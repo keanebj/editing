@@ -1,0 +1,41 @@
+  <div class="layout">
+    <div class="layout-ceiling">
+      <div class="layout-ceiling-main">
+        <a href="#">注册登录</a> |
+        <a href="#">帮助中心</a> |
+        <a href="#">安全中心</a> |
+        <a href="#">服务大厅</a>
+      </div>
+    </div>
+    <Row type="flex">
+      <i-col span="5">
+        <Menu accordion width="auto">
+          <Submenu :name="k" v-for="(item,k) in menu" key="item.name">
+            <template slot="title">
+              <Icon type="ios-navigate"></Icon>
+              {{item.name}}
+            </template>
+            <Menu-item :name="k+'-'+i" v-for="(child,i) in item.children" key="item.name"
+                       @click.native="onSelect(child)">{{child.name}}
+            </Menu-item>
+          </Submenu>
+        </Menu>
+      </i-col>
+      <i-col span="19" class="layout-content-warp">
+        <div class="layout-breadcrumb">
+          <Breadcrumb>
+            <Breadcrumb-item href="/">首页</Breadcrumb-item>
+            <Breadcrumb-item v-for="(item,index) in breadcrumb" key="index" :href="item.path?item.path:''">{{item.name}}</Breadcrumb-item>
+          </Breadcrumb>
+        </div>
+        <div class="layout-content">
+          <div class="layout-content-main">
+            <router-view></router-view>
+          </div>
+        </div>
+        <div class="layout-copy">
+          2015-2017 &copy; PDMI
+        </div>
+      </i-col>
+    </Row>
+  </div>

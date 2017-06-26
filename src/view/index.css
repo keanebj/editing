@@ -1,0 +1,44 @@
+  .layout {
+    position: relative;
+  }
+
+  .layout-breadcrumb {
+    padding: 10px 15px 0;
+  }
+
+  .layout-content-warp {
+    background: #f5f7f9;
+  }
+
+  .layout-content {
+    min-height: 200px;
+    margin: 15px;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 4px;
+  }
+
+  .layout-content-main {
+    padding: 15px;
+  }
+
+  .layout-copy {
+    text-align: center;
+    padding: 10px 0 20px;
+    color: #9ea7b4;
+  }
+
+  .layout-ceiling {
+    background: #313540;
+    padding: 15px 0;
+    overflow: hidden;
+  }
+
+  .layout-ceiling-main {
+    float: right;
+    margin-right: 15px;
+  }
+
+  .layout-ceiling-main a {
+    color: #9ba7b5;
+  }
