@@ -9,16 +9,21 @@
     </div>
     <Row type="flex">
       <i-col span="5">
-        <Menu accordion width="auto">
-          <Submenu :name="k" v-for="(item,k) in menu" key="item.name" @click.native="onSelect(item)">
-            <template slot="title">
-              <Icon :type="item.icon"></Icon>
-              {{item.name}}
-            </template>
-            <Menu-item v-if="item.children" :name="k+'-'+i" v-for="(child,i) in item.children" key="item.name"
-                       @click.native="onSelect(child)">{{child.name}}
+        <Menu accordion width="auto" active-name="0-2"  :open-names="['1']" accordion>
+          <div v-for="(item,k) in menu" key="item.name">
+            <Submenu v-if="item.children" :name="k" @click.native="onSelect(item)">
+              <template slot="title">
+                <Icon :type="item.icon"></Icon>
+                {{k + item.name}}
+              </template>
+              <Menu-item :name="k+'-'+i" v-for="(child,i) in item.children" key="item.name"
+                        @click.native="onSelect(child)">{{k+'-'+i + child.name}}
+              </Menu-item>
+            </Submenu>
+            <Menu-item v-if="!item.children" :name="k" key="item.name"
+                      @click.native="onSelect(item)"><Icon :type="item.icon"></Icon> {{k+item.name}}
             </Menu-item>
-          </Submenu>
+          </div>
         </Menu>
       </i-col>
       <i-col span="19" class="layout-content-warp">

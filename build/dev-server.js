@@ -22,7 +22,7 @@ var proxyTable = config.dev.proxyTable
 
 var app = express()
 global.app = app
-require('../mock')
+require('./dev-mock')
 var compiler = webpack(webpackConfig)
 
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
