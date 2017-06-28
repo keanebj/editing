@@ -1,5 +1,5 @@
 export default {
-  name: '{{name}}',
+  name: 'Register',
   data () {
     return {
     }

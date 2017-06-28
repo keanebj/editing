@@ -1,3 +1,5 @@
+import { mapGetters } from 'vuex'
+
 export default {
   data() {
     return {
@@ -13,5 +15,12 @@ export default {
         textarea: ''
       }
     }
+  },
+  computed: {
+    ...mapGetters([
+      'aaaa'
+    ])
+  },
+  created () {
   }
 }

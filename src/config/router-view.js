@@ -9,6 +9,12 @@ module.exports = [{
   path: '/',
   title: '首页',
   children: [{
+    path: '/register',
+    title: '注册'
+  }, {
+    path: '/home',
+    title: '主页'
+  }, {
     path: '/release/article',
     title: '内容发布'
   }, {

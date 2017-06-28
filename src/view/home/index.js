@@ -1,11 +1,11 @@
 export default {
-  name: '{{name}}',
+  name: 'Home',
+  created () {
+  },
   data () {
     return {
     }
   },
   methods: {
-  },
-  created () {},
-  mounted () {}
+  }
 }

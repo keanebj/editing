@@ -10,12 +10,12 @@
     <Row type="flex">
       <i-col span="5">
         <Menu accordion width="auto">
-          <Submenu :name="k" v-for="(item,k) in menu" key="item.name">
+          <Submenu :name="k" v-for="(item,k) in menu" key="item.name" @click.native="onSelect(item)">
             <template slot="title">
-              <Icon type="ios-navigate"></Icon>
+              <Icon :type="item.icon"></Icon>
               {{item.name}}
             </template>
-            <Menu-item :name="k+'-'+i" v-for="(child,i) in item.children" key="item.name"
+            <Menu-item v-if="item.children" :name="k+'-'+i" v-for="(child,i) in item.children" key="item.name"
                        @click.native="onSelect(child)">{{child.name}}
             </Menu-item>
           </Submenu>

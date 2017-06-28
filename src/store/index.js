@@ -8,13 +8,15 @@ const store = new Vuex.Store({
     breadcrumb: []
   },
   getters: {
-
   },
   mutations: {
     breadcrumb (state, path) {
       var result = []
       recursive('path', path, state.menu, 0, result)
       state.breadcrumb = result
+    },
+    set (state, data) {
+      Object.assign(state, data)
     }
   },
   actions: {

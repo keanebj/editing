@@ -1,5 +1,6 @@
 export default [{
   name: '内容发布',
+  icon: 'ios-navigate',
   children: [{
     name: '文章发布',
     path: '/release/article'
@@ -12,6 +13,7 @@ export default [{
   }]
 }, {
   name: '内容管理',
+  icon: 'ios-close',
   children: [{
     name: '我发表的',
     path: '/cms/me'
@@ -50,4 +52,7 @@ export default [{
   name: '数据管理'
 }, {
   name: '账号管理'
-}]
+}, {
+    name: '注册',
+    path: '/register'
+  }]
