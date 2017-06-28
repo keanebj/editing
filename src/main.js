@@ -8,8 +8,8 @@ import iView from 'iview'
 import 'iview/dist/styles/iview.css'
 Vue.use(iView)
 Vue.config.productionTip = false
-import utils from './utils'
-Vue.prototype.$http = utils.ajax
+import http from './http'
+Vue.prototype.$http = http
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
