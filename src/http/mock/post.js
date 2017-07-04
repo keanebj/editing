@@ -1,5 +1,5 @@
 exports.path = '/api/post'
-exports.type = 'get'
+exports.type = 'post'
 exports.export = function (req, res) {
   return {
     b: 100112

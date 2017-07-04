@@ -1,5 +1,4 @@
-import { mapGetters } from 'vuex'
-
+import { mapState } from 'vuex'
 export default {
   data() {
     return {
@@ -16,11 +15,12 @@ export default {
       }
     }
   },
-  computed: {
-    ...mapGetters([
+  computed: {   
+    ...mapState([
       'aaaa'
-    ])
+    ])    
   },
   created () {
+
   }
 }

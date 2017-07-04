@@ -15,5 +15,9 @@ export default {
     }
   },
   created () {
+    this.$store.commit('set', {
+      aaaa: 555
+    })
+    console.log(this.$store.state)
   }
 }

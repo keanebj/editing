@@ -1,3 +1,4 @@
+
 export default {
   name: 'SourceVideo',
   created () {
@@ -9,7 +10,10 @@ export default {
   },
   methods: {
     fetch () {
-      this.$http.get('/api/user', (req) => {
+      this.$http.get('/api/user').then((req) => {
+        console.log(req)
+      })
+      this.$http.post('/api/post').then((req) => {
         console.log(req)
       })
     }

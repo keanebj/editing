@@ -1,4 +1,5 @@
 import { mapState } from 'vuex'
+
 export default {
   computed: {
     ...mapState(['menu', 'breadcrumb'])
@@ -8,9 +9,7 @@ export default {
     }
   },
   created () {
-    this.$store.commit('set', {
-      aaaa: 1000
-    })
+    
   },
   methods: {
     onSelect (e) {

@@ -13,7 +13,7 @@ chokidar.watch(fileWatch).on('change', function () {
   temp = 'export default ' + temp
   writeFile(fileWrite, temp)
 })
-function eachItems(data, path = '') {
+function eachItems(data) {
   var temp = ''
   temp += '[\n'
   data.forEach(function (item, i) {
