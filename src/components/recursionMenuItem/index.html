@@ -1,13 +1,13 @@
 <Menu accordion width="auto">
   <div v-for="(item,k) in data" key="item.name">
-    <Submenu v-if="item.children" :name="k" @click.native="onSelect(item)">
+    <Submenu v-if="item.children" :name="menuKey + k" @click.native="onSelect(item)">
       <template slot="title">
         <Icon :type="item.icon"></Icon>
         {{item.name}}
       </template>
-      <RecursionMenuItem :data="item.children" :onSelect="onSelect"></RecursionMenuItem>
+      <RecursionMenuItem :data="item.children" :onSelect="onSelect" :menuKey="menuKey + k + '-'"></RecursionMenuItem>
     </Submenu>
-    <Menu-item v-if="!item.children" :name="k" key="item.name" @click.native="onSelect(item)">
+    <Menu-item v-if="!item.children" :name="menuKey + k" key="item.name" @click.native="onSelect(item)">
       <Icon :type="item.icon"></Icon> {{item.name}}
     </Menu-item>
   </div>
