@@ -8,6 +8,7 @@ const store = new Vuex.Store({
     breadcrumb: []
   },
   getters: {
+    
   },
   mutations: {
     breadcrumb (state, path) {
