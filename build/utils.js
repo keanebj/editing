@@ -1,4 +1,5 @@
 var path = require('path')
+var fs = require('fs')
 var config = require('../config')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
@@ -69,3 +70,30 @@ exports.styleLoaders = function (options) {
   }
   return output
 }
+
+//递归创建目录 异步方法
+var mkdirs = function (dirname, callback) {
+  fs.exists(dirname, function (exists) {
+    if (exists) {
+      callback();
+    } else {
+      //console.log(path.dirname(dirname));
+      mkdirs(path.dirname(dirname), function () {
+        fs.mkdir(dirname, callback);
+      });
+    }
+  });
+}
+//递归创建目录 同步方法
+var mkdirsSync = function (dirname) {
+  if (fs.existsSync(dirname)) {
+    return true;
+  } else {
+    if (mkdirsSync(path.dirname(dirname))) {
+      fs.mkdirSync(dirname);
+      return true;
+    }
+  }
+}
+exports.mkdirs = mkdirs
+exports.mkdirsSync = mkdirsSync

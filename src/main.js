@@ -9,6 +9,8 @@ import 'iview/dist/styles/iview.css'
 Vue.use(iView)
 Vue.config.productionTip = false
 import http from './http'
+import './directive'
+import './filtres'
 Vue.prototype.$http = http
 /* eslint-disable no-new */
 new Vue({

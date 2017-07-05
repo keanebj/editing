@@ -1,58 +1,29 @@
 export default [{
-  name: '内容发布',
-  icon: 'ios-navigate',
+  name: '首页',
+  path: '/home',
+  icon: 'ios-home-outline'
+}, {
+  name: '发表',
+  path: '/publish',
+  icon: 'edit'
+}, {
+  name: '管理',
+  icon: 'ios-paper-outline',
   children: [{
-    name: '文章发布',
-    path: '/release/article'
+    name: '内容管理',
+    path: '/manage/content'
   }, {
-    name: '组图发布',
-    path: '/release/image'
+    name: '工作室管理',
+    path: '/manage/studio'
   }, {
-    name: '组图发布',
-    path: '/release/video'
+    name: '广告管理',
+    path: '/manage/ad'
   }]
 }, {
-  name: '内容管理',
-  icon: 'ios-close',
+  name: '设置',
+  icon: 'ios-gear-outline',
   children: [{
-    name: '我发表的',
-    path: '/cms/me'
-  }, {
-    name: '自动同步',
-    path: '/cms/auto'
-  }, {
-    name: '原创内容',
-    path: '/cms/original'
+    name: '账号信息',
+    path: '/settings/account'
   }]
-}, {
-  name: '渠道管理',
-  children: [{
-    name: '内容接入',
-    path: '/content/import'
-  }, {
-    name: '内容输出',
-    path: '/content/export'
-  }]
-}, {
-  name: '素材管理',
-  children: [{
-    name: '图片管理',
-    path: '/source/image'
-  }, {
-    name: '视频管理',
-    path: '/source/video'
-  }]
-}, {
-  name: '直播间'
-}, {
-  name: '粉丝'
-}, {
-  name: '问答系统'
-}, {
-  name: '数据管理'
-}, {
-  name: '账号管理'
-}, {
-    name: '注册',
-    path: '/register'
-  }]
+}]

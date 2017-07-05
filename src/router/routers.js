@@ -14,88 +14,46 @@ export default [
   component: require('@/view/index.vue'),
   children:[
 {
-  path: '/register',
-  meta: {
-    title: '注册'
-  },
-  component: require('@/view/register/index.vue'),
-},
-{
   path: '/home',
   meta: {
-    title: '主页'
+    title: '首页'
   },
   component: require('@/view/home/index.vue'),
 },
 {
-  path: '/release/article',
+  path: '/publish',
   meta: {
-    title: '内容发布'
+    title: '发表'
   },
-  component: require('@/view/release/article/index.vue'),
+  component: require('@/view/publish/index.vue'),
 },
 {
-  path: '/release/image',
+  path: '/manage/content',
   meta: {
-    title: '图片发布'
+    title: '内容管理'
   },
-  component: require('@/view/release/image/index.vue'),
+  component: require('@/view/manage/content/index.vue'),
 },
 {
-  path: '/release/video',
+  path: '/manage/studio',
   meta: {
-    title: '视频发布'
+    title: '工作室管理'
   },
-  component: require('@/view/release/video/index.vue'),
+  component: require('@/view/manage/studio/index.vue'),
 },
 {
-  path: '/cms/me',
+  path: '/manage/ad',
   meta: {
-    title: '我发表的'
+    title: '广告管理'
   },
-  component: require('@/view/cms/me/index.vue'),
+  component: require('@/view/manage/ad/index.vue'),
 },
 {
-  path: '/cms/auto',
+  path: 'settings/account',
   meta: {
-    title: '自动同步'
+    title: '账号信息'
   },
-  component: require('@/view/cms/auto/index.vue'),
-},
-{
-  path: '/cms/original',
-  meta: {
-    title: '原创内容'
-  },
-  component: require('@/view/cms/original/index.vue'),
-},
-{
-  path: '/content/import',
-  meta: {
-    title: '内容接入'
-  },
-  component: require('@/view/content/import/index.vue'),
-},
-{
-  path: '/content/export',
-  meta: {
-    title: '内容输出'
-  },
-  component: require('@/view/content/export/index.vue'),
-},
-{
-  path: '/source/image',
-  meta: {
-    title: '图片管理'
-  },
-  component: require('@/view/source/image/index.vue'),
-},
-{
-  path: '/source/video',
-  meta: {
-    title: '视频管理'
-  },
-  component: require('@/view/source/video/index.vue'),
+  component: require('@/view/settings/account/index.vue'),
 },
 ]
 
