@@ -20,6 +20,7 @@ function eachItems(data, path = '') {
   data.forEach(function (item, i) {
     var componentPath = parsePath(item.path)
     temp += '{\n'
+    temp += '  name: \'' + item.name + '\',\n'
     temp += '  path: \'' + item.path + '\',\n'
     temp += '  meta: {\n'
     temp += '    title: \'' + item.title + '\'\n'

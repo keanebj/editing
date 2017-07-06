@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="27px" viewBox="0 0 20 27" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>手机</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="内容管理" transform="translate(-654.000000, -2868.000000)" stroke="#CCCCCC">
+            <g id="公告内容" transform="translate(395.000000, 412.000000)">
+                <g id="3-copy-6" transform="translate(0.000000, 1427.000000)">
+                    <g id="手机" transform="translate(260.000000, 1030.000000)">
+                        <path d="M18,6.5 L18,1 C18,1 17.5,-4.54749086e-13 16.5,0 C15.5,4.54743448e-13 1.5,0 1.5,0 C1.5,0 3.3913296e-16,4.56801263e-13 0,2 L0,23.5 C0,23.5 0,25 2,25 C4,25 16,25 16,25 C16,25 18,25 18,23.5 L18,10" id="Path-16" stroke-linecap="round"></path>
+                        <path d="M0,19 L18.5,19" id="Path-22"></path>
+                        <path d="M5,4 L13.5,4" id="Path-23"></path>
+                        <path d="M7,22 L11,22" id="Path-24"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

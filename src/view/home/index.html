@@ -1,3 +1,43 @@
 <section>
-  <h1>home</h1>
+  <Row :gutter="25">
+    <Col span="8">
+    <div class="card">
+      <img src="../../assets/svg/发表的背景.png" style="width:100%" alt="">
+      <div class="big-title"><span>发表</span></div>
+    </div>
+    </Col>
+    <Col span="8">
+    <div class="card">
+      <img src="../../assets/svg/发文数.png" style="width:100%" alt="">
+      <div class="title"><span>总发文数</span></div>
+      <div class="num"><span>43124</span></div>
+    </div>
+    </Col>
+    <Col span="8">
+    <div class="card">
+      <img src="../../assets/svg/数.png" style="width:100%" alt="">
+      <div class="title"><span>工作室数</span></div>
+      <div class="num"><span>321</span></div>
+    </div>
+    </Col>
+  </Row>
+  <div style="margin-top:25px;">
+    <img style="width:100%" src="../../assets/e05d365213027c8948e112c2ac3da50d.png" alt="">
+  </div>
+
+
+  <div class="notice">
+    <div class="notice-header">
+      <Button type="ghost" shape="circle">公告</Button> 中央厨房号学院
+    </div>
+    <ul>
+      <li class="notice-item" :class="{read:item.isRead}" v-for="item in randomMovieList">
+        <Icon type="volume-medium"></Icon> <a :href="item.url" target="_blank">{{ item.name }}</a>
+        <span class="date">
+            2017-12-21 00:12
+        </span>
+      </li>
+    </ul>
+  </div>
+  <Page :total="40" size="small" show-total></Page>
 </section>

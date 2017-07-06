@@ -3,12 +3,14 @@
   <div class="layout-container">
     <Row type="flex">
       <i-col span="5">
-        <RecursionMenuItem :data="menu" :onSelect="onSelect"></RecursionMenuItem>
+        <ComponentsMainMenu :data="menu" :onSelect="onSelect"></ComponentsMainMenu>
       </i-col>
       <i-col span="19" class="layout-content-warp">
         <div class="layout-content">
           <div class="layout-content-main">
-            <router-view></router-view>
+            <transition name="slide-fade"  mode="out-in">
+              <router-view></router-view>
+            </transition>
           </div>
         </div>
       </i-col>

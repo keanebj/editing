@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="23px" height="22px" viewBox="0 0 23 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>预览</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="内容发布审阅" transform="translate(-1798.000000, -172.000000)">
+            <g id="按钮" transform="translate(1413.000000, 148.000000)">
+                <g id="预览-copy" transform="translate(313.000000, 12.000000)">
+                    <g id="预览" transform="translate(73.000000, 12.000000)">
+                        <path d="M5.03213611,1.16666667 C5.03213611,1.16666667 -0.467863894,-0.333333333 0.0321361059,5.66666667" id="Path-13" stroke="#F68A6F" stroke-linecap="round"></path>
+                        <path d="M21.0321357,1.16666638 C21.0321357,1.16666638 15.5321357,-0.333333622 16.0321357,5.66666638" id="Path-13-Copy-2" stroke="#F68A6F" stroke-linecap="round" transform="translate(18.516068, 3.333333) rotate(90.000000) translate(-18.516068, -3.333333) "></path>
+                        <path d="M10.5,16 C14.6421356,16 18,12.0908 18,11 C18,9.90920002 14.6421356,6 10.5,6 C6.35786438,6 3,9.74692203 3,11 C3,12.253078 6.35786438,16 10.5,16 Z" id="Oval-2" stroke="#F68A6F"></path>
+                        <circle id="Oval-3" fill="#F68A6F" fill-rule="nonzero" cx="10.5" cy="12.5" r="2.5"></circle>
+                        <path d="M21.032136,16.166666 C21.032136,16.166666 15.532136,14.666666 16.032136,20.666666" id="Path-13-Copy" stroke="#F68A6F" stroke-linecap="round" transform="translate(18.516068, 18.333333) rotate(180.000000) translate(-18.516068, -18.333333) "></path>
+                        <path d="M5.03213642,16.1666663 C5.03213642,16.1666663 -0.467863582,14.6666663 0.0321364175,20.6666663" id="Path-13-Copy-3" stroke="#F68A6F" stroke-linecap="round" transform="translate(2.516068, 18.333333) rotate(-90.000000) translate(-2.516068, -18.333333) "></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

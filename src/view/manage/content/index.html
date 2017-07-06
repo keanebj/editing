@@ -24,58 +24,57 @@
     </Col>
   </Row>
 
-  <div>
 
-    <table class="table">
-      <thead>
-        <tr>
-          <th>标题</th>
-          <th></th>
-          <th>作者</th>
-          <th>时间</th>
-          <th>状态</th>
-          <th>操作</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">
-            <img src="../../../assets/img.png" alt="">
-          </th>
-          <th scope="row">
-            同宿舍4人全考上博士 “学霸”恋爱挣钱生活丰富
-          </th>
-          <td>南山南</td>
-          <td>2017-07-22</td>
-          <td>
-            <Checkbox :value="true">已发表</Checkbox>
-          </td>
-          <td>
-            <Dropdown>
-              <a href="javascript:void(0)">
-                <Icon type="edit"></Icon>
-              </a>
-              <Dropdown-menu slot="list">
-                <Dropdown-item>置顶</Dropdown-item>
-                <Dropdown-item>撤回</Dropdown-item>
-                <Dropdown-item>删除</Dropdown-item>
-              </Dropdown-menu>
-            </Dropdown>
-            <Dropdown style="margin-left: 20px">
-              <a href="javascript:void(0)">
-                  <Icon type="ios-gear-outline"></Icon>
-              </a>
-              <Dropdown-menu slot="list">
-                <Dropdown-item>驴打滚</Dropdown-item>
-                <Dropdown-item>炸酱面</Dropdown-item>
-                <Dropdown-item disabled>豆汁儿</Dropdown-item>
-                <Dropdown-item>冰糖葫芦</Dropdown-item>
-                <Dropdown-item divided>北京烤鸭</Dropdown-item>
-              </Dropdown-menu>
-            </Dropdown>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>标题</th>
+        <th></th>
+        <th>作者</th>
+        <th>时间</th>
+        <th>状态</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">
+          <img width="120" src="../../../assets/img.png" alt="">
+        </th>
+        <th scope="row">
+          同宿舍4人全考上博士 “学霸”恋爱挣钱生活丰富
+        </th>
+        <td>南山南</td>
+        <td>2017-07-22</td>
+        <td>
+          <Checkbox :value="true">已发表</Checkbox>
+        </td>
+        <td>
+          <Dropdown>
+            <a href="javascript:void(0)">
+              <Icon type="edit"></Icon>
+            </a>
+            <Dropdown-menu slot="list">
+              <Dropdown-item>置顶</Dropdown-item>
+              <Dropdown-item>撤回</Dropdown-item>
+              <Dropdown-item>删除</Dropdown-item>
+            </Dropdown-menu>
+          </Dropdown>
+          <Dropdown style="margin-left: 20px">
+            <a href="javascript:void(0)">
+              <Icon type="ios-gear-outline"></Icon>
+            </a>
+            <Dropdown-menu slot="list">
+              <Dropdown-item>驴打滚</Dropdown-item>
+              <Dropdown-item>炸酱面</Dropdown-item>
+              <Dropdown-item disabled>豆汁儿</Dropdown-item>
+              <Dropdown-item>冰糖葫芦</Dropdown-item>
+              <Dropdown-item divided>北京烤鸭</Dropdown-item>
+            </Dropdown-menu>
+          </Dropdown>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <Page :total="40" size="small" show-total></Page>
 </section>

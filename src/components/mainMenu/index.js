@@ -1,5 +1,5 @@
 export default {
-  name: 'RecursionMenuItem',
+  name: 'ComponentsMainMenu',
   props: {
     data: Array,
     onSelect: Function,
@@ -10,6 +10,6 @@ export default {
   },
   methods: {
   },
-  created () {},
-  mounted () {}
+  created() { },
+  mounted() { }
 }

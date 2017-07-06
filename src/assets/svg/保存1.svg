@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="22px" viewBox="0 0 22 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>保存</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="内容发布审阅" transform="translate(-1673.000000, -171.000000)" stroke="#F68A6F">
+            <g id="按钮" transform="translate(1413.000000, 148.000000)">
+                <g id="预览" transform="translate(260.000000, 14.000000)">
+                    <g id="保存" transform="translate(0.000000, 9.000000)">
+                        <rect id="Rectangle-4" x="0.5" y="0.5" width="20.4089429" height="20.4089429" rx="5"></rect>
+                        <path d="M5.04129092,0.5 L16.0432741,0.5 L16.0432741,6.81193638 C16.0432741,7.75302009 15.4313488,8.25338786 14.6935442,8.25821462 C14.697916,8.25818602 13.3414291,8.26724123 12.8940907,8.2700894 C12.1833368,8.27461471 11.5597381,8.27821408 10.966429,8.2811004 C8.12591449,8.29491885 6.33786893,8.2899469 5.96654307,8.2598394 C5.41215997,8.21488942 5.04129092,7.64448073 5.04129092,6.81193638 L5.04129092,0.5 Z" id="Rectangle-12"></path>
+                        <path d="M13.75,2.43283442 L13.75,5.83880262" id="Path-2" stroke-linecap="round"></path>
+                        <path d="M5.83880262,13.75 L15.5701403,13.75" id="Path-3" stroke-linecap="round"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
