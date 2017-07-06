@@ -1,43 +1,109 @@
 <section>
-  <Row :gutter="25">
-    <Col span="8">
-    <div class="card">
-      <img src="../../assets/svg/发表的背景.png" style="width:100%" alt="">
-      <div class="big-title"><span>发表</span></div>
-    </div>
-    </Col>
-    <Col span="8">
-    <div class="card">
-      <img src="../../assets/svg/发文数.png" style="width:100%" alt="">
-      <div class="title"><span>总发文数</span></div>
-      <div class="num"><span>43124</span></div>
-    </div>
-    </Col>
-    <Col span="8">
-    <div class="card">
-      <img src="../../assets/svg/数.png" style="width:100%" alt="">
-      <div class="title"><span>工作室数</span></div>
-      <div class="num"><span>321</span></div>
-    </div>
-    </Col>
+
+   <Row :gutter="34">
+      <Col span="8">
+        <div class="home-title publish">
+          <img src="../../assets/home-t-1.png">
+          <span class="title-t-0">发表</span>
+        </div>
+      </Col>
+      <Col span="8">
+        <div class="home-title articles">
+          <img src="../../assets/home-t-2.png">
+          <span class="title-t-1">总发文数</span>
+          <span class="title-t-2">6889</span>          
+        </div>
+      </Col>
+      <Col span="8">
+        <div class="home-title studios">
+          <img src="../../assets/home-t-3.png">
+          <span class="title-t-1">工作室数</span>
+          <span class="title-t-2">81</span>    
+        </div>
+      </Col>
   </Row>
-  <div style="margin-top:25px;">
-    <img style="width:100%" src="../../assets/e05d365213027c8948e112c2ac3da50d.png" alt="">
-  </div>
-
-
-  <div class="notice">
-    <div class="notice-header">
-      <Button type="ghost" shape="circle">公告</Button> 中央厨房号学院
-    </div>
-    <ul>
-      <li class="notice-item" :class="{read:item.isRead}" v-for="item in randomMovieList">
-        <Icon type="volume-medium"></Icon> <a :href="item.url" target="_blank">{{ item.name }}</a>
-        <span class="date">
-            2017-12-21 00:12
-        </span>
-      </li>
-    </ul>
-  </div>
-  <Page :total="40" size="small" show-total></Page>
+  <Row>
+	  <Col span="24">
+	     <div class="home-ad">
+	     	<img src="../../assets/ad.png">
+	     </div>
+	  </Col>
+  </Row>
+  <Row>
+      <Col span="24">
+                <div class="home-tab">
+                	<span v-bind:class="{ active: switchTab == 0 }" v-on:click="switchTab = 0">公告</span>
+                	<span v-bind:class="{ active: switchTab == 1 }" v-on:click="switchTab = 1">中央厨房号学院</span>
+                </div>
+              	<div class="home-tab-n" v-if="switchTab==0">
+              		<ul class="home-notices">
+		              	<li>
+		              		<i></i>
+		              		<span class="home-notice-content">
+		              			您的企业版已到期，如需继续使用，请前往升级，平台仍保留您原有的配置。
+		              		</span>
+		              		<span  class="home-notice-date">
+		              			2017-05-22 09:40
+		              		</span>
+		              	</li>
+		              	<li>
+		              		<i></i>
+		              		<span class="home-notice-content">
+		              			您的企业版已到期，如需继续使用，请前往升级，平台仍保留您原有的配置。
+		              		</span>
+		              		<span  class="home-notice-date">
+		              			2017-05-22 09:40
+		              		</span>
+		              	</li>
+		              	<li>
+		              		<i></i>
+		              		<span class="home-notice-content">
+		              			您的企业版已到期，如需继续使用，请前往升级，平台仍保留您原有的配置。
+		              		</span>
+		              		<span  class="home-notice-date">
+		              			2017-05-22 09:40
+		              		</span>
+		              	</li>
+		              	<li>
+		              		<i class="readed"></i>
+		              		<span class="home-notice-content">
+		              			您的企业版已到期，如需继续使用，请前往升级，平台仍保留您原有的配置。
+		              		</span>
+		              		<span  class="home-notice-date">
+		              			2017-05-22 09:40
+		              		</span>
+		              	</li>
+		              	<li>
+		              		<i class="readed"></i>
+		              		<span class="home-notice-content">
+		              			您的企业版已到期，如需继续使用，请前往升级，平台仍保留您原有的配置。
+		              		</span>
+		              		<span  class="home-notice-date">
+		              			2017-05-22 09:40
+		              		</span>
+		              	</li>
+	              	</ul>
+	              	<div class="home-pager">
+			          	<Page :total="100" show-total></Page>
+			        </div>
+              	</div>
+              	<div class="home-tab-d" v-if="switchTab==1">
+              		<ul class="home-notices">
+		              	<li>
+		              		<i></i>
+		              		<span class="home-notice-content">
+		              			您的企业版已到期，如需继续使用，请前往升级，平台仍保留您原有的配置。
+		              		</span>
+		              		<span  class="home-notice-date">
+		              			2017-05-22 09:40
+		              		</span>
+		              	</li>
+		              	
+	              	</ul>
+	              	<div class="home-pager">
+			          	<Page :total="100" show-total></Page>
+			        </div>
+              	</div>
+      </Col>
+  </Row>
 </section>
