@@ -24,7 +24,7 @@
   <Row>
 	  <Col span="24">
 	     <div class="home-ad">
-					<Carousel autoplay v-model="value2" autoplay-speed="4000">
+					<Carousel autoplay v-model="value2">
 							<Carousel-item>
 									<div class="demo-carousel">
 										<img src="../../assets/ad.png">
@@ -104,8 +104,9 @@
 		              	</li>
 	              	</ul>
 	              	<div class="home-pager">
-			          	<Page :total="100" show-total></Page>
-			        </div>
+			          		<Page :total="40" size="small" ></Page>
+										<span>共{{pageTotalG}}页</span>
+			            </div>
               	</div>
               	<div class="home-tab-d" v-if="switchTab==1">
               		<ul class="home-notices">
@@ -121,7 +122,8 @@
 		              	
 	              	</ul>
 	              	<div class="home-pager">
-			          	<Page :total="100" show-total></Page>
+			          		<Page :total="12" size="small"></Page>
+										<span>共{{pageTotalX}}页</span>
 			        </div>
               	</div>
       </Col>

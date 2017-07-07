@@ -108,3 +108,17 @@
     color: #F95759;
     
 }
+.ivu-page-item-jump-next, .ivu-page-item-jump-prev, .ivu-page-next, .ivu-page-prev,.ivu-page-item{
+    border: none!important;
+}
+.ivu-page-item-active a, .ivu-page-item-active:hover a{
+    color: #F95759!important;
+}
+.ivu-page-item-active{
+    color: #F95759;
+    border-color: #fff!important;
+    background-color: #fff!important;
+}
+.ivu-page-total{
+    float: right!important;
+}
