@@ -20,7 +20,9 @@
     margin-top: 5%;
     float: right;
 }
-
+.home-tab{
+    color:  #999999;
+}
 .home-notices:after{
     content:""; 
     display:block; 
@@ -30,12 +32,10 @@
     float: left;
     width: 100%;
     padding: 16px 0;
+    color: #333333;
     border-bottom: 1px solid #CCCCCC;
 }
-.home-notices li:hover{
-    color: #F95759;
-    cursor: pointer;
-}
+
 .home-notices li i{
     width: 5%;
     background-image: url(../../assets/gg.svg);
@@ -43,9 +43,13 @@
     height: 16px;
     float: left;
 }
-.home-notices li i.readed{
+.home-notices li.readed i{
     background-image: url(../../assets/gg-1.svg);
     background-size: 100% 100%;
+}
+
+.home-notices li .readed .home-notice-content{
+    color: #999999;
 }
 .home-notices li .home-notice-content{
     width: 79%;
@@ -54,6 +58,11 @@
 .home-notices li .home-notice-date{
     width: 16%;
     float: left;
+    color: #999999;
+}
+.home-notices li:hover{
+    color: #F95759;
+    cursor: pointer;
 }
 .title-t-0{
     width: 100px;

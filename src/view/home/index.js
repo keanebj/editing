@@ -4,7 +4,8 @@ export default {
   },
   data () {
     return {
-      switchTab:0
+      switchTab:0,
+      value2:0
     }
   },
   methods: {
