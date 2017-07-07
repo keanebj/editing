@@ -48,7 +48,7 @@
     background-size: 100% 100%;
 }
 
-.home-notices li .readed .home-notice-content{
+.home-notices li.readed .home-notice-content{
     color: #999999;
 }
 .home-notices li .home-notice-content{
@@ -122,3 +122,14 @@
 .ivu-page-total{
     float: right!important;
 }
+.home-pager{
+    color: #999999!important;
+}
+.home-pager ul{
+    float: left;
+}
+.home-pager span{
+    float: right;
+    line-height: 24px;    
+}
+

@@ -49,7 +49,7 @@ export default [
   component: require('@/view/manage/ad/index.vue'),
 },
 {
-  path: 'settings/account',
+  path: '/settings/account',
   meta: {
     title: '账号信息'
   },
