@@ -15,7 +15,7 @@ export default [{
   }, {
     name: '工作室管理',
     path: '/manage/studio',
-    match: ['manageStudioId'] // 如匹配路由name也可激活<Menu:activeName>
+    match: ['manageStudioSingle'] // 如匹配路由name也可激活<Menu:activeName>
   }, {
     name: '广告管理',
     path: '/manage/ad'
