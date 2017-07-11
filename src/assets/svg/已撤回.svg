@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>已撤回</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round">
+        <g id="内容管理" transform="translate(-1492.000000, -2042.000000)" stroke="#F7B346">
+            <g id="公告内容" transform="translate(395.000000, 412.000000)">
+                <g id="3-copy-8" transform="translate(0.000000, 1583.000000)">
+                    <g id="已发表" transform="translate(1092.000000, 41.000000)">
+                        <g id="已撤回" transform="translate(15.212868, 15.633863) rotate(-16.000000) translate(-15.212868, -15.633863) translate(3.212868, 3.633863)">
+                            <path d="M18,13 L20,8 L18,13 Z" id="Path-2" stroke-linejoin="round"></path>
+                            <path d="M14.3441573,14.7907324 L16.3441573,9.79073244 L14.3441573,14.7907324 Z" id="Path-2-Copy" stroke-linejoin="round" transform="translate(15.344157, 12.290732) rotate(-93.000000) translate(-15.344157, -12.290732) "></path>
+                            <path d="M17.3807773,3.05901313 C17.3807773,3.05901313 8.1939348,3.05901313 6.38077735,3.05901313 C4.56761989,3.05901313 2.88077735,3.84572412 2.88077735,6.55901313 C2.88077735,9.27230214 2.88077735,19.0590131 2.88077735,19.0590131 C2.88077735,19.0590131 3.38077735,21.5590131 6.38077735,21.5590131 L17.3807773,21.5590131 C17.3807773,21.5590131 20.8807773,22.0590131 20.8807773,18.5590131 C20.8807773,15.0590131 20.8807773,11.5590131 20.8807773,11.5590131" id="Path-10" transform="translate(11.880777, 12.321359) rotate(16.000000) translate(-11.880777, -12.321359) "></path>
+                            <path d="M16.9225234,11.2186343 C14.4225234,5.21863435 6.92252339,7.21863435 6.92252339,12.6299077 C6.92252339,18.041181 11.9661059,18.2186343 14.4225234,17.7186343" id="Path-5" stroke-linejoin="round"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

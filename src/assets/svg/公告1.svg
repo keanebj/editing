@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="18px" viewBox="0 0 20 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>公告1</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="首页" transform="translate(-437.000000, -1031.000000)" stroke="#999999">
+            <g id="公告1" transform="translate(438.000000, 1032.000000)">
+                <path d="M5,12.5 L9.5,16 L9.5,0 L4.5,3.5 L1.5,3.5 C0,3.5 0,4.5 0,4.5 L0,11.5 C0,11.5 2.68882139e-16,12.5 0.5,12.5 L2.5,12.5" id="Path-14"></path>
+                <path d="M14.5,1 C14.5,1 17.5,2.5 18,5 C18.5,7.5 18.5,10.5 17,12.5 C15.5,14.5 14,14.5 14,14.5" id="Path-16"></path>
+                <path d="M12.5,4 C12.5,4 17.5,8 12.5,11.5" id="Path-15"></path>
+            </g>
+        </g>
+    </g>
+</svg>

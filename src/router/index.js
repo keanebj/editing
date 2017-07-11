@@ -20,5 +20,7 @@ router.afterEach(() => {
   window.scrollTo(0, 0)
   var currentRoutePath = router.currentRoute.path
   store.commit('breadcrumb', currentRoutePath)
+  store.commit('menu', router.currentRoute)
 })
+
 export default router

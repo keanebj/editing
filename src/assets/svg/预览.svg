@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="23px" height="22px" viewBox="0 0 23 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>预览</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="内容发布审阅" transform="translate(-1714.000000, -199.000000)">
+            <g id="预览" transform="translate(1715.000000, 199.000000)">
+                <path d="M5.03213611,1.16666667 C5.03213611,1.16666667 -0.467863894,-0.333333333 0.0321361059,5.66666667" id="Path-13" stroke="#F95759" stroke-linecap="round"></path>
+                <path d="M21.0321361,1.16666667 C21.0321361,1.16666667 15.5321361,-0.333333333 16.0321361,5.66666667" id="Path-13-Copy-2" stroke="#F95759" stroke-linecap="round" transform="translate(18.516068, 3.333333) rotate(90.000000) translate(-18.516068, -3.333333) "></path>
+                <path d="M10.5,16 C14.6421356,16 18,12.0908 18,11 C18,9.90920002 14.6421356,6 10.5,6 C6.35786438,6 3,9.74692203 3,11 C3,12.253078 6.35786438,16 10.5,16 Z" id="Oval-2" stroke="#F95759"></path>
+                <circle id="Oval-3" fill="#F95759" cx="10.5" cy="12.5" r="2.5"></circle>
+                <path d="M21.0321361,16.1666667 C21.0321361,16.1666667 15.5321361,14.6666667 16.0321361,20.6666667" id="Path-13-Copy" stroke="#F95759" stroke-linecap="round" transform="translate(18.516068, 18.333333) rotate(180.000000) translate(-18.516068, -18.333333) "></path>
+                <path d="M5.03213611,16.1666667 C5.03213611,16.1666667 -0.467863894,14.6666667 0.0321361059,20.6666667" id="Path-13-Copy-3" stroke="#F95759" stroke-linecap="round" transform="translate(2.516068, 18.333333) rotate(-90.000000) translate(-2.516068, -18.333333) "></path>
+            </g>
+        </g>
+    </g>
+</svg>

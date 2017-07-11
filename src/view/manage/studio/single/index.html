@@ -1,0 +1,42 @@
+<Row style="margin-left:50px;">
+  <Col span="18">
+  <Form :model="form" label-position="left" :label-width="100">
+    <Form-item label="账号">
+      <Input placeholder="请输入账号名称"></Input>
+    </Form-item>
+    <Form-item label="密码">
+      <Input placeholder="请输入密码" type="password"></Input>
+    </Form-item>
+    <Form-item label="LOGO">
+      <Upload action="//jsonplaceholder.typicode.com/posts/" style="display:inline-block">
+        <Button type="primary" size="large" shape="circle" icon="ios-download-outline">上传</Button> 建议logo长宽比为3:2
+      </Upload>
+    </Form-item>
+
+    <Form-item label="工作室">
+      <Input placeholder="工作室名称编辑"></Input>
+    </Form-item>
+    <Form-item label="URL">
+      <Input placeholder="URL地址编辑"></Input>
+    </Form-item>
+    <Form-item label="栏目绑定">
+      <Select placeholder="请选择">
+                <Option value="beijing">一秒一世界</Option>
+                <Option value="shanghai">经意城</Option>
+                <Option value="shenzhen">深圳市</Option>
+            </Select>
+    </Form-item>
+    <Form-item label="中央厨房指数">
+      <Input></Input>
+    </Form-item>
+
+    <Form-item>
+            <Button type="primary" shape="circle">提交</Button>
+            <Button type="ghost" shape="circle" style="margin-left: 20px">取消</Button>
+        </Form-item>
+
+  </Form>
+
+
+  </Col>
+</Row>

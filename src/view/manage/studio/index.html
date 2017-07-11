@@ -1,3 +1,52 @@
 <section>
-  <h1>view/manage/studio</h1>
+  <Row>
+    <Col span="24">
+    <Button type="primary" size="large" shape="circle" icon="ios-plus-outline">新建</Button>
+    </Col>
+  </Row>
+
+
+  <table class="table" style="margin-top:20px;">
+    <thead>
+      <tr>
+        <th>LOGO</th>
+        <th>工作室名称</th>
+        <th>URL</th>
+        <th>时间</th>
+        <th>绑定栏目</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">
+          <img width="100" src="../../../assets/img.png" alt="">
+        </th>
+        <td>南山南</td>
+        <td>www.xxxxxxxxx.com</td>
+        <td>2012-12-12</td>
+        <td>栏目1</td>
+        <td>
+          <router-link to="/manage/studio/2">
+            <Icon type="edit"></Icon>
+          </router-link>
+
+          <Dropdown style="margin-left: 20px">
+            <a href="javascript:void(0)">
+              <Icon type="ios-gear-outline"></Icon>
+            </a>
+            <Dropdown-menu slot="list">
+              <Dropdown-item>驴打滚</Dropdown-item>
+              <Dropdown-item>炸酱面</Dropdown-item>
+              <Dropdown-item disabled>豆汁儿</Dropdown-item>
+              <Dropdown-item>冰糖葫芦</Dropdown-item>
+              <Dropdown-item divided>北京烤鸭</Dropdown-item>
+            </Dropdown-menu>
+          </Dropdown>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+    <Page :total="40" size="small" show-total></Page>
 </section>

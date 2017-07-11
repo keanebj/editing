@@ -1,9 +1,10 @@
 export default {
   name: 'Home',
-  created () {
+  created() {
   },
-  data () {
+  data() {
     return {
+<<<<<<< HEAD
       switchTab:0,
       value2:0,
       pageTotalX:2,
@@ -12,6 +13,9 @@ export default {
       studioTotal:35,
       noticeList:[],
       collegeList:[]
+=======
+      switchTab: 0
+>>>>>>> 599b89e068f9be0a3c96ca8ea35e2896ec6d12cb
     }
   },
   methods: {

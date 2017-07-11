@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>导入</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round">
+        <g id="内容管理" transform="translate(-507.000000, -185.000000)" stroke="#F95759">
+            <g id="导入" transform="translate(507.000000, 186.000000)">
+                <path d="M0.5,8.5 C0.5,8.5 0.5,15.254628 0.5,19.5 C0.5,21.2444086 1.89248614,22.0092561 2.5,22.0092561 C4.5,22.0092561 18.5054727,22.0092561 20.5,22.0092561 C21.0385965,22.0092561 22.9504725,21.451735 23,20 C23.1194064,16.5 23,8.5 23,8.5" id="Path-17" stroke-linejoin="round"></path>
+                <path d="M9,16.5 L15.5,16.5" id="Path-18"></path>
+                <polygon id="Path-19" stroke-linejoin="round" points="9 0 15 0 15 6.02079729 18.5000618 6.02079729 12 12 6 6 9 6"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

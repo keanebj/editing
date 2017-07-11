@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="21px" height="20px" viewBox="0 0 21 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>已发表</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round">
+        <g id="内容管理" transform="translate(-1492.000000, -482.000000)" stroke="#F95759">
+            <g id="公告内容" transform="translate(395.000000, 412.000000)">
+                <g id="1" transform="translate(0.000000, 22.000000)">
+                    <g id="已发表" transform="translate(1098.000000, 48.000000)">
+                        <path d="M14,0.5 L2.98864223,0.5 C0.977284454,0.5 0.387157166,1.09012729 0.443578583,3.04506364 C0.5,5 0.443578583,16.5115003 0.443578583,16.5115003 C0.443578583,16.5115003 0.570677625,18.7065211 2.53533881,18.6032606 C4.5,18.5 14.5007635,18.6032606 16.5003818,18.6032606 C18.5,18.6032606 19,18 19,16 L19,9" id="Path-8"></path>
+                        <polyline id="Path-5" stroke-linejoin="round" points="4.5 8.72151899 9 13.221519 19.5 2.72151899"></polyline>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
