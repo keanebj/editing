@@ -11,99 +11,85 @@
         <div class="home-title articles">
           <img src="../../assets/home-t-2.png">
           <span class="title-t-1">总发文数</span>
-          <span class="title-t-2">6889</span>          
+          <span class="title-t-2" v-text="articleTotal"></span>          
         </div>
       </Col>
       <Col span="8">
         <div class="home-title studios">
           <img src="../../assets/home-t-3.png">
           <span class="title-t-1">工作室数</span>
-          <span class="title-t-2">81</span>    
+          <span class="title-t-2" v-text="studioTotal"></span>    
         </div>
       </Col>
   </Row>
   <Row>
 	  <Col span="24">
 	     <div class="home-ad">
-	     	<img src="../../assets/ad.png">
+					<Carousel autoplay v-model="value2">
+							<Carousel-item>
+									<div class="demo-carousel">
+										<img src="../../assets/ad.png">
+									</div>
+							</Carousel-item>
+							<Carousel-item>
+									<div class="demo-carousel">
+										<img src="../../assets/ad.png">
+									</div>
+							</Carousel-item>
+							<Carousel-item>
+									<div class="demo-carousel">
+										<img src="../../assets/ad.png">
+									</div>
+							</Carousel-item>
+							<Carousel-item>
+									<div class="demo-carousel">
+										<img src="../../assets/ad.png">
+									</div>
+							</Carousel-item>
+					</Carousel>
 	     </div>
 	  </Col>
   </Row>
   <Row>
       <Col span="24">
-                <div class="home-tab">
-                	<span v-bind:class="{ active: switchTab == 0 }" v-on:click="switchTab = 0">公告</span>
-                	<span v-bind:class="{ active: switchTab == 1 }" v-on:click="switchTab = 1">中央厨房号学院</span>
-                </div>
-              	<div class="home-tab-n" v-if="switchTab==0">
-              		<ul class="home-notices">
-		              	<li>
-		              		<i></i>
-		              		<span class="home-notice-content">
-		              			您的企业版已到期，如需继续使用，请前往升级，平台仍保留您原有的配置。
-		              		</span>
-		              		<span  class="home-notice-date">
-		              			2017-05-22 09:40
-		              		</span>
-		              	</li>
-		              	<li>
-		              		<i></i>
-		              		<span class="home-notice-content">
-		              			您的企业版已到期，如需继续使用，请前往升级，平台仍保留您原有的配置。
-		              		</span>
-		              		<span  class="home-notice-date">
-		              			2017-05-22 09:40
-		              		</span>
-		              	</li>
-		              	<li>
-		              		<i></i>
-		              		<span class="home-notice-content">
-		              			您的企业版已到期，如需继续使用，请前往升级，平台仍保留您原有的配置。
-		              		</span>
-		              		<span  class="home-notice-date">
-		              			2017-05-22 09:40
-		              		</span>
-		              	</li>
-		              	<li>
-		              		<i class="readed"></i>
-		              		<span class="home-notice-content">
-		              			您的企业版已到期，如需继续使用，请前往升级，平台仍保留您原有的配置。
-		              		</span>
-		              		<span  class="home-notice-date">
-		              			2017-05-22 09:40
-		              		</span>
-		              	</li>
-		              	<li>
-		              		<i class="readed"></i>
-		              		<span class="home-notice-content">
-		              			您的企业版已到期，如需继续使用，请前往升级，平台仍保留您原有的配置。
-		              		</span>
-		              		<span  class="home-notice-date">
-		              			2017-05-22 09:40
-		              		</span>
-		              	</li>
-	              	</ul>
-	              	<div class="home-pager">
-			          	<Page :total="100" show-total></Page>
-			        </div>
-              	</div>
-              	<div class="home-tab-d" v-if="switchTab==1">
-              		<ul class="home-notices">
-		              	<li>
-		              		<i></i>
-		              		<span class="home-notice-content">
-		              			您的企业版已到期，如需继续使用，请前往升级，平台仍保留您原有的配置。
-		              		</span>
-		              		<span  class="home-notice-date">
-		              			2017-05-22 09:40
-		              		</span>
-		              	</li>
-		              	
-	              	</ul>
-	              	<div class="home-pager">
-			          	<Page :total="100" show-total></Page>
-			        </div>
-              	</div>
+				<div class="home-tab">
+					<span v-bind:class="{ active: switchTab == 0 }" v-on:click="switchTab = 0">公告</span>
+					<span v-bind:class="{ active: switchTab == 1 }" v-on:click="switchTab = 1">中央厨房号学院</span>
+				</div>
+				<div class="home-tab-n" v-if="switchTab==0">
+					<ul class="home-notices">
+						<li v-for="notice in noticeList" :class="{readed:notice.isReaded}">
+							<i></i>
+							<span class="home-notice-content">
+								{{notice.title}}
+							</span>
+							<span  class="home-notice-date">
+								{{notice.dateTime}}
+							</span>
+						</li>						
+					</ul>
+					<div class="home-pager">
+						<Page :total="40" size="small" ></Page>
+						<span>共{{pageTotalG}}页</span>
+					</div>
+				</div>
+				<div class="home-tab-d" v-if="switchTab==1">
+					<ul class="home-notices">
+						<li v-for="college in collegeList" :class="{readed: college.isReaded}">
+							<i></i>
+							<span class="home-notice-content">
+								{{college.title}}
+							</span>
+							<span  class="home-notice-date">
+								{{college.dateTime}}
+							</span>
+						</li>							
+					</ul>
+					<div class="home-pager">
+						<Page :total="12" size="small"></Page>
+						<span>共{{pageTotalX}}页</span>
+		  	</div>
+		    </div>
       </Col>
   </Row>
 </section>
