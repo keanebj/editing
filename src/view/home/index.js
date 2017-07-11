@@ -26,6 +26,9 @@ export default {
         this.collegeList = res.data.data;
         this.pageTotalX = Math.ceil(this.collegeList.length / 10);
       });
+    },
+    getNoticeURL (id){
+      this.$router.push({path:'/notice?'+id})
     }
 
   },
