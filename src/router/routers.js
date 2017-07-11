@@ -6,9 +6,7 @@ export default [
       title: 'login'
     },
     component: require('@/view/login/index.vue')
-  },
-<<<<<<< HEAD
-  component: require('@/view/login/index.vue'),
+  
 },
 {
   path: '/',
@@ -62,7 +60,6 @@ export default [
 ]
 
 },
-=======
   {
     name: 'main',
     path: '/',
@@ -129,5 +126,4 @@ export default [
       },
     ]
   }
->>>>>>> 599b89e068f9be0a3c96ca8ea35e2896ec6d12cb
 ]
