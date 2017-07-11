@@ -1,0 +1,16 @@
+.con_new p{    
+    text-align: left;
+    text-indent: 20px;
+    font-size: 14px;
+    line-height: 24px;
+    margin: 14px 0;
+}
+.con_new{    
+    text-align: center;
+}
+.con_new img{
+    width: 70%;
+}
+.article{
+    margin: 50px 0;
+}
