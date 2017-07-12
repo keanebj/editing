@@ -1,0 +1,17 @@
+/*滚动条*/
+.scrollBar{
+	position: absolute;
+	right: 15px;
+	top: 10px;
+	height: 23vw;
+	border-right: 1px solid #ccc;
+}
+.scrollBar_con{
+	width: 7px;
+	height: 50px;
+	border-radius: 10px;
+	position: absolute;
+	top: 0px;
+	left: 5px;
+	background: #ccc;
+}

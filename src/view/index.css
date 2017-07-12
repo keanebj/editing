@@ -89,3 +89,11 @@
   opacity: 0;
 }
 
+/*mine*/
+.hide{
+  display:none !important;
+}
+.set-width{
+  width:100% !important;
+}
+

@@ -72,6 +72,14 @@ export default [
         },
         component: require('@/view/settings/account/index.vue')
       },
+      {
+        name:'notice',
+        path: '/notice',
+        meta: {
+          title: '公告',
+        },
+        component: require('@/view/notice/index.vue'),
+      },
     ]
   }
 ]

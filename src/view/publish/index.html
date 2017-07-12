@@ -1,3 +1,151 @@
 <section>
-  <h1>fabiao</h1>
+  <Form ref="formTop" :model="formTop" label-position="top" :rules="ruleValidate">
+  <Row :gutter="34">
+    <Col span="17" class="m-t-20">
+    <Form-item label="" prop="titleContent">
+      <Input id="titleContent" v-model="formTop.titleContent" class="title-input" placeholder="请输入标题" @on-change="getTitleContent"></Input>
+      <span class="limit-words">
+          <span>{{titleContentCount}}</span>/50
+        </span>
+    </Form-item>
+
+      <textarea id="editor" style="width:100%;height:600px;margin-bottom: 6px;">{{formTop.editorContent}}</textarea>
+      <span style="color:#ed3f14;" :class="{hide:hideTip}">正文不能为空</span>
+    </Col>
+    <Col span="7" class="m-t-20">
+    <div class="btn publish-btn m-r-10" @click="publish('formTop')">发布</div>
+
+    <div class="pull-right">
+      <div style="position: relative;display: inline-block;">
+        <button style="position: absolute;top:-20px;" @click="save('formTop',false)">保存</button>
+        <div class="btn-icon save-btn-icon m-r-10" @click="save('formTop',false)"></div>
+      </div>
+      <div class="btn-icon share-btn-icon m-r-10" @click="share">
+        <Modal v-model="qCode" class="share_hide" width="auto" :closable="false" ref="shareHide">
+          <vue-q-art :config="config" :downloadButton="downloadButton" style="text-align: center;"></vue-q-art>
+          <div>
+            <input type="text" v-model="config.value" ref="copyInput" readonly /><span @click="CopyUrl($event)">复制</span>
+          </div>
+          <p>链接有效时间为<span>2小时</span><br />通过扫描二维码和复制文章链接<br />可以将文章转发给成员观看</p>
+        </Modal>
+
+      </div>
+      <div class="btn-icon preview-btn-icon " @click="showPreviewContent"></div>
+    </div>
+    <Modal
+      v-model="previewContent"
+      width="768"
+      :class-name="tabView"
+      >
+      <p slot="header" ref="scrollWarp">
+        <span :class="{ select: tabView == 'pc' }" @click="changeView('pc')">pc样式预览</span>
+        <span :class="{ select: tabView == 'mobile' }" @click="changeView('mobile')">移动端样式预览</span>
+      </p>
+
+      <ul class="set-max-height">
+        <div class="set-line"></div>
+        <ScrollBar @element="change" :elements="elements" :preview-con="previewCon[0]"></ScrollBar>
+      </ul>
+      <p slot="footer">
+      </p>
+    </Modal>
+
+
+    <div style="margin:20px 0;font-size:14px;">发布设置</div>
+
+      <Form-item label="渠道">
+        <Select v-model="formTop.publishChannel" placeholder="请选择">
+          <Option v-for="(item,index) in publishChannels" :value="item" :key="index" >{{item}}</Option>
+        </Select>
+      </Form-item>
+      <Form-item label="作者" prop="author">
+        <Input v-model="formTop.author"></Input>
+      </Form-item>
+      <Form-item label="关键字">
+        <Input v-model="formTop.keyword"></Input>
+      </Form-item>
+      <Form-item label="封面" prop="cover">
+        <Input v-model="formTop.cover" type="text" class="hide"></Input>
+        <div class="cover-container"><img :src="formTop.cover" v-if="formTop.cover != ''" style="width:100%"/></div>
+        <span class="m-r-20 main-color pointer" @click="fromContent">正文选择</span>
+        <span class="main-color pointer" @click="fromLocal">本地上传</span>
+      </Form-item>
+
+      <Modal
+        v-model="localModal"
+        width="600"
+        id="localPop"
+        >
+        <p slot="header">
+          <span>本地上传</span>
+        </p>
+        <Row :gutter="34" style="margin-top:20px;">
+          <Col span="16">
+          <div class="content-pic">
+            <img :src="localDefaultSrc" class="m-b-10">
+          </div>
+
+          </Col>
+          <Col span="8">
+          <div class="content-pic">
+            <span>预览封面</span>
+            <img class="m-t-20" :src="localDefaultSrc">
+          </div>
+          </Col>
+        </Row>
+        <div style="position:relative">
+          <label>图片大小2M以内支持PNG、JPG、JPEG格式<br/>
+            您上传的图片自动会生成128*128像素的图片,请注意图片是否清晰
+          </label>
+          <Upload action="//jsonplaceholder.typicode.com/posts/"
+               ref="upload"
+               id="localUpload" :show-upload-list="false"
+               :on-success="handleSuccess"
+               :on-error="handleError"
+               :format="['jpg','jpeg','png']"
+               :max-size="2048"
+               :on-format-error="handleFormatError"
+               :on-exceeded-size="handleMaxSize">
+            <Button style="position:absolute;right:5%;top:0;" type="ghost" icon="ios-cloud-upload-outline" @click="fromLocal">本地上传</Button>
+       </Upload>
+        </div>
+        <p slot="footer">
+          <Button type="primary" shape="circle" @click="clickLocalCoverOk">确定</Button>
+        </p>
+      </Modal>
+
+
+      <Modal
+        v-model="contentModal"
+        width="600"
+        id="contentPop"
+        :closable="false"
+        >
+        <p slot="header">
+          <span>正文选择</span>
+          <a class="ivu-modal-close"><i @click="closeContentPop" class="ivu-icon ivu-icon-ios-close-empty"></i></a>
+        </p>
+        <div>
+          <Row :gutter="34">
+            <Col span="24">
+            <div style="margin:0 0 20px 0;color:#757575;font-size: 1.1em">请从正文使用过的照片选择封面</div></Col>
+          </Row>
+          <div class="content-cover-container">
+            <ScrollBar @iIndex="index" :iIndex="iIndex" :preview-con="previewCon[1]" :contentCoverSrc="contentCoverSrc" :tempi="tempi"></ScrollBar>
+         </div>
+        </div>
+        <p slot="footer">
+          <Button type="primary" shape="circle" @click="clickCoverOk">确定</Button>
+        </p>
+      </Modal>
+
+      <Form-item label="摘要" prop="abstract">
+        <Input v-model="formTop.abstract" type="textarea" :autosize="{minRows: 5,maxRows: 5}" @on-change="abstractWordCount"></Input>
+        <span class="main-color pointer" @click="renderAbstract">生成摘要</span>
+        <label style="position:absolute;right:20px;bottom:20%;color:#ccc"><span class="active-color">{{formTop.currentAbstractCount}}</span>/140</label>
+      </Form-item>
+
+    </Col>
+  </Row>
+  </Form>
 </section>

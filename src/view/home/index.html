@@ -11,14 +11,14 @@
         <div class="home-title articles">
           <img src="../../assets/home-t-2.png">
           <span class="title-t-1">总发文数</span>
-          <span class="title-t-2" v-text="articleTotal"></span>          
+          <span class="title-t-2" v-text="articleTotal"></span>
         </div>
       </Col>
       <Col span="8">
         <div class="home-title studios">
           <img src="../../assets/home-t-3.png">
           <span class="title-t-1">工作室数</span>
-          <span class="title-t-2" v-text="studioTotal"></span>    
+          <span class="title-t-2" v-text="studioTotal"></span>
         </div>
       </Col>
   </Row>
@@ -58,7 +58,8 @@
 				</div>
 				<div class="home-tab-n" v-if="switchTab==0">
 					<ul class="home-notices">
-						<li v-for="notice in noticeList" :class="{readed:notice.isReaded}">
+						<li v-for="notice in noticeList" :class="{readed:notice.isReaded}" @click="readed">
+              <router-link :to="{path:'./notice',query:{noticeID:notice.id}}" target="_blank">
 							<i></i>
 							<span class="home-notice-content">
 								{{notice.title}}
@@ -66,7 +67,8 @@
 							<span  class="home-notice-date">
 								{{notice.dateTime}}
 							</span>
-						</li>						
+              </router-link>
+						</li>
 					</ul>
 					<div class="home-pager">
 						<Page :total="40" size="small" ></Page>
@@ -83,7 +85,7 @@
 							<span  class="home-notice-date">
 								{{college.dateTime}}
 							</span>
-						</li>							
+						</li>
 					</ul>
 					<div class="home-pager">
 						<Page :total="12" size="small"></Page>
