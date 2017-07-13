@@ -20,7 +20,7 @@ export default {
       },
       downloadButton: false,
 
-      articleID:0,
+      articleID:-1,
       hideTip:true,
       qCode: false,
       titleContentCount:0,
@@ -32,19 +32,17 @@ export default {
       localModal:false,
       contentModal:false,
       contentCoverSrc:'',
-     /* contentPics:[{src:require('../../assets/logo.png')},{src:require('../../assets/img.png')},{src:require('../../assets/img.png')}
-        ,{src:require('../../assets/img.png')},{src:require('../../assets/img.png')},{src:require('../../assets/img.png')}
-        ,{src:require('../../assets/img.png')},{src:require('../../assets/img.png')},{src:require('../../assets/img.png')}],
-      */publishChannels:['人民日报中央厨房'],
+      publishChannels:['人民日报中央厨房'],
       formTop: {
-        publishChannel: '人民日报中央厨房',
+        contenttype:"Article",
+        publishchannel: '人民日报中央厨房',
         author: '',
         keyword: '',
         cover:'',
-        abstract:'',
+        summary:'',
         currentAbstractCount:0,
-        titleContent:'',
-        editorContent:'',
+        title:'',
+        content:'',
       },
       ruleValidate: {
         author: [
@@ -53,10 +51,10 @@ export default {
         cover: [
           { required: true, message: '封面不能为空', trigger: 'blur' }
         ],
-        abstract:[
+        summary:[
           { type: 'string', max: 140, message: '介绍不能大于140字', trigger: 'change' }
         ],
-        titleContent:[
+        title:[
           { required: true, message: '标题不能为空', trigger: 'change' },
           { type: 'string', max: 50, message: '标题不能大于50字', trigger: 'change' }
         ]
@@ -70,30 +68,30 @@ export default {
       iIndex: [-1],
       i: -1,
       tempi: -1,
-      timer:null
+      timer:null,
+      headers:{'Content-Type':'multipart/form-data'}
     }
   },
   created(){
     //判断一下是编辑还是草稿通过文章的id
     //编辑：发出ajax请求
-    if(this.articleID != 0) {
+    if(this.articleID > 0) {
       this.$http({
-        method: 'POST',
-        url: "/api/post",
-        params: {articleID: this.articleID}
+        method: 'GET',
+        url: "http://mp.dev.hubpd.com/api/content/"+this.articleID
       }).then((response) => {
-        let data = response.data;
-        //给数据值
-        this.formTop.titleContent = data.title;
-        this.formTop.publishChannel = data.channel;
-        this.formTop.author = data.author;
-        this.formTop.keyword = data.keyWord;
-        this.formTop.cover = data.cover;
-        this.formTop.abstract = data.abstract;
-        this.formTop.editorContent = data.content;
-        this.formTop.currentAbstractCount = data.abstract.toString().length;
-        this.titleContentCount = data.title.toString().length;
-      }, (response) => {
+        let data = response.data.content_info[0];
+          //给数据值
+          this.formTop.title = data.Title;
+          this.formTop.publishchannel = data.publishchannel;
+          this.formTop.author = data.Author;
+          this.formTop.keyword = data.KeyWord;
+          this.formTop.cover = data.Cover;
+          this.formTop.summary = data.Summary;
+          this.formTop.content = data.Content;
+          this.formTop.currentAbstractCount = data.Summary.toString().length;
+          this.titleContentCount = data.Title.toString().length;
+        }, (response) => {
         alert("error");
       });
     }else{
@@ -117,15 +115,15 @@ export default {
         }
     })
     this.editor.ready(function(){
-      This.editor.execCommand('inserthtml',This.formTop.editorContent);
+      This.editor.execCommand('inserthtml',This.formTop.content);
     })
     //自动保存:半分钟自动保存一次
-    this.timer=setInterval(function(){
+    /*this.timer=setInterval(function(){
       //存到本地草稿
 
       //存到数据库
       This.save('formTop',true);
-    },3000);
+    },3000);*/
 
   },
   watch:{
@@ -205,7 +203,11 @@ export default {
       var length=event.target.value.length;
       this.formTop.currentAbstractCount=length;
     },
+    beforeUpload:function(res){
+      console.log(res);
+    },
     handleError:function(error, file, fileList){
+      console.log(file);
       this.$Message.error('上传失败');
     },
     handleSuccess (res, file) {
@@ -242,8 +244,8 @@ export default {
           url: "/api/post",
           params: { content: content }
         }).then((response) => {
-          console.log(response);
-          this.formTop.abstract=response.data.abstract.toString();
+
+          this.formTop.summary=response.data.abstract.toString();
           this.formTop.currentAbstractCount=response.data.abstract.toString().length;
         },(response) => {
           alert("error");
@@ -252,9 +254,9 @@ export default {
     },
     publish:function(name){
       // 发布
-      this.formTop.editorContent=this.editor.getContent();
+      this.formTop.content=this.editor.getContent();
       this.$refs[name].validate((valid) => {
-        if(!this.formTop.editorContent){
+        if(!this.formTop.content){
             this.$Message.error('保存失败，请检查格式是否正确!');
             this.hideTip=false;
         }
@@ -280,32 +282,44 @@ export default {
 
     },
     save:function(name,hideTip){
-      this.formTop.editorContent=this.editor.getContent();
+      this.formTop.content=this.editor.getContent();
         this.$refs[name].validate((valid) => {
-          if(!this.formTop.editorContent){
+          if(!this.formTop.content){
             if(!hideTip){
               this.$Message.error('保存失败，请检查格式是否正确!');
             }
             this.hideTip=false;
           }
           else if (valid) {
-            //通过验证，访问后台，保存表单数据
-            this.$http({
-              method: 'POST',
-              url: "",
-              params: {formData:this.formTop,id:this.articleID}//后台可以判断是都有稿件id判断是插入还是更新
-            }).then((response) => {
-                if(response.status == 200){
-                  if(!hideTip) {
-                    this.$Message.success('保存成功!');
-                    //this.articleID=response.data.ID;
-                  }
-                }else{
-                  if(!hideTip) {
-                    this.$Message.error('保存失败，请检查格式是否正确!');
-                  }
-                }
-            });
+              //通过验证，访问后台，保存表单数据
+              //根据文章的id判断是保存还是更新:???????
+              if(this.articleID > -1){
+                //更新http://domain/webapp/api/content/{_id}
+                this.$http({
+                  method: 'PUT',
+                  url: "http://mp.dev.hubpd.com/api/content/"+this.articleID,
+                  params:this.formTop
+                }).then((response) => {
+                  this.$Message.success(response.data.message);
+                  this.articleID=response.data.contentID;
+                }, (response) => {
+                  this.$Message.error(response.data.message);
+                });
+
+              }else{
+                //新建
+                this.$http({
+                  method: 'POST',
+                  url: "http://mp.dev.hubpd.com/api/content",
+                  params:this.formTop
+                }).then((response) => {
+                    this.$Message.success(response.data.message);
+                   // this.articleID=response.data.contentID;
+                  this.articleID=14;
+                }, (response) => {
+                    this.$Message.error(response.data.message);
+                });
+              }
           } else {
             if(!hideTip) {
               this.$Message.error('保存失败，请检查格式是否正确!');
@@ -318,7 +332,7 @@ export default {
       document.execCommand("Copy");
     },
     share: function () {
-      //点击分享的时候需要后台返回详情页的url
+      //根据文章的id判断是否能够分享id>0 ok,<0 no
       this.$http({
         method: 'GET',
         url: "",
@@ -337,7 +351,7 @@ export default {
           }
           this.$refs.shareHide.$el.children[1].children[0].style.top = (195 - scrollTop) + 'px';
 
-          //this.config.value=response.data.qcodelink;
+          //this.config.value=http://localhost:8080/notice?noticeID=this.articleID;
           this.qCode = true;
         }else{
           this.$Message.error('此文章暂时不能分享');
@@ -406,59 +420,9 @@ export default {
       str = str.replace(/&#32;/g, " ");
       return str;
     },
-//  mouseScroll: function (ev) {
-//  	let cY = ev.clientY;
-//  	let onscroll = this.$refs.onscroll;
-//  	let setCon = this.$refs.setCon;
-//  	let scroll = this.$refs.scroll;
-//  	let scrollCon = this.$refs.scrollCon;
-//  	document.onmousemove = function (e) {
-//				let ch = cY - e.clientY;
-//				let Top = ch + onscroll.offsetTop;
-//				if (Top>=0) {
-//					Top = 0;
-//				}
-//				if(Top<= (setCon.clientHeight - onscroll.clientHeight)) {
-//					Top = setCon.clientHeight - onscroll.clientHeight
-//				}
-//				let scale = Top/(onscroll.clientHeight - setCon.clientHeight);
-//  		let scTop = scale*(scroll.clientHeight - scrollCon.clientHeight)
-//				onscroll.style.top = Top + 'px';
-//				scrollCon.style.top = -scTop + 'px';
-//  	}
-//  	document.onmouseup = function () {
-//  		document.onmousemove = null;
-//  	}
-//  },
-//  barScroll: function (ev) {
-//  	let cY = ev.clientY - this.$refs.scrollCon.offsetTop;
-//  	let onscroll = this.$refs.onscroll;
-//  	let setCon = this.$refs.setCon;
-//  	let scroll = this.$refs.scroll;
-//  	let scrollCon = this.$refs.scrollCon;
-//  	console.log(scrollCon.offsetTop)//10
-//  	document.onmousemove = function (e) {
-//				let Top = e.clientY - cY;
-////				let Top = ch + scrollCon.offsetTop;
-//				if (Top<=0) {
-//					Top = 0;
-//				}
-//				if(Top>= (scroll.clientHeight - scrollCon.clientHeight)) {
-//					Top = scroll.clientHeight - scrollCon.clientHeight
-//				}
-//				let scale = Top/(scroll.clientHeight - scrollCon.clientHeight);
-//  		let scTop = scale*(onscroll.clientHeight - setCon.clientHeight)
-//				scrollCon.style.top = Top + 'px';
-//				onscroll.style.top = -scTop + 'px';
-//  	}
-//  	document.onmouseup = function () {
-//  		document.onmousemove = null;
-//  	}
-//  }
-
     //editor
     getTitleContent:function(){
-      this.titleContentCount=this.formTop.titleContent.length;
+      this.titleContentCount=this.formTop.title.length;
     },
   }
 

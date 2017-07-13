@@ -2,14 +2,14 @@
   <Form ref="formTop" :model="formTop" label-position="top" :rules="ruleValidate">
   <Row :gutter="34">
     <Col span="17" class="m-t-20">
-    <Form-item label="" prop="titleContent">
-      <Input id="titleContent" v-model="formTop.titleContent" class="title-input" placeholder="请输入标题" @on-change="getTitleContent"></Input>
+    <Form-item label="" prop="title">
+      <Input id="titleContent" v-model="formTop.title" class="title-input" placeholder="请输入标题" @on-change="getTitleContent"></Input>
       <span class="limit-words">
           <span>{{titleContentCount}}</span>/50
         </span>
     </Form-item>
 
-      <textarea id="editor" style="width:100%;height:600px;margin-bottom: 6px;">{{formTop.editorContent}}</textarea>
+      <textarea id="editor" style="width:100%;height:600px;margin-bottom: 6px;">{{formTop.content}}</textarea>
       <span style="color:#ed3f14;" :class="{hide:hideTip}">正文不能为空</span>
     </Col>
     <Col span="7" class="m-t-20">
@@ -49,12 +49,10 @@
       <p slot="footer">
       </p>
     </Modal>
-
-
     <div style="margin:20px 0;font-size:14px;">发布设置</div>
 
       <Form-item label="渠道">
-        <Select v-model="formTop.publishChannel" placeholder="请选择">
+        <Select v-model="formTop.publishchannel" placeholder="请选择">
           <Option v-for="(item,index) in publishChannels" :value="item" :key="index" >{{item}}</Option>
         </Select>
       </Form-item>
@@ -70,7 +68,6 @@
         <span class="m-r-20 main-color pointer" @click="fromContent">正文选择</span>
         <span class="main-color pointer" @click="fromLocal">本地上传</span>
       </Form-item>
-
       <Modal
         v-model="localModal"
         width="600"
@@ -97,9 +94,12 @@
           <label>图片大小2M以内支持PNG、JPG、JPEG格式<br/>
             您上传的图片自动会生成128*128像素的图片,请注意图片是否清晰
           </label>
-          <Upload action="//jsonplaceholder.typicode.com/posts/"
+          <Upload action="http://mp.dev.hubpd.com/api/image/upload"
+                  :headers="headers"
                ref="upload"
-               id="localUpload" :show-upload-list="false"
+               id="localUpload"
+               :show-upload-list="false"
+               :before-upload="beforeUpload"
                :on-success="handleSuccess"
                :on-error="handleError"
                :format="['jpg','jpeg','png']"
@@ -113,8 +113,6 @@
           <Button type="primary" shape="circle" @click="clickLocalCoverOk">确定</Button>
         </p>
       </Modal>
-
-
       <Modal
         v-model="contentModal"
         width="600"
@@ -139,8 +137,8 @@
         </p>
       </Modal>
 
-      <Form-item label="摘要" prop="abstract">
-        <Input v-model="formTop.abstract" type="textarea" :autosize="{minRows: 5,maxRows: 5}" @on-change="abstractWordCount"></Input>
+      <Form-item label="摘要" prop="summary">
+        <Input v-model="formTop.summary" type="textarea" :autosize="{minRows: 5,maxRows: 5}" @on-change="abstractWordCount"></Input>
         <span class="main-color pointer" @click="renderAbstract">生成摘要</span>
         <label style="position:absolute;right:20px;bottom:20%;color:#ccc"><span class="active-color">{{formTop.currentAbstractCount}}</span>/140</label>
       </Form-item>
