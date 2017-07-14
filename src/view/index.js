@@ -40,7 +40,7 @@ export default {
       }
 	  
 	  //判断路径
-      if(e.path.indexOf('publish') > -1){
+      if(e.path && e.path.indexOf('publish') > -1){
           this.isActive=true;
       }else{
         this.isActive=false;
