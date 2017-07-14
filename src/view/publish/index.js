@@ -19,8 +19,6 @@ export default {
         filter: 'color',
       },
       downloadButton: false,
-
-      articleID:0,
       hideTip:true,
       qCode: false,
       titleContentCount:0,
@@ -73,7 +71,13 @@ export default {
       timer:null
     }
   },
+  computed:{
+    articleID:function(){
+      return this.$route.query.articleID ? this.$route.query.articleID:-1;
+    }
+  },
   created(){
+
     //判断一下是编辑还是草稿通过文章的id
     //编辑：发出ajax请求
     if(this.articleID != 0) {
@@ -145,11 +149,11 @@ export default {
   },
   methods: {
     showPreviewContent:function(){
-    	
+
       //获得编辑器中的内容
 //    this.previewCon[0]=this.editor.getContent();
       this.previewContent=true;
-      
+
       var ele = this.elements;
       clearTimeout(time)
       var time =  setTimeout(function () {
@@ -308,15 +312,15 @@ export default {
               //通过验证，访问后台，保存表单数据
               //根据文章的id判断是保存还是更新:???????
               if(this.articleID > -1){
-                //更新http://domain/webapp/api/content/{_id}
+                //更新
                 this.$http.put("http://mp.dev.hubpd.com/api/content/"+this.articleID,
-                  {"contenttype":"Article","title":"aaaa"},
-                  {
+                  {"contenttype":"Article","title":"aaaa"}
+                /*  {
                     headers: {
                       'Content-Type': 'application/json'
                     },
                     emulateJSON :true,
-                  }
+                  }*/
                  /* {
                   method: 'PUT',
                   url: "http://mp.dev.hubpd.com/api/content/"+this.articleID,
@@ -335,9 +339,12 @@ export default {
                 //新建
                 this.$http({
                   method: 'POST',
-                  url: "http://mp.dev.hubpd.com/api/content",
-                  params:this.formTop
+                  //url: "http://mp.dev.hubpd.com/api/content",
+                  url:"http://10.1.43.54:8080/zmt/api/studio/login",
+                  //params:this.formTop,
+                  params:{username:'admin',password:'admin'},
                 }).then((response) => {
+
                     this.$Message.success(response.data.message);
                    //this.articleID=response.data.contentID;
                   this.articleID=14;
@@ -394,7 +401,7 @@ export default {
       	if (ele[3].clientHeight < ele[0].clientHeight) {
 	      	ele[1].style.display = 'block';
 	      	ele[2].style.display = 'block';
-	      	
+
 	      	var scale = ele[3].clientHeight / ele[0].clientHeight;
 	      	ele[1].style.height = ele[2].clientHeight*scale + 'px'
 	      }else{
@@ -402,7 +409,7 @@ export default {
 	      	ele[2].style.display = 'none';
 	      }
       },10)
-      
+
     },
     htmlspecialchars_decode:function(str){
       str = str.replace(/&amp;/g, '&');

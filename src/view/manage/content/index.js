@@ -6,7 +6,7 @@ export default {
       total:6,
       pageSize:2,//每页显示显示条数
       pageIndex:1,//当前页码
-      contentList:[{id:1}]
+      contentList:[{id:1,AddTime:"2017-09-01 22:22:22"}]
     }
   },
   created () {},
@@ -17,9 +17,9 @@ export default {
     pageCount:function(){
       let remainder=this.total%this.pageSize;
       if(remainder){
-        return this.total/this.pageSize+1;
+        return Math.ceil(this.total/this.pageSize);
       }else{
-        return this.total/this.pageSize
+        return Math.floor(this.total/this.pageSize);
       }
     }
   },
@@ -28,8 +28,16 @@ export default {
       let contentid=this.$refs.type[0].$el.attributes['data-id'].nodeValue;
       switch (type){
         case 'top':
-          this.$http.put("http://mp.dev.hubpd.com/api/content/top/"+contentid,{contentid:contentid}).then((response)=>{
+          this.$http.put("http://mp.dev.hubpd.com/api/content/top/"+contentid,{contentid:contentid},
+            {
+              headers:{
+
+              }
+            }
+          ).then((response)=>{
             this.$Message.success(response.data.message);
+              //重新加载列表
+              this.getContentList();
           },(error)=>{
             this.$Message.success(error.data.message);
           })
@@ -51,8 +59,7 @@ export default {
         default :
           break;
       }
-      //重新加载列表
-      this.getContentList();
+
     },
     contentTypeList:function(status){
       if(status !== ''){
@@ -76,10 +83,18 @@ export default {
       this.$http({
         method: 'GET',
         url: "http://mp.dev.hubpd.com/api/content",
-        params:{status:this.status,pagesize:this.pageSize,pageindex:this.pageIndex}
+        params:{status:this.status,pagesize:this.pageSize,pageindex:this.pageIndex-1}
       }).then((response) => {
         console.log(response);
-        //this.total=response.data.content_list.length;
+        this.total=response.data.count;
+        //格式化time
+        if(response.data.content_list && response.data.content_list.length){
+          for(let i=0;i<response.data.content_list.length;i++){
+            if(response.data.content_list[i].AddTime){
+              response.data.content_list[i].AddTime=response.data.content_list[i].AddTime.substring(0,10);
+            }
+          }
+        }
         this.contentList=response.data.content_list;
       },(error)=>{
 

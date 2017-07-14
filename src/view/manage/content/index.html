@@ -36,39 +36,32 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(item,index) in contentList" :index="item.id">
+      <tr v-for="(item,index) in contentList" :index="item.ID">
         <th scope="row">
           <img width="120" :src="item.cover">
         </th>
-        <th scope="row">
-          {{item.Title}}
+        <th scope="row" id="title">
+          <router-link :to="{path:'../notice',query:{articleID:item.ID}}">{{item.Title}}</router-link>
         </th>
         <td>{{item.Author}}</td>
         <td>{{item.AddTime}}</td>
         <td>
-          <Checkbox :value="true">已发表</Checkbox>
+          <div v-if="item.Status == 'Draft'"><span class="draft-back">草稿</span></div>
+          <div v-else-if="item.Status == 'Publish'"><span class="publish-back">已发表</span></div>
+          <div v-else-if="item.Status == 'Offline'"><span class="offline-back">已撤回</span></div>
+          <div v-else><span class="offline-back">已撤回</span></div>
         </td>
         <td>
-          <Dropdown @on-click="operateContent">
+          <router-link :to="{path:'../publish',query:{articleID:item.ID}}"><Icon type="edit" style="font-size:1.1em;color: #F95759;"></Icon></router-link>
+
+          <Dropdown style="margin-left: 15px" @on-click="operateContent">
             <a href="javascript:void(0)">
-              <Icon type="edit"></Icon>
+              <Icon type="ios-gear-outline" style="font-size:1.2em;color: #F95759;"></Icon>
             </a>
             <Dropdown-menu slot="list" >
-              <Dropdown-item name="top" ref="type" :data-id="item.id">置顶</Dropdown-item>
-              <Dropdown-item name="drop" ref="type" :data-id="item.id">撤回</Dropdown-item>
-              <Dropdown-item name="delete" ref="type" :data-id="item.id">删除</Dropdown-item>
-            </Dropdown-menu>
-          </Dropdown>
-          <Dropdown style="margin-left: 20px">
-            <a href="javascript:void(0)">
-              <Icon type="ios-gear-outline"></Icon>
-            </a>
-            <Dropdown-menu slot="list">
-              <Dropdown-item>驴打滚</Dropdown-item>
-              <Dropdown-item>炸酱面</Dropdown-item>
-              <Dropdown-item disabled>豆汁儿</Dropdown-item>
-              <Dropdown-item>冰糖葫芦</Dropdown-item>
-              <Dropdown-item divided>北京烤鸭</Dropdown-item>
+              <Dropdown-item name="top" ref="type" :data-id="item.ID">置顶</Dropdown-item>
+              <Dropdown-item name="drop" ref="type" :data-id="item.ID">撤回</Dropdown-item>
+              <Dropdown-item name="delete" ref="type" :data-id="item.ID">删除</Dropdown-item>
             </Dropdown-menu>
           </Dropdown>
         </td>
