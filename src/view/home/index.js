@@ -1,22 +1,27 @@
 export default {
   name: 'Home',
   created() {
+    this.getTestAPI();    
+    this.roleFlag = this.$store.state.roleType;
   },
   data() {
     return {
+      roleFlag:0,
       switchTab:0,
       value2:0,
       pageTotalX:2,
-      pageTotalG:10,
+      pageTotalG:40,
       articleTotal:8869,
       studioTotal:35,
+      accountIndex:100,
       noticeList:[],
-      collegeList:[]
+      collegeList:[],
+      adList:[]
     }
   },
   methods: {
     getNotice () {
-      this.$http.get('/api/notices').then((res) => {        
+      this.$http.get('/api/notices').then((res) => {
         this.noticeList = res.data.data;
         this.pageTotalG =Math.ceil(this.noticeList.length / 10);
       });
@@ -29,11 +34,27 @@ export default {
     },
     getNoticeURL (id){
       this.$router.push({path:'/notice?'+id})
+    },
+    getTestAPI () {
+      this.$http.get('http://mp.dev.hubpd.com/api/advertise').then((res) => { 
+        if(this.$store.state.advertiselist == undefined){
+          this.$store.state.advertiselist = res.data.advertiselist;          
+        } 
+        this.adList = this.$store.state.advertiselist;       
+        console.log('advertiseList:'+this.$store.state.advertiselist);
+      },(err) => {
+        console.log('出错啦！'+err)
+      });
+    },
+    changePageNotice (page){
+        console.log(page)
+    },
+    changePageCollege (page){
+        console.log(page)
     }
-
   },
   mounted () {
        this.getNotice();
-       this.getCollege();
+       this.getCollege();       
   }
 }

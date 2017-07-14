@@ -211,4 +211,6 @@
     float: right;
     line-height: 24px;    
 }
-
+.ivu-carousel-list{
+    min-height: 100px;
+}
