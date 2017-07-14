@@ -1,11 +1,11 @@
 <section>
   <Row>
     <Col span="12">
-    <Button type="primary" size="large" shape="circle" icon="ios-plus-outline">新建</Button>
+    <Button type="primary" size="large" shape="circle" icon="ios-plus-outline" @click="createArticle">新建</Button>
     <Upload action="//jsonplaceholder.typicode.com/posts/" style="display:inline-block">
       <Button type="ghost" size="large" shape="circle" icon="ios-download-outline">导入</Button>
     </Upload>
-    支持word文档、pdf文件导入
+    支持word文档、ppt文件导入
     </Col>
     <Col span="12">
     <Input icon="ios-search" placeholder="请输入..." style="width:250px;float:right"></Input>
@@ -15,15 +15,14 @@
     <Col span="12"> 发布渠道： <span style="font-weight:700">人民日报中央厨房</span>
     </Col>
     <Col span="12">
-    <Radio-group style="float:right">
-      <Radio label="全部文章" style="margin-right:30px;"></Radio>
-      <Radio label="已发表" style="margin-right:30px;"></Radio>
-      <Radio label="草稿" style="margin-right:30px;"></Radio>
-      <Radio label="已撤回"></Radio>
+    <Radio-group style="float:right" v-model="status" @on-change="contentTypeList">
+      <Radio label="" style="margin-right:30px;">全部文章</Radio>
+      <Radio label="Publish" style="margin-right:30px;">已发表</Radio>
+      <Radio label="Draft" style="margin-right:30px;">草稿</Radio>
+      <Radio label="Offline">已撤回</Radio>
     </Radio-group>
     </Col>
   </Row>
-
 
   <table class="table">
     <thead>
@@ -37,27 +36,27 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr v-for="(item,index) in contentList" :index="item.id">
         <th scope="row">
-          <img width="120" src="../../../assets/img.png" alt="">
+          <img width="120" :src="item.cover">
         </th>
         <th scope="row">
-          同宿舍4人全考上博士 “学霸”恋爱挣钱生活丰富
+          {{item.Title}}
         </th>
-        <td>南山南</td>
-        <td>2017-07-22</td>
+        <td>{{item.Author}}</td>
+        <td>{{item.AddTime}}</td>
         <td>
           <Checkbox :value="true">已发表</Checkbox>
         </td>
         <td>
-          <Dropdown>
+          <Dropdown @on-click="operateContent">
             <a href="javascript:void(0)">
               <Icon type="edit"></Icon>
             </a>
-            <Dropdown-menu slot="list">
-              <Dropdown-item>置顶</Dropdown-item>
-              <Dropdown-item>撤回</Dropdown-item>
-              <Dropdown-item>删除</Dropdown-item>
+            <Dropdown-menu slot="list" >
+              <Dropdown-item name="top" ref="type" :data-id="item.id">置顶</Dropdown-item>
+              <Dropdown-item name="drop" ref="type" :data-id="item.id">撤回</Dropdown-item>
+              <Dropdown-item name="delete" ref="type" :data-id="item.id">删除</Dropdown-item>
             </Dropdown-menu>
           </Dropdown>
           <Dropdown style="margin-left: 20px">
@@ -76,5 +75,8 @@
       </tr>
     </tbody>
   </table>
-  <Page :total="40" size="small" show-total style="float:right"></Page>
+  <div>
+    <div style="float:right;line-height:24px;">共{{pageCount}}页</div>
+    <Page :total="total" style="float:right" :page-size="pageSize" :current="pageIndex" size="small"  @on-change="changePage"></Page>
+  </div>
 </section>

@@ -99,6 +99,14 @@ export default {
     }
   },
   mounted(){
+    //用于隐藏左侧
+    var span5 =  document.querySelector(".ivu-col-span-5")
+    var span19 =  document.querySelector(".ivu-col-span-19")
+    span5.style.display = 'none';
+    span19.className = "layout-content-warp ivu-col ivu-col-span-24"
+
+
+
     this.editor=UE.getEditor("editor",{
       //此处可以定制工具栏的功能，若不设置，则默认是全部的功能
       UEDITOR_HOME_URL: '/static/ueditor1_4_3_3-utf8-jsp/',
@@ -295,15 +303,26 @@ export default {
               //根据文章的id判断是保存还是更新:???????
               if(this.articleID > -1){
                 //更新http://domain/webapp/api/content/{_id}
-                this.$http({
+                this.$http.put("http://mp.dev.hubpd.com/api/content/"+this.articleID,
+                  {"contenttype":"Article","title":"aaaa"},
+                  {
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    emulateJSON :true,
+                  }
+                 /* {
                   method: 'PUT',
                   url: "http://mp.dev.hubpd.com/api/content/"+this.articleID,
-                  params:this.formTop
-                }).then((response) => {
+                  params:,
+                  headers: {
+                    'Content-Type': 'application/json'
+                  }
+                }*/).then((response) => {
                   this.$Message.success(response.data.message);
                   this.articleID=response.data.contentID;
                 }, (response) => {
-                  this.$Message.error(response.data.message);
+                  //this.$Message.error(response.data.message);
                 });
 
               }else{
@@ -314,7 +333,7 @@ export default {
                   params:this.formTop
                 }).then((response) => {
                     this.$Message.success(response.data.message);
-                   // this.articleID=response.data.contentID;
+                   //this.articleID=response.data.contentID;
                   this.articleID=14;
                 }, (response) => {
                     this.$Message.error(response.data.message);
