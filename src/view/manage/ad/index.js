@@ -184,6 +184,20 @@ export default {
           desc: '更新错误'
         })
       })
+    },
+    onCancel() {
+      var m = this.data
+      for (var k in m) {
+        var item = m[k]
+        if (item.ID) {
+          item.Path = item.PathOld
+          item.Url = item.UrlOld
+          item.isEdit = false
+        } else {
+          this.data.splice(k, m.length - k)
+          return
+        }
+      }
     }
   },
   created() {

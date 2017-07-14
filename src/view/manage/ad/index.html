@@ -48,6 +48,6 @@
     <Icon type="plus-round"></Icon> 添加广告位</a>
   <div style="padding: 30px;">
     <Button :disabled="!isModify" type="primary" size="large" shape="circle" icon="ios-plus-outline" @click="onSubmit">提交</Button>
-    <Button :disabled="!isModify" style="margin-left:20px;" type="ghost" size="large" shape="circle" icon="ios-download-outline">取消</Button>
+    <Button :disabled="!isModify" style="margin-left:20px;" type="ghost" size="large" shape="circle" icon="ios-download-outline" @click="onCancel">取消</Button>
   </div>
 </section>
