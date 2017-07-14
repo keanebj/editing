@@ -26,7 +26,7 @@ export default {
 //  }
   },
   mounted () {
-    this.$emit('element', [this.$refs.onscroll, this.$refs.scrollCon]);
+    this.$emit('element', [this.$refs.onscroll, this.$refs.scrollCon, this.$refs.scroll, this.$refs.setCon]);
   },
   updated () {
     this.$emit('iIndex', [this.i, this.contentCoverSrc]);

@@ -23,32 +23,17 @@
       </Col>
   </Row>
   <Row>
-	  <Col span="24">
-	     <div class="home-ad">
-					<Carousel autoplay v-model="value2">
-							<Carousel-item>
-									<div class="demo-carousel">
-										<img src="../../assets/ad.png">
-									</div>
-							</Carousel-item>
-							<Carousel-item>
-									<div class="demo-carousel">
-										<img src="../../assets/ad.png">
-									</div>
-							</Carousel-item>
-							<Carousel-item>
-									<div class="demo-carousel">
-										<img src="../../assets/ad.png">
-									</div>
-							</Carousel-item>
-							<Carousel-item>
-									<div class="demo-carousel">
-										<img src="../../assets/ad.png">
-									</div>
-							</Carousel-item>
-					</Carousel>
-	     </div>
-	  </Col>
+    <Col span="24">
+    <div class="home-ad">
+      <Carousel autoplay v-model="value2">
+        <Carousel-item v-for="ad in adList" key="ad.id">
+          <div class="demo-carousel">
+            <img src="../../assets/ad.png">
+          </div>
+        </Carousel-item>
+      </Carousel>
+    </div>
+    </Col>
   </Row>
   <Row>
       <Col span="24">
@@ -59,39 +44,41 @@
 				<div class="home-tab-n" v-if="switchTab==0">
 					<ul class="home-notices">
 						<li v-for="notice in noticeList" :class="{readed:notice.isReaded}" @click="readed">
-              <router-link :to="{path:'./notice',query:{noticeID:notice.id}}" target="_blank">
+              <router-link :to="{path:'./notice',query:{id:notice.ID}}" target="_blank">
 							<i></i>
 							<span class="home-notice-content">
-								{{notice.title}}
+								{{notice.Title}}
 							</span>
 							<span  class="home-notice-date">
-								{{notice.dateTime}}
+								{{notice.AddTime}}
 							</span>
               </router-link>
 						</li>
 					</ul>
 					<div class="home-pager">
-						<Page :total="40" size="small" ></Page>
-						<span>共{{pageTotalG}}页</span>
+						<Page :total="articleTotal" size="small" :current="pageCurrentLX" :page-size="pageSize" @on-change="changePageNotice"></Page>
+						<span>共{{pageTotalX}}页</span>
 					</div>
 				</div>
 				<div class="home-tab-d" v-if="switchTab==1">
 					<ul class="home-notices">
-						<li v-for="college in collegeList" :class="{readed: college.isReaded}">
-							<i></i>
-							<span class="home-notice-content">
-								{{college.title}}
-							</span>
-							<span  class="home-notice-date">
-								{{college.dateTime}}
-							</span>
+						<li v-for="college in collegeList" :class="{readed: college.isReaded}" @click="readed" >
+							<router-link :to="{path:'./notice',query:{id:college.ID}}" target="_blank">
+								<i></i>
+								<span class="home-notice-content">
+									{{college.Title}}
+								</span>
+								<span  class="home-notice-date">
+									{{college.AddTime}}
+								</span>
+							</router-link>
 						</li>
 					</ul>
 					<div class="home-pager">
-						<Page :total="12" size="small"></Page>
-						<span>共{{pageTotalX}}页</span>
-		  	</div>
-		    </div>
+						<Page :total="studioTotal" size="small" :current="pageCurrentlG" :page-size="pageSize" @on-change="changePageCollege"></Page>
+						<span>共{{pageTotalG}}页</span>
+		  			</div>
+		    	</div>
       </Col>
   </Row>
 </section>

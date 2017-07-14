@@ -20,7 +20,7 @@ export default {
       },
       downloadButton: false,
 
-      articleID:-1,
+      articleID:0,
       hideTip:true,
       qCode: false,
       titleContentCount:0,
@@ -32,17 +32,19 @@ export default {
       localModal:false,
       contentModal:false,
       contentCoverSrc:'',
-      publishChannels:['人民日报中央厨房'],
+     /* contentPics:[{src:require('../../assets/logo.png')},{src:require('../../assets/img.png')},{src:require('../../assets/img.png')}
+        ,{src:require('../../assets/img.png')},{src:require('../../assets/img.png')},{src:require('../../assets/img.png')}
+        ,{src:require('../../assets/img.png')},{src:require('../../assets/img.png')},{src:require('../../assets/img.png')}],
+      */publishChannels:['人民日报中央厨房'],
       formTop: {
-        contenttype:"Article",
-        publishchannel: '人民日报中央厨房',
+        publishChannel: '人民日报中央厨房',
         author: '',
         keyword: '',
         cover:'',
-        summary:'',
+        abstract:'',
         currentAbstractCount:0,
-        title:'',
-        content:'',
+        titleContent:'',
+        editorContent:'',
       },
       ruleValidate: {
         author: [
@@ -51,10 +53,10 @@ export default {
         cover: [
           { required: true, message: '封面不能为空', trigger: 'blur' }
         ],
-        summary:[
+        abstract:[
           { type: 'string', max: 140, message: '介绍不能大于140字', trigger: 'change' }
         ],
-        title:[
+        titleContent:[
           { required: true, message: '标题不能为空', trigger: 'change' },
           { type: 'string', max: 50, message: '标题不能大于50字', trigger: 'change' }
         ]
@@ -62,36 +64,36 @@ export default {
       localDefaultSrc:require('../../assets/logo.png'),
       elements: [],
       previewCon: [
-        '',
+        'dawtf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对出对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对生的出tf对人生',
         [{src:require('../../assets/img.png')}]
       ],
       iIndex: [-1],
       i: -1,
       tempi: -1,
-      timer:null,
-      headers:{'Content-Type':'multipart/form-data'}
+      timer:null
     }
   },
   created(){
     //判断一下是编辑还是草稿通过文章的id
     //编辑：发出ajax请求
-    if(this.articleID > 0) {
+    if(this.articleID != 0) {
       this.$http({
-        method: 'GET',
-        url: "http://mp.dev.hubpd.com/api/content/"+this.articleID
+        method: 'POST',
+        url: "/api/post",
+        params: {articleID: this.articleID}
       }).then((response) => {
-        let data = response.data.content_info[0];
-          //给数据值
-          this.formTop.title = data.Title;
-          this.formTop.publishchannel = data.publishchannel;
-          this.formTop.author = data.Author;
-          this.formTop.keyword = data.KeyWord;
-          this.formTop.cover = data.Cover;
-          this.formTop.summary = data.Summary;
-          this.formTop.content = data.Content;
-          this.formTop.currentAbstractCount = data.Summary.toString().length;
-          this.titleContentCount = data.Title.toString().length;
-        }, (response) => {
+        let data = response.data;
+        //给数据值
+        this.formTop.titleContent = data.title;
+        this.formTop.publishChannel = data.channel;
+        this.formTop.author = data.author;
+        this.formTop.keyword = data.keyWord;
+        this.formTop.cover = data.cover;
+        this.formTop.abstract = data.abstract;
+        this.formTop.editorContent = data.content;
+        this.formTop.currentAbstractCount = data.abstract.toString().length;
+        this.titleContentCount = data.title.toString().length;
+      }, (response) => {
         alert("error");
       });
     }else{
@@ -123,19 +125,18 @@ export default {
         }
     })
     this.editor.ready(function(){
-      This.editor.execCommand('inserthtml',This.formTop.content);
+      This.editor.execCommand('inserthtml',This.formTop.editorContent);
     })
     //自动保存:半分钟自动保存一次
-    /*this.timer=setInterval(function(){
+    this.timer=setInterval(function(){
       //存到本地草稿
 
       //存到数据库
       This.save('formTop',true);
-    },3000);*/
+    },3000);
 
   },
   watch:{
-
   },
   destroyed() {
     //清除定时器
@@ -144,9 +145,24 @@ export default {
   },
   methods: {
     showPreviewContent:function(){
+    	
       //获得编辑器中的内容
-      this.previewCon[0]=this.editor.getContent();
+//    this.previewCon[0]=this.editor.getContent();
       this.previewContent=true;
+      
+      var ele = this.elements;
+      clearTimeout(time)
+      var time =  setTimeout(function () {
+      	if (ele[3].clientHeight >= ele[0].clientHeight) {
+      		ele[1].style.display = 'none';
+      		ele[2].style.display = 'none';
+      	}else{
+      		ele[1].style.display = 'block';
+      		ele[2].style.display = 'block';
+      		var scale = ele[3].clientHeight / ele[0].clientHeight;
+	      	ele[1].style.height = ele[2].clientHeight*scale + 'px'
+      	}
+      },200)
     },
     fromContent:function(){
       //从正文选择图片
@@ -173,12 +189,6 @@ export default {
     fromLocal:function(){
       this.localModal=true;
     },
- /* selectCover:function(index){
-       this.iIndex[0]=index;
-      // this.contentCoverSrc=this.previewCon[index].src;
-     /!* this.i=index;
-      this.contentCoverSrc=this.contentPics[index].src;*!/
-    },*/
     clickCoverOk:function(){
       //选择的封面显示在文本域中
       if(this.iIndex[0]>=0){
@@ -211,11 +221,7 @@ export default {
       var length=event.target.value.length;
       this.formTop.currentAbstractCount=length;
     },
-    beforeUpload:function(res){
-      console.log(res);
-    },
     handleError:function(error, file, fileList){
-      console.log(file);
       this.$Message.error('上传失败');
     },
     handleSuccess (res, file) {
@@ -252,8 +258,8 @@ export default {
           url: "/api/post",
           params: { content: content }
         }).then((response) => {
-
-          this.formTop.summary=response.data.abstract.toString();
+          console.log(response);
+          this.formTop.abstract=response.data.abstract.toString();
           this.formTop.currentAbstractCount=response.data.abstract.toString().length;
         },(response) => {
           alert("error");
@@ -262,9 +268,9 @@ export default {
     },
     publish:function(name){
       // 发布
-      this.formTop.content=this.editor.getContent();
+      this.formTop.editorContent=this.editor.getContent();
       this.$refs[name].validate((valid) => {
-        if(!this.formTop.content){
+        if(!this.formTop.editorContent){
             this.$Message.error('保存失败，请检查格式是否正确!');
             this.hideTip=false;
         }
@@ -290,9 +296,9 @@ export default {
 
     },
     save:function(name,hideTip){
-      this.formTop.content=this.editor.getContent();
+      this.formTop.editorContent=this.editor.getContent();
         this.$refs[name].validate((valid) => {
-          if(!this.formTop.content){
+          if(!this.formTop.editorContent){
             if(!hideTip){
               this.$Message.error('保存失败，请检查格式是否正确!');
             }
@@ -351,7 +357,7 @@ export default {
       document.execCommand("Copy");
     },
     share: function () {
-      //根据文章的id判断是否能够分享id>0 ok,<0 no
+      //点击分享的时候需要后台返回详情页的url
       this.$http({
         method: 'GET',
         url: "",
@@ -370,7 +376,7 @@ export default {
           }
           this.$refs.shareHide.$el.children[1].children[0].style.top = (195 - scrollTop) + 'px';
 
-          //this.config.value=http://localhost:8080/notice?noticeID=this.articleID;
+          //this.config.value=response.data.qcodelink;
           this.qCode = true;
         }else{
           this.$Message.error('此文章暂时不能分享');
@@ -380,55 +386,23 @@ export default {
     //滚动条
     changeView: function (view) {
       this.tabView = view;
-      this.elements[0].style.top = '0px';
-      this.elements[1].style.top = '0px';
-    },
-    scrollBar: function (e) {
-      if (e.wheelDelta) {
-        if (e.wheelDelta < 0) {
-          let t = this.$refs.onscroll.offsetTop;
-          t -= 20;
-          if ( t <= -(this.$refs.onscroll.clientHeight - this.$refs.setCon.clientHeight)){
-            t = this.$refs.setCon.clientHeight - this.$refs.onscroll.clientHeight;
-          }
-          let scale = t/(this.$refs.onscroll.clientHeight - this.$refs.setCon.clientHeight);
-          let scTop = scale*(this.$refs.scroll.clientHeight - this.$refs.scrollCon.clientHeight)
-          this.$refs.scrollCon.style.top = -scTop + 'px';
-          this.$refs.onscroll.style.top = t + 'px';
-        }else if (e.wheelDelta > 0) {
-          let t = this.$refs.onscroll.offsetTop;
-          t += 20;
-          if ( t >= 0) {
-            t = 0
-          }
-          let scale = t/(this.$refs.onscroll.clientHeight - this.$refs.setCon.clientHeight);
-          let scTop = scale*(this.$refs.scroll.clientHeight - this.$refs.scrollCon.clientHeight)
-          this.$refs.scrollCon.style.top = -scTop + 'px';
-          this.$refs.onscroll.style.top = t + 'px';
-        }
-      }else if (e.detail) {
-        if (e.detail > 0) {
-          let t = this.$refs.onscroll.offsetTop;
-          t -= 20;
-          if ( t <= -(this.$refs.onscroll.clientHeight - this.$refs.setCon.clientHeight)){
-            t = this.$refs.setCon.clientHeight - this.$refs.onscroll.clientHeight;
-          }
-          let scale = t/(this.$refs.onscroll.clientHeight - this.$refs.setCon.clientHeight);
-          let scTop = scale*(this.$refs.scroll.clientHeight - this.$refs.scrollCon.clientHeight)
-          this.$refs.scrollCon.style.top = -scTop + 'px';
-          this.$refs.onscroll.style.top = t + 'px';
-        }else if (e.detail < 0) {
-          let t = this.$refs.onscroll.offsetTop;
-          t += 20;
-          if ( t <= -(this.$refs.onscroll.clientHeight - this.$refs.setCon.clientHeight)){
-            t = this.$refs.setCon.clientHeight - this.$refs.onscroll.clientHeight;
-          }
-          let scale = t/(this.$refs.onscroll.clientHeight - this.$refs.setCon.clientHeight);
-          let scTop = scale*(this.$refs.scroll.clientHeight - this.$refs.scrollCon.clientHeight)
-          this.$refs.scrollCon.style.top = -scTop + 'px';
-          this.$refs.onscroll.style.top = t + 'px';
-        }
-      }
+      this.elements[0].style.top = '0px';//内容高度
+      this.elements[1].style.top = '0px';//条的高度
+      var ele = this.elements;
+      clearTimeout(time)
+      var time=setTimeout(function () {
+      	if (ele[3].clientHeight < ele[0].clientHeight) {
+	      	ele[1].style.display = 'block';
+	      	ele[2].style.display = 'block';
+	      	
+	      	var scale = ele[3].clientHeight / ele[0].clientHeight;
+	      	ele[1].style.height = ele[2].clientHeight*scale + 'px'
+	      }else{
+	      	ele[1].style.display = 'none';
+	      	ele[2].style.display = 'none';
+	      }
+      },10)
+      
     },
     htmlspecialchars_decode:function(str){
       str = str.replace(/&amp;/g, '&');
@@ -439,9 +413,59 @@ export default {
       str = str.replace(/&#32;/g, " ");
       return str;
     },
+//  mouseScroll: function (ev) {
+//  	let cY = ev.clientY;
+//  	let onscroll = this.$refs.onscroll;
+//  	let setCon = this.$refs.setCon;
+//  	let scroll = this.$refs.scroll;
+//  	let scrollCon = this.$refs.scrollCon;
+//  	document.onmousemove = function (e) {
+//				let ch = cY - e.clientY;
+//				let Top = ch + onscroll.offsetTop;
+//				if (Top>=0) {
+//					Top = 0;
+//				}
+//				if(Top<= (setCon.clientHeight - onscroll.clientHeight)) {
+//					Top = setCon.clientHeight - onscroll.clientHeight
+//				}
+//				let scale = Top/(onscroll.clientHeight - setCon.clientHeight);
+//  		let scTop = scale*(scroll.clientHeight - scrollCon.clientHeight)
+//				onscroll.style.top = Top + 'px';
+//				scrollCon.style.top = -scTop + 'px';
+//  	}
+//  	document.onmouseup = function () {
+//  		document.onmousemove = null;
+//  	}
+//  },
+//  barScroll: function (ev) {
+//  	let cY = ev.clientY - this.$refs.scrollCon.offsetTop;
+//  	let onscroll = this.$refs.onscroll;
+//  	let setCon = this.$refs.setCon;
+//  	let scroll = this.$refs.scroll;
+//  	let scrollCon = this.$refs.scrollCon;
+//  	console.log(scrollCon.offsetTop)//10
+//  	document.onmousemove = function (e) {
+//				let Top = e.clientY - cY;
+////				let Top = ch + scrollCon.offsetTop;
+//				if (Top<=0) {
+//					Top = 0;
+//				}
+//				if(Top>= (scroll.clientHeight - scrollCon.clientHeight)) {
+//					Top = scroll.clientHeight - scrollCon.clientHeight
+//				}
+//				let scale = Top/(scroll.clientHeight - scrollCon.clientHeight);
+//  		let scTop = scale*(onscroll.clientHeight - setCon.clientHeight)
+//				scrollCon.style.top = Top + 'px';
+//				onscroll.style.top = -scTop + 'px';
+//  	}
+//  	document.onmouseup = function () {
+//  		document.onmousemove = null;
+//  	}
+//  }
+
     //editor
     getTitleContent:function(){
-      this.titleContentCount=this.formTop.title.length;
+      this.titleContentCount=this.formTop.titleContent.length;
     },
   }
 

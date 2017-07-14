@@ -133,6 +133,7 @@
 .home-notices li .home-notice-content{
     width: 79%;
     float: left;
+    color: #333;
 }
 .home-notices li .home-notice-date{
     width: 16%;
@@ -210,5 +211,8 @@
 .home-pager span{
     float: right;
     line-height: 24px;    
+}
+.ivu-carousel-list{
+    min-height: 100px;
 }
 
