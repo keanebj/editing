@@ -6,7 +6,15 @@ export default {
       total:6,
       pageSize:2,//每页显示显示条数
       pageIndex:1,//当前页码
-      contentList:[{id:1,AddTime:"2017-09-01 22:22:22"}]
+      contentList:[{id:1,AddTime:"2017-09-01 22:22:22"}],
+      uploadModal: false,//上传对话框
+      beforeUpload: false,//上传之前参数
+      fileName: '',//上传文件名称
+      fileSize: '',//上传文件大小
+      file: '',//上传的文件
+      percentProgress: 0,//上传进度条
+      headToken: {token:'814238e9e374a6066aa49f87a0be91c3c51a35587554ad2d'},//携带头部
+      catalogId: {catalogId: 12}
     }
   },
   created () {},
@@ -99,7 +107,39 @@ export default {
       },(error)=>{
 
       })
-    }
+    },
+//  文件上传
+//上传前
+		beforeLoad (file) {
+			
+			this.file = file;
+			this.$refs.upload.fileList = [];
+			this.beforeUpload = true;
+			this.fileName = file.name;
+			console.log( this.$refs.upload.fileList)
+			this.fileSize = (file.size/1024).toFixed(2) + 'K';
+        
+//			return this.beforeLoaded;
+		},
+//		上传中
+		onLoading (event, file, fileList) {
+			this.percentProgress = event.percent;
+			if (this.percentProgress==100) {
+				this.uploadModal = false;
+			}
+		},
+		handleFormatError (file) {
+			this.$Notice.warning({
+        title: '文件格式不正确',
+        desc: '文件 ' + file.name + ' 格式不正确，请上传 jpg 或 png 格式的图片。'
+    	});
+		},
+//		上传成功
+		handleSuccess (res, file) {
+//			console.log(res)
+//			console.log(file)
+//			alert(111)
+		}
   },
 
 }

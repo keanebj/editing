@@ -1,26 +1,32 @@
 <section>
 
-   <Row :gutter="34">
-      <Col span="8">
-        <div class="home-title publish">
-          <img src="../../assets/home-t-1.png">
-          <span class="title-t-0">发表</span>
-        </div>
-      </Col>
-      <Col span="8">
-        <div class="home-title articles">
-          <img src="../../assets/home-t-2.png">
-          <span class="title-t-1">总发文数</span>
-          <span class="title-t-2" v-text="articleTotal"></span>
-        </div>
-      </Col>
-      <Col span="8">
-        <div class="home-title studios">
-          <img src="../../assets/home-t-3.png">
-          <span class="title-t-1">工作室数</span>
-          <span class="title-t-2" v-text="studioTotal"></span>
-        </div>
-      </Col>
+  <Row :gutter="34">
+    <Col span="8">
+    <div class="home-title publish">
+      <img src="../../assets/home-t-1.png">
+      <span class="title-t-0">发表</span>
+    </div>
+    </Col>
+    <Col span="8">
+    <div class="home-title articles">
+      <img src="../../assets/home-t-2.png">
+      <span class="title-t-1">总发文数</span>
+      <span class="title-t-2" v-text="articleTotal"></span>
+    </div>
+    </Col>
+    <Col span="8">
+    <div class="home-title studios">
+      <img src="../../assets/home-t-3.png">
+      <div v-if="roleFlag==0">
+        <span class="title-t-1">工作室数</span>
+        <span class="title-t-2" v-text="studioTotal"></span>
+      </div>
+      <div v-else>
+        <span class="title-t-1">中央厨房号指数</span>
+        <span class="title-t-2" v-text="accountIndex"></span>
+      </div>
+    </div>
+    </Col>
   </Row>
   <Row>
     <Col span="24">
@@ -36,49 +42,47 @@
     </Col>
   </Row>
   <Row>
-      <Col span="24">
-				<div class="home-tab">
-					<span v-bind:class="{ active: switchTab == 0 }" v-on:click="switchTab = 0">公告</span>
-					<span v-bind:class="{ active: switchTab == 1 }" v-on:click="switchTab = 1">中央厨房号学院</span>
-				</div>
-				<div class="home-tab-n" v-if="switchTab==0">
-					<ul class="home-notices">
-						<li v-for="notice in noticeList" :class="{readed:notice.isReaded}" @click="readed">
-              <router-link :to="{path:'./notice',query:{id:notice.ID}}" target="_blank">
-							<i></i>
-							<span class="home-notice-content">
-								{{notice.Title}}
-							</span>
-							<span  class="home-notice-date">
-								{{notice.AddTime}}
-							</span>
-              </router-link>
-						</li>
-					</ul>
-					<div class="home-pager">
-						<Page :total="articleTotal" size="small" :current="pageCurrentLX" :page-size="pageSize" @on-change="changePageNotice"></Page>
-						<span>共{{pageTotalX}}页</span>
-					</div>
-				</div>
-				<div class="home-tab-d" v-if="switchTab==1">
-					<ul class="home-notices">
-						<li v-for="college in collegeList" :class="{readed: college.isReaded}" @click="readed" >
-							<router-link :to="{path:'./notice',query:{id:college.ID}}" target="_blank">
-								<i></i>
-								<span class="home-notice-content">
+    <Col span="24">
+    <div class="home-tab">
+      <span v-bind:class="{ active: switchTab == 0 }" v-on:click="switchTab = 0">公告</span>
+      <span v-bind:class="{ active: switchTab == 1 }" v-on:click="switchTab = 1">中央厨房号学院</span>
+    </div>
+    <div class="home-tab-n" v-if="switchTab==0">
+      <ul class="home-notices">
+        <li v-for="notice in noticeList" key="notice.ID" :class="{readed:notice.isReaded}">
+          <router-link :to="{path:'./notice',query:{id:notice.ID}}">
+	          <i></i>
+	          <span class="home-notice-content">
+									  {{notice.Title}}
+								  </span>
+	          <span class="home-notice-date">
+									  {{notice.AddTime}}
+								  </span>
+			</router-link>
+        </li>
+      </ul>
+      <div class="home-pager">
+        <Page :total="noticeTotal" size="small" :current="pageIndexX" @on-change="changePageNotice"></Page>
+        <span>共{{pageTotalX}}页 </span>
+      </div>
+    </div>
+    <div class="home-tab-d" v-if="switchTab==1">
+      <ul class="home-notices">
+        <li v-for="college in collegeList" key="college.id" :class="{readed: college.isReaded}" @click="getNoticeURL(college.id)">
+          <i></i>
+          <span class="home-notice-content">
 									{{college.Title}}
 								</span>
-								<span  class="home-notice-date">
+          <span class="home-notice-date">
 									{{college.AddTime}}
 								</span>
-							</router-link>
-						</li>
-					</ul>
-					<div class="home-pager">
-						<Page :total="studioTotal" size="small" :current="pageCurrentlG" :page-size="pageSize" @on-change="changePageCollege"></Page>
-						<span>共{{pageTotalG}}页</span>
-		  			</div>
-		    	</div>
-      </Col>
+        </li>
+      </ul>
+      <div class="home-pager">
+        <Page :total="articleTotal" size="small" @on-change="changePageCollege"></Page>
+        <span>共{{pageTotalG}}页</span>
+      </div>
+    </div>
+    </Col>
   </Row>
 </section>
