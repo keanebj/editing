@@ -1,41 +1,43 @@
 var data = [{
-  "ID": 1,
-  "Path": "/static/demo.jpg",
-  "Url": "http://www.baidu.com",
-  "ShowTime": "2017-09-10 00:00:00"
+  "id": 1,
+  "path": "/static/demo.jpg",
+  "url": "http://www.baidu.com",
+  "showtime": "2017-09-10 00:00:00"
 },
 {
-  "ID": 3,
-  "Path": "/static/demo.jpg",
-  "Url": "http://www.baidu.com",
-  "ShowTime": "2017-09-10 00:00:00"
+  "id": 3,
+  "path": "/static/demo.jpg",
+  "url": "http://www.baidu.com",
+  "showtime": "2017-09-10 00:00:00"
 },
 {
-  "ID": 2,
-  "Path": "/static/demo.jpg",
-  "Url": "http://www.baidu.com",
-  "ShowTime": "2017-07-12 00:00:00"
+  "id": 2,
+  "path": "/static/demo.jpg",
+  "url": "http://www.baidu.com",
+  "showtime": "2017-09-10 00:00:00"
 }]
 var itemTemplate = {
-  ID: null,
-  Path: '',
-  Url: '',
-  ShowTime: null
+  id: null,
+  path: '',
+  url: '',
+  showtime: null
 }
 export default {
   name: 'ViewManageAd',
   data() {
     return {
-      data: []
+      data: [],
+      loading: false,
+      requestCount: 0
     }
   },
   computed: {
     isModify() {
       var m = this.data
       for (var k in m) {
-        if (m[k].Path !== m[k].PathOld || m[k].Url !== m[k].UrlOld) {
+        if (m[k].path !== m[k].pathOld || m[k].url !== m[k].urlOld) {
           if (m[k].id) return true
-          else if (m[k].Url && m[k].Path) return true
+          else if (m[k].url && m[k].path) return true
         }
       }
       return false
@@ -46,18 +48,18 @@ export default {
      * 请求广告列表
      */
     fetchCollection() {
-      this.$http.get('/api/advertise/', {
+      this.$http.get('/api/advertise', {
         params: {
-          pageindex: 1,
+          pageindex: 0,
           pagesize: 1000
         }
-      }).then(res => {
-        if (res.status) {
-          this.setData(res.advertiselist)
+      }).then(({ data }) => {
+        if (data.status) {
+          this.setData(data.advertises)
         } else {
           this.$Notice.error({
             title: '错误',
-            desc: res.message || '数据列表请求错误'
+            desc: data.message || '数据列表请求错误'
           })
         }
       }, () => {
@@ -69,7 +71,7 @@ export default {
     },
     onRemove(index) {
       var item = this.data[index]
-      if (!item.ShowTime) {
+      if (!item.id) {
         this.data.splice(index, 1)
         return
       }
@@ -82,17 +84,17 @@ export default {
       })
     },
     requestRemove(item, index) {
-      this.$http.delete('/api/advertise/' + item.ID).then(res => {
-        if (res.status) {
+      this.$http.delete('/api/advertise/' + item.id).then(({ data }) => {
+        if (data.status) {
           this.$Notice.success({
             title: '成功',
-            desc: res.message || '删除成功'
+            desc: data.message || '删除成功'
           })
           this.data.splice(index, 1)
         } else {
           this.$Notice.error({
             title: '错误',
-            desc: res.message || '删除错误'
+            desc: data.message || '删除错误'
           })
         }
       }, () => {
@@ -105,59 +107,71 @@ export default {
     onAdd() {
       this.data.push(Object.assign({
         isEdit: true,
-        PathOld: '',
-        UrlOld: ''
+        pathOld: '',
+        urlOld: ''
       }, itemTemplate))
     },
     setData(data) {
+      if (!data) return
       this.data = data.map((n) => {
         n.isEdit = n.isEdit || false
-        n.PathOld = n.Path
-        n.UrlOld = n.Url
+        n.pathOld = n.path
+        n.urlOld = n.url
         return n
       })
     },
     onBlur(index) {
       var item = this.data[index]
-      if (item.ShowTime) {
+      if (item.showtime) {
         item.isEdit = false
       }
     },
     onSubmit() {
       var m = this.data
+      this.requestCount = 0
       for (var k in m) {
         var item = m[k]
-        if (!item.Url) {
-          this.$Message.warning('请输入Url')
+        if (!item.url) {
+          this.$Message.warning('请输入url')
           continue
-        } else if (!item.Path) {
-          this.$Message.warning('请输入Path')
+        } else if (!item.path) {
+          this.$Message.warning('请输入path')
           continue
         }
 
-        if (item.Path !== item.PathOld || item.Url !== item.UrlOld) {
-          if (item.ID) this.requestUpdate(k, item)
+        if (item.path !== item.pathOld || item.url !== item.urlOld) {
+          if (item.id) this.requestUpdate(k, item)
           else this.requestSave(k, item)
+          this.requestCount++
         }
       }
+      if (this.requestCount) {
+        this.loading = true
+      }
+      console.log(this.requestCount)
     },
     requestSave(index, item) {
-      this.$http.post('/api/advertise/', {
-        path: item.Path,
-        url: item.Url
-      }).then(res => {
-        if (res.status) {
-          item.ID = res.id
-          item.ShowTime = new Date()
-          item.PathOld = item.Path
-          item.UrlOld = item.Url
+      this.$http.post('/api/advertise', {
+        path: item.path,
+        url: item.url
+      }).then(({ data }) => {
+        this.requestCount--
+        if (this.requestCount <= 0) this.loading = false
+        if (data.status) {
+          item.id = data.id
+          item.showtime = new Date()
+          item.pathOld = item.path
+          item.urlOld = item.url
+          item.isEdit = false
         } else {
           this.$Notice.error({
             title: '错误',
-            desc: res.message || '添加错误'
+            desc: data.message || '添加错误'
           })
         }
       }, () => {
+        this.requestCount--
+        if (this.requestCount <= 0) this.loading = false
         this.$Notice.error({
           title: '错误',
           desc: '添加错误'
@@ -165,20 +179,25 @@ export default {
       })
     },
     requestUpdate(index, item) {
-      this.$http.put('/api/advertise/' + item.ID, {
-        path: item.Path,
-        url: item.Url
-      }).then(res => {
-        if (res.status) {
-          item.PathOld = item.Path
-          item.UrlOld = item.Url
+      this.$http.put('/api/advertise/' + item.id, {
+        path: item.path,
+        url: item.url
+      }).then(({ data }) => {
+        this.requestCount--
+        if (this.requestCount <= 0) this.loading = false
+        if (data.status) {
+          item.pathOld = item.path
+          item.urlOld = item.url
+          item.isEdit = false
         } else {
           this.$Notice.error({
             title: '错误',
-            desc: res.message || '更新错误'
+            desc: data.message || '更新错误'
           })
         }
       }, () => {
+        this.requestCount--
+        if (this.requestCount <= 0) this.loading = false
         this.$Notice.error({
           title: '错误',
           desc: '更新错误'
@@ -189,9 +208,9 @@ export default {
       var m = this.data
       for (var k in m) {
         var item = m[k]
-        if (item.ID) {
-          item.Path = item.PathOld
-          item.Url = item.UrlOld
+        if (item.id) {
+          item.path = item.pathOld
+          item.url = item.urlOld
           item.isEdit = false
         } else {
           this.data.splice(k, m.length - k)

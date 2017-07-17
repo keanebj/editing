@@ -12,9 +12,9 @@
     </thead>
     <tbody>
       <tr v-for="(item,index) in data">
-        <td style="width:70px">{{item.ID || '#'}}</td>
-        <th scope="row" style="width:200px">
-          <img v-if="item.Path" width="200" :src="item.Path">
+        <td style="width:70px">{{item.id || '#'}}</td>
+        <th scope="row" style="width:200px" @click="item.path = 1">
+          <img v-if="item.path" width="200" :src="item.path">
           <Upload v-else action="//" >
             <div class="imagePlaceholder">
               <div class="title">点击上传广告图片</div>
@@ -24,16 +24,16 @@
         </th>
         <th scope="row" style="width:20px;padding:0">
           <Upload action="//">
-            <a v-if="item.Path" href="javascript:void(0)">
+            <a v-if="item.path" href="javascript:void(0)">
               <Icon type="edit"></Icon>
             </a>
           </Upload>
         </th>
         <td style="width:320px">
-          <Input v-if="item.isEdit" v-model="item.Url" @on-blur="onBlur(index)" placeholder="请输入链接" style="width: 250px"></Input>
-          <span v-else @dblclick="item.isEdit=true">{{item.Url}}</span>
+          <Input v-if="item.isEdit" v-model="item.url" @on-blur="onBlur(index)" placeholder="请输入链接" style="width: 250px"></Input>
+          <span v-else @dblclick="item.isEdit=true">{{item.url}}</span>
         </td>
-        <td>{{item.ShowTime}}</td>
+        <td>{{item.showtime}}</td>
         <td style="font-size:20px;">
           <Tooltip content="删除" placement="top">
             <a href="javascript:void(0)" @click="onRemove(index)">
@@ -47,7 +47,7 @@
   <a href="javascript:;" @click="onAdd">
     <Icon type="plus-round"></Icon> 添加广告位</a>
   <div style="padding: 30px;">
-    <Button :disabled="!isModify" type="primary" size="large" shape="circle" icon="ios-plus-outline" @click="onSubmit">提交</Button>
+    <Button :disabled="!isModify" type="primary" size="large" shape="circle" icon="ios-plus-outline" @click="onSubmit" :loading="loading">提交</Button>
     <Button :disabled="!isModify" style="margin-left:20px;" type="ghost" size="large" shape="circle" icon="ios-download-outline" @click="onCancel">取消</Button>
   </div>
 </section>

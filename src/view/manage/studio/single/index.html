@@ -1,39 +1,43 @@
 <Row style="margin-left:50px;width:600px">
   <Col span="18">
-  <Form :model="form" label-position="left" :label-width="100">
-    <Form-item label="账号">
-      <Input placeholder="请输入账号名称"></Input>
+  <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" label-position="left" :label-width="100">
+    <Form-item label="账号" prop="username">
+      <Input v-model="formValidate.username" placeholder="请输入账号名称"></Input>
     </Form-item>
-    <Form-item label="密码">
-      <Input placeholder="请输入密码" type="password"></Input>
+    <Form-item label="密码" prop="password">
+      <Input v-model="formValidate.password" placeholder="请输入姓名" type="password"></Input>
     </Form-item>
-    <Form-item label="LOGO">
-      <Upload action="//jsonplaceholder.typicode.com/posts/" style="display:inline-block">
-        <Button type="primary" size="large" shape="circle" icon="ios-download-outline">上传</Button> 建议logo长宽比为3:2
-      </Upload>
+    <Form-item label="LOGO" prop="logofile">
+      <img v-if="formValidate.logofile" style="max-width:100px;border:1px solid #eee" :src="$conf.host + formValidate.logofile"
+      />
+      <UploadImage :onSuccess="onSuccess" :onError="onError">
+        <a v-if="formValidate.logofile" href="javascript:void(0)">
+          <Icon type="edit"></Icon>
+        </a>
+        <Button v-else type="primary" shape="circle" icon="ios-download-outline">上传</Button>
+      </UploadImage>
+      建议logo长宽比为3:2
     </Form-item>
 
-    <Form-item label="工作室">
-      <Input placeholder="工作室名称编辑"></Input>
+    <Form-item label="工作室" prop="studioname">
+      <Input v-model="formValidate.studioname" placeholder="工作室名称编辑"></Input>
     </Form-item>
-    <Form-item label="URL">
-      <Input placeholder="URL地址编辑"></Input>
+    <Form-item label="URL" prop="url">
+      <Input v-model="formValidate.url" placeholder="URL地址编辑"></Input>
     </Form-item>
-    <Form-item label="栏目绑定">
-      <Select placeholder="请选择">
-                <Option value="beijing">一秒一世界</Option>
-                <Option value="shanghai">经意城</Option>
-                <Option value="shenzhen">深圳市</Option>
-            </Select>
+    <Form-item label="栏目绑定" prop="catalogid">
+      <Select v-model="formValidate.catalogid" number placeholder="请选择">
+          <Option v-for="option in catelog" key="option.id" :value="option.id">{{option.name}}</Option>
+      </Select>
     </Form-item>
-    <Form-item label="中央厨房指数">
-      <Input></Input>
+    <Form-item label="中央厨房指数" prop="accountindex">
+      <Input v-model="formValidate.accountindex" placeholder="请输入中央厨房指数" number></Input>
     </Form-item>
 
     <Form-item>
-            <Button type="primary" shape="circle">提交</Button>
-            <Button type="ghost" shape="circle" style="margin-left: 20px">取消</Button>
-        </Form-item>
+      <Button type="primary" shape="circle" @click="submit" :loading="loading">提交</Button>
+      <Button type="ghost" shape="circle" style="margin-left: 20px" @click="cancel">取消</Button>
+    </Form-item>
 
   </Form>
 
