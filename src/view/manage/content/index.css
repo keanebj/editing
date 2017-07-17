@@ -1,0 +1,96 @@
+.draft-back{
+  background:  url(../../../assets/svg/草稿.svg) left center no-repeat ;
+  background-size: 14px 14px;
+  padding-left:20px;
+}
+.publish-back{
+  background:  url(../../../assets/svg/已发表.svg) left center no-repeat ;
+  background-size: 14px 14px;
+  padding-left:20px;
+}
+.offline-back{
+  background:  url(../../../assets/svg/已撤回.svg) left center no-repeat ;
+  background-size: 14px 14px;
+  padding-left:20px;
+}
+#title a{
+  color: #495060;
+}
+/*上传部分*/
+.upload_doc{
+	margin: 0px auto;
+	width: 70%;
+	color: #777;
+	font-size: 14px;
+}
+.upload_doc_con{
+	overflow: hidden;
+	margin: 4px 0;
+}
+.upload_doc_con input{
+	float: left;
+	width: 190px;
+	background: #fff;
+	border: 1px solid #ddd;
+	color: #777;
+	padding: 0 5px;
+	margin-right: 10px;
+}
+.upload_doc_con .ivu-upload{
+	float: left;
+}
+.upload_doc_con .ivu-btn{
+	padding: 4px 8px;
+}
+.upload_doc_mask .ivu-modal-body{
+	height: 200px;
+}
+.upload_doc_mask .ivu-modal-header-inner{
+	color: #777;
+	font-weight: normal;
+}
+.upload_doc_mask .ivu-modal-footer div{
+	padding-bottom: 10px;
+	margin-right:20px;
+}
+.befor_upload {
+	overflow: hidden;
+	border: 1px solid #ddd;
+	font-size: 12px;
+	position: relative;
+}
+.befor_upload>span:first-child{
+	float: left;
+	width: 180px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	position: absolute;
+	top: 0px;
+	left: 2px;
+	z-index: 2;
+}
+.befor_upload>span:last-child{
+	float: right;
+	position: absolute;
+	top: 0px;
+	right: 2px;
+}
+.befor_upload .ivu-icon{
+	margin-left: 5px;
+	color:#f60;
+	cursor: pointer;
+}
+.befor_upload .ivu-progress-inner{
+	border-radius: 0px;
+	margin-top: -1px;
+}
+.ivu-upload-list{
+	display: none;
+}
+.upload_doc_mask .ivu-modal-footer{
+	display: none;
+}
+.befor_upload .ivu-progress-bg{
+	border-radius: 0px;
+}

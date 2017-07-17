@@ -2,10 +2,10 @@
   <MainHeader :logOut="logOut" ></MainHeader>
   <div class="layout-container">
     <Row type="flex">
-      <i-col span="5">
+      <i-col span="5" :class="{hide:isActive}">
         <ComponentsMainMenu :data="menu" :onSelect="onSelect"></ComponentsMainMenu>
       </i-col>
-      <i-col span="19" class="layout-content-warp">
+      <i-col span="19" class="layout-content-warp" :class="{'set-width':isActive}">
         <div class="layout-content">
           <div class="layout-content-main">
             <transition name="slide-fade"  mode="out-in">

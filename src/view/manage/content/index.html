@@ -1,11 +1,44 @@
 <section>
   <Row>
     <Col span="12">
-    <Button type="primary" size="large" shape="circle" icon="ios-plus-outline">新建</Button>
-    <Upload action="//jsonplaceholder.typicode.com/posts/" style="display:inline-block">
-      <Button type="ghost" size="large" shape="circle" icon="ios-download-outline">导入</Button>
-    </Upload>
-    支持word文档、pdf文件导入
+    <Button type="primary" size="large" shape="circle" icon="ios-plus-outline" @click="createArticle">新建</Button>
+    <!--<Upload action="//jsonplaceholder.typicode.com/posts/" style="display:inline-block">-->
+      <Button type="ghost" size="large" shape="circle" icon="ios-download-outline" @click="uploadModal=true">导入</Button>
+      <Modal v-model="uploadModal" title="导入" width="450" class="upload_doc_mask">
+      	<div class="upload_doc">
+      			选择文件：
+      			<div class="upload_doc_con">
+      				<input type="text" value="*.doc、*.docx、*.ppt、*.pptx" disabled="" />
+      				<Upload 
+      					ref="upload"
+      					action="http://mp.dev.hubpd.com/api/content/import" 
+      					:before-upload="beforeLoad" 
+      					:show-upload-list="true" 
+      					accept=".doc,.docx,.ppt,.pptx"
+      					type="select"
+      					:on-progress="onLoading"
+      					:format="['doc','docx','ppt','pptx']"
+      					:on-format-error="handleFormatError"
+      					:on-success="handleSuccess"
+      					:headers="headToken"
+      					:data="catalogId"
+      				>
+      					<Button type="info" icon="ios-cloud-upload-outline">上传文件</Button>
+      				</Upload>
+     				</div>
+     				<div v-if="beforeUpload"  class="befor_upload">
+     					<span>{{ fileName }}</span>
+     					<Progress :percent="percentProgress" :hide-info="true" :stroke-width="18" status="normal"></Progress>
+     					<span>{{ fileSize }}</span>
+     				</div>
+     				<div style="margin-top: 20px;">
+     					支持doc、docx、ppt、pptx格式文件
+     				</div>
+      	</div>
+      </Modal>
+      	 
+    <!--</Upload>-->
+    支持word文档、ppt文件导入
     </Col>
     <Col span="12">
     <Input icon="ios-search" placeholder="请输入..." style="width:250px;float:right"></Input>
@@ -15,15 +48,14 @@
     <Col span="12"> 发布渠道： <span style="font-weight:700">人民日报中央厨房</span>
     </Col>
     <Col span="12">
-    <Radio-group style="float:right">
-      <Radio label="全部文章" style="margin-right:30px;"></Radio>
-      <Radio label="已发表" style="margin-right:30px;"></Radio>
-      <Radio label="草稿" style="margin-right:30px;"></Radio>
-      <Radio label="已撤回"></Radio>
+    <Radio-group style="float:right" v-model="status" @on-change="contentTypeList">
+      <Radio label="" style="margin-right:30px;">全部文章</Radio>
+      <Radio label="Publish" style="margin-right:30px;">已发表</Radio>
+      <Radio label="Draft" style="margin-right:30px;">草稿</Radio>
+      <Radio label="Offline">已撤回</Radio>
     </Radio-group>
     </Col>
   </Row>
-
 
   <table class="table">
     <thead>
@@ -37,44 +69,40 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr v-for="(item,index) in contentList" :index="item.ID">
         <th scope="row">
-          <img width="120" src="../../../assets/img.png" alt="">
+          <img width="120" :src="item.cover">
         </th>
-        <th scope="row">
-          同宿舍4人全考上博士 “学霸”恋爱挣钱生活丰富
+        <th scope="row" id="title">
+          <router-link :to="{path:'../notice',query:{articleID:item.ID}}">{{item.Title}}</router-link>
         </th>
-        <td>南山南</td>
-        <td>2017-07-22</td>
+        <td>{{item.Author}}</td>
+        <td>{{item.AddTime}}</td>
         <td>
-          <Checkbox :value="true">已发表</Checkbox>
+          <div v-if="item.Status == 'Draft'"><span class="draft-back">草稿</span></div>
+          <div v-else-if="item.Status == 'Publish'"><span class="publish-back">已发表</span></div>
+          <div v-else-if="item.Status == 'Offline'"><span class="offline-back">已撤回</span></div>
+          <div v-else><span class="offline-back">已撤回</span></div>
         </td>
         <td>
-          <Dropdown>
+          <router-link :to="{path:'../publish',query:{articleID:item.ID}}"><Icon type="edit" style="font-size:1.1em;color: #F95759;"></Icon></router-link>
+
+          <Dropdown style="margin-left: 15px" @on-click="operateContent">
             <a href="javascript:void(0)">
-              <Icon type="edit"></Icon>
+              <Icon type="ios-gear-outline" style="font-size:1.2em;color: #F95759;"></Icon>
             </a>
-            <Dropdown-menu slot="list">
-              <Dropdown-item>置顶</Dropdown-item>
-              <Dropdown-item>撤回</Dropdown-item>
-              <Dropdown-item>删除</Dropdown-item>
-            </Dropdown-menu>
-          </Dropdown>
-          <Dropdown style="margin-left: 20px">
-            <a href="javascript:void(0)">
-              <Icon type="ios-gear-outline"></Icon>
-            </a>
-            <Dropdown-menu slot="list">
-              <Dropdown-item>驴打滚</Dropdown-item>
-              <Dropdown-item>炸酱面</Dropdown-item>
-              <Dropdown-item disabled>豆汁儿</Dropdown-item>
-              <Dropdown-item>冰糖葫芦</Dropdown-item>
-              <Dropdown-item divided>北京烤鸭</Dropdown-item>
+            <Dropdown-menu slot="list" >
+              <Dropdown-item name="top" ref="type" :data-id="item.ID">置顶</Dropdown-item>
+              <Dropdown-item name="drop" ref="type" :data-id="item.ID">撤回</Dropdown-item>
+              <Dropdown-item name="delete" ref="type" :data-id="item.ID">删除</Dropdown-item>
             </Dropdown-menu>
           </Dropdown>
         </td>
       </tr>
     </tbody>
   </table>
-  <Page :total="40" size="small" show-total></Page>
+  <div>
+    <div style="float:right;line-height:24px;">共{{pageCount}}页</div>
+    <Page :total="total" style="float:right" :page-size="pageSize" :current="pageIndex" size="small"  @on-change="changePage"></Page>
+  </div>
 </section>

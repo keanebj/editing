@@ -7,7 +7,18 @@ const store = new Vuex.Store({
     menu: menu,
     menuActiveName: '',
     menuOpenNames: [],
-    breadcrumb: []
+    breadcrumb: [],
+    token: 'c00e47509c4be91d98e3dc4af3a37482a676f8d219199d7b',
+    catelog: [{
+      name: '时政',
+      id: 12
+    }, {
+      name: '军事',
+      id: 13
+    }, {
+      name: '游戏',
+      id: 14
+    }]
   },
   getters: {
   },

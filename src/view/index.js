@@ -18,13 +18,21 @@ export default {
   data() {
     return {
 
+		isActive:false
     }
   },
-  beforeCreate() {
-    let _token = sessionStorage.getItem("token")
-    if (_token == undefined || _token == null) {
-      this.$router.push('/login')
-    }
+   beforeCreate () {
+    //监听浏览器的返回按钮
+    window.addEventListener("popstate", function(e) {
+      location.reload();
+    }, false);
+   },
+   mounted(){
+  if(window.location.href.indexOf('publish') > -1){
+    this.isActive=true;
+  }else{
+    this.isActive=false;
+  }
   },
   created() {},
   methods: {
@@ -34,29 +42,12 @@ export default {
           path: e.path
         })
       }
-    },
-    logOut(e) {
-      this.$http({
-          method: 'get',
-          url: 'http://mp.dev.hubpd.com/api/studio/logout'
-        })
-        .then(res => {
-          console.log('退出结果：' + JSON.stringify(res.data))
-          if (res.data.status == 0) {
-            if (sessionStorage.getItem("token") == null || sessionStorage.getItem("token") == undefined) {
-              this.$router.push('/login')
-            } else {
-              this.$Message.error(res.data.message)
-            }
-
-          } else {
-            sessionStorage.removeItem("token")
-            this.$router.push('/login')
-          }
-
-        }, err => {
-          console.log('出错啦！' + err)
-        })
+	  //判断路径
+     /* if(e.path.indexOf('publish') > -1){
+          this.isActive=true;
+      }else{
+        this.isActive=false;
+      }*/
     }
   }
 }

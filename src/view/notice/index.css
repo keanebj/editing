@@ -1,16 +1,23 @@
-.con_new p{    
-    text-align: left;
-    text-indent: 20px;
-    font-size: 14px;
-    line-height: 24px;
-    margin: 14px 0;
+
+.notice{
+	/*width: 1000px;*/
+	margin: 0 auto;
+	font-family: "微软雅黑";
 }
-.con_new{    
-    text-align: center;
+.notice h1{
+	text-align: center;
+	color: #e51c23;
+	border-bottom: 1px solid #d2d2d2;
+	padding-bottom: 30px;
+	font-weight: 500;
 }
-.con_new img{
-    width: 70%;
+.notice p{
+	text-indent: 35px;
+	font-size: 16px;
+	margin-top: 25px;
 }
-.article{
-    margin: 50px 0;
+.notice img{
+	margin: 20px auto;
+	display: block;
+	width: 500px;
 }
