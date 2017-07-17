@@ -1,11 +1,13 @@
 export default {
   name: 'ComponentsMainHeader',
-  data () {
-    return {
-    }
+  data() {
+    return {}
   },
-  methods: {
+  props: {
+     logOut: Function
   },
-  created () {},
-  mounted () {}
+  methods: {    
+  },
+  created() {},
+  mounted() {}
 }
