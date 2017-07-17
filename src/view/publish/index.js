@@ -132,12 +132,12 @@ export default {
       This.editor.execCommand('inserthtml',This.formTop.editorContent);
     })
     //自动保存:半分钟自动保存一次
-    this.timer=setInterval(function(){
+//  this.timer=setInterval(function(){
       //存到本地草稿
 
       //存到数据库
-      This.save('formTop',true);
-    },3000);
+//    This.save('formTop',true);
+//  },3000);
 
   },
   watch:{
@@ -151,7 +151,7 @@ export default {
     showPreviewContent:function(){
 
       //获得编辑器中的内容
-//    this.previewCon[0]=this.editor.getContent();
+      this.previewCon[0]=this.editor.getContent();
       this.previewContent=true;
 
       var ele = this.elements;
@@ -340,9 +340,9 @@ export default {
                 this.$http({
                   method: 'POST',
                   //url: "http://mp.dev.hubpd.com/api/content",
-                  url:"http://10.1.43.54:8080/zmt/api/studio/login",
+                  url:"http://mp.dev.hubpd.com/api/studio/login",
                   //params:this.formTop,
-                  params:{username:'admin',password:'admin'},
+                  params:{username:'admin1',password:'admin'},
                 }).then((response) => {
 
                     this.$Message.success(response.data.message);

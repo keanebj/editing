@@ -1,54 +1,82 @@
 export default {
   name: 'Home',
   created() {
-  	this.getTestAPI();    
+    this.getTestAPI();    
     this.roleFlag = this.$store.state.roleType;
   },
   data() {
     return {
-    	roleFlag:0,
+      roleFlag:0,
       switchTab:0,
       value2:0,
-      pageCurrentLX:1,//公告的当前页数
-      pageCurrentlG:1,//学院的当前页数
-      pageTotalX:2,//公告的总页数
-      pageTotalG:10,//学院的总页数
+      pageTotalX:2,//公告所有页
+      pageTotalG:40,//学院所有页
+      pageIndexX: 1,//公告当前页
+      pageIndexG: 1,//学院当前页
+      pageSize: 10,//每页的个数
+      noticeTotal: 0,
       articleTotal:8869,
-      studioTotal:25,
-      noticeList:[{id:15,title:"的开发后端开发的疯狂的书法家",dateTime:"2017-09-09"}],
+      studioTotal:35,
+      accountIndex:100,
+      noticeList:[],
       collegeList:[],
-      adList:[],
-      pageSize: 10
+      adList:[]
     }
   },
   methods: {
-    readed (ev) {
-      var ele = ev.target.parentNode.parentNode.nodeName == "LI" ? ev.target.parentNode.parentNode : ev.target;
-      ele.className = "readed";
-    },
     getNotice () {
-      this.$http.get('http://mp.dev.hubpd.com/api/content', {params: { classification:"Notice", pagesize:this.pageSize, pageindex:(this.pageCurrentLX-1)  }}).then((res) => {//classification:"Notice"为传递参数
-//    	console.log(res.data)
-        this.noticeList = res.data.content_list;
-        this.articleTotal = res.data.count ;
-        this.pageTotalX = Math.ceil( this.articleTotal / this.pageSize)
-      });
+//    this.$http.get('http://mp.dev.hubpd.com/api/content').then((res) => {
+//    	console.log(res)
+////      this.noticeList = res.data.data;
+////      this.pageTotalG =Math.ceil(this.noticeList.length / 10);
+//    });
+      
+      this.$http({
+	      method: 'GET',
+	      url: "/api/content",
+	      params: {
+	      	pagesize: this.pageSize,
+	      	pageindex: (this.pageIndexX-1),
+	      	classification: "Notice"
+	      },
+	      headers:{
+          token:"554a7b390e4a09363ce8e35b823d7459b95a23764e59c528"
+        }
+	    }).then((response) => {
+	      //给公告的内容赋值
+				console.log(response.data)
+				this.noticeList = response.data.contents;
+				this.noticeTotal = response.data.total;
+				this.pageTotalX = Math.ceil(this.noticeTotal / this.pageSize);
+				console.log(this.pageTotalX)
+	    })
     },
     getCollege () {
-      this.$http.get('http://mp.dev.hubpd.com/api/content', {params: { classification:"College", pagesize:this.pageSize, pageindex:(this.pageCurrentlG-1)  }}).then((res) => {//classification:"College"
-      	console.log(res.data)
-        this.collegeList = res.data.content_list;
-        this.studioTotal = res.data.count ;
-        this.pageTotalG = Math.ceil( this.studioTotal / this.pageSize)
-//      console.log(this.pageCurrentLX)
-//      console.log(this.articleTotal)
-      });
-   },
-		getNoticeURL (id){
+      this.$http({
+	      method: 'GET',
+	      url: "/api/content",
+	      params: {
+	      	pagesize: this.pageSize,
+	      	pageindex: (this.pageIndexG-1),
+	      	classification: "College"
+	      },
+	      headers:{
+          token:"554a7b390e4a09363ce8e35b823d7459b95a23764e59c528"
+        }
+	    }).then((response) => {
+	      //给公告的内容赋值
+				console.log(response.data)
+				this.collegeList = response.data.contents;
+				this.articleTotal = response.data.total;
+				this.pageTotalG = Math.ceil(this.articleTotal / this.pageSize);
+	    })
+    },
+    getNoticeURL (id){
       this.$router.push({path:'/notice?'+id})
     },
     getTestAPI () {
-      this.$http.get('http://mp.dev.hubpd.com/api/advertise').then((res) => { 
+      this.$http.get('http://mp.dev.hubpd.com/api/advertise').then((res) => {
+      	console.log(res)
         if(this.$store.state.advertiselist == undefined){
           this.$store.state.advertiselist = res.data.advertiselist;          
         } 
@@ -59,19 +87,18 @@ export default {
       });
     },
     changePageNotice (page){
-        
-        this.pageCurrentLX = page;
-        console.log(this.pageCurrentLX)
-        this.getNotice();
+      console.log(page)
+      this.pageIndexX = page;
+      this.getNotice();
     },
     changePageCollege (page){
-    	this.pageCurrentlG = page;
-      console.log(this.pageTotalG)
-      this.getCollege();
+        console.log(page)
+        this.pageIndexG = page;
+      	this.getCollege();
     }
   },
   mounted () {
        this.getNotice();
-       this.getCollege();
+       this.getCollege();       
   }
 }
