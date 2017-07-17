@@ -1,4 +1,6 @@
-import { mapState } from 'vuex'
+import {
+  mapState
+} from 'vuex'
 import MainHeader from '@/components/mainHeader/index.vue'
 import MainFooter from '@/components/mainFooter/index.vue'
 import ComponentsMainMenu from '@/components/mainMenu/index.vue'
@@ -13,20 +15,48 @@ export default {
   computed: {
     ...mapState(['menu'])
   },
-  data () {
+  data() {
     return {
+
     }
   },
-  created () {
-    
+  beforeCreate() {
+    let _token = sessionStorage.getItem("token")
+    if (_token == undefined || _token == null) {
+      this.$router.push('/login')
+    }
   },
+  created() {},
   methods: {
-    onSelect (e) {
+    onSelect(e) {
       if (e.path) {
         this.$router.push({
           path: e.path
         })
       }
+    },
+    logOut(e) {
+      this.$http({
+          method: 'get',
+          url: 'http://mp.dev.hubpd.com/api/studio/logout'
+        })
+        .then(res => {
+          console.log('退出结果：' + JSON.stringify(res.data))
+          if (res.data.status == 0) {
+            if (sessionStorage.getItem("token") == null || sessionStorage.getItem("token") == undefined) {
+              this.$router.push('/login')
+            } else {
+              this.$Message.error(res.data.message)
+            }
+
+          } else {
+            sessionStorage.removeItem("token")
+            this.$router.push('/login')
+          }
+
+        }, err => {
+          console.log('出错啦！' + err)
+        })
     }
   }
 }

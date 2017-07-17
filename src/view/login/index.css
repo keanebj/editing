@@ -2,3 +2,13 @@
     width: 500px;
     margin: 20px auto 0;
   }
+  .ivu-card-bordered,.ivu-card-head{
+    border:none!important;
+  }  
+  .ivu-card-head p{
+    text-align: center;
+    color: #F95759!important;
+    font-size: 20px;
+    letter-spacing: 2px;
+  }
+  
