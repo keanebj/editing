@@ -55,8 +55,8 @@ export default {
     }
   },
   mounted() {
-    this.getNotice();
-    this.getCollege();
-    this.getAds();
+    // this.getNotice();
+    // this.getCollege();
+    // this.getAds();
   }
 }

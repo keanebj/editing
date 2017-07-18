@@ -13,12 +13,13 @@ export default {
     ComponentsBreadcrumb
   },
   computed: {
-    ...mapState(['menu'])
+    ...mapState(['menu','userinfo'])
   },
   data() {
     return {
-
-		isActive:false
+    userName:'熊老师',
+    isActive:false,
+    roleType:'Manage'
     }
   },
    beforeCreate () {
@@ -34,7 +35,10 @@ export default {
 		this.isActive=false;
 	  }
   },
-  created() {},
+  created() {
+    this.userName = this.userinfo.username
+    this.roleType = this.userinfo.roleType
+  },
   methods: {
     onSelect(e) {
       if (e.path) {

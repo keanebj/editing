@@ -1,4 +1,6 @@
-import { mapState } from 'vuex'
+import {
+  mapState
+} from 'vuex'
 
 export default {
   name: 'ViewSettingsAccount',
@@ -99,24 +101,19 @@ export default {
   },
   methods: {
     getOperatorInfo() {
-      // this.$http({
-      //     method: 'get',
-      //     url: 'http://mp.dev.hubpd.com/api/studio',
-      //     params: {
-      //       username: this.userinfo.username
-      //     }
-      //   })
-      this.$http.get('http://mp.dev.hubpd.com/api/studio',{params:{username: this.userinfo.username}})
+      this.$http.get('http://mp.dev.hubpd.com/api/studio/'+this.userinfo.id, {
+          username: this.userinfo.username
+        })
         .then(res => {
           console.log(JSON.stringify(res.data))
           if (res.data.status == 0) {
             this.$router.push('/login')
-            // this.$Message.error(res.data.message)
           } else {
-            let operatorInfo = res.data.studios[0]
+            console.log(JSON.stringify(res.data))
+            let operatorInfo = res.data.studio
             this.formValidate.name = operatorInfo.fullname
             this.formValidate.tel = operatorInfo.tel
-            this.account = operatorInfo.username
+            this.account = this.userinfo.username
             this.studioName = operatorInfo.studioname
             this.formValidate.mail = operatorInfo.email
           }
@@ -126,21 +123,14 @@ export default {
         })
     },
     getStudioInfo() {
-      // this.$http({
-      //     method: 'get',
-      //     url: 'http://mp.dev.hubpd.com/api/studio',
-      //     params: {
-      //       username: this.userinfo.username
-      //     }
-      //   })
-      this.$http.get('http://mp.dev.hubpd.com/api/studio',{params:{username: this.userinfo.username}})
+      this.$http.get('http://mp.dev.hubpd.com/api/studio/'+this.userinfo.id, {
+          username: this.userinfo.username
+        })
         .then(res => {
           if (res.data.status == 0) {
             this.$router.push('/login')
-            // this.$Message.error(res.data.message)
-
           } else {
-            let studioInfo = res.data.studios[0]
+            let studioInfo = res.data.studio
             this.formValidateM.name = studioInfo.fullname
             this.formValidateM.tel = studioInfo.tel
             this.studioName = studioInfo.studioname
@@ -152,6 +142,7 @@ export default {
               url: studioInfo.logofile
             }
             this.uploadList.push(_preImg)
+            this.uploadImg = _preImg.url
           }
         }, err => {
           console.log('出错啦！' + err)
@@ -165,15 +156,25 @@ export default {
         tel: this.formValidateM.tel,
         logofile: this.uploadImg
       };
-      this.$http.put('http://mp.dev.hubpd.com/api/studio/' + this.userinfo.id, {params:reqParams})
+      this.$http.put('http://mp.dev.hubpd.com/api/studio/' + this.userinfo.id, reqParams)
         .then(res => {
           if (res.data.status == 1) {
-            this.$Message.success(res.data.message);
+            this.$Notice.success({
+              title: '成功',
+              desc: res.data.message || '修改成功'
+            })
           } else {
-            this.$Message.err(res.data.message);
+            this.$Notice.error({
+              title: '错误',
+              desc: res.data.message || '修改失败'
+            })
           }
           console.log(JSON.stringify(res.data))
         }, err => {
+          this.$Notice.error({
+            title: '错误',
+            desc: JSON.stringify(err) || '网络错误'
+          })
           console.log('出错啦！' + JSON.stringify(err))
         })
     },
@@ -186,15 +187,25 @@ export default {
         tel: this.formValidate.tel,
         email: this.formValidate.mail
       };
-      this.$http.put('http://mp.dev.hubpd.com/api/studio/' + this.userinfo.id, {params:reqParams})
+      this.$http.put('http://mp.dev.hubpd.com/api/studio/' + this.userinfo.id, reqParams)
         .then(res => {
           if (res.data.status == 1) {
-            this.$Message.success(res.data.message);
+            this.$Notice.success({
+              title: '成功',
+              desc: res.data.message || '修改成功'
+            })
           } else {
-            this.$Message.err(res.data.message);
+            this.$Notice.error({
+              title: '错误',
+              desc: res.data.message || '修改失败'
+            })
           }
           console.log(JSON.stringify(res.data))
         }, err => {
+          this.$Notice.error({
+            title: '错误',
+            desc: JSON.stringify(err) || '网络错误'
+          })
           console.log('出错啦！' + JSON.stringify(err))
         })
     },
@@ -209,8 +220,10 @@ export default {
     },
     handleSuccess(res, file) {
       console.log(JSON.stringify(res.path))
-      this.$Message.success(res.message);
-      // 因为上传过程为实例，这里模拟添加 url
+      this.$Notice.success({
+        title: '成功',
+        desc: res.message || '上传成功'
+      })
       file.url = 'http://mp.dev.hubpd.com/' + res.path;
       this.uploadImg = file.url;
       this.hideImg = true;
@@ -249,7 +262,10 @@ export default {
           }
 
         } else {
-          this.$Message.error('表单验证失败!');
+          this.$Notice.error({
+            title: '错误',
+            desc: '表单验证失败'
+          })
         }
       })
     },

@@ -2,11 +2,14 @@ export default {
   name: 'ComponentsMainHeader',
   data() {
     return {
-      userName:$store.state.userinfo.username
     }
   },
   props: {
-     logOut: Function
+     logOut: Function,
+     userName:{
+       type: String,
+       default: '熊老师'
+     }
   },
   methods: {    
   },

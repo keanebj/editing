@@ -45,11 +45,6 @@ export default {
         username: this.formItem.username,
         password: this.formItem.password
       };
-      // this.$http({
-      //     method: 'post',
-      //     url: 'http://mp.dev.hubpd.com/api/studio/login',
-      //     params: reqParams
-      //   })
       this.$http.post('http://mp.dev.hubpd.com/api/studio/login', reqParams)
         .then(res => {
           //设置用户身份等信息
