@@ -1,3 +1,5 @@
+import { mapState } from 'vuex'
+
 export default {
   name: 'ViewSettingsAccount',
   data() {
@@ -87,6 +89,9 @@ export default {
       }
     }
   },
+  computed: mapState({
+    userinfo: state => state.userinfo,
+  }),
   beforeCreate() {
     if (sessionStorage.getItem('token') == undefined || sessionStorage.getItem('token') == null) {
       this.$router.push('/login')
@@ -94,13 +99,14 @@ export default {
   },
   methods: {
     getOperatorInfo() {
-      this.$http({
-          method: 'get',
-          url: 'http://mp.dev.hubpd.com/api/studio',
-          params: {
-            username: this.$store.state.username
-          }
-        })
+      // this.$http({
+      //     method: 'get',
+      //     url: 'http://mp.dev.hubpd.com/api/studio',
+      //     params: {
+      //       username: this.userinfo.username
+      //     }
+      //   })
+      this.$http.get('http://mp.dev.hubpd.com/api/studio',{params:{username: this.userinfo.username}})
         .then(res => {
           console.log(JSON.stringify(res.data))
           if (res.data.status == 0) {
@@ -120,13 +126,14 @@ export default {
         })
     },
     getStudioInfo() {
-      this.$http({
-          method: 'get',
-          url: 'http://mp.dev.hubpd.com/api/studio',
-          params: {
-            username: this.$store.state.username
-          }
-        })
+      // this.$http({
+      //     method: 'get',
+      //     url: 'http://mp.dev.hubpd.com/api/studio',
+      //     params: {
+      //       username: this.userinfo.username
+      //     }
+      //   })
+      this.$http.get('http://mp.dev.hubpd.com/api/studio',{params:{username: this.userinfo.username}})
         .then(res => {
           if (res.data.status == 0) {
             this.$router.push('/login')
@@ -152,13 +159,13 @@ export default {
     },
     editStudioInfo() {
       let reqParams = {
-        username: this.$store.state.username,
+        username: this.userinfo.username,
         studioname: this.studioName,
         fullname: this.formValidateM.name,
         tel: this.formValidateM.tel,
         logofile: this.uploadImg
       };
-      this.$http.put('http://mp.dev.hubpd.com/api/studio/' + this.$store.state.id, reqParams)
+      this.$http.put('http://mp.dev.hubpd.com/api/studio/' + this.userinfo.id, {params:reqParams})
         .then(res => {
           if (res.data.status == 1) {
             this.$Message.success(res.data.message);
@@ -172,14 +179,14 @@ export default {
     },
     editOperatorInfo() {
       let reqParams = {
-        username: this.$store.state.username,
-        password: this.$store.state.password,
+        username: this.userinfo.username,
+        password: this.userinfo.password,
         studioname: this.studioName,
         fullname: this.formValidate.name,
         tel: this.formValidate.tel,
         email: this.formValidate.mail
       };
-      this.$http.put('http://mp.dev.hubpd.com/api/studio/' + this.$store.state.id, reqParams)
+      this.$http.put('http://mp.dev.hubpd.com/api/studio/' + this.userinfo.id, {params:reqParams})
         .then(res => {
           if (res.data.status == 1) {
             this.$Message.success(res.data.message);
@@ -252,7 +259,7 @@ export default {
 
   },
   created() {
-    if (this.$store.state.roleType == 'Edit') {
+    if (this.userinfo.roleType == 'Edit') {
       this.roleType = 1;
       console.log('工作室编辑')
       this.getStudioInfo();

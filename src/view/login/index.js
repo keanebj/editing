@@ -45,25 +45,30 @@ export default {
         username: this.formItem.username,
         password: this.formItem.password
       };
-      this.$http({
-          method: 'post',
-          url: 'http://mp.dev.hubpd.com/api/studio/login',
-          params: reqParams
-        })
+      // this.$http({
+      //     method: 'post',
+      //     url: 'http://mp.dev.hubpd.com/api/studio/login',
+      //     params: reqParams
+      //   })
+      this.$http.post('http://mp.dev.hubpd.com/api/studio/login', reqParams)
         .then(res => {
           //设置用户身份等信息
-          console.log('ret=' + JSON.stringify())
           if (res.data.status == 0) {
             this.$Message.error(res.data.message);
           } else {
             console.log(JSON.stringify(res.data))
-            this.$store.state.id = res.data.id
-            this.$store.state.roleType = res.data.operatortype
+            this.$store.commit('set', {
+              userinfo: {
+                id: res.data.id,
+                roleType: res.data.operatortype,
+                username: res.data.operator,
+                password: this.formItem.password
+              }
+            })
             sessionStorage.setItem('token', res.data.token)
-            console.log(sessionStorage.getItem('token'))
-            this.$store.state.username = res.data.operator
-            this.$store.state.password = this.formItem.password
-            Vue.http.headers.common['token'] = res.data.token
+            this.$store.commit('set', {
+              token: res.data.token
+            })
             this.$router.push('/home')
           }
         }, err => {

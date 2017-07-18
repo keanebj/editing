@@ -2,13 +2,15 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import menu from '../config/menu'
 Vue.use(Vuex)
+var token = sessionStorage.getItem('token') || ''
 const store = new Vuex.Store({
   state: {
     menu: menu,
     menuActiveName: '',
     menuOpenNames: [],
     breadcrumb: [],
-    token: 'c00e47509c4be91d98e3dc4af3a37482a676f8d219199d7b',
+	useinfo: {},
+    token: token,
     catelog: [{
       name: '时政',
       id: 12

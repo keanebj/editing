@@ -28,11 +28,11 @@ export default {
     }, false);
    },
    mounted(){
-  if(window.location.href.indexOf('publish') > -1){
-    this.isActive=true;
-  }else{
-    this.isActive=false;
-  }
+	  if(window.location.href.indexOf('publish') > -1){
+		this.isActive=true;
+	  }else{
+		this.isActive=false;
+	  }
   },
   created() {},
   methods: {
@@ -48,6 +48,29 @@ export default {
       }else{
         this.isActive=false;
       }*/
+    },
+    logOut(e) {
+      this.$http({
+          method: 'get',
+          url: 'http://mp.dev.hubpd.com/api/studio/logout'
+        })
+        .then(res => {
+          console.log('退出结果：' + JSON.stringify(res.data))
+          if (res.data.status == 0) {
+            if (sessionStorage.getItem("token") == null || sessionStorage.getItem("token") == undefined) {
+              this.$router.push('/login')
+            } else {
+              this.$Message.error(res.data.message)
+            }
+
+          } else {
+            sessionStorage.removeItem("token")
+            this.$router.push('/login')
+          }
+
+        }, err => {
+          console.log('出错啦！' + err)
+        })
     }
   }
 }

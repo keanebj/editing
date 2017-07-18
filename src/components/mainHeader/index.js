@@ -1,7 +1,9 @@
 export default {
   name: 'ComponentsMainHeader',
   data() {
-    return {}
+    return {
+      userName:$store.state.userinfo.username
+    }
   },
   props: {
      logOut: Function
