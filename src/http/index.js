@@ -26,7 +26,7 @@ ajax.interceptors.request.use(function (config) {
 // Add a response interceptor
 ajax.interceptors.response.use(function (response) {
   if (response.data && response.data.status && response.data.status === 2) {
-    window.localhost.href = '/login'
+    window.location.href = '/login'
   }
   return response
 }, function (error) {
