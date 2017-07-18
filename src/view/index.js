@@ -13,7 +13,7 @@ export default {
     ComponentsBreadcrumb
   },
   computed: {
-    ...mapState(['menu','userinfo'])
+    ...mapState(['menu', 'userinfo'])
   },
   data() {
     return {
@@ -21,6 +21,9 @@ export default {
     }
   },
   beforeCreate() {
+    if (sessionStorage.getItem('token') == undefined || sessionStorage.getItem('token') == null) {
+      this.$router.push('/login')
+    }
     //监听浏览器的返回按钮
     window.addEventListener("popstate", function (e) {
       location.reload();
@@ -42,10 +45,7 @@ export default {
       }
     },
     logOut(e) {
-      this.$http({
-          method: 'get',
-          url: 'http://mp.dev.hubpd.com/api/studio/logout'
-        })
+      this.$http.get('http://mp.dev.hubpd.com/api/studio/logout')
         .then(res => {
           console.log('退出结果：' + JSON.stringify(res.data))
           if (res.data.status == 0) {

@@ -38,18 +38,18 @@ export default {
           trigger: 'blur'
         }],
         tel: [{
-            required: true,
-            message: '电话不能为空',
-            trigger: 'blur'
-          },
-          {
-            type: 'string',
-            min: 7,
-            max: 11,
-            pattern: /^[0-9]+$/,
-            message: '电话格式不正确',
-            trigger: 'blur'
-          }
+          required: true,
+          message: '电话不能为空',
+          trigger: 'blur'
+        },
+        {
+          type: 'string',
+          min: 7,
+          max: 11,
+          pattern: /^[0-9]+$/,
+          message: '电话格式不正确',
+          trigger: 'blur'
+        }
         ]
       },
       formValidate: {
@@ -64,29 +64,29 @@ export default {
           trigger: 'blur'
         }],
         mail: [{
-            required: true,
-            message: '邮箱不能为空',
-            trigger: 'blur'
-          },
-          {
-            type: 'email',
-            message: '邮箱格式不正确',
-            trigger: 'blur'
-          }
+          required: true,
+          message: '邮箱不能为空',
+          trigger: 'blur'
+        },
+        {
+          type: 'email',
+          message: '邮箱格式不正确',
+          trigger: 'blur'
+        }
         ],
         tel: [{
-            required: true,
-            message: '电话不能为空',
-            trigger: 'blur'
-          },
-          {
-            type: 'string',
-            min: 7,
-            max: 11,
-            pattern: /^[0-9]+$/,
-            message: '电话格式不正确',
-            trigger: 'blur'
-          }
+          required: true,
+          message: '电话不能为空',
+          trigger: 'blur'
+        },
+        {
+          type: 'string',
+          min: 7,
+          max: 11,
+          pattern: /^[0-9]+$/,
+          message: '电话格式不正确',
+          trigger: 'blur'
+        }
         ]
       }
     }
@@ -94,22 +94,13 @@ export default {
   computed: mapState({
     userinfo: state => state.userinfo,
   }),
-  beforeCreate() {
-    if (sessionStorage.getItem('token') == undefined || sessionStorage.getItem('token') == null) {
-      this.$router.push('/login')
-    }
-  },
   methods: {
     getOperatorInfo() {
-      this.$http.get('http://mp.dev.hubpd.com/api/studio/'+this.userinfo.id, {
-          username: this.userinfo.username
-        })
+      this.$http.get('http://mp.dev.hubpd.com/api/studio/' + this.userinfo.id, {
+        username: this.userinfo.username
+      })
         .then(res => {
-          console.log(JSON.stringify(res.data))
-          if (res.data.status == 0) {
-            this.$router.push('/login')
-          } else {
-            console.log(JSON.stringify(res.data))
+          if (res.data.status === 1) {
             let operatorInfo = res.data.studio
             this.formValidate.name = operatorInfo.fullname
             this.formValidate.tel = operatorInfo.tel
@@ -117,19 +108,16 @@ export default {
             this.studioName = operatorInfo.studioname
             this.formValidate.mail = operatorInfo.email
           }
-
         }, err => {
           console.log('出错啦！' + err)
         })
     },
     getStudioInfo() {
-      this.$http.get('http://mp.dev.hubpd.com/api/studio/'+this.userinfo.id, {
-          username: this.userinfo.username
-        })
+      this.$http.get('http://mp.dev.hubpd.com/api/studio/' + this.userinfo.id, {
+        username: this.userinfo.username
+      })
         .then(res => {
-          if (res.data.status == 0) {
-            this.$router.push('/login')
-          } else {
+          if (res.data.status == 1) {
             let studioInfo = res.data.studio
             this.formValidateM.name = studioInfo.fullname
             this.formValidateM.tel = studioInfo.tel
@@ -169,13 +157,11 @@ export default {
               desc: res.data.message || '修改失败'
             })
           }
-          console.log(JSON.stringify(res.data))
         }, err => {
           this.$Notice.error({
             title: '错误',
             desc: JSON.stringify(err) || '网络错误'
           })
-          console.log('出错啦！' + JSON.stringify(err))
         })
     },
     editOperatorInfo() {

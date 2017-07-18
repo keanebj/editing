@@ -1,27 +1,11 @@
-var data = [{
-  "id": 1,
-  "path": "/static/demo.jpg",
-  "url": "http://www.baidu.com",
-  "showtime": "2017-09-10 00:00:00"
-},
-{
-  "id": 3,
-  "path": "/static/demo.jpg",
-  "url": "http://www.baidu.com",
-  "showtime": "2017-09-10 00:00:00"
-},
-{
-  "id": 2,
-  "path": "/static/demo.jpg",
-  "url": "http://www.baidu.com",
-  "showtime": "2017-09-10 00:00:00"
-}]
+import UploadImage from '@/components/uploadImage/index.vue'
 var itemTemplate = {
   id: null,
   path: '',
   url: '',
   showtime: null
 }
+var match = /^((ht|f)tps?):\/\/([\w\-]+(\.[\w\-]+)*\/)*[\w\-]+(\.[\w\-]+)*\/?(\?([\w\-\.,@?^=%&:\/~\+#]*)+)?/
 export default {
   name: 'ViewManageAd',
   data() {
@@ -31,6 +15,7 @@ export default {
       requestCount: 0
     }
   },
+  components: { UploadImage },
   computed: {
     isModify() {
       var m = this.data
@@ -134,6 +119,9 @@ export default {
         if (!item.url) {
           this.$Message.warning('请输入url')
           continue
+        }if (!match.test(item.url)) {
+          this.$Message.warning('请输入有效的url')
+          continue
         } else if (!item.path) {
           this.$Message.warning('请输入path')
           continue
@@ -148,7 +136,6 @@ export default {
       if (this.requestCount) {
         this.loading = true
       }
-      console.log(this.requestCount)
     },
     requestSave(index, item) {
       this.$http.post('/api/advertise', {
@@ -217,10 +204,20 @@ export default {
           return
         }
       }
+    },
+    onSuccess(data, response, file, fileList) {
+      if (response.path) {
+        data.path = response.path
+      }
+    },
+    onError(data, error, file, fileList) {
+      this.$Notice.error({
+        title: '错误',
+        desc: error.message || '图片上传错误！'
+      })
     }
   },
   created() {
-    this.setData(data)
     this.fetchCollection()
   }
 }

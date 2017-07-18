@@ -1,9 +1,9 @@
 <div class="layout">
-  <MainHeader :logOut="logOut" :userName="userName"></MainHeader>
+  <MainHeader :logOut="logOut" :userName="userinfo.username"></MainHeader>
   <div class="layout-container">
     <Row type="flex">
       <i-col span="5" :class="{hide:isActive}">
-        <ComponentsMainMenu :data="menu" :onSelect="onSelect" :roleType="roleType"></ComponentsMainMenu>
+        <ComponentsMainMenu :data="menu" :onSelect="onSelect" :roleType="userinfo.roleType"></ComponentsMainMenu>
       </i-col>
       <i-col span="19" class="layout-content-warp" :class="{'set-width':isActive}">
         <div class="layout-content">
