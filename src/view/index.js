@@ -17,13 +17,11 @@ export default {
   },
   data() {
     return {
-      userName: '熊老师',
-      isActive: false,
-      roleType: 'Manage'
+      isActive: false
     }
   },
   beforeCreate() {
-    if (sessionStorage.getItem("token") == null || sessionStorage.getItem("token") == undefined) {
+    if (sessionStorage.getItem('token') == undefined || sessionStorage.getItem('token') == null) {
       this.$router.push('/login')
     }
     //监听浏览器的返回按钮
@@ -45,7 +43,6 @@ export default {
       this.userName = this.userinfo.username
       this.roleType = this.userinfo.roleType
     }
-
   },
   methods: {
     onSelect(e) {
@@ -54,12 +51,6 @@ export default {
           path: e.path
         })
       }
-      //判断路径
-      /* if(e.path.indexOf('publish') > -1){
-           this.isActive=true;
-       }else{
-         this.isActive=false;
-       }*/
     },
     logOut(e) {
       this.$http.get('http://mp.dev.hubpd.com/api/studio/logout')

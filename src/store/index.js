@@ -9,7 +9,7 @@ const store = new Vuex.Store({
     menuActiveName: '',
     menuOpenNames: [],
     breadcrumb: [],
-    useinfo: {},
+    userinfo: {},
     token: token,
     catelog: [{
       name: '时政',
@@ -53,7 +53,6 @@ const store = new Vuex.Store({
   },
   actions: {}
 })
-
 function recursiveBreadcrumb(key, val, data, index, result) {
   for (var i = 0, l = data.length; i < l; i++) {
     var e = data[i]

@@ -129,13 +129,13 @@ export default {
         })
       })
     },
-    onSuccess(response, file, fileList) {
+    onSuccess(e, response, file, fileList) {
       if (response.path) {
         this.formValidate.logofile = response.path
         this.$refs['formValidate'].validateField('logofile')
       }
     },
-    onError(error, file, fileList) {
+    onError(e, error, file, fileList) {
       this.$Notice.error({
         title: '错误',
         desc: error.message || '图片上传错误！'
