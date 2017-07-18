@@ -215,5 +215,9 @@
 .ivu-carousel-list{
     min-height: 100px;
 }
-
-
+.publish a{
+	color: #fff;
+}
+.publish a:hover{
+	color: #fff;
+}

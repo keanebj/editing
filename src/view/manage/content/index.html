@@ -2,46 +2,43 @@
   <Row>
     <Col span="12">
     <Button type="primary" size="large" shape="circle" icon="ios-plus-outline" @click="createArticle">新建</Button>
-    <!--<Upload action="//jsonplaceholder.typicode.com/posts/" style="display:inline-block">-->
-      <Button type="ghost" size="large" shape="circle" icon="ios-download-outline" @click="uploadModal=true">导入</Button>
-      <Modal v-model="uploadModal" title="导入" width="450" class="upload_doc_mask">
-      	<div class="upload_doc">
-      			选择文件：
-      			<div class="upload_doc_con">
-      				<input type="text" value="*.doc、*.docx、*.ppt、*.pptx" disabled="" />
-      				<Upload 
-      					ref="upload"
-      					action="http://mp.dev.hubpd.com/api/content/import" 
-      					:before-upload="beforeLoad" 
-      					:show-upload-list="true" 
-      					accept=".doc,.docx,.ppt,.pptx"
-      					type="select"
-      					:on-progress="onLoading"
-      					:format="['doc','docx','ppt','pptx']"
-      					:on-format-error="handleFormatError"
-      					:on-success="handleSuccess"
-      					:headers="headToken"
-      					:data="catalogId"
-      				>
-      					<Button type="info" icon="ios-cloud-upload-outline">上传文件</Button>
-      				</Upload>
-     				</div>
-     				<div v-if="beforeUpload"  class="befor_upload">
-     					<span>{{ fileName }}</span>
-     					<Progress :percent="percentProgress" :hide-info="true" :stroke-width="18" status="normal"></Progress>
-     					<span>{{ fileSize }}</span>
-     				</div>
-     				<div style="margin-top: 20px;">
-     					支持doc、docx、ppt、pptx格式文件
-     				</div>
-      	</div>
-      </Modal>
-      	 
-    <!--</Upload>-->
+    <Button type="ghost" size="large" shape="circle" icon="ios-download-outline" @click="uploadModal=true">导入</Button>
+    <Modal v-model="uploadModal" title="导入" width="450" class="upload_doc_mask">
+      <div class="upload_doc">
+        选择文件：
+        <div class="upload_doc_con">
+          <input type="text" value="*.doc、*.docx、*.ppt、*.pptx" disabled="" />
+          <Upload
+            ref="upload"
+            action="http://mp.dev.hubpd.com/api/content/import"
+            :before-upload="beforeLoad"
+            :show-upload-list="true"
+            accept=".doc,.docx,.ppt,.pptx"
+            type="select"
+            :on-progress="onLoading"
+            :format="['doc','docx','ppt','pptx']"
+            :on-format-error="handleFormatError"
+            :on-success="handleSuccess"
+            :headers="headToken"
+            :data="catalogId"
+            >
+            <Button type="info" icon="ios-cloud-upload-outline">上传文件</Button>
+          </Upload>
+        </div>
+        <div v-if="beforeUpload"  class="befor_upload">
+          <span>{{ fileName }}</span>
+          <Progress :percent="percentProgress" :hide-info="true" :stroke-width="18" status="normal"></Progress>
+          <span>{{ fileSize }}</span>
+        </div>
+        <div style="margin-top: 20px;">
+          支持doc、docx、ppt、pptx格式文件
+        </div>
+      </div>
+    </Modal>
     支持word文档、ppt文件导入
     </Col>
     <Col span="12">
-    <Input icon="ios-search" placeholder="请输入..." style="width:250px;float:right"></Input>
+    <Input icon="ios-search" placeholder="输入搜索关键字，按enter键查询" style="width:250px;float:right" @on-enter="getContentList" @on-click="getContentList" v-model="searchValue"></Input>
     </Col>
   </Row>
   <Row style="margin:30px 0;">
@@ -65,6 +62,7 @@
         <th>作者</th>
         <th>时间</th>
         <th>状态</th>
+        <th v-if="roleType == 'Manage'">标签</th>
         <th>操作</th>
       </tr>
     </thead>
@@ -74,34 +72,39 @@
           <img width="120" :src="item.cover">
         </th>
         <th scope="row" id="title">
-          <router-link :to="{path:'../notice',query:{articleID:item.ID}}">{{item.Title}}</router-link>
+          <router-link :to="{path:'../article',query:{id:item.id}}" v-if="roleType == 'Edit'">{{item.title}}</router-link>
+          <router-link :to="{path:'../notice',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'Notice'">{{item.title}}</router-link>
+          <router-link :to="{path:'../article',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'College'">{{item.title}}</router-link>
         </th>
-        <td>{{item.Author}}</td>
-        <td>{{item.AddTime}}</td>
+        <td>{{item.author}}</td>
+        <td>{{item.addtime}}</td>
         <td>
-          <div v-if="item.Status == 'Draft'"><span class="draft-back">草稿</span></div>
-          <div v-else-if="item.Status == 'Publish'"><span class="publish-back">已发表</span></div>
-          <div v-else-if="item.Status == 'Offline'"><span class="offline-back">已撤回</span></div>
-          <div v-else><span class="offline-back">已撤回</span></div>
+          <div v-if="item.status == 'Draft'"><span class="draft-back">草稿</span></div>
+          <div v-else-if="item.status == 'Publish'"><span class="publish-back">已发表</span></div>
+          <div v-else-if="item.status == 'Offline'"><span class="offline-back">已撤回</span></div>
+        </td>
+        <td v-if="roleType == 'Manage'">
+          <span v-if="item.label == 'Notice' ">公告</span>
+          <span v-else>人民日报中央厨房</span>
         </td>
         <td>
-          <router-link :to="{path:'../publish',query:{articleID:item.ID}}"><Icon type="edit" style="font-size:1.1em;color: #F95759;"></Icon></router-link>
+          <router-link :to="{path:'../publish',query:{articleID:item.id}}"><Icon type="edit" style="font-size:1.1em;color: #F95759;"></Icon></router-link>
 
-          <Dropdown style="margin-left: 15px" @on-click="operateContent">
-            <a href="javascript:void(0)">
+          <Dropdown style="margin-left: 15px" trigger="click" @on-click="operateContent">
+            <a href="javascript:void(0)" @click="getOperateContentID(item.id)">
               <Icon type="ios-gear-outline" style="font-size:1.2em;color: #F95759;"></Icon>
             </a>
             <Dropdown-menu slot="list" >
-              <Dropdown-item name="top" ref="type" :data-id="item.ID">置顶</Dropdown-item>
-              <Dropdown-item name="drop" ref="type" :data-id="item.ID">撤回</Dropdown-item>
-              <Dropdown-item name="delete" ref="type" :data-id="item.ID">删除</Dropdown-item>
+              <Dropdown-item name="top" >置顶</Dropdown-item>
+              <Dropdown-item name="drop" >撤回</Dropdown-item>
+              <Dropdown-item name="delete">删除</Dropdown-item>
             </Dropdown-menu>
           </Dropdown>
         </td>
       </tr>
     </tbody>
   </table>
-  <div>
+  <div :class="{hide:isActiveHide}">
     <div style="float:right;line-height:24px;">共{{pageCount}}页</div>
     <Page :total="total" style="float:right" :page-size="pageSize" :current="pageIndex" size="small"  @on-change="changePage"></Page>
   </div>

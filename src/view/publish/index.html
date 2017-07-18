@@ -17,7 +17,7 @@
 
     <div class="pull-right">
       <div style="position: relative;display: inline-block;">
-        <button style="position: absolute;top:-20px;" @click="save('formTop',false)">保存</button>
+        <!--<button style="position: absolute;top:-20px;" @click="save('formTop',false)">保存</button>-->
         <div class="btn-icon save-btn-icon m-r-10" @click="save('formTop',false)"></div>
       </div>
       <div class="btn-icon share-btn-icon m-r-10" @click="share">
@@ -51,20 +51,25 @@
     </Modal>
     <div style="margin:20px 0;font-size:14px;">发布设置</div>
 
-      <Form-item label="渠道">
-        <Select v-model="formTop.publishchannel" placeholder="请选择">
+      <Form-item label="渠道" v-if="roleType == 'Edit'">
+        <Select v-model="formTop.channel" placeholder="请选择">
           <Option v-for="(item,index) in publishChannels" :value="item" :key="index" >{{item}}</Option>
         </Select>
       </Form-item>
       <Form-item label="作者" prop="author">
         <Input v-model="formTop.author"></Input>
       </Form-item>
-      <Form-item label="关键字">
+      <Form-item label="关键字" v-if="roleType == 'Edit'">
         <Input v-model="formTop.keyword"></Input>
       </Form-item>
+    <Form-item label="标签" v-if="roleType == 'Manage'" prop="label">
+      <Select v-model="formTop.label" placeholder="请选择">
+        <Option v-for="(item,index) in publishLabels" :value="index" :key="index" >{{item}}</Option>
+      </Select>
+    </Form-item>
       <Form-item label="封面" prop="cover">
         <Input v-model="formTop.cover" type="text" class="hide"></Input>
-        <div class="cover-container"><img :src="formTop.cover" v-if="formTop.cover != ''" style="width:100%"/></div>
+        <div class="cover-container"><img :src="formTop.cover" width=128 height=128 v-if="formTop.cover != ''" /></div>
         <span class="m-r-20 main-color pointer" @click="fromContent">正文选择</span>
         <span class="main-color pointer" @click="fromLocal">本地上传</span>
       </Form-item>
@@ -99,7 +104,6 @@
                ref="upload"
                id="localUpload"
                :show-upload-list="false"
-               :before-upload="beforeUpload"
                :on-success="handleSuccess"
                :on-error="handleError"
                :format="['jpg','jpeg','png']"

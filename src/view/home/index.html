@@ -3,8 +3,10 @@
   <Row :gutter="34">
     <Col span="8">
     <div class="home-title publish">
-      <img src="../../assets/home-t-1.png">
-      <span class="title-t-0">发表</span>
+    	<router-link to="./publish">
+    		<img src="../../assets/home-t-1.png">
+      	<span class="title-t-0">发表</span>
+    	</router-link>
     </div>
     </Col>
     <Col span="8">
@@ -34,7 +36,9 @@
       <Carousel autoplay v-model="value2">
         <Carousel-item v-for="ad in adList" key="ad.id">
           <div class="demo-carousel">
-            <img src="../../assets/ad.png">
+          	<a :href="ad.url">
+          		<img :src="ad.path">
+          	</a>
           </div>
         </Carousel-item>
       </Carousel>
@@ -48,37 +52,41 @@
       <span v-bind:class="{ active: switchTab == 1 }" v-on:click="switchTab = 1">中央厨房号学院</span>
     </div>
     <div class="home-tab-n" v-if="switchTab==0">
-      <ul class="home-notices">
-        <li v-for="notice in noticeList" key="notice.id" :class="{readed:notice.isReaded}" @click="getNoticeURL(notice.id)">
-          <i></i>
-          <span class="home-notice-content">
-								  {{notice.title}}
-							  </span>
-          <span class="home-notice-date">
-								  {{notice.dateTime}}
-							  </span>
+      <ul class="home-notices" ref="uls">
+        <li v-for="notice in noticeList" key="notice.id" :class="{readed:notice.isReaded}" @click="readed($event,notice.id)">
+          <router-link :to="{path:'./notice',query:{id:notice.id}}" target="_blank">
+	          <i></i>
+	          <span class="home-notice-content">
+						  {{notice.title}}
+					  </span>
+	          <span class="home-notice-date">
+						  {{notice.addtime}}
+					  </span>
+			</router-link>
         </li>
       </ul>
       <div class="home-pager">
-        <Page :total="40" size="small" :current="1" @on-change="changePageNotice"></Page>
-        <span>共{{pageTotalG}}页 </span>
+        <Page :total="noticeTotal" size="small" :current="pageIndexX" @on-change="changePageNotice" :page-size="pageSize"></Page>
+        <span>共{{pageTotalX}}页 </span>
       </div>
     </div>
     <div class="home-tab-d" v-if="switchTab==1">
       <ul class="home-notices">
-        <li v-for="college in collegeList" key="college.id" :class="{readed: college.isReaded}" @click="getNoticeURL(college.id)">
-          <i></i>
-          <span class="home-notice-content">
-									{{college.title}}
-								</span>
-          <span class="home-notice-date">
-									{{college.dateTime}}
-								</span>
+        <li v-for="college in collegeList" key="college.id" :class="{readed: college.isReaded}" @click="readed($event,college.id)">
+          <router-link :to="{path:'./notice',query:{id:college.id}}" target="_blank">
+	          <i></i>
+	          <span class="home-notice-content">
+							{{college.title}}
+						</span>
+	          <span class="home-notice-date">
+							{{college.addtime}}
+						</span>
+					</router-link>
         </li>
       </ul>
       <div class="home-pager">
-        <Page :total="12" size="small" @on-change="changePageCollege"></Page>
-        <span>共{{pageTotalX}}页</span>
+        <Page :total="articleTotal" size="small" @on-change="changePageCollege" :page-size="pageSize"></Page>
+        <span>共{{pageTotalG}}页</span>
       </div>
     </div>
     </Col>

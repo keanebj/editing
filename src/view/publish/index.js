@@ -1,7 +1,7 @@
 import VueQArt from 'vue-qart'
 import ScrollBar from '@/view/scroll/index.vue'
 import '../../../static/ueditor1_4_3_3-utf8-jsp/ueditor.config.js'
-import '../../../static/ueditor1_4_3_3-utf8-jsp/ueditor.all.min.js'
+import '../../../static/ueditor1_4_3_3-utf8-jsp/ueditor.all.js'
 import '../../../static/ueditor1_4_3_3-utf8-jsp/lang/zh-cn/zh-cn.js'
 import '../../../static/ueditor1_4_3_3-utf8-jsp/ueditor.parse.min.js'
 export default {
@@ -18,31 +18,34 @@ export default {
         imagePath: require('../../assets/erweima.png'),
         filter: 'color',
       },
+      roleType: 'Edit',
+      articleID: -1,
       downloadButton: false,
-      hideTip:true,
+      hideTip: true,
       qCode: false,
-      titleContentCount:0,
-      editor:null,
-      dialogTitle:'错误提示',
-      dialogContent:'还有未正确填写的项',
-      tabView:'pc',
-      previewContent:false,
-      localModal:false,
-      contentModal:false,
-      contentCoverSrc:'',
-     /* contentPics:[{src:require('../../assets/logo.png')},{src:require('../../assets/img.png')},{src:require('../../assets/img.png')}
-        ,{src:require('../../assets/img.png')},{src:require('../../assets/img.png')},{src:require('../../assets/img.png')}
-        ,{src:require('../../assets/img.png')},{src:require('../../assets/img.png')},{src:require('../../assets/img.png')}],
-      */publishChannels:['人民日报中央厨房'],
+      titleContentCount: 0,
+      editor: null,
+      tabView: 'pc',
+      previewContent: false,
+      localModal: false,
+      contentModal: false,
+      contentCoverSrc: '',
+      publishChannels: ['人民日报中央厨房'],
+      publishLabels: {
+        Notice: '公告',
+        College: '人民日报中央厨房'
+      },
       formTop: {
-        publishChannel: '人民日报中央厨房',
+        contenttype:"Article",
+        channel: '人民日报中央厨房',
         author: '',
         keyword: '',
         cover:'',
-        abstract:'',
+        summary:'',
         currentAbstractCount:0,
-        titleContent:'',
-        editorContent:'',
+        title:'',
+        content:'',
+        label:'Notice'
       },
       ruleValidate: {
         author: [
@@ -51,72 +54,47 @@ export default {
         cover: [
           { required: true, message: '封面不能为空', trigger: 'blur' }
         ],
-        abstract:[
+        summary:[
           { type: 'string', max: 140, message: '介绍不能大于140字', trigger: 'change' }
         ],
-        titleContent:[
+        title:[
           { required: true, message: '标题不能为空', trigger: 'change' },
           { type: 'string', max: 50, message: '标题不能大于50字', trigger: 'change' }
-        ]
+        ],
+        label: [
+          { required: true, message: '标签不能为空', trigger: 'blur' }
+        ],
+
       },
       localDefaultSrc:require('../../assets/logo.png'),
       elements: [],
       previewCon: [
-        'dawtf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对出对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对人生的出tf对生的出tf对人生',
-        [{src:require('../../assets/img.png')}]
+        '',
+        []
       ],
       iIndex: [-1],
       i: -1,
       tempi: -1,
-      timer:null
-    }
-  },
-  computed:{
-    articleID:function(){
-      return this.$route.query.articleID ? this.$route.query.articleID:-1;
+      timer:null,
+      headers:{
+        token:this.$store.state.token
+      },
+      token:this.$store.state.token
     }
   },
   created(){
-
-    //判断一下是编辑还是草稿通过文章的id
-    //编辑：发出ajax请求
-    if(this.articleID != 0) {
-      this.$http({
-        method: 'POST',
-        url: "/api/post",
-        params: {articleID: this.articleID}
-      }).then((response) => {
-        let data = response.data;
-        //给数据值
-        this.formTop.titleContent = data.title;
-        this.formTop.publishChannel = data.channel;
-        this.formTop.author = data.author;
-        this.formTop.keyword = data.keyWord;
-        this.formTop.cover = data.cover;
-        this.formTop.abstract = data.abstract;
-        this.formTop.editorContent = data.content;
-        this.formTop.currentAbstractCount = data.abstract.toString().length;
-        this.titleContentCount = data.title.toString().length;
-      }, (response) => {
-        alert("error");
-      });
-    }else{
-      //新建
-    }
+    this.roleType=this.$store.state.roleType;
   },
   mounted(){
     //用于隐藏左侧
     var span5 =  document.querySelector(".ivu-col-span-5")
     var span19 =  document.querySelector(".ivu-col-span-19")
     span5.style.display = 'none';
-    span19.className = "layout-content-warp ivu-col ivu-col-span-24"
-
-
+    span19.className = "layout-content-warp ivu-col ivu-col-span-24";
 
     this.editor=UE.getEditor("editor",{
       //此处可以定制工具栏的功能，若不设置，则默认是全部的功能
       UEDITOR_HOME_URL: '/static/ueditor1_4_3_3-utf8-jsp/',
-      //serverUrl: config.ajaxUrl + '/ueditor/jsp/controller.jsp',
       emotionLocalization: true,
       scaleEnabled: true,
     })
@@ -128,19 +106,49 @@ export default {
           This.hideTip=true;
         }
     })
-    this.editor.ready(function(){
-      This.editor.execCommand('inserthtml',This.formTop.editorContent);
-    })
-    //自动保存:半分钟自动保存一次
-//  this.timer=setInterval(function(){
-      //存到本地草稿
 
+    //判断一下是编辑还是草稿通过文章的id
+    if(this.$route.query.articleID){
+      this.articleID=this.$route.query.articleID;
+    }
+
+    //编辑：发出ajax请求
+    if(this.articleID > 0) {
+      this.$http.get("/api/content/"+this.articleID).then((response) => {
+        let data = response.data.content;
+
+        //给数据值
+        this.formTop.title = data.title;
+        this.formTop.publishchannel = data.channel;
+        this.formTop.author = data.author;
+        this.formTop.keyword = data.keyword;
+        this.formTop.cover = data.cover;
+        this.formTop.summary = data.summary;
+        this.formTop.content = data.content;
+        this.formTop.label = data.label;
+        if(data.summary){
+          this.formTop.currentAbstractCount = data.summary.toString().length;
+        }
+        this.titleContentCount = data.title.length;
+        this.editor.ready(function(){
+          This.editor.execCommand('inserthtml',This.formTop.content);
+        })
+
+      }, (response) => {
+        this.$Message.error(response.data.message);
+      });
+    }else{
+      this.editor.ready(function(){
+        This.editor.execCommand('inserthtml',This.formTop.content);
+      })
+    }
+
+    //自动保存:一分钟自动保存一次
+    this.timer=setInterval(function(){
       //存到数据库
-//    This.save('formTop',true);
-//  },3000);
+      This.save('formTop',true);
+    },60000);
 
-  },
-  watch:{
   },
   destroyed() {
     //清除定时器
@@ -149,13 +157,11 @@ export default {
   },
   methods: {
     showPreviewContent:function(){
-
-      //获得编辑器中的内容
-      this.previewCon[0]=this.editor.getContent();
+      //获得编辑器中的内容:这里的预览需要写一个界面（待完善。。。）
+    this.previewCon[0]=this.editor.getContent();
       this.previewContent=true;
-
       var ele = this.elements;
-      clearTimeout(time)
+      clearTimeout(time);
       var time =  setTimeout(function () {
       	if (ele[3].clientHeight >= ele[0].clientHeight) {
       		ele[1].style.display = 'none';
@@ -172,8 +178,8 @@ export default {
       //从正文选择图片
       //判断是否有图片？正则匹配到数组
       let reg=/<img\b[^>]*src\s*=\s*"[^>"]*\.(?:png|jpg|jpeg|gif)"[^>]*>/gi;
-     //let content=this.editor.getContent();
-      let content='<p>wijifdf</p><img src="http://www.w3school.com.cn/i/ct_css_selector.gif"/><i class="dfdf"></i><img src="http://pagead2.googlesyndication.com/sadbundle/$dns%3Doff$/2192791104758210524/1-3.png"/><div>fdfdf</div>';
+      let content=this.editor.getContent();
+      //let content='<p>wijifdf</p><img src="http://www.w3school.com.cn/i/ct_css_selector.gif"/><i class="dfdf"></i><img src="http://pagead2.googlesyndication.com/sadbundle/$dns%3Doff$/2192791104758210524/1-3.png"/><div>fdfdf</div>';
       let imgArr=content.match(reg);
       var srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i;
       //未匹配到图片
@@ -199,7 +205,6 @@ export default {
         this.formTop.cover=this.iIndex[1];
         this.tempi=this.iIndex[0];
         this.i=this.iIndex[0];
-        console.log("点击确定按钮temip"+this.tempi +"i="+this.i)
         this.contentModal=false;
       }else{
         //未选择封面，提示选择
@@ -209,8 +214,6 @@ export default {
     closeContentPop:function(){
       //关闭选择正文封面的弹框
       this.iIndex[0] = this.tempi;
-      console.log("关闭弹框时：tempi" +this.tempi);
-      console.log("关闭弹框时：i" +this.iIndex[0]);
       this.contentModal=false;
     },
     change (element) {
@@ -228,12 +231,8 @@ export default {
     handleError:function(error, file, fileList){
       this.$Message.error('上传失败');
     },
-    handleSuccess (res, file) {
-      // 因为上传过程为实例，这里模拟添加 url
-      file.url=require('../../assets/img.png');
-      this.localDefaultSrc=file.url;
-      //file.url = 'https://o5wwk8baw.qnssl.com/7eb99afb9d5f317c912f08b5212fd69a/avatar';
-      //file.name = '7eb99afb9d5f317c912f08b5212fd69a';
+    handleSuccess (res, file){
+      this.localDefaultSrc="http://mp.dev.hubpd.com/"+file.response.path;
     },
     handleFormatError (file) {
       this.$Notice.warning({
@@ -248,31 +247,35 @@ export default {
       });
     },
     clickLocalCoverOk:function(){
-      this.formTop.cover=require('../../assets/img.png');
+      this.formTop.cover=this.localDefaultSrc;
       this.localModal=false;
     },
     renderAbstract:function(){
       let content=this.editor.getContent();
-      if(!content){
-        this.$Message.warning("正文内容为空,无法生成摘要");
+      let title=this.formTop.title;
+      if(!content && !title){
+        this.$Message.warning("标题和正文为空,无法生成摘要");
       }else{
         //interface://获得正文的摘要:需要发送请求给后台，参数：正文内容  返回：摘要内容
-        this.$http({
-          method: 'POST',
-          url: "/api/post",
-          params: { content: content }
-        }).then((response) => {
+          this.$http.post("/api/content/summary",{content: content,title:title}
+          // ,{
+            // headers:{
+            //   token:this.token
+            // }
+        // }
+        ).then((response) => {
           console.log(response);
-          this.formTop.abstract=response.data.abstract.toString();
-          this.formTop.currentAbstractCount=response.data.abstract.toString().length;
-        },(response) => {
-          alert("error");
+          this.formTop.summary=response.data.summary.toString();
+          this.formTop.currentAbstractCount=response.data.summary.toString().length;
+        },(error) => {
+          this.$Message.error(error.data.message);
         });
       }
     },
     publish:function(name){
-      // 发布
-      this.formTop.editorContent=this.editor.getContent();
+      // 发布：暂时不做
+
+     /* this.formTop.editorContent=this.editor.getContent();
       this.$refs[name].validate((valid) => {
         if(!this.formTop.editorContent){
             this.$Message.error('保存失败，请检查格式是否正确!');
@@ -280,74 +283,58 @@ export default {
         }
         else if (valid) {
           //通过验证，访问后台，保存表单数据
-          this.$http({
-            method: 'POST',
-            url: "",
-            params: {formData:this.formTop,id:this.articleID}//后台可以判断是都有稿件id判断是插入还是更新
-          }).then((response) => {
-            if(response.status == 200){
-                this.$Message.success('发布成功!');
-                //this.articleID=response.data.ID;
-            }else{
-                this.$Message.error('保存失败，请检查格式是否正确!');
-            }
+          this.$http.put("/api/content/publish/"+this.articleID,{contentid:this.articleID}).then((response) => {
+             this.$Message.success('发布成功!');
           });
         } else {
-            this.$Message.error('保存失败，请检查格式是否正确!');
+            this.$Message.error('发布失败，请检查格式是否正确!');
         }
-      })
+      })*/
 
 
     },
     save:function(name,hideTip){
-      this.formTop.editorContent=this.editor.getContent();
+      this.formTop.content=this.editor.getContent();
         this.$refs[name].validate((valid) => {
-          if(!this.formTop.editorContent){
+          if(!this.formTop.content){
             if(!hideTip){
               this.$Message.error('保存失败，请检查格式是否正确!');
             }
             this.hideTip=false;
           }
           else if (valid) {
-              //通过验证，访问后台，保存表单数据
-              //根据文章的id判断是保存还是更新:???????
               if(this.articleID > -1){
                 //更新
-                this.$http.put("http://mp.dev.hubpd.com/api/content/"+this.articleID,
-                  {"contenttype":"Article","title":"aaaa"}
-                /*  {
-                    headers: {
-                      'Content-Type': 'application/json'
-                    },
-                    emulateJSON :true,
-                  }*/
-                 /* {
-                  method: 'PUT',
-                  url: "http://mp.dev.hubpd.com/api/content/"+this.articleID,
-                  params:,
-                  headers: {
-                    'Content-Type': 'application/json'
-                  }
-                }*/).then((response) => {
-                  this.$Message.success(response.data.message);
-                  this.articleID=response.data.contentID;
-                }, (response) => {
-                  //this.$Message.error(response.data.message);
-                });
-
-              }else{
-                //新建
-                this.$http({
-                  method: 'POST',
-                  //url: "http://mp.dev.hubpd.com/api/content",
-                  url:"http://mp.dev.hubpd.com/api/studio/login",
-                  //params:this.formTop,
-                  params:{username:'admin1',password:'admin'},
-                }).then((response) => {
-
+                this.$http.put("/api/content/"+this.articleID,this.formTop
+                  // {
+                  //   headers:{
+                  //     token:this.token
+                  //   }
+                  // }
+               ).then((response) => {
+                    //console.log(this.formTop.label)
                     this.$Message.success(response.data.message);
-                   //this.articleID=response.data.contentID;
-                  this.articleID=14;
+                    this.articleID=response.data.content_id;
+                }, (error) => {
+                      this.$Message.error(error.data.message);
+                });
+              }else{
+
+                //新建
+                this.$http.post('/api/content',this.formTop)
+                // this.$http.post({
+                //   method: 'POST',
+                //   url: "/api/content",
+                //   params:this.formTop
+                  // headers:{
+                  //   token:this.token
+                  // }
+                // })
+                .then((response) => {
+                    console.log(response);
+                  //console.log(this.formTop.label)
+                    this.$Message.success(response.data.message);
+                    this.articleID=response.data.content_id;
                 }, (response) => {
                     this.$Message.error(response.data.message);
                 });
@@ -364,13 +351,7 @@ export default {
       document.execCommand("Copy");
     },
     share: function () {
-      //点击分享的时候需要后台返回详情页的url
-      this.$http({
-        method: 'GET',
-        url: "",
-        params: {id:this.articleID}
-      }).then((response) => {
-        if(response.status == 200){
+        if(this.articleID > 0){
           //可以分享
           var scrollTop=0;
           if(document.documentElement&&document.documentElement.scrollTop)
@@ -383,12 +364,11 @@ export default {
           }
           this.$refs.shareHide.$el.children[1].children[0].style.top = (195 - scrollTop) + 'px';
 
-          //this.config.value=response.data.qcodelink;
+          this.config.value="http://mp.dev.hubpd.com/notice?id="+this.articleID;
           this.qCode = true;
         }else{
           this.$Message.error('此文章暂时不能分享');
         }
-      });
     },
     //滚动条
     changeView: function (view) {
@@ -472,7 +452,7 @@ export default {
 
     //editor
     getTitleContent:function(){
-      this.titleContentCount=this.formTop.titleContent.length;
+      this.titleContentCount=this.formTop.title.length;
     },
   }
 

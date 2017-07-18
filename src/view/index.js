@@ -57,7 +57,7 @@ export default {
         .then(res => {
           console.log('退出结果：' + JSON.stringify(res.data))
           sessionStorage.removeItem("token")
-          this.$Message.info(res.data.message)
+          this.$Message.success(res.data.message)
           this.$router.push('/login')
         }, err => {
           console.log('出错啦！' + err)

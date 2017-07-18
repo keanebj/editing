@@ -6,7 +6,7 @@
         <Row :gutter="34">
         <Col span="8" v-for="(value,key) in previewCon" :index="key" :key="key">
         <div class="content-pic" :index="key" @click="selectCover(key)">
-          <div style="width: 100%;height: 120px;display:table-cell;text-align:center;vertical-align:middle;overflow: hidden;">
+          <div style="width: 100%;height: 120px;text-align:center;vertical-align:middle;overflow: hidden;">
             <img :src="value.src" :index="key" :class="[i == key?'active-border':'']"/>
           </div>
         <div class="center" :index="key" style="font-size:2em"><Icon :class="[i == key ? 'active-color':'']" type="ios-checkmark-outline" ref=""></Icon></div>

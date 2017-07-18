@@ -1,6 +1,18 @@
 <section>
-	<div class="notice">
-		<h1>{{title}}</h1>
-    <div v-html="content"></div>
-	</div>
+  <MainHeader></MainHeader>
+  <Row type="flex" justify="center">
+    <Col span="12">
+    <div class="article">
+      <div>
+        <div class="con_new hidden-xs">
+          <h2 class="orginTit">
+            {{title}}
+          </h2>
+          <div v-html="content"></div>
+        </div>
+      </div>
+    </div>
+    </Col>
+  </Row>
+  <MainFooter></MainFooter>
 </section>
