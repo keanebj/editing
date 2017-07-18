@@ -49,21 +49,19 @@
     </div>
     <div class="home-tab-n" v-if="switchTab==0">
       <ul class="home-notices">
-        <li v-for="notice in noticeList" key="notice.ID" :class="{readed:notice.isReaded}">
-          <router-link :to="{path:'./notice',query:{id:notice.ID}}">
-	          <i></i>
-	          <span class="home-notice-content">
-									  {{notice.Title}}
-								  </span>
-	          <span class="home-notice-date">
-									  {{notice.AddTime}}
-								  </span>
-			</router-link>
+        <li v-for="notice in noticeList" key="notice.id" :class="{readed:notice.isReaded}" @click="getNoticeURL(notice.id)">
+          <i></i>
+          <span class="home-notice-content">
+								  {{notice.title}}
+							  </span>
+          <span class="home-notice-date">
+								  {{notice.dateTime}}
+							  </span>
         </li>
       </ul>
       <div class="home-pager">
-        <Page :total="noticeTotal" size="small" :current="pageIndexX" @on-change="changePageNotice"></Page>
-        <span>共{{pageTotalX}}页 </span>
+        <Page :total="40" size="small" :current="1" @on-change="changePageNotice"></Page>
+        <span>共{{pageTotalG}}页 </span>
       </div>
     </div>
     <div class="home-tab-d" v-if="switchTab==1">
@@ -71,16 +69,16 @@
         <li v-for="college in collegeList" key="college.id" :class="{readed: college.isReaded}" @click="getNoticeURL(college.id)">
           <i></i>
           <span class="home-notice-content">
-									{{college.Title}}
+									{{college.title}}
 								</span>
           <span class="home-notice-date">
-									{{college.AddTime}}
+									{{college.dateTime}}
 								</span>
         </li>
       </ul>
       <div class="home-pager">
-        <Page :total="articleTotal" size="small" @on-change="changePageCollege"></Page>
-        <span>共{{pageTotalG}}页</span>
+        <Page :total="12" size="small" @on-change="changePageCollege"></Page>
+        <span>共{{pageTotalX}}页</span>
       </div>
     </div>
     </Col>

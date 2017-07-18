@@ -6,6 +6,10 @@ export default {
     menuKey: {
       type: String,
       default: ''
+    },
+    roleType: {
+      type: String,
+      default: 'Manage'
     }
   },
   methods: {

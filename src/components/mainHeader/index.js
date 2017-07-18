@@ -1,11 +1,18 @@
 export default {
   name: 'ComponentsMainHeader',
-  data () {
+  data() {
     return {
     }
   },
-  methods: {
+  props: {
+     logOut: Function,
+     userName:{
+       type: String,
+       default: '熊老师'
+     }
   },
-  created () {},
-  mounted () {}
+  methods: {    
+  },
+  created() {},
+  mounted() {}
 }

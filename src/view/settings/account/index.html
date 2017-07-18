@@ -1,105 +1,81 @@
-
 <section>
   <div v-show="roleType == 1" class="media-account">
-      <div class="account upload-logo">
-            <label>LOGO</label>
-            <div class="demo-upload-list" v-for="item in uploadList">
-            <template v-if="item.status === 'finished'">
-                <img :src="item.url">
-                <div class="demo-upload-list-cover">
-                    <Icon type="ios-eye-outline" @click.native="handleView(item.name)"></Icon>
-                    <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
-                </div>
-            </template>
-            <template v-else>
-                <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
-            </template>
+    <div class="account upload-logo">
+      <label>LOGO</label>
+      <div class="demo-upload-list" v-for="item in uploadList">
+        <div v-if="item.status === 'finished'">
+          <img :src="item.url">
+          <div class="demo-upload-list-cover">
+            <Icon type="ios-eye-outline" @click.native="handleView(item.name)"></Icon>
+            <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
+          </div>
         </div>
-        <Upload
-            ref="upload"
-            :show-upload-list="false"
-            :default-file-list="defaultList"
-            :on-success="handleSuccess"
-            :format="['jpg','jpeg','png']"
-            :max-size="2048"
-            :on-format-error="handleFormatError"
-            :on-exceeded-size="handleMaxSize"
-            :before-upload="handleBeforeUpload" 
-            action="//jsonplaceholder.typicode.com/posts/"
-            style="display: inline-block;width:58px;">
-            <div style="width: 58px;height:58px;line-height: 58px;">
-                <img src="../../../assets/img-edit.svg">
-            </div>            
-        </Upload>
-        <span class="file-tips">建议logo长宽比为3:2</span>   
-        <Modal title="查看图片" v-model="visible">
-            <img :src="'https://o5wwk8baw.qnssl.com/' + imgName + '/large'" v-if="visible" style="width: 100%">
-        </Modal>
-            <!--<img :src="imgSrc" >
-            <Upload action="//jsonplaceholder.typicode.com/posts/" class="img-pre"
-            :on-success="handleSuccess"
-            :format="['jpg','jpeg','png']"
-            :max-size="2048"
-            :on-format-error="handleFormatError"
-            :on-exceeded-size="handleMaxSize"
-            :before-upload="handleBeforeUpload">                
-                <Button type="ghost" class="img-edit">
-                  <img src="../../../assets/img-edit.svg">
-                </Button>                
-            </Upload>  
-            <span class="file-tips">建议logo长宽比为3:2</span>          -->
+        <div v-else>
+          <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
         </div>
+      </div>
+      <Upload ref="upload" :headers="uploadHeaders" :show-upload-list="false" :on-success="handleSuccess" :format="['jpg','jpeg','png']"
+        :max-size="2048" :on-format-error="handleFormatError" :on-exceeded-size="handleMaxSize" :before-upload="handleBeforeUpload"
+        action="http://mp.dev.hubpd.com/api/image/upload" style="display: inline-block;width:58px;">
+        <div style="width: 58px;height:58px;line-height: 58px;">
+          <img src="../../../assets/img-edit.svg">
+        </div>
+      </Upload>
+      <span class="file-tips">建议logo长宽比为3:2</span>
+      <Modal title="查看图片" v-model="visible">
+        <img :src="uploadImg" v-if="visible" style="width: 100%">
+      </Modal>
+    </div>
     <Form ref="formValidateM" :model="formValidateM" label-position="left" :rules="ruleValidateM" :label-width="100">
-        
-        <div class="account">
-          <label>工作室名称</label>
-          <label>{{studioName}}</label>
-        </div>
-        <div class="account">
-          <label>URL</label>
-          <label>{{URL}}</label>
-        </div>
-        <div class="account">
-          <label>绑定栏目</label>
-          <label>{{account}}</label>
-        </div>
-        <Form-item label="姓名" prop="name">
-            <Input v-model="formValidateM.name" placeholder="请输入姓名"></Input>
-        </Form-item>                        
-        <Form-item label="电话" prop="tel">
-            <Input v-model="formValidateM.tel"   placeholder="请输入电话"></Input>
+      <div class="account">
+        <label>工作室名称</label>
+        <label>{{studioName}}</label>
+      </div>
+      <div class="account">
+        <label>URL</label>
+        <label>{{URL}}</label>
+      </div>
+      <div class="account">
+        <label>绑定栏目</label>
+        <label>{{catalog}}</label>
+      </div>
+      <Form-item label="姓名" prop="name">
+        <Input v-model="formValidateM.name" placeholder="请输入姓名"></Input>
+      </Form-item>
+      <Form-item label="电话" prop="tel">
+        <Input v-model="formValidateM.tel" placeholder="请输入电话"></Input>
+      </Form-item>
+      <div class="account-btn">
+        <Form-item>
+          <Button type="primary" @click="handleSubmit('formValidateM')" class="save">提交</Button>
+          <Button type="ghost" @click="handleReset('formValidateM')" class="cancel" style="margin-left: 8px">取消</Button>
         </Form-item>
-        <div class="account-btn">
-            <Form-item>
-                <Button type="primary" @click="handleSubmit('formValidateM')" class="save">提交</Button>
-                <Button type="ghost" @click="handleReset('formValidateM')" class="cancel" style="margin-left: 8px">取消</Button>
-            </Form-item>
-        </div>
-            
+      </div>
+
     </Form>
   </div>
   <div v-show="roleType == 0" class="operation-account">
     <Form ref="formValidate" :model="formValidate" label-position="left" :rules="ruleValidate" :label-width="100">
-        <div class="account">
-          <label>账户名</label>
-          <label>{{account}}</label>
-        </div>
-        <Form-item label="姓名" prop="name">
-            <Input v-model="formValidate.name" placeholder="请输入姓名"></Input>
-        </Form-item>                        
-        <Form-item label="电话" prop="tel">
-            <Input v-model="formValidate.tel"   placeholder="请输入电话"></Input>
+      <div class="account">
+        <label>账户名</label>
+        <label>{{account}}</label>
+      </div>
+      <Form-item label="姓名" prop="name">
+        <Input v-model="formValidate.name" placeholder="请输入姓名"></Input>
+      </Form-item>
+      <Form-item label="电话" prop="tel">
+        <Input v-model="formValidate.tel" placeholder="请输入电话"></Input>
+      </Form-item>
+      <Form-item label="邮箱" prop="mail">
+        <Input v-model="formValidate.mail" placeholder="请输入邮箱"></Input>
+      </Form-item>
+      <div class="account-btn">
+        <Form-item>
+          <Button type="primary" @click="handleSubmit('formValidate')" class="save">提交</Button>
+          <Button type="ghost" @click="handleReset('formValidate')" class="cancel" style="margin-left: 8px">取消</Button>
         </Form-item>
-        <Form-item label="邮箱" prop="mail">
-            <Input v-model="formValidate.mail" placeholder="请输入邮箱"></Input>
-        </Form-item> 
-        <div class="account-btn">
-            <Form-item>
-                <Button type="primary" @click="handleSubmit('formValidate')" class="save">提交</Button>
-                <Button type="ghost" @click="handleReset('formValidate')" class="cancel" style="margin-left: 8px">取消</Button>
-            </Form-item>
-        </div>
-            
+      </div>
+
     </Form>
   </div>
 </section>

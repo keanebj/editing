@@ -19,7 +19,7 @@ export default {
   },
   created () {
     this.headers = {
-      token: this.$store.state.token
+      token: this.$store.state.userinfo.token
     }
   }
 }

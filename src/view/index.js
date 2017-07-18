@@ -1,4 +1,6 @@
-import { mapState } from 'vuex'
+import {
+  mapState
+} from 'vuex'
 import MainHeader from '@/components/mainHeader/index.vue'
 import MainFooter from '@/components/mainFooter/index.vue'
 import ComponentsMainMenu from '@/components/mainMenu/index.vue'
@@ -11,7 +13,7 @@ export default {
     ComponentsBreadcrumb
   },
   computed: {
-    ...mapState(['menu'])
+    ...mapState(['menu','userinfo'])
   },
   data() {
     return {
@@ -38,13 +40,29 @@ export default {
           path: e.path
         })
       }
+    },
+    logOut(e) {
+      this.$http({
+          method: 'get',
+          url: 'http://mp.dev.hubpd.com/api/studio/logout'
+        })
+        .then(res => {
+          console.log('退出结果：' + JSON.stringify(res.data))
+          if (res.data.status == 0) {
+            if (sessionStorage.getItem("token") == null || sessionStorage.getItem("token") == undefined) {
+              this.$router.push('/login')
+            } else {
+              this.$Message.error(res.data.message)
+            }
 
-      //判断路径
-      /* if(e.path.indexOf('publish') > -1){
-           this.isActive=true;
-       }else{
-         this.isActive=false;
-       }*/
+          } else {
+            sessionStorage.removeItem("token")
+            this.$router.push('/login')
+          }
+
+        }, err => {
+          console.log('出错啦！' + err)
+        })
     }
   }
 }
