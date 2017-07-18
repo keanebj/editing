@@ -13,38 +13,38 @@ export default {
   computed: {
     ...mapState(['menu'])
   },
-  data () {
+  data() {
     return {
-		isActive:false
+      isActive: false
     }
   },
-   beforeCreate () {
+  beforeCreate() {
     //监听浏览器的返回按钮
-    window.addEventListener("popstate", function(e) {
+    window.addEventListener("popstate", function (e) {
       location.reload();
     }, false);
-   },
-   mounted(){
-  if(window.location.href.indexOf('publish') > -1){
-    this.isActive=true;
-  }else{
-    this.isActive=false;
-  }
+  },
+  mounted() {
+    if (window.location.href.indexOf('publish') > -1) {
+      this.isActive = true;
+    } else {
+      this.isActive = false;
+    }
   },
   methods: {
-    onSelect (e) {
+    onSelect(e) {
       if (e.path) {
         this.$router.push({
           path: e.path
         })
       }
 
-	  //判断路径
-     /* if(e.path.indexOf('publish') > -1){
-          this.isActive=true;
-      }else{
-        this.isActive=false;
-      }*/
+      //判断路径
+      /* if(e.path.indexOf('publish') > -1){
+           this.isActive=true;
+       }else{
+         this.isActive=false;
+       }*/
     }
   }
 }
