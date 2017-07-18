@@ -101,14 +101,14 @@ export default {
   },
   methods: {
     getOperatorInfo() {
-      this.$http.get('http://mp.dev.hubpd.com/api/studio/'+this.userinfo.id, {
+      this.$http.get('http://mp.dev.hubpd.com/api/studio/' + this.userinfo.id, {
           username: this.userinfo.username
         })
         .then(res => {
           console.log(JSON.stringify(res.data))
           if (res.data.status == 0) {
             this.$router.push('/login')
-          } else {
+          } else if (res.data.status == 1){
             console.log(JSON.stringify(res.data))
             let operatorInfo = res.data.studio
             this.formValidate.name = operatorInfo.fullname
@@ -117,19 +117,22 @@ export default {
             this.studioName = operatorInfo.studioname
             this.formValidate.mail = operatorInfo.email
           }
+          else{
+            this.$router.push('/login')
+          }
 
         }, err => {
           console.log('出错啦！' + err)
         })
     },
     getStudioInfo() {
-      this.$http.get('http://mp.dev.hubpd.com/api/studio/'+this.userinfo.id, {
+      this.$http.get('http://mp.dev.hubpd.com/api/studio/' + this.userinfo.id, {
           username: this.userinfo.username
         })
         .then(res => {
           if (res.data.status == 0) {
             this.$router.push('/login')
-          } else {
+          } else if (res.data.status == 1) {
             let studioInfo = res.data.studio
             this.formValidateM.name = studioInfo.fullname
             this.formValidateM.tel = studioInfo.tel
@@ -143,6 +146,8 @@ export default {
             }
             this.uploadList.push(_preImg)
             this.uploadImg = _preImg.url
+          } else {
+            this.$router.push('/login')
           }
         }, err => {
           console.log('出错啦！' + err)
@@ -163,11 +168,13 @@ export default {
               title: '成功',
               desc: res.data.message || '修改成功'
             })
-          } else {
+          } else if (res.data.status == 0) {
             this.$Notice.error({
               title: '错误',
               desc: res.data.message || '修改失败'
             })
+          } else {
+            this.$router.push('/login')
           }
           console.log(JSON.stringify(res.data))
         }, err => {
@@ -194,11 +201,13 @@ export default {
               title: '成功',
               desc: res.data.message || '修改成功'
             })
-          } else {
+          } else if (res.data.status == 0) {
             this.$Notice.error({
               title: '错误',
               desc: res.data.message || '修改失败'
             })
+          } else {
+            this.$router.push('/login')
           }
           console.log(JSON.stringify(res.data))
         }, err => {

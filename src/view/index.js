@@ -13,31 +13,39 @@ export default {
     ComponentsBreadcrumb
   },
   computed: {
-    ...mapState(['menu','userinfo'])
+    ...mapState(['menu', 'userinfo'])
   },
   data() {
     return {
-    userName:'熊老师',
-    isActive:false,
-    roleType:'Manage'
+      userName: '熊老师',
+      isActive: false,
+      roleType: 'Manage'
     }
   },
-   beforeCreate () {
+  beforeCreate() {
+    if (sessionStorage.getItem("token") == null || sessionStorage.getItem("token") == undefined) {
+      this.$router.push('/login')
+    }
     //监听浏览器的返回按钮
-    window.addEventListener("popstate", function(e) {
+    window.addEventListener("popstate", function (e) {
       location.reload();
     }, false);
-   },
-   mounted(){
-	  if(window.location.href.indexOf('publish') > -1){
-		this.isActive=true;
-	  }else{
-		this.isActive=false;
-	  }
+  },
+  mounted() {
+    if (window.location.href.indexOf('publish') > -1) {
+      this.isActive = true;
+    } else {
+      this.isActive = false;
+    }
   },
   created() {
-    this.userName = this.userinfo.username
-    this.roleType = this.userinfo.roleType
+    if (this.userinfo == undefined) {
+      this.$router.push('/login')
+    } else {
+      this.userName = this.userinfo.username
+      this.roleType = this.userinfo.roleType
+    }
+
   },
   methods: {
     onSelect(e) {
@@ -46,34 +54,23 @@ export default {
           path: e.path
         })
       }
-	  //判断路径
-     /* if(e.path.indexOf('publish') > -1){
-          this.isActive=true;
-      }else{
-        this.isActive=false;
-      }*/
+      //判断路径
+      /* if(e.path.indexOf('publish') > -1){
+           this.isActive=true;
+       }else{
+         this.isActive=false;
+       }*/
     },
     logOut(e) {
-      this.$http({
-          method: 'get',
-          url: 'http://mp.dev.hubpd.com/api/studio/logout'
-        })
+      this.$http.get('http://mp.dev.hubpd.com/api/studio/logout')
         .then(res => {
           console.log('退出结果：' + JSON.stringify(res.data))
-          if (res.data.status == 0) {
-            if (sessionStorage.getItem("token") == null || sessionStorage.getItem("token") == undefined) {
-              this.$router.push('/login')
-            } else {
-              this.$Message.error(res.data.message)
-            }
-
-          } else {
-            sessionStorage.removeItem("token")
-            this.$router.push('/login')
-          }
-
+          sessionStorage.removeItem("token")
+          this.$Message.info(res.data.message)
+          this.$router.push('/login')
         }, err => {
           console.log('出错啦！' + err)
+          this.$Message.error(JSON.stringify(err))
         })
     }
   }

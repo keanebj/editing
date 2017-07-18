@@ -9,7 +9,7 @@ const store = new Vuex.Store({
     menuActiveName: '',
     menuOpenNames: [],
     breadcrumb: [],
-	useinfo: {},
+    useinfo: {},
     token: token,
     catelog: [{
       name: '时政',
@@ -22,15 +22,14 @@ const store = new Vuex.Store({
       id: 14
     }]
   },
-  getters: {
-  },
+  getters: {},
   mutations: {
-    breadcrumb (state, path) {
+    breadcrumb(state, path) {
       var result = []
       recursiveBreadcrumb('path', path, state.menu, 0, result)
       state.breadcrumb = result
     },
-    menu (state, route) {
+    menu(state, route) {
       let activeName = ''
       let openNames = []
       state.menu.forEach((n, i) => {
@@ -48,14 +47,14 @@ const store = new Vuex.Store({
       state.menuActiveName = activeName
       state.menuOpenNames = [...openNames]
     },
-    set (state, data) {
+    set(state, data) {
       Object.assign(state, data)
     }
   },
-  actions: {
-  }
+  actions: {}
 })
-function recursiveBreadcrumb (key, val, data, index, result) {
+
+function recursiveBreadcrumb(key, val, data, index, result) {
   for (var i = 0, l = data.length; i < l; i++) {
     var e = data[i]
     if (e[key] && val === e[key]) {
