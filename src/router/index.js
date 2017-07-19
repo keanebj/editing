@@ -4,9 +4,11 @@ import iView from 'iview'
 import util from '../utils'
 import routers from './routers'
 import store from '../store'
+import config from '../config'
 Vue.use(Router)
 const RouterConfig = {
   mode: 'history',
+  base: config.root,
   routes: routers
 }
 const router = new Router(RouterConfig)
