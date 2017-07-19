@@ -42,7 +42,7 @@ export default {
     // 登录请求发送
     submitLogin() {
       let reqParams = {
-        username: this.formItem.username, 
+        username: this.formItem.username,
         password: this.formItem.password
       };
       this.$http.post('http://mp.dev.hubpd.com/api/studio/login', reqParams)
@@ -51,30 +51,25 @@ export default {
           if (res.data.status == 0) {
             this.$Message.error(res.data.message);
           } else if (res.data.status == 1) {
-            console.log(JSON.stringify(res.data))
-            let _user = {
-              userinfo: {
-                id: res.data.id,
-                roleType: res.data.operatortype,
-                username: res.data.operator,
-                password: this.formItem.password
-              }
+            var userinfo = {
+              id: res.data.id,
+              roleType: res.data.operatortype,
+              username: res.data.operator,
+              password: this.formItem.password
             }
-            this.$store.commit('set', _user)
-            sessionStorage.setItem('userinfo',_user)
-            sessionStorage.setItem('token', res.data.token)
+            this.$store.commit('set', { userinfo })
             this.$store.commit('set', {
               token: res.data.token
             })
+            sessionStorage.setItem('token', res.data.token)
+            sessionStorage.setItem('userinfo', JSON.stringify(userinfo))
             this.$router.push('/home')
-          } else {
-            this.$router.push('/login')
           }
         }, err => {
           console.log('出错啦！' + JSON.stringify(err))
         })
     }
   },
-  created() {},
-  mounted() {}
+  created() { },
+  mounted() { }
 }

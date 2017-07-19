@@ -13,16 +13,14 @@ export default {
     ComponentsBreadcrumb
   },
   computed: {
-    ...mapState(['menu', 'userinfo', 'isActive'])
+    ...mapState(['menu', 'userinfo', 'isActive', 'token'])
   },
   data() {
     return {
     }
   },
-  beforeCreate() {    
-    if (sessionStorage.getItem('token') == undefined || sessionStorage.getItem('token') == null) {
-      this.$router.push('/login')
-    }
+  beforeCreate() {
+
     //监听浏览器的返回按钮
     window.addEventListener("popstate", function (e) {
       location.reload();
@@ -30,12 +28,15 @@ export default {
   },
   mounted() {
     if (window.location.href.indexOf('publish') > -1) {
-      this.$store.commit('set',{isActive:true})
+      this.$store.commit('set', { isActive: true })
     } else {
-      this.$store.commit('set',{isActive:false})
+      this.$store.commit('set', { isActive: false })
     }
   },
   created() {
+    if (!this.token) {
+      this.$router.push('/login')
+    }
     if (this.userinfo.username == undefined || this.userinfo.username == null) {
       this.$router.push('/login')
     } else {
@@ -56,7 +57,9 @@ export default {
         .then(res => {
           console.log('退出结果：' + JSON.stringify(res.data))
           sessionStorage.removeItem("token")
-          sessionStorage.removeItem("userinfo")
+          this.$store.commit('set', {
+            token: ''
+          })
           this.$Message.success(res.data.message)
           this.$router.push('/login')
         }, err => {

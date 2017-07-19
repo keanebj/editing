@@ -131,8 +131,6 @@ export default {
             }
             this.uploadList.push(_preImg)
             this.uploadImg = _preImg.url
-          } else {
-            this.$router.push('/login')
           }
         }, err => {
           console.log('出错啦！' + err)
@@ -158,8 +156,6 @@ export default {
               title: '错误',
               desc: res.data.message || '修改失败'
             })
-          } else {
-            this.$router.push('/login')
           }
         }, err => {
           this.$Notice.error({
@@ -189,8 +185,6 @@ export default {
               title: '错误',
               desc: res.data.message || '修改失败'
             })
-          } else {
-            this.$router.push('/login')
           }
           console.log(JSON.stringify(res.data))
         }, err => {
