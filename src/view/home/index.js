@@ -36,17 +36,13 @@ export default {
 	      	pageindex: (this.pageIndexX-1),
           label: "Notice"
         }
-        // ,
-	      // headers:{
-        //   token:"64fb2b381e2727d69f720439e0553353fe38647f0835233c"
-        // }
 	    }).then((response) => {
 	      //给公告的内容赋值
 				console.log(response.data.operatortype)
 				this.noticeList = response.data.contents;
 				this.noticeTotal = response.data.total;
 				if (this.noticeTotal == undefined) {
-					this.noticeTotal == 0;
+					this.noticeTotal = 0;
 				}
 
 				//判断身份
@@ -77,10 +73,6 @@ export default {
 	      	pageindex: (this.pageIndexG-1),
 	      	label:"College"
         }
-        //       ,
-	      // headers:{
-        //   token:"64fb2b381e2727d69f720439e0553353fe38647f0835233c"
-        // }
 	    }).then((response) => {
 	      //给学院的内容赋值
 	      console.log(response.data)

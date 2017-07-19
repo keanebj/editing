@@ -156,6 +156,9 @@ export default {
     this.editor.destroy();
   },
   methods: {
+    goBack(){
+      this.$router.push('/home')  
+    },
     showPreviewContent:function(){
       //获得编辑器中的内容:这里的预览需要写一个界面（待完善。。。）
     this.previewCon[0]=this.editor.getContent();

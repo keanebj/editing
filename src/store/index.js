@@ -11,6 +11,7 @@ const store = new Vuex.Store({
     breadcrumb: [],
     userinfo: {},
     token: token,
+    isActive: false,
     catelog: [{
       name: '时政',
       id: 12

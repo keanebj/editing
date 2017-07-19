@@ -37,7 +37,7 @@ export default {
     }
   },
   created() {
-    if (this.userinfo == undefined) {
+    if (this.userinfo.username == undefined || this.userinfo.username == null) {
       this.$router.push('/login')
     } else {
       this.userName = this.userinfo.username
