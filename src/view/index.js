@@ -19,7 +19,7 @@ export default {
     return {
     }
   },
-  beforeCreate() {
+  beforeCreate() {    
     if (sessionStorage.getItem('token') == undefined || sessionStorage.getItem('token') == null) {
       this.$router.push('/login')
     }
@@ -56,6 +56,7 @@ export default {
         .then(res => {
           console.log('退出结果：' + JSON.stringify(res.data))
           sessionStorage.removeItem("token")
+          sessionStorage.removeItem("userinfo")
           this.$Message.success(res.data.message)
           this.$router.push('/login')
         }, err => {
