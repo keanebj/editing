@@ -6,7 +6,7 @@ export default {
     'iIndex'
   ],
   created () {
-    console.log("子元素中i"+this.iIndex[0]);
+
   },
   data () {
     return {
