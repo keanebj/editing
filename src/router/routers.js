@@ -80,6 +80,14 @@ export default [
         },
         component: require('@/view/notice/index.vue'),
       },
+      {
+        name:'article',
+        path: '/article',
+        meta: {
+          title: '文章',
+        },
+        component: require('@/view/article/index.vue'),
+      }
     ]
   }
 ]
