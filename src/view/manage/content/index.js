@@ -23,9 +23,16 @@ export default {
     }
   },
   created () {
-    this.roleType=this.$store.state.roleType;
+    this.roleType=this.$store.state.userinfo.roleType;
   },
   mounted () {
+    var span5 =  document.querySelector(".ivu-col-span-5")
+    var span19 =  document.querySelector(".ivu-col-span-19")
+    if(!span19){
+      span19 =  document.querySelector(".ivu-col-span-24")
+    }
+    span5.style.display = 'block';
+    span19.className = "layout-content-warp ivu-col ivu-col-span-19";
     this.getContentList();
   },
   computed:{
