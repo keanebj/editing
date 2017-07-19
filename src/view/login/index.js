@@ -52,14 +52,16 @@ export default {
             this.$Message.error(res.data.message);
           } else if (res.data.status == 1) {
             console.log(JSON.stringify(res.data))
-            this.$store.commit('set', {
+            let _user = {
               userinfo: {
                 id: res.data.id,
                 roleType: res.data.operatortype,
                 username: res.data.operator,
                 password: this.formItem.password
               }
-            })
+            }
+            this.$store.commit('set', _user)
+            sessionStorage.setItem('userinfo',_user)
             sessionStorage.setItem('token', res.data.token)
             this.$store.commit('set', {
               token: res.data.token
