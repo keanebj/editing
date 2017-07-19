@@ -3,13 +3,15 @@ import Vuex from 'vuex'
 import menu from '../config/menu'
 Vue.use(Vuex)
 var token = sessionStorage.getItem('token') || ''
+var userinfo = sessionStorage.getItem('userinfo') || '{}'
+userinfo = JSON.parse(userinfo)
 const store = new Vuex.Store({
   state: {
     menu: menu,
     menuActiveName: '',
     menuOpenNames: [],
     breadcrumb: [],
-    userinfo: {},
+    userinfo: userinfo,
     token: token,
     isActive: false,
     catelog: [{
