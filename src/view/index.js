@@ -13,11 +13,10 @@ export default {
     ComponentsBreadcrumb
   },
   computed: {
-    ...mapState(['menu', 'userinfo'])
+    ...mapState(['menu', 'userinfo', 'isActive'])
   },
   data() {
     return {
-      isActive: false
     }
   },
   beforeCreate() {
@@ -31,9 +30,9 @@ export default {
   },
   mounted() {
     if (window.location.href.indexOf('publish') > -1) {
-      this.isActive = true;
+      this.$store.commit('set',{isActive:true})
     } else {
-      this.isActive = false;
+      this.$store.commit('set',{isActive:false})
     }
   },
   created() {

@@ -38,7 +38,6 @@ export default {
         }
 	    }).then((response) => {
 	      //给公告的内容赋值
-				console.log(response.data.operatortype)
 				this.noticeList = response.data.contents;
 				this.noticeTotal = response.data.total;
 				if (this.noticeTotal == undefined) {
@@ -118,8 +117,17 @@ export default {
   	}
   },
   mounted () {
-       this.getNotice();
-       this.getCollege();
-       this.getAdlist();
+    //用于显示左侧
+    var span5 =  document.querySelector(".ivu-col-span-5");
+    var span19 =  document.querySelector(".ivu-col-span-19");
+    if(!span19){
+      span19 =  document.querySelector(".ivu-col-span-24");
+    }
+    span5.style.display = 'block';
+    span19.className = "layout-content-warp ivu-col ivu-col-span-19";
+
+     this.getNotice();
+     this.getCollege();
+     this.getAdlist();
   }
 }

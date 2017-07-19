@@ -5,9 +5,12 @@ export default {
 //	var id = this.$route.query.ID;
   },
   mounted(){
-     //判断是公告还是文章
-//      //公告
-				console.log(this.$route.query.id)
+
+    var span5 =  document.querySelector(".ivu-col-span-5")
+    var span19 =  document.querySelector(".ivu-col-span-19")
+    span5.style.display = 'none';
+    span19.className = "layout-content-warp ivu-col ivu-col-span-24";
+
         this.noticeID=this.$route.query.id;
 
         //ajax获得后台公告的内容
@@ -38,6 +41,8 @@ export default {
 
   },
   methods: {
-
+    goBack(){
+      this.$router.push('/home')
+    }
   }
 }
