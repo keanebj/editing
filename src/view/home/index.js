@@ -41,14 +41,14 @@ export default {
 				this.noticeList = response.data.contents;
 				this.noticeTotal = response.data.total;
 				if (this.noticeTotal == undefined) {
-					this.noticeTotal = 0;
+					this.noticeTotal = 1;
 				}
 
 				//判断身份
 				if (response.data.operatortype == "Edit") {
-					this.roleFlag = 0;
-				}else{
 					this.roleFlag = 1;
+				}else{
+					this.roleFlag = 0;
 				}
 
 				if (response.data.contents&&response.data.total) {
@@ -78,7 +78,7 @@ export default {
 				this.collegeList = response.data.contents;
 				this.articleTotal = response.data.total;
 				if (this.articleTotal == undefined) {
-					this.articleTotal = 0;
+					this.articleTotal = 1;
 				}
 
 				if (response.data.contents&&response.data.total) {
