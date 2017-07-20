@@ -89,6 +89,9 @@
 .home-title img,.home-ad img{
     width: 100%;
 }
+.home-ad img{
+	height: 170px;
+}
 .home-title span{
     position: absolute;    
 }
