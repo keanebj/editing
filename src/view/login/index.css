@@ -1,14 +1,23 @@
   .login {
-    width: 500px;
+    width: 300px;
     margin: 20px auto 0;
   }
-  .ivu-card-bordered,.ivu-card-head{
+  .ivu-card-bordered{
     border:none!important;
   }  
   .ivu-card-head p{
     text-align: center;
     color: #F95759!important;
-    font-size: 20px;
+    font-size: 20px!important;
     letter-spacing: 2px;
   }
+ .disabled{
+    background-color: #d9d9d9!important;
+    border-color: #d9d9d9!important;
+  }
+  .login-btn{
+    width: 100%!important;
+    border-radius: 100px!important;
+  }
+  
   

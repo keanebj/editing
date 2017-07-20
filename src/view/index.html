@@ -1,5 +1,6 @@
 <div class="layout">
-  <MainHeader :logOut="logOut" :userName="userinfo.username"></MainHeader>
+  <MainHeader :logOut="logOut" :userName="userinfo.username" 
+  :goHome="goHome" :goAccount="goAccount" :studioLogo="userinfo.studioLogo"></MainHeader>
   <div class="layout-container">
     <Row type="flex">
       <i-col span="5" :class="{'hide':isActive}">

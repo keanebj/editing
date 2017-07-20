@@ -6,6 +6,7 @@ export default {
   name: 'ViewSettingsAccount',
   data() {
     return {
+      disabledM:true,
       roleType: 1,
       account: '运营人员1',
       studioName: '一秒世界',
@@ -95,6 +96,11 @@ export default {
     userinfo: state => state.userinfo,
   }),
   methods: {
+    allowSubmit(e){
+      if(this.disabledM){
+        this.disabledM = false
+      }
+    },
     getOperatorInfo() {
       this.$http.get('http://mp.dev.hubpd.com/api/studio/' + this.userinfo.id, {
         username: this.userinfo.username
@@ -127,7 +133,7 @@ export default {
             this.catalog = studioInfo.catalogname
             let _preImg = {
               status: 'finished',
-              url: studioInfo.logofile
+              url: this.$conf.host+studioInfo.logofile
             }
             this.uploadList.push(_preImg)
             this.uploadImg = _preImg.url
@@ -149,7 +155,7 @@ export default {
           if (res.data.status == 1) {
             this.$Notice.success({
               title: '成功',
-              desc: res.data.message || '修改成功'
+              desc: res.data.message || '信息修改成功'
             })
           } else if (res.data.status == 0) {
             this.$Notice.error({
@@ -178,12 +184,12 @@ export default {
           if (res.data.status == 1) {
             this.$Notice.success({
               title: '成功',
-              desc: res.data.message || '修改成功'
+              desc: res.data.message || '信息修改成功'
             })
           } else if (res.data.status == 0) {
             this.$Notice.error({
               title: '错误',
-              desc: res.data.message || '修改失败'
+              desc: res.data.message || '信息修改失败'
             })
           }
           console.log(JSON.stringify(res.data))

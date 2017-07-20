@@ -97,3 +97,9 @@
   width:100% !important;
 }
 
+.ivu-menu-vertical.ivu-menu-light:after{
+  background:transparent!important;
+}
+.ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu){
+  border-right:none!important;
+}

@@ -49,6 +49,12 @@ export default {
         })
       }
     },
+    goHome() {
+      this.$router.push('/home')
+    },
+    goAccount() {
+      this.$router.push('/settings/account')
+    },
     logOut(e) {
       this.$http.get('http://mp.dev.hubpd.com/api/studio/logout')
         .then(res => {
