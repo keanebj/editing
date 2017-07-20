@@ -39,9 +39,6 @@ export default {
     }
     if (this.userinfo.username == undefined || this.userinfo.username == null) {
       this.$router.push('/login')
-    } else {
-      this.userName = this.userinfo.username
-      this.roleType = this.userinfo.roleType
     }
   },
   methods: {
