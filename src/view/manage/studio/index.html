@@ -40,7 +40,7 @@
 
   <Page size="small" :total="total" show-total @on-change="onChangePage" style="float:right"></Page>
 
-  <Spin  size="large" fix v-if="true">
+  <Spin  size="large" fix v-if="isLoading">
     <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
     <div>Loading</div>
   </Spin>
