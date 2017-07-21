@@ -27,6 +27,9 @@ export default {
     }
   },
   methods: {
+    search(e) {
+       console.log('你按回车键了');  
+    },
     handleSubmit(name) {
       this.$refs[name].validate((valid) => {
         if (valid) {          

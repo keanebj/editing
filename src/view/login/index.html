@@ -2,12 +2,12 @@
   <p slot="title">中央厨房通行证</p>
   <Form ref="formItem" :model="formItem" :rules="formRules" class="login">
     <Form-item prop="username">
-      <Input v-model="formItem.username" placeholder="请填写用户名">
+      <Input v-model="formItem.username" placeholder="请填写用户名" @on-enter="handleSubmit('formItem')">
        <Icon type="ios-person-outline" slot="prepend"></Icon> 
       </Input>
     </Form-item>
     <Form-item prop="password">
-      <Input v-model="formItem.password" placeholder="请填写密码" type="password">      
+      <Input v-model="formItem.password" placeholder="请填写密码" type="password" @on-enter="handleSubmit('formItem')">      
        <Icon type="ios-locked-outline" slot="prepend"></Icon> 
       </Input>
     </Form-item>
