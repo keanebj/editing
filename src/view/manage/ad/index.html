@@ -12,22 +12,22 @@
     </thead>
     <tbody>
       <tr v-for="(item,index) in data">
-        <td style="width:70px">{{item.id || '#'}}</td>
+        <td style="width:70px">{{index+1}}</td>
         <th scope="row" style="width:200px">
           <img v-if="item.path" style="max-width:100px;" :src="$conf.host + item.path">
-          <UploadImage v-else :onSuccess="onSuccess" :onError="onError" :data="item">
+          <image-crop-upload v-else :width="1400" :height="400" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :data="item">
             <div class="imagePlaceholder">
               <div class="title">点击上传广告图片</div>
               <div class="sub-title">尺寸要求: 2000*800</div>
             </div>
-          </UploadImage>
+          </image-crop-upload>
         </th>
         <th scope="row" style="width:20px;padding:0">
-          <UploadImage :onSuccess="onSuccess" :onError="onError" :data="item">
+          <image-crop-upload :width="1400" :height="400" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :data="item">
             <a v-if="item.path" href="javascript:void(0)">
               <Icon type="edit"></Icon>
             </a>
-          </UploadImage>
+          </image-crop-upload>
         </th>
         <td style="width:320px">
           <Input v-if="item.isEdit" v-model="item.url" @on-blur="onBlur(index)" placeholder="请输入链接" style="width: 250px"></Input>
@@ -44,7 +44,7 @@
       </tr>
     </tbody>
   </table>
-  <a href="javascript:;" @click="onAdd">
+  <a href="javascript:;" @click="onAdd" :disabled="data.length>=5">
     <Icon type="plus-round"></Icon> 添加广告位</a>
   <div style="padding: 30px;">
     <Button :disabled="!isModify" type="primary" size="large" shape="circle" icon="ios-plus-outline" @click="onSubmit" :loading="loading">提交</Button>

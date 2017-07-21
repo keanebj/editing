@@ -1,13 +1,14 @@
-import UploadImage from '@/components/uploadImage/index.vue'
-import {mapState} from 'vuex'
+import { mapState } from 'vuex'
+import imageCropUpload from '@/components/imageCropUpload/index.vue'
 export default {
   name: 'ViewManageStudioId',
-  components: { UploadImage },
+  components: {
+    'image-crop-upload': imageCropUpload
+  },
   data() {
     return {
       id: 0,
       loading: false,
-      uploadImageUrl: 'http://mp.dev.hubpd.com/api/image/upload',
       formValidate: {
         "id": 0,
         "username": "",
@@ -37,14 +38,14 @@ export default {
           { required: true, message: '工作室不能为空', trigger: 'blur' }
         ],
         url: [
-          { required: true,  message: 'URL不能为空', trigger: 'blur' },
+          { required: true, message: 'URL不能为空', trigger: 'blur' },
           { type: 'url', message: 'URl不正确', trigger: 'blur' }
         ],
         catalogid: [
           { required: true, type: 'number', message: '请选择【栏目绑定】', trigger: 'blur' }
         ],
         accountindex: [
-          { required: true, type: 'number', message: '请输入数字', trigger: 'blur' }
+          { type: 'number', required: true, message: '请输入数字', trigger: 'blur' },
         ],
       }
     }
@@ -140,6 +141,15 @@ export default {
         title: '错误',
         desc: error.message || '图片上传错误！'
       })
+    },
+    cropUploadSuccess(e, response, field, ki) {
+      console.log(e, response)
+      if (response.path) {
+        this.formValidate.logofile = response.path
+        this.$refs['formValidate'].validateField('logofile')
+      }
+    },
+    cropUploadFail(e, resData, field, ki) {
     }
   },
   created() {

@@ -1,4 +1,5 @@
-import UploadImage from '@/components/uploadImage/index.vue'
+import imageCropUpload from '@/components/imageCropUpload/index.vue'
+
 var itemTemplate = {
   id: null,
   path: '',
@@ -15,7 +16,9 @@ export default {
       requestCount: 0
     }
   },
-  components: { UploadImage },
+  components: {
+    'image-crop-upload': imageCropUpload
+  },
   computed: {
     isModify() {
       var m = this.data
@@ -119,7 +122,7 @@ export default {
         if (!item.url) {
           this.$Message.warning('请输入url')
           continue
-        }if (!match.test(item.url)) {
+        } if (!match.test(item.url)) {
           this.$Message.warning('请输入有效的url')
           continue
         } else if (!item.path) {

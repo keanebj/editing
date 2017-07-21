@@ -1,5 +1,6 @@
 <Row style="margin-left:50px;width:600px">
   <Col span="18">
+
   <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" label-position="left" :label-width="100">
     <Form-item label="账号" prop="username">
       <Input v-model="formValidate.username" placeholder="请输入账号名称"></Input>
@@ -10,12 +11,13 @@
     <Form-item label="LOGO" prop="logofile">
       <img v-if="formValidate.logofile" style="max-width:100px;border:1px solid #eee" :src="$conf.host + formValidate.logofile"
       />
-      <UploadImage :onSuccess="onSuccess" :onError="onError">
+      <image-crop-upload :width="300" :height="200"
+        :cropUploadSuccess="cropUploadSuccess" :cropUploadFail="cropUploadFail">
         <a v-if="formValidate.logofile" href="javascript:void(0)">
           <Icon type="edit"></Icon>
         </a>
         <Button v-else type="primary" shape="circle" icon="ios-download-outline">上传</Button>
-      </UploadImage>
+      </image-crop-upload>
       建议logo长宽比为3:2
     </Form-item>
 

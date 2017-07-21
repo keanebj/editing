@@ -41,7 +41,7 @@ export default {
     onRemove(index) {
       this.$Modal.confirm({
         title: '确认删除',
-        content: '是否删除该条广告？',
+        content: '是否删除该条数据？',
         onOk: () => {
           this.requestRemove(index)
         }
