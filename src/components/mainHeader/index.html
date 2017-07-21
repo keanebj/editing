@@ -1,9 +1,12 @@
 <div class="layout-ceiling">
-  <div class="logo">
+  <div class="logo" @click="goHome">
     <img src="../../assets/logo.png" alt="logo">
   </div>
-  <div class="layout-ceiling-main">
-    <a href="javascript:;" class="nickname" v-text="userName"></a>
+  <div class="layout-ceiling-main">    
+    <a href="javascript:;" v-if="studioLogo == ''" class="nickname" v-text="userName" 
+    @click="goAccount"></a>
+    <img v-else :src="studioLogo" class="studio-logo"
+    @click="goAccount">
     <a href="javascript:;" @click="logOut">退出</a>
   </div>
 </div>

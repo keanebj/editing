@@ -1,18 +1,22 @@
 export default {
   name: 'ComponentsMainHeader',
   data() {
-    return {
-    }
+    return {}
   },
   props: {
-     logOut: Function,
-     userName:{
-       type: String,
-       default: '熊老师'
-     }
+    logOut: Function,
+    goHome: Function,
+    goAccount: Function,
+    studioLogo: {
+      type: String,
+      default: ''
+    },
+    userName: {
+      type: String,
+      default: '熊老师'
+    }
   },
-  methods: {    
-  },
+  methods: {},
   created() {},
   mounted() {}
 }

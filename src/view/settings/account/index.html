@@ -40,15 +40,16 @@
         <label>{{catalog}}</label>
       </div>
       <Form-item label="姓名" prop="name">
-        <Input v-model="formValidateM.name" placeholder="请输入姓名"></Input>
+        <Input v-model="formValidateM.name" @on-change="allowSubmit" placeholder="请输入姓名"></Input>
       </Form-item>
       <Form-item label="电话" prop="tel">
-        <Input v-model="formValidateM.tel" placeholder="请输入电话"></Input>
+        <Input v-model="formValidateM.tel" @on-change="allowSubmit" placeholder="请输入电话"></Input>
       </Form-item>
       <div class="account-btn">
         <Form-item>
-          <Button type="primary" @click="handleSubmit('formValidateM')" class="save">提交</Button>
-          <Button type="ghost" @click="handleReset('formValidateM')" class="cancel" style="margin-left: 8px">取消</Button>
+          <Button type="primary" :disabled="disabledM" @click="handleSubmit('formValidateM')" :class="{'save':true,'disabled':disabledM}">保存</Button>
+          <Button type="ghost" :disabled="disabledM" @click="handleReset('formValidateM')" :class="{'cancel':true,'disabled':disabledM}"
+            style="margin-left: 8px">取消</Button>
         </Form-item>
       </div>
 
@@ -61,18 +62,19 @@
         <label>{{account}}</label>
       </div>
       <Form-item label="姓名" prop="name">
-        <Input v-model="formValidate.name" placeholder="请输入姓名"></Input>
+        <Input v-model="formValidate.name" placeholder="请输入姓名" @on-change="allowSubmit"></Input>
       </Form-item>
       <Form-item label="电话" prop="tel">
-        <Input v-model="formValidate.tel" placeholder="请输入电话"></Input>
+        <Input v-model="formValidate.tel" placeholder="请输入电话" @on-change="allowSubmit"></Input>
       </Form-item>
       <Form-item label="邮箱" prop="mail">
-        <Input v-model="formValidate.mail" placeholder="请输入邮箱"></Input>
+        <Input v-model="formValidate.mail" placeholder="请输入邮箱" @on-change="allowSubmit"></Input>
       </Form-item>
       <div class="account-btn">
         <Form-item>
-          <Button type="primary" @click="handleSubmit('formValidate')" class="save">提交</Button>
-          <Button type="ghost" @click="handleReset('formValidate')" class="cancel" style="margin-left: 8px">取消</Button>
+          <Button type="primary" :disabled="disabledM" @click="handleSubmit('formValidate')" :class="{'save':true,'disabled':disabledM}">提交</Button>
+          <Button type="ghost" :disabled="disabledM" @click="handleReset('formValidate')" :class="{'cancel':true,'disabled':disabledM}"
+            style="margin-left: 8px">取消</Button>
         </Form-item>
       </div>
 

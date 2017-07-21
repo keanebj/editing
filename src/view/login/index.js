@@ -2,6 +2,7 @@ import Vue from 'vue'
 export default {
   data() {
     return {
+      loginDisabled:false,
       formItem: {
         username: '',
         password: ''
@@ -28,8 +29,7 @@ export default {
   methods: {
     handleSubmit(name) {
       this.$refs[name].validate((valid) => {
-        if (valid) {
-          this.$Message.success('提交成功!');
+        if (valid) {          
           this.submitLogin();
         } else {
           this.$Message.error('表单验证失败!');
@@ -55,14 +55,17 @@ export default {
               id: res.data.id,
               roleType: res.data.operatortype,
               username: res.data.operator,
-              password: this.formItem.password
+              password: this.formItem.password,
+              studioLogo: this.$conf.host + res.data.logo || ''
             }
+
             this.$store.commit('set', { userinfo })
             this.$store.commit('set', {
               token: res.data.token
             })
             sessionStorage.setItem('token', res.data.token)
             sessionStorage.setItem('userinfo', JSON.stringify(userinfo))
+            this.$Message.success('登录成功!');
             this.$router.push('/home')
           }
         }, err => {

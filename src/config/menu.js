@@ -6,7 +6,7 @@ export default [{
 }, {
   name: '发表',
   path: '/publish',
-  icon: 'edit',
+  icon: 'ios-compose-outline',
   authority:'Manage Edit'
 }, {
   name: '管理',
