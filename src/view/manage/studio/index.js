@@ -6,7 +6,8 @@ export default {
       data: [],
       pageindex: 0,
       pagesize: 10,
-      total: 0
+      total: 0,
+      isLoading: true,
     }
   },
   computed: {
@@ -16,6 +17,7 @@ export default {
      * 请求广告列表
      */
     fetchCollection() {
+      this.isLoading = true
       this.$http.get('/api/studio', {
         params: {
           pageindex: this.pageindex,
@@ -31,11 +33,13 @@ export default {
             desc: data.message || '数据列表请求错误'
           })
         }
+        this.isLoading = false
       }, () => {
         this.$Notice.error({
           title: '错误',
           desc: '数据列表请求错误'
         })
+        this.isLoading = false
       })
     },
     onRemove(index) {

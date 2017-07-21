@@ -6,13 +6,25 @@ export default {
     'image-crop-upload': imageCropUpload
   },
   data() {
+    const validatePassCheck = (rule, value, callback) => {
+      console.log(value, this.formValidate.passwordConfirm)
+      if (value === '') {
+        callback(new Error('请再次输入密码'))
+      } else if (value !== this.formValidate.password) {
+        callback(new Error('两次输入密码不一致!'))
+      } else {
+        callback()
+      }
+    };
     return {
       id: 0,
-      loading: false,
+      isSubmit: false,
+      isLoading: false,
       formValidate: {
         "id": 0,
         "username": "",
         "password": "",
+        "passwordConfirm": "",
         "studioname": "",
         "usertype": "",
         "tel": "",
@@ -29,7 +41,12 @@ export default {
           { required: true, type: '', message: '账号不能为空', trigger: 'blur' }
         ],
         password: [
-          { required: true, message: '密码不能为空', trigger: 'blur' }
+          { required: true, message: '密码不能为空', trigger: 'blur' },
+          { type: 'string', min: 6, message: '密码至少6位', trigger: 'blur' }
+        ],
+        passwordConfirm: [
+          { required: true, message: '确认密码不能为空', trigger: 'blur' },
+          { validator: validatePassCheck, trigger: 'blur' }
         ],
         logofile: [
           { required: true, message: 'LOGO不能为空', trigger: 'blur' }
@@ -45,7 +62,7 @@ export default {
           { required: true, type: 'number', message: '请选择【栏目绑定】', trigger: 'blur' }
         ],
         accountindex: [
-          { type: 'number', required: true, message: '请输入数字', trigger: 'blur' },
+          { type: 'number', min: 1, message: '请输入数字', trigger: 'blur' }
         ],
       }
     }
@@ -55,6 +72,7 @@ export default {
   },
   methods: {
     request() {
+      this.isLoading = true
       this.$http.get('/api/studio/' + this.id).then(({ data }) => {
         if (data.status) {
           this.formValidate = data.studio
@@ -64,11 +82,13 @@ export default {
             desc: data.message || '获取错误'
           })
         }
+        this.isLoading = false
       }, () => {
         this.$Notice.error({
           title: '错误',
           desc: '获取错误'
         })
+        this.isLoading = false
       })
     },
     cancel() {
@@ -84,9 +104,9 @@ export default {
     },
     save() {
       delete this.formValidate.id
-      this.loading = true
+      this.isSubmit = true
       this.$http.post('/api/studio', this.formValidate).then(({ data }) => {
-        this.loading = false
+        this.isSubmit = false
         if (data.status) {
           this.$router.push({ path: '/manage/studio' })
           this.$Notice.success({
@@ -100,7 +120,7 @@ export default {
           })
         }
       }, () => {
-        this.loading = false
+        this.isSubmit = false
         this.$Notice.error({
           title: '错误',
           desc: '保存错误'
@@ -108,9 +128,9 @@ export default {
       })
     },
     update() {
-      this.loading = true
+      this.isSubmit = true
       this.$http.put('/api/studio/' + this.id, this.formValidate).then(({ data }) => {
-        this.loading = false
+        this.isSubmit = false
         if (data.status) {
           this.$Notice.success({
             title: '成功',
@@ -123,7 +143,7 @@ export default {
           })
         }
       }, () => {
-        this.loading = false
+        this.isSubmit = false
         this.$Notice.error({
           title: '错误',
           desc: '保存错误'

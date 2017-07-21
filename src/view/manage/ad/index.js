@@ -12,7 +12,8 @@ export default {
   data() {
     return {
       data: [],
-      loading: false,
+      isLoading: true,
+      isSubmit: false,
       requestCount: 0
     }
   },
@@ -36,6 +37,7 @@ export default {
      * 请求广告列表
      */
     fetchCollection() {
+      this.isLoading = true
       this.$http.get('/api/advertise', {
         params: {
           pageindex: 0,
@@ -50,11 +52,13 @@ export default {
             desc: data.message || '数据列表请求错误'
           })
         }
+        this.isLoading = false
       }, () => {
         this.$Notice.error({
           title: '错误',
           desc: '数据列表请求错误'
         })
+        this.isLoading = false
       })
     },
     onRemove(index) {
@@ -110,7 +114,7 @@ export default {
     },
     onBlur(index) {
       var item = this.data[index]
-      if (item.showtime) {
+      if (item.id) {
         item.isEdit = false
       }
     },
@@ -137,7 +141,7 @@ export default {
         }
       }
       if (this.requestCount) {
-        this.loading = true
+        this.isSubmit = true
       }
     },
     requestSave(index, item) {
@@ -146,10 +150,10 @@ export default {
         url: item.url
       }).then(({ data }) => {
         this.requestCount--
-        if (this.requestCount <= 0) this.loading = false
+        if (this.requestCount <= 0) this.isSubmit = false
         if (data.status) {
           item.id = data.id
-          item.showtime = new Date()
+          // item.showtime = new Date()
           item.pathOld = item.path
           item.urlOld = item.url
           item.isEdit = false
@@ -161,7 +165,7 @@ export default {
         }
       }, () => {
         this.requestCount--
-        if (this.requestCount <= 0) this.loading = false
+        if (this.requestCount <= 0) this.isSubmit = false
         this.$Notice.error({
           title: '错误',
           desc: '添加错误'
@@ -174,7 +178,7 @@ export default {
         url: item.url
       }).then(({ data }) => {
         this.requestCount--
-        if (this.requestCount <= 0) this.loading = false
+        if (this.requestCount <= 0) this.isSubmit = false
         if (data.status) {
           item.pathOld = item.path
           item.urlOld = item.url
@@ -187,7 +191,7 @@ export default {
         }
       }, () => {
         this.requestCount--
-        if (this.requestCount <= 0) this.loading = false
+        if (this.requestCount <= 0) this.isSubmit = false
         this.$Notice.error({
           title: '错误',
           desc: '更新错误'
