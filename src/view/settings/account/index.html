@@ -18,7 +18,7 @@
         :max-size="2048" :on-format-error="handleFormatError" :on-exceeded-size="handleMaxSize" :before-upload="handleBeforeUpload"
         action="http://mp.dev.hubpd.com/api/image/upload" style="display: inline-block;width:58px;">
         <div style="width: 58px;height:58px;line-height: 58px;">
-          <img src="../../../assets/img-edit.svg">          
+          <img src="../../../assets/img-edit.svg">
         </div>
       </Upload>
       <span class="file-tips">建议logo长宽比为3:2</span>
@@ -47,8 +47,9 @@
       </Form-item>
       <div class="account-btn">
         <Form-item>
-          <Button type="primary" :disabled="disabledM"  @click="handleSubmit('formValidateM')"  :class="{'save':true,'disabled':disabledM}">保存</Button>
-          <Button type="ghost" :disabled="disabledM" @click="handleReset('formValidateM')"  :class="{'cancel':true,'disabled':disabledM}" style="margin-left: 8px">取消</Button>
+          <Button type="primary" :disabled="disabledM" @click="handleSubmit('formValidateM')" :class="{'save':true,'disabled':disabledM}">保存</Button>
+          <Button type="ghost" :disabled="disabledM" @click="handleReset('formValidateM')" :class="{'cancel':true,'disabled':disabledM}"
+            style="margin-left: 8px">取消</Button>
         </Form-item>
       </div>
 
@@ -71,8 +72,9 @@
       </Form-item>
       <div class="account-btn">
         <Form-item>
-          <Button type="primary" :disabled="disabledM"  @click="handleSubmit('formValidate')" :class="{'save':true,'disabled':disabledM}">提交</Button>
-          <Button type="ghost" :disabled="disabledM" @click="handleReset('formValidate')" :class="{'cancel':true,'disabled':disabledM}" style="margin-left: 8px">取消</Button>
+          <Button type="primary" :disabled="disabledM" @click="handleSubmit('formValidate')" :class="{'save':true,'disabled':disabledM}">提交</Button>
+          <Button type="ghost" :disabled="disabledM" @click="handleReset('formValidate')" :class="{'cancel':true,'disabled':disabledM}"
+            style="margin-left: 8px">取消</Button>
         </Form-item>
       </div>
 

@@ -56,7 +56,7 @@ export default {
               roleType: res.data.operatortype,
               username: res.data.operator,
               password: this.formItem.password,
-              studioLogo: res.data.logofile || 'https://studio.hubpd.com/upload/resources/image/2017/03/26/56226.png'          
+              studioLogo: this.$conf.host + res.data.logo || ''
             }
 
             this.$store.commit('set', { userinfo })
