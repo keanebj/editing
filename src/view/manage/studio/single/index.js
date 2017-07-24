@@ -37,49 +37,86 @@ export default {
         "addtime": ""
       },
       ruleValidate: {
-        username: [
-          { required: true, type: '', message: '账号不能为空', trigger: 'blur' }
+        username: [{
+          required: true,
+          type: '',
+          message: '账号不能为空',
+          trigger: 'blur'
+        }],
+        password: [{
+            required: true,
+            message: '密码不能为空',
+            trigger: 'blur'
+          },
+          {
+            type: 'string',
+            min: 6,
+            message: '密码至少6位',
+            trigger: 'blur'
+          }
         ],
-        password: [
-          { required: true, message: '密码不能为空', trigger: 'blur' },
-          { type: 'string', min: 6, message: '密码至少6位', trigger: 'blur' }
+        passwordConfirm: [{
+            required: true,
+            message: '确认密码不能为空',
+            trigger: 'blur'
+          },
+          {
+            validator: validatePassCheck,
+            trigger: 'blur'
+          }
         ],
-        passwordConfirm: [
-          { required: true, message: '确认密码不能为空', trigger: 'blur' },
-          { validator: validatePassCheck, trigger: 'blur' }
+        logofile: [{
+          required: true,
+          message: 'LOGO不能为空',
+          trigger: 'blur'
+        }],
+        studioname: [{
+          required: true,
+          message: '工作室不能为空',
+          trigger: 'blur'
+        }],
+        url: [{
+            required: true,
+            message: 'URL不能为空',
+            trigger: 'blur'
+          },
+          {
+            type: 'url',
+            message: 'URl不正确',
+            trigger: 'blur'
+          }
         ],
-        logofile: [
-          { required: true, message: 'LOGO不能为空', trigger: 'blur' }
-        ],
-        studioname: [
-          { required: true, message: '工作室不能为空', trigger: 'blur' }
-        ],
-        url: [
-          { required: true, message: 'URL不能为空', trigger: 'blur' },
-          { type: 'url', message: 'URl不正确', trigger: 'blur' }
-        ],
-        catalogid: [
-          { required: true, type: 'number', message: '请选择【栏目绑定】', trigger: 'blur' }
-        ],
-        accountindex: [
-          { type: 'number', min: 1, message: '请输入数字', trigger: 'blur' }
-        ],
+        catalogid: [{
+          required: true,
+          type: 'number',
+          message: '请选择【栏目绑定】',
+          trigger: 'blur'
+        }],
+        accountindex: [{
+          type: 'number',
+          min: 1,
+          message: '请输入数字',
+          trigger: 'blur'
+        }],
       }
     }
   },
   methods: {
     request() {
       this.isLoading = true
-      this.$http.get('/api/studio/' + this.id).then(({ data }) => {
-        if (data.status) {
+      this.$http.get('/api/studio/' + this.id).then(({
+        data
+      }) => {
+        if (data.status == 1) {
           this.formValidate = data.studio
+          this.isLoading = false
         } else {
           this.$Notice.error({
             title: '错误',
             desc: data.message || '获取错误'
           })
-        }
-        this.isLoading = false
+          this.isLoading = false
+        }        
       }, () => {
         this.$Notice.error({
           title: '错误',
@@ -102,7 +139,9 @@ export default {
     save() {
       delete this.formValidate.id
       this.isSubmit = true
-      this.$http.post('/api/studio', this.formValidate).then(({ data }) => {
+      this.$http.post('/api/studio', this.formValidate).then(({
+        data
+      }) => {
         this.isSubmit = false
         if (data.status === 1) {
           this.$router.push({ path: '/manage/studio' })
@@ -126,7 +165,9 @@ export default {
     },
     update() {
       this.isSubmit = true
-      this.$http.put('/api/studio/' + this.id, this.formValidate).then(({ data }) => {
+      this.$http.put('/api/studio/' + this.id, this.formValidate).then(({
+        data
+      }) => {
         this.isSubmit = false
         if (data.status === 1) {
           this.$Notice.success({
