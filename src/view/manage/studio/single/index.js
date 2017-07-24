@@ -158,7 +158,7 @@ export default {
         data
       }) => {
         this.isSubmit = false
-        if (data.status) {
+        if (data.status == 1) {
           this.$router.push({
             path: '/manage/studio'
           })
@@ -186,7 +186,7 @@ export default {
         data
       }) => {
         this.isSubmit = false
-        if (data.status) {
+        if (data.status == 1) {
           this.$Notice.success({
             title: '成功',
             desc: data.message || '保存成功'
