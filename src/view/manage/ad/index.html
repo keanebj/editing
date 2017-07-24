@@ -14,7 +14,7 @@
       <tr v-for="(item,index) in data">
         <td style="width:70px">{{index+1}}</td>
         <th scope="row" style="width:200px">
-          <img v-if="item.path" style="max-width:100px;" :src="$conf.host + item.path">
+          <img v-if="item.path" style="max-width:200px;" :src="$conf.host + item.path">
           <image-crop-upload v-else :width="1400" :height="400" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :data="item">
             <div class="imagePlaceholder">
               <div class="title">点击上传广告图片</div>
@@ -44,7 +44,7 @@
       </tr>
     </tbody>
   </table>
-  <a href="javascript:;" @click="onAdd" :disabled="data.length>=5">
+  <a href="javascript:;" @click="onAdd" v-if="data.length<5">
     <Icon type="plus-round"></Icon> 添加广告位</a>
   <div style="padding: 30px;">
     <Button :disabled="!isModify" type="primary" size="large" shape="circle" icon="ios-plus-outline" @click="onSubmit" :loading="isSubmit">提交</Button>

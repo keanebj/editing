@@ -8,6 +8,7 @@ export default {
       pagesize: 10,
       total: 0,
       isLoading: true,
+      catalogs: {}
     }
   },
   computed: {
@@ -27,6 +28,7 @@ export default {
         if (data.status) {
           this.total = data.total
           this.data = data.studios
+          this.data[0].catalogid = 15725
         } else {
           this.$Notice.error({
             title: '错误',
@@ -77,9 +79,23 @@ export default {
     onChangePage(page) {
       this.pageindex = page - 1
       this.fetchCollection()
+    },
+    fetchCatalogs () {
+      this.$http.get('/api/catalog').then(({ data }) => {
+        if (data.status) {
+          if (data.catalogs) {
+            var catalogs = {}
+            data.catalogs.forEach(n => {
+              catalogs[n.id] = n
+            })
+          }
+          this.catalogs = catalogs
+        }
+      })
     }
   },
   created() {
     this.fetchCollection()
+    this.fetchCatalogs()
   }
 }

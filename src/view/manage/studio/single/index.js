@@ -1,4 +1,3 @@
-import { mapState } from 'vuex'
 import imageCropUpload from '@/components/imageCropUpload/index.vue'
 export default {
   name: 'ViewManageStudioId',
@@ -20,6 +19,7 @@ export default {
       id: 0,
       isSubmit: false,
       isLoading: false,
+      catalogs: {},
       formValidate: {
         "id": 0,
         "username": "",
@@ -67,20 +67,7 @@ export default {
       }
     }
   },
-  computed: {
-    ...mapState(['catelog'])
-  },
   methods: {
-    getCatalog() {
-      this.$http.get('/api/catalog').then(res => {
-        console.log("获取栏目列表："+JSON.stringify(res.data))
-      },err => {
-        this.$Notice.error({
-          title: '错误',
-          desc: err.message || '获取错误'
-        })
-      })
-    },
     request() {
       this.isLoading = true
       this.$http.get('/api/studio/' + this.id).then(({ data }) => {
@@ -117,7 +104,7 @@ export default {
       this.isSubmit = true
       this.$http.post('/api/studio', this.formValidate).then(({ data }) => {
         this.isSubmit = false
-        if (data.status) {
+        if (data.status === 1) {
           this.$router.push({ path: '/manage/studio' })
           this.$Notice.success({
             title: '成功',
@@ -141,7 +128,7 @@ export default {
       this.isSubmit = true
       this.$http.put('/api/studio/' + this.id, this.formValidate).then(({ data }) => {
         this.isSubmit = false
-        if (data.status) {
+        if (data.status === 1) {
           this.$Notice.success({
             title: '成功',
             desc: data.message || '保存成功'
@@ -180,15 +167,31 @@ export default {
       }
     },
     cropUploadFail(e, resData, field, ki) {
+    },
+    fetchCatalogs() {
+      this.$http.get('/api/catalog').then(({ data }) => {
+        if (data.status) {
+          if (data.catalogs) {
+            var catalogs = {}
+            data.catalogs.forEach(n => {
+              catalogs[n.id] = n
+            })
+          }
+          this.catalogs = catalogs
+        } else {
+          this.$Notice.error({
+            title: '错误',
+            desc: err.message || '获取错误'
+          })
+        }
+      })
     }
   },
   created() {
-    this.getCatalog()
+    this.fetchCatalogs()
     this.id = this.$route.params.id
     if (this.id !== '0') {
       this.request()
-      
     }
-    
   }
 }

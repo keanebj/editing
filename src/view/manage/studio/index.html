@@ -22,12 +22,11 @@
         <td>{{item.studioname}}</td>
         <td>{{item.url}}</td>
         <td>{{item.addtime}}</td>
-        <td>{{item.catalogid}}</td>
+        <td>{{catalogs[item.catalogid]?catalogs[item.catalogid]['name']:'未绑定'}}</td>
         <td style="font-size:15px;">
           <router-link :to="'/manage/studio/'+item.id">
             <Icon type="edit"></Icon>
           </router-link>
-
           <Tooltip content="删除" placement="top" style="margin-left:15px;">
             <a href="javascript:void(0)" @click="onRemove(index)">
               <Icon type="ios-trash-outline"></Icon>

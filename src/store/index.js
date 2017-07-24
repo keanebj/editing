@@ -13,17 +13,7 @@ const store = new Vuex.Store({
     breadcrumb: [],
     userinfo: userinfo,
     token: token,
-    isActive: false,
-    catelog: [{
-      name: '时政',
-      id: 12
-    }, {
-      name: '军事',
-      id: 13
-    }, {
-      name: '游戏',
-      id: 14
-    }]
+    isActive: false
   },
   getters: {},
   mutations: {

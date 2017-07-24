@@ -32,7 +32,7 @@
       </Form-item>
       <Form-item label="栏目绑定" prop="catalogid">
         <Select v-model="formValidate.catalogid" number placeholder="请选择">
-          <Option v-for="option in catelog" key="option.id" :value="option.id">{{option.name}}</Option>
+          <Option v-for="option in catalogs" key="option.id" :value="option.id">{{option.name}}</Option>
       </Select>
       </Form-item>
       <Form-item label="中央厨房指数" prop="accountindex">

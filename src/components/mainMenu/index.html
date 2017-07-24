@@ -1,4 +1,4 @@
-<Menu width="auto" :active-name="$store.state.menuActiveName" :open-names="$store.state.menuOpenNames">
+<Menu width="auto" :active-name="$store.state.menuActiveName" :open-names="$store.state.menuOpenNames" style="max-width:250px;">
   <div v-for="(item,k) in data" key="menuKey + k">
     <Submenu v-if="item.children" :name="menuKey + k" @click.native="onSelect(item)">
       <template slot="title">
