@@ -16,8 +16,7 @@ export default {
     ...mapState(['menu', 'userinfo', 'isActive', 'token'])
   },
   data() {
-    return {
-    }
+    return {}
   },
   beforeCreate() {
 
@@ -28,9 +27,13 @@ export default {
   },
   mounted() {
     if (window.location.href.indexOf('publish') > -1) {
-      this.$store.commit('set', { isActive: true })
+      this.$store.commit('set', {
+        isActive: true
+      })
     } else {
-      this.$store.commit('set', { isActive: false })
+      this.$store.commit('set', {
+        isActive: false
+      })
     }
   },
   created() {
@@ -59,11 +62,15 @@ export default {
       this.$http.get('http://mp.dev.hubpd.com/api/studio/logout')
         .then(res => {
           console.log('退出结果：' + JSON.stringify(res.data))
-          sessionStorage.removeItem("token")
-          this.$store.commit('set', {
-            token: ''
-          })
-          this.$Message.success(res.data.message)
+          if (res.data.status == 1) {
+            sessionStorage.removeItem("token")
+            this.$store.commit('set', {
+              token: ''
+            })
+            this.$Message.success('退出成功')
+          } else {
+            this.$Message.error(res.data.message)
+          }
           this.$router.push('/login')
         }, err => {
           console.log('出错啦！' + err)

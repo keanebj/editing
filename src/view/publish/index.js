@@ -1,5 +1,6 @@
 import VueQArt from 'vue-qart'
 import ScrollBar from '@/view/scroll/index.vue'
+import imageCropUpload from '@/components/imageCropUpload/index.vue'
 import '../../../static/ueditor1_4_3_3-utf8-jsp/ueditor.config.js'
 import '../../../static/ueditor1_4_3_3-utf8-jsp/ueditor.all.js'
 import '../../../static/ueditor1_4_3_3-utf8-jsp/lang/zh-cn/zh-cn.js'
@@ -9,6 +10,7 @@ export default {
   components:{
     ScrollBar,
     VueQArt,
+    imageCropUpload
   },
   data () {
     return {
@@ -104,7 +106,6 @@ export default {
   created(){
     this.roleType=this.$store.state.userinfo.roleType;
     this.$http.get("/api/studio/"+this.$store.state.userinfo.id).then((response) => {
-      console.log(response.data.studio.studioname)
       this.studioName = response.data.studio.studioname;
     }, (response) => {
       this.$Message.error(error.data.message);
@@ -252,6 +253,20 @@ export default {
     },
     fromLocal:function(){
       this.localModal=true;
+    },
+    onError(data, error, file, fileList) {
+      this.$Notice.error({
+        title: '错误',
+        desc: error.message || '图片上传错误！'
+      })
+    },
+    onSuccess(data, response, file, fileList) {
+      console.log(response.path)
+      console.log(file)
+
+      if (response.path) {
+        this.formTop.cover = 'http://mp.dev.hubpd.com/' + response.path;
+      }
     },
     clickCoverOk:function(){
       //选择的封面显示在文本域中

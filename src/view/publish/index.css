@@ -138,16 +138,9 @@
   display: inline-block;
   cursor: pointer;
 }
-
-.publish-btn {
-  background: url(../../assets/svg/发表1.svg) 20% center no-repeat;
-  background-size: 14px 14px;
-}
-
-.publish-btn:hover {
-  background: url(../../assets/svg/发表.svg) 20% center no-repeat #F95759;
-  background-size: 14px 14px;
-  color: #fff;
+.publish-btn:hover{
+  color: #fff !important;
+  background: #F95759 !important;
 }
 
 .save-btn {

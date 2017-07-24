@@ -6,7 +6,7 @@ export default {
   name: 'ViewSettingsAccount',
   data() {
     return {
-      disabledM:true,
+      disabledM: true,
       roleType: 1,
       account: '运营人员1',
       studioName: '一秒世界',
@@ -39,18 +39,18 @@ export default {
           trigger: 'blur'
         }],
         tel: [{
-          required: true,
-          message: '电话不能为空',
-          trigger: 'blur'
-        },
-        {
-          type: 'string',
-          min: 7,
-          max: 11,
-          pattern: /^[0-9]+$/,
-          message: '电话格式不正确',
-          trigger: 'blur'
-        }
+            required: true,
+            message: '电话不能为空',
+            trigger: 'blur'
+          },
+          {
+            type: 'string',
+            min: 7,
+            max: 11,
+            pattern: /^[0-9]+$/,
+            message: '电话格式不正确',
+            trigger: 'blur'
+          }
         ]
       },
       formValidate: {
@@ -65,29 +65,29 @@ export default {
           trigger: 'blur'
         }],
         mail: [{
-          required: true,
-          message: '邮箱不能为空',
-          trigger: 'blur'
-        },
-        {
-          type: 'email',
-          message: '邮箱格式不正确',
-          trigger: 'blur'
-        }
+            required: true,
+            message: '邮箱不能为空',
+            trigger: 'blur'
+          },
+          {
+            type: 'email',
+            message: '邮箱格式不正确',
+            trigger: 'blur'
+          }
         ],
         tel: [{
-          required: true,
-          message: '电话不能为空',
-          trigger: 'blur'
-        },
-        {
-          type: 'string',
-          min: 7,
-          max: 11,
-          pattern: /^[0-9]+$/,
-          message: '电话格式不正确',
-          trigger: 'blur'
-        }
+            required: true,
+            message: '电话不能为空',
+            trigger: 'blur'
+          },
+          {
+            type: 'string',
+            min: 7,
+            max: 11,
+            pattern: /^[0-9]+$/,
+            message: '电话格式不正确',
+            trigger: 'blur'
+          }
         ]
       }
     }
@@ -96,15 +96,15 @@ export default {
     userinfo: state => state.userinfo,
   }),
   methods: {
-    allowSubmit(e){
-      if(this.disabledM){
+    allowSubmit(e) {
+      if (this.disabledM) {
         this.disabledM = false
       }
     },
     getOperatorInfo() {
       this.$http.get('http://mp.dev.hubpd.com/api/studio/' + this.userinfo.id, {
-        username: this.userinfo.username
-      })
+          username: this.userinfo.username
+        })
         .then(res => {
           if (res.data.status === 1) {
             let operatorInfo = res.data.studio
@@ -113,20 +113,23 @@ export default {
             this.account = this.userinfo.username
             this.studioName = operatorInfo.studioname
             this.formValidate.mail = operatorInfo.email
-          }else{
+          } else {
             this.$Notice.error({
               title: '错误',
               desc: res.data.message || '修改失败'
             })
           }
         }, err => {
-          console.log('出错啦！' + err)
+          this.$Notice.error({
+            title: '错误',
+            desc: JSON.stringify(err) || '网络错误'
+          })
         })
     },
     getStudioInfo() {
       this.$http.get('http://mp.dev.hubpd.com/api/studio/' + this.userinfo.id, {
-        username: this.userinfo.username
-      })
+          username: this.userinfo.username
+        })
         .then(res => {
           if (res.data.status == 1) {
             let studioInfo = res.data.studio
@@ -138,19 +141,21 @@ export default {
             this.catalog = studioInfo.catalogname
             let _preImg = {
               status: 'finished',
-              url: this.$conf.host+studioInfo.logofile
+              url: this.$conf.host + studioInfo.logofile
             }
             this.uploadList.push(_preImg)
             this.uploadImg = _preImg.url
-          }
-          else{
+          } else {
             this.$Notice.error({
               title: '错误',
               desc: res.data.message || '修改失败'
             })
           }
         }, err => {
-          console.log('出错啦！' + err)
+          this.$Notice.error({
+            title: '错误',
+            desc: JSON.stringify(err) || '网络错误'
+          })
         })
     },
     editStudioInfo() {
@@ -164,6 +169,7 @@ export default {
       this.$http.put('http://mp.dev.hubpd.com/api/studio/' + this.userinfo.id, reqParams)
         .then(res => {
           if (res.data.status == 1) {
+            this.disabledM = true
             this.$Notice.success({
               title: '成功',
               desc: res.data.message || '信息修改成功'
@@ -173,7 +179,7 @@ export default {
               title: '错误',
               desc: res.data.message || '修改失败'
             })
-          }else{
+          } else {
             this.$Notice.error({
               title: '错误',
               desc: res.data.message || '修改失败'
@@ -198,6 +204,7 @@ export default {
       this.$http.put('http://mp.dev.hubpd.com/api/studio/' + this.userinfo.id, reqParams)
         .then(res => {
           if (res.data.status == 1) {
+            this.disabledM = true
             this.$Notice.success({
               title: '成功',
               desc: res.data.message || '信息修改成功'
@@ -207,7 +214,7 @@ export default {
               title: '错误',
               desc: res.data.message || '信息修改失败'
             })
-          }else{
+          } else {
             this.$Notice.error({
               title: '错误',
               desc: res.data.message || '修改失败'

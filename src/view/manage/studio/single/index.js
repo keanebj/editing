@@ -1,4 +1,6 @@
-import { mapState } from 'vuex'
+import {
+  mapState
+} from 'vuex'
 import imageCropUpload from '@/components/imageCropUpload/index.vue'
 export default {
   name: 'ViewManageStudioId',
@@ -37,33 +39,67 @@ export default {
         "addtime": ""
       },
       ruleValidate: {
-        username: [
-          { required: true, type: '', message: '账号不能为空', trigger: 'blur' }
+        username: [{
+          required: true,
+          type: '',
+          message: '账号不能为空',
+          trigger: 'blur'
+        }],
+        password: [{
+            required: true,
+            message: '密码不能为空',
+            trigger: 'blur'
+          },
+          {
+            type: 'string',
+            min: 6,
+            message: '密码至少6位',
+            trigger: 'blur'
+          }
         ],
-        password: [
-          { required: true, message: '密码不能为空', trigger: 'blur' },
-          { type: 'string', min: 6, message: '密码至少6位', trigger: 'blur' }
+        passwordConfirm: [{
+            required: true,
+            message: '确认密码不能为空',
+            trigger: 'blur'
+          },
+          {
+            validator: validatePassCheck,
+            trigger: 'blur'
+          }
         ],
-        passwordConfirm: [
-          { required: true, message: '确认密码不能为空', trigger: 'blur' },
-          { validator: validatePassCheck, trigger: 'blur' }
+        logofile: [{
+          required: true,
+          message: 'LOGO不能为空',
+          trigger: 'blur'
+        }],
+        studioname: [{
+          required: true,
+          message: '工作室不能为空',
+          trigger: 'blur'
+        }],
+        url: [{
+            required: true,
+            message: 'URL不能为空',
+            trigger: 'blur'
+          },
+          {
+            type: 'url',
+            message: 'URl不正确',
+            trigger: 'blur'
+          }
         ],
-        logofile: [
-          { required: true, message: 'LOGO不能为空', trigger: 'blur' }
-        ],
-        studioname: [
-          { required: true, message: '工作室不能为空', trigger: 'blur' }
-        ],
-        url: [
-          { required: true, message: 'URL不能为空', trigger: 'blur' },
-          { type: 'url', message: 'URl不正确', trigger: 'blur' }
-        ],
-        catalogid: [
-          { required: true, type: 'number', message: '请选择【栏目绑定】', trigger: 'blur' }
-        ],
-        accountindex: [
-          { type: 'number', min: 1, message: '请输入数字', trigger: 'blur' }
-        ],
+        catalogid: [{
+          required: true,
+          type: 'number',
+          message: '请选择【栏目绑定】',
+          trigger: 'blur'
+        }],
+        accountindex: [{
+          type: 'number',
+          min: 1,
+          message: '请输入数字',
+          trigger: 'blur'
+        }],
       }
     }
   },
@@ -73,8 +109,8 @@ export default {
   methods: {
     getCatalog() {
       this.$http.get('/api/catalog').then(res => {
-        console.log("获取栏目列表："+JSON.stringify(res.data))
-      },err => {
+        console.log("获取栏目列表：" + JSON.stringify(res.data))
+      }, err => {
         this.$Notice.error({
           title: '错误',
           desc: err.message || '获取错误'
@@ -83,16 +119,19 @@ export default {
     },
     request() {
       this.isLoading = true
-      this.$http.get('/api/studio/' + this.id).then(({ data }) => {
-        if (data.status) {
+      this.$http.get('/api/studio/' + this.id).then(({
+        data
+      }) => {
+        if (data.status == 1) {
           this.formValidate = data.studio
+          this.isLoading = false
         } else {
           this.$Notice.error({
             title: '错误',
             desc: data.message || '获取错误'
           })
-        }
-        this.isLoading = false
+          this.isLoading = false
+        }        
       }, () => {
         this.$Notice.error({
           title: '错误',
@@ -115,10 +154,14 @@ export default {
     save() {
       delete this.formValidate.id
       this.isSubmit = true
-      this.$http.post('/api/studio', this.formValidate).then(({ data }) => {
+      this.$http.post('/api/studio', this.formValidate).then(({
+        data
+      }) => {
         this.isSubmit = false
         if (data.status) {
-          this.$router.push({ path: '/manage/studio' })
+          this.$router.push({
+            path: '/manage/studio'
+          })
           this.$Notice.success({
             title: '成功',
             desc: data.message || '保存成功'
@@ -139,7 +182,9 @@ export default {
     },
     update() {
       this.isSubmit = true
-      this.$http.put('/api/studio/' + this.id, this.formValidate).then(({ data }) => {
+      this.$http.put('/api/studio/' + this.id, this.formValidate).then(({
+        data
+      }) => {
         this.isSubmit = false
         if (data.status) {
           this.$Notice.success({
@@ -179,16 +224,15 @@ export default {
         this.$refs['formValidate'].validateField('logofile')
       }
     },
-    cropUploadFail(e, resData, field, ki) {
-    }
+    cropUploadFail(e, resData, field, ki) {}
   },
   created() {
-    this.getCatalog()
+    //this.getCatalog()
     this.id = this.$route.params.id
     if (this.id !== '0') {
       this.request()
-      
+
     }
-    
+
   }
 }
