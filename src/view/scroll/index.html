@@ -1,7 +1,26 @@
 <section>
   <div class="set-con" @mousewheel="scrollBar($event)" ref="setCon">
     <div class="set-posi" ref="onscroll" @mousedown.prevent="mouseScroll($event)">
-      <div v-if="typeof previewCon == 'string'"  v-html="previewCon"></div>
+    	<!--//  魏征霖修改部分结束
+//  魏征霖修改部分
+//  魏征霖修改部分
+//  魏征霖修改部分
+//  魏征霖修改部分
+//  魏征霖修改部分-->
+      <div v-if="previewCon.title"  class="yulan">
+      	<h1  class="yulan-tit">{{ previewCon.title }}</h1>
+      	<div class="yulan-xinxi">
+      		<span>{{ previewCon.time.substring(0,10) }}</span>
+      		<span>{{ previewCon.studioname }}</span>
+      	</div>
+      	<div v-html="previewCon.content"></div>
+      </div>
+      <!--//  魏征霖修改部分结束
+//  魏征霖修改部分
+//  魏征霖修改部分
+//  魏征霖修改部分
+//  魏征霖修改部分
+//  魏征霖修改部分-->
       <div v-else>
         <Row :gutter="34">
         <Col span="8" v-for="(value,key) in previewCon" :index="key" :key="key">

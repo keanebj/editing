@@ -488,3 +488,8 @@
   font-size: 14px;
   color: #333
 }
+/*.author-input:focus{
+  border-color:#F95759 !important;
+  outline: none;
+   -webkit-appearance: none;
+}*/

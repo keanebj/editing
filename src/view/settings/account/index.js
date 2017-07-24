@@ -113,6 +113,11 @@ export default {
             this.account = this.userinfo.username
             this.studioName = operatorInfo.studioname
             this.formValidate.mail = operatorInfo.email
+          }else{
+            this.$Notice.error({
+              title: '错误',
+              desc: res.data.message || '修改失败'
+            })
           }
         }, err => {
           console.log('出错啦！' + err)
@@ -138,6 +143,12 @@ export default {
             this.uploadList.push(_preImg)
             this.uploadImg = _preImg.url
           }
+          else{
+            this.$Notice.error({
+              title: '错误',
+              desc: res.data.message || '修改失败'
+            })
+          }
         }, err => {
           console.log('出错啦！' + err)
         })
@@ -158,6 +169,11 @@ export default {
               desc: res.data.message || '信息修改成功'
             })
           } else if (res.data.status == 0) {
+            this.$Notice.error({
+              title: '错误',
+              desc: res.data.message || '修改失败'
+            })
+          }else{
             this.$Notice.error({
               title: '错误',
               desc: res.data.message || '修改失败'
@@ -190,6 +206,11 @@ export default {
             this.$Notice.error({
               title: '错误',
               desc: res.data.message || '信息修改失败'
+            })
+          }else{
+            this.$Notice.error({
+              title: '错误',
+              desc: res.data.message || '修改失败'
             })
           }
           console.log(JSON.stringify(res.data))

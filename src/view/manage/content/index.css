@@ -23,6 +23,10 @@
   text-align:center;
 }
 
+.tr-hover:hover{
+  background:#dddee1;
+}
+
 
 /*上传部分*/
 .upload_doc{

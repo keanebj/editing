@@ -10,7 +10,9 @@
           <input type="text" value="*.doc、*.docx、*.ppt、*.pptx" disabled="" />
           <Upload
             ref="upload"
-            action="http://mp.dev.hubpd.com/api/content/import"
+            action="http://mp.dev.hubpd.com/api/content/import
+
+"
             :before-upload="beforeLoad"
             :show-upload-list="true"
             accept=".doc,.docx,.ppt,.pptx"
@@ -19,9 +21,7 @@
             :format="['doc','docx','ppt','pptx']"
             :on-format-error="handleFormatError"
             :on-success="handleSuccess"
-            :headers="headToken"
-            :data="catalogId"
-            >
+            :headers="headToken">
             <Button type="info" icon="ios-cloud-upload-outline">上传文件</Button>
           </Upload>
         </div>
@@ -67,9 +67,12 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(item,index) in contentList" :index="item.ID">
-        <th scope="row">
-          <img width="120" :src="item.cover">
+      <tr v-for="(item,index) in contentList" :index="item.ID" class="tr-hover">
+        <th scope="row" style="position: relative">
+          <Icon v-if="item.topflag" type="flag" style="position:absolute;top:10px;left:10px;color:#F95759;font-size:20px;">top</Icon>
+          <router-link :to="{path:'../article',query:{id:item.id}}" v-if="roleType == 'Edit'"> <img width="120" :src="item.cover"></router-link>
+          <router-link :to="{path:'../notice',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'Notice'"> <img width="120" :src="item.cover"></router-link>
+          <router-link :to="{path:'../article',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'College'"> <img width="120" :src="item.cover"></router-link>
         </th>
         <th scope="row" id="title">
           <router-link :to="{path:'../article',query:{id:item.id}}" v-if="roleType == 'Edit'">{{item.title}}</router-link>
@@ -95,8 +98,9 @@
               <Icon type="ios-gear-outline" style="font-size:1.2em;color: #F95759;"></Icon>
             </a>
             <Dropdown-menu slot="list" >
-              <Dropdown-item name="top" >置顶</Dropdown-item>
-              <Dropdown-item name="drop" >撤回</Dropdown-item>
+              <Dropdown-item v-if="item.topflag" name="canceltop" >取消置顶</Dropdown-item>
+              <Dropdown-item v-else="item.topflag" name="top" >置顶</Dropdown-item>
+              <div v-if="item.status == 'Publish'"><Dropdown-item name="drop" >撤回</Dropdown-item></div>
               <Dropdown-item name="delete">删除</Dropdown-item>
             </Dropdown-menu>
           </Dropdown>
