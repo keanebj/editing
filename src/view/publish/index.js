@@ -8,7 +8,7 @@ export default {
   name: 'ViewPublish',
   components:{
     ScrollBar,
-    VueQArt
+    VueQArt,
   },
   data () {
     return {
@@ -35,10 +35,18 @@ export default {
         Notice: '公告',
         College: '人民日报中央厨房'
       },
+      titleMaxCount:22,
+      summaryMaxCount:60,
+      authorMaxCount:5,
+      keyMaxCount:5,
+      author: '',
+      keyword: '',
       formTop: {
         contenttype:"Article",
         channel: '人民日报中央厨房',
         author: '',
+        authorArr:[],
+        keywordArr:[],
         keyword: '',
         cover:'',
         summary:'',
@@ -48,28 +56,28 @@ export default {
         label:'Notice'
       },
       ruleValidate: {
-        author: [
-          { required: true, message: '作者不能为空', trigger: 'blur' }
+        authorArr: [
+          { required: true, message: ' '}
         ],
         cover: [
           { required: true, message: '封面不能为空', trigger: 'blur' }
         ],
-        summary:[
-          { type: 'string', max: 140, message: '介绍不能大于140字', trigger: 'change' }
-        ],
         title:[
-          { required: true, message: '标题不能为空', trigger: 'change' },
-          { type: 'string', max: 50, message: '标题不能大于50字', trigger: 'change' }
+          { required: true, message: '标题不能为空', trigger: 'change' }
         ],
         label: [
           { required: true, message: '标签不能为空', trigger: 'blur' }
         ],
-
       },
       localDefaultSrc:'http://mp.dev.hubpd.com/product/images/logo_login.png',
       elements: [],
       previewCon: [
-        '',
+        {
+          title: '',
+          content: '',
+          studioname: '',
+          time: ''
+        },
         []
       ],
       iIndex: [-1],
@@ -79,11 +87,28 @@ export default {
       headers:{
         token:this.$store.state.token
       },
-      token:this.$store.state.token
+      token:this.$store.state.token,
+      studioName: '',
+      hidesave:true,
+      hideshare:true,
+      hidepreview:true,
+      isHideAuthor:true,
+      isHideClose:false,
+      isHideKeyClose:false,
+      isHideKeyword:true,
+      temptimer:null,
+      placeauthor:'每个作者最多5个字',
+      placekeyword:'每个关键词最多5个字'
     }
   },
   created(){
     this.roleType=this.$store.state.userinfo.roleType;
+    this.$http.get("/api/studio/"+this.$store.state.userinfo.id).then((response) => {
+      console.log(response.data.studio.studioname)
+      this.studioName = response.data.studio.studioname;
+    }, (response) => {
+      this.$Message.error(error.data.message);
+    })
   },
   mounted(){
     //用于隐藏左侧
@@ -95,7 +120,6 @@ export default {
     this.editor=UE.getEditor("editor",{
       //此处可以定制工具栏的功能，若不设置，则默认是全部的功能
       UEDITOR_HOME_URL: '/static/ueditor1_4_3_3-utf8-jsp/',
-      // UEDITOR_HOME_URL: `/${this.$conf.root}/static/ueditor1_4_3_3-utf8-jsp/`,
       emotionLocalization: true,
       scaleEnabled: true,
     })
@@ -121,16 +145,17 @@ export default {
         //给数据值
         this.formTop.title = data.title;
         this.formTop.publishchannel = data.channel;
-        this.formTop.author = data.author;
-        this.formTop.keyword = data.keyword;
+        this.formTop.authorArr=data.author.split(" ");
+        this.formTop.keywordArr=data.keyword.split(" ");
         this.formTop.cover = data.cover;
         this.formTop.summary = data.summary;
         this.formTop.content = data.content;
         this.formTop.label = data.label;
         if(data.summary){
-          this.formTop.currentAbstractCount = data.summary.toString().length;
+          this.formTop.currentAbstractCount = Math.ceil(this.gblen(data.summary,120,'summary')) >60?60:Math.ceil(this.gblen(data.summary,120,'summary'));
         }
-        this.titleContentCount = data.title.length;
+
+        this.titleContentCount = Math.ceil(this.gblen(data.title,44,'title')) > 22 ? 22:Math.ceil(this.gblen(data.title,44,'title'));
         this.editor.ready(function(){
           This.editor.execCommand('inserthtml',This.formTop.content);
         })
@@ -149,11 +174,21 @@ export default {
       //存到数据库
       This.save('formTop',true);
     },60000);
-
+  },
+  updated(){
+    let padleft=this.$refs.authorContainer.clientWidth;
+    this.$refs.authorInput.style.paddingLeft=padleft+'px';
+    this.placeauthor=padleft>10?'':'每个作者最多5个字';
+    if(this.roleType == 'Edit'){
+      let keypadleft=this.$refs.keywordContainer.clientWidth;
+      this.$refs.keywordInput.style.paddingLeft=keypadleft+'px';
+      this.placekeyword=keypadleft>10?'':'每个关键字最多5个字';
+    }
   },
   destroyed() {
     //清除定时器
     clearInterval(this.timer);
+    clearInterval(this.temptimer);
     this.editor.destroy();
   },
   methods: {
@@ -162,21 +197,36 @@ export default {
     },
     showPreviewContent:function(){
       //获得编辑器中的内容:这里的预览需要写一个界面（待完善。。。）
-    this.previewCon[0]=this.editor.getContent();
-      this.previewContent=true;
-      var ele = this.elements;
-      clearTimeout(time);
-      var time =  setTimeout(function () {
-      	if (ele[3].clientHeight >= ele[0].clientHeight) {
-      		ele[1].style.display = 'none';
-      		ele[2].style.display = 'none';
-      	}else{
-      		ele[1].style.display = 'block';
-      		ele[2].style.display = 'block';
-      		var scale = ele[3].clientHeight / ele[0].clientHeight;
-	      	ele[1].style.height = ele[2].clientHeight*scale + 'px'
-      	}
-      },200)
+      if (this.articleID > -1) {
+//    	保存显示预览(后台返回数据问题)
+        this.$http.get("/api/content/"+this.articleID).then((response) => {
+          let data = response.data.content;
+          //给数据值
+          this.previewCon[0].title = data.title;
+          this.previewCon[0].content = data.content;
+          this.previewCon[0].time = data.addtime;
+          this.previewCon[0].studioname = this.studioName;
+        }, (response) => {
+          this.$Message.error(response.data.message);
+        });
+        this.previewContent=true;
+        var ele = this.elements;
+        clearTimeout(time);
+        var time =  setTimeout(function () {
+          if (ele[3].clientHeight >= ele[0].clientHeight) {
+            ele[1].style.display = 'none';
+            ele[2].style.display = 'none';
+          }else{
+            ele[1].style.display = 'block';
+            ele[2].style.display = 'block';
+            var scale = ele[3].clientHeight / ele[0].clientHeight;
+            ele[1].style.height = ele[2].clientHeight*scale + 'px'
+          }
+        },200)
+      }else{
+//    	不显示预览
+        this.$Message.info('保存后才能预览');
+      }
     },
     fromContent:function(){
       //从正文选择图片
@@ -228,8 +278,126 @@ export default {
       this.iIndex = iIndex;
 
     },
-    abstractWordCount:function(event){
-      var length=event.target.value.length;
+    closeAuthor:function(index){
+      this.formTop.authorArr.splice(index,1);
+      let This=this;
+      this.temptimer=setTimeout(function(){
+        let padleft=This.$refs.authorContainer.clientWidth;
+        This.$refs.authorInput.style.paddingLeft=padleft+'px';
+      },200);
+      if(!this.author && this.formTop.authorArr.length == 0){
+        this.placeauthor='每个作者最多5个字';
+      }else{
+        this.placeauthor='';
+      }
+    },
+    checkAuthorCount:function(ev){
+      if(!this.author && this.formTop.authorArr.length == 0){
+        this.placeauthor='每个作者最多5个字';
+      }else{
+        this.placeauthor='';
+      }
+
+      let count=Math.ceil(this.gblen(this.author,10,'author'));
+      //判断作者是否输入了空格
+      let reg=/[^\s]\s+$/;
+      if((reg.test(this.author) && ev.keyCode==32) || (count==5 && ev.keyCode==32 && this.author.Trim())){
+        //输入了空格:是否重复：放到数组中去
+        if(this.isRepeat(this.formTop.authorArr,this.author.Trim())){
+          //有重复
+          if(this.formTop.authorArr.length <3){
+            //隐藏掉不为空
+            this.$refs.authorTip.innerHTML="作者不能重复";
+            this.isHideAuthor=false;
+          }
+        }else{
+          //没重复
+          if(this.formTop.authorArr.length >= 3){
+            return;
+          }
+          this.formTop.authorArr.push(this.author.Trim());
+          this.author='';
+          let This=this;
+          this.temptimer=setTimeout(function(){
+            let padleft=This.$refs.authorContainer.clientWidth;
+            This.$refs.authorInput.style.paddingLeft=padleft+'px';
+          },200);
+
+          this.isHideAuthor=true;
+        }
+      }
+    },
+    authorBlur:function(){
+      this.author='';
+      if(!this.isRepeat(this.formTop.authorArr)){
+        this.isHideAuthor=true;
+      }
+    },
+    keywordBlur:function(){
+      this.keyword='';
+      if(!this.isRepeat(this.formTop.keywordArr)){
+        this.isHideKeyword=true;
+      }
+    },
+    closeKeyword:function(index){
+      this.formTop.keywordArr.splice(index,1);
+      let This=this;
+      this.temptimer=setTimeout(function(){
+        let padleft=This.$refs.keywordContainer.clientWidth;
+        This.$refs.keywordInput.style.paddingLeft=padleft+'px';
+      },200);
+      if(!this.keyword && this.formTop.keywordArr.length == 0){
+        this.placekeyword='每个作者最多5个字';
+      }else{
+        this.placekeyword='';
+      }
+    },
+    checkKeywordCount:function(ev){
+      if(!this.keyword && this.formTop.keywordArr.length == 0){
+        this.placekeyword='每个作者最多5个字';
+      }else{
+        this.placekeyword='';
+      }
+      let count=Math.ceil(this.gblen(this.keyword,10,'keyword'))
+      //判断作者是否输入了空格
+      let reg=/[^\s]\s+$/;
+      if(reg.test(this.keyword) && ev.keyCode==32 || (count==5 && ev.keyCode==32 && this.keyword.Trim())){
+        //输入了空格:是否重复：放到数组中去
+        if(this.isRepeat(this.formTop.keywordArr,this.keyword.Trim())){
+          //有重复
+          if(this.formTop.keywordArr.length < 5){
+            this.isHideKeyword=false;
+          }
+        }else{
+          //没重复
+          if(this.formTop.keywordArr.length >= 5){
+            return;
+          }
+          this.formTop.keywordArr.push(this.keyword.Trim());
+          this.keyword='';
+          let This=this;
+          this.temptimer=setTimeout(function(){
+            let padleft=This.$refs.keywordContainer.clientWidth;
+            This.$refs.keywordInput.style.paddingLeft=padleft+'px';
+          },200);
+
+          this.isHideKeyword=true;
+        }
+      }
+    },
+    isRepeat:function (arr,item) {
+    for(let i=0;i<arr.length;i++){
+      if(arr[i] == item){
+        return true;
+      }
+    }
+      return false;
+},
+abstractWordCount:function(event){
+      var length=Math.ceil(this.gblen(event.target.value,120,'summary'));
+      if(length > 60){
+        length=60;
+      }
       this.formTop.currentAbstractCount=length;
     },
     handleError:function(error, file, fileList){
@@ -268,84 +436,75 @@ export default {
             // }
         // }
         ).then((response) => {
-          console.log(response);
           this.formTop.summary=response.data.summary.toString();
-          this.formTop.currentAbstractCount=response.data.summary.toString().length;
+          this.formTop.currentAbstractCount=Math.ceil(this.gblen(response.data.summary,120,'summary'))>60?60:Math.ceil(this.gblen(response.data.summary,120,'summary'));
         },(error) => {
           this.$Message.error(error.data.message);
         });
       }
     },
-    publish:function(name){
-      // 发布：暂时不做
-
-     /* this.formTop.editorContent=this.editor.getContent();
-      this.$refs[name].validate((valid) => {
-        if(!this.formTop.editorContent){
-            this.$Message.error('保存失败，请检查格式是否正确!');
-            this.hideTip=false;
-        }
-        else if (valid) {
-          //通过验证，访问后台，保存表单数据
-          this.$http.put("/api/content/publish/"+this.articleID,{contentid:this.articleID}).then((response) => {
-             this.$Message.success('发布成功!');
+    publish:function(){
+      // 发布
+      if(this.articleID > -1){
+        //已经保存了，可以发布
+        this.$http.put("/api/content/publish/"+this.articleID
+        ).then((response) => {
+            console.log(response);
+            this.$Notice.success({title:response.data.message,desc: false});
+          }, (error) => {
+            this.$Notice.error({title:error.data.message,desc: false});
           });
-        } else {
-            this.$Message.error('发布失败，请检查格式是否正确!');
-        }
-      })*/
-
-
+      }else{
+        this.$Notice.warning({title:'请先保存，保存后才能发布!',desc: false});
+      }
     },
     save:function(name,hideTip){
       this.formTop.content=this.editor.getContent();
+      this.formTop.author=this.formTop.authorArr.join(" ");
+      this.formTop.keyword=this.formTop.keywordArr.join(" ");
+      if(!this.formTop.author){
+        //提示不能为空
+        this.$refs.authorTip.innerHTML="作者不能为空";
+        this.isHideAuthor=false;
+      }
         this.$refs[name].validate((valid) => {
           if(!this.formTop.content){
             if(!hideTip){
-              this.$Message.error('保存失败，请检查格式是否正确!');
+              this.$Notice.error({title:'保存失败，请检查格式是否正确!',desc: false});
             }
             this.hideTip=false;
+          }else if(!this.isHideKeyword){
+            if(!hideTip){
+              this.$Notice.error({title:'保存失败，请检查格式是否正确!',desc: false});
+            }
+          }else if(!this.isHideAuthor){
+            if(!hideTip){
+              this.$Notice.error({title:'保存失败，请检查格式是否正确!',desc: false});
+            }
           }
           else if (valid) {
               if(this.articleID > -1){
                 //更新
                 this.$http.put("/api/content/"+this.articleID,this.formTop
-                  // {
-                  //   headers:{
-                  //     token:this.token
-                  //   }
-                  // }
                ).then((response) => {
-                    //console.log(this.formTop.label)
-                    this.$Message.success(response.data.message);
-                    this.articleID=response.data.content_id;
+                    this.$Notice.success({title:response.data.message,desc: false});
+                    //this.articleID=response.data.id;
                 }, (error) => {
-                      this.$Message.error(error.data.message);
+                    this.$Notice.error({title:error.data.message,desc: false});
                 });
               }else{
-
                 //新建
                 this.$http.post('/api/content',this.formTop)
-                // this.$http.post({
-                //   method: 'POST',
-                //   url: "/api/content",
-                //   params:this.formTop
-                  // headers:{
-                  //   token:this.token
-                  // }
-                // })
                 .then((response) => {
-                    console.log(response);
-                  //console.log(this.formTop.label)
-                    this.$Message.success(response.data.message);
-                    this.articleID=response.data.content_id;
+                    this.$Notice.success({title:response.data.message,desc: false});
+                    this.articleID=response.data.id;
                 }, (response) => {
-                    this.$Message.error(response.data.message);
+                    this.$Notice.error({title:error.data.message,desc: false});
                 });
               }
           } else {
             if(!hideTip) {
-              this.$Message.error('保存失败，请检查格式是否正确!');
+              this.$Notice.error({title:'保存失败，请检查格式是否正确!',desc: false});
             }
           }
         })
@@ -456,8 +615,82 @@ export default {
 
     //editor
     getTitleContent:function(){
-      this.titleContentCount=this.formTop.title.length;
+      //需要转换为字符
+      let count=this.gblen(this.formTop.title,44,'title');
+      this.titleContentCount=Math.ceil(count)>22 ? 22:Math.ceil(count);
     },
-  }
+    //转为字符：中文1个 英文0.5个
+    gblen:function(str,max,name){
+      var len = 0;
+      if(name == 'title'){
+        this.titleMaxCount=22;
+      }else if(name == 'summary'){
+        this.summaryMaxCount=60;
+      }else if(name == 'author'){
+        this.authorMaxCount=5;
+      }else if(name == 'keyword'){
+        this.keyMaxCount=5;
+      }
+      for (var i=0; i<str.length; i++) {
+        if (str.charCodeAt(i)>127 || str.charCodeAt(i)==94) {
+          len ++;
+        } else {
+          switch(name){
+            case 'title':
+              this.titleMaxCount+=0.5;
+              if(this.titleMaxCount > max){
+                this.titleMaxCount=max;
+              }
+              break;
+            case 'summary':
+              this.summaryMaxCount+=0.5;
+              if(this.summaryMaxCount > max){
+                this.summaryMaxCount=max;
+              }
+              break;
+            case 'author':
+              this.authorMaxCount+=0.5;
+              if(this.authorMaxCount > max){
+                this.authorMaxCount=max;
+              }
+              break;
+            case 'keyword':
+              this.keyMaxCount+=0.5;
+              if(this.keyMaxCount > max){
+                this.keyMaxCount=max;
+              }
+              break;
+          }
+          len +=0.5;
+        }
+      }
+      return len;
+    }
+  },
+/*  directives:{
+    //直接绑定函数，作用等同于update,不做准备工作和扫尾工作
+    myDirective1(val){
+      console.log(val)
+    },
+    demo:{
+      bind(el,binding,vnode){
+        //第一次绑定到元素的准备工作
+       // console.log(binding);
+        el.innerHTML=binding.value;
+      },
+      update(el, binding, vnode, oldVnode){
+      //在绑定到元素后立即以初始值第一次调用，然后每次example2变化都会调用update
+        console.log(binding);
+        //el.innerHTML=binding.value;
+    },
+    unbind(){
+     //销毁前的清理工作
+    }
+    }
+  }*/
+}
 
+String.prototype.Trim = function()
+{
+  return this.replace(/(^\s*)|(\s*$)/g, "");
 }

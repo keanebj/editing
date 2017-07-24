@@ -6,7 +6,7 @@ export default {
     'iIndex'
   ],
   created () {
-
+		
   },
   data () {
     return {

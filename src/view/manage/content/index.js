@@ -16,7 +16,6 @@ export default {
       file: '',//上传的文件
       percentProgress: 0,//上传进度条
       headToken: {token:'64fb2b381e2727d69f720439e0553353fe38647f0835233c'},//携带头部
-      catalogId: {catalogId: 12},
       uploadModal: false,//上传对话框
       beforeUpload: false,//上传之前参数
       roleType:'Edit'
@@ -46,12 +45,50 @@ export default {
     }
   },
   methods: {
+    confirm (contentid) {
+      this.$Modal.confirm({
+        title: '确认提示',
+        content: '<p>你确定要删除吗？</p>',
+        onOk: () => {
+          this.$http.delete("/api/content/"+contentid,
+            {
+              headers:{
+                token:this.token
+              }
+            }).then((response)=>{
+              this.$Message.success(response.data.message);
+              //重新加载列表
+              this.getContentList();
+            },(error)=>{
+              this.$Message.success(error.data.message);
+            })
+        },
+        onCancel: () => {
+        }
+      });
+    },
     getOperateContentID:function(id){
       this.contentId=id;
     },
     operateContent:function(type){
       let contentid=this.contentId;
       switch (type){
+        case 'canceltop':
+          //需要取消置顶的接口
+          this.$http.put("/api/content/top/"+contentid,{contentid:contentid,method:''},
+            {
+              headers:{
+                token:this.token
+              }
+            }
+          ).then((response)=>{
+              this.$Message.success(response.data.message);
+              //重新加载列表
+              this.getContentList();
+            },(error)=>{
+              this.$Message.success(error.data.message);
+            })
+              break;
         case 'top':
           this.$http.put("/api/content/top/"+contentid,{contentid:contentid,method:'top'},
             {
@@ -82,18 +119,8 @@ export default {
           })
           break;
         case 'delete':
-          this.$http.delete("/api/content/"+contentid,
-            {
-              headers:{
-                token:this.token
-              }
-            }).then((response)=>{
-            this.$Message.success(response.data.message);
-              //重新加载列表
-              this.getContentList();
-          },(error)=>{
-            this.$Message.success(error.data.message);
-          })
+          //给一个提示框
+          this.confirm(contentid);
           break;
         default :
           break;
@@ -130,7 +157,6 @@ export default {
           token:this.token
         }
       }).then((response) => {
-        console.log(response.data);
         this.total=response.data.total;
         //格式化time
         if(response.data.contents && response.data.contents.length){
@@ -150,7 +176,6 @@ export default {
           this.isActiveHide=true;
         }
         this.contentList=response.data.contents;
-        console.log(this.contentList)
       },(error)=>{
         console.log(error);
       })
@@ -158,15 +183,11 @@ export default {
     //  文件上传
 //上传前
     beforeLoad (file) {
-
       this.file = file;
       this.$refs.upload.fileList = [];
       this.beforeUpload = true;
       this.fileName = file.name;
-      console.log( this.$refs.upload.fileList)
       this.fileSize = (file.size/1024).toFixed(2) + 'K';
-
-//			return this.beforeLoaded;
     },
 //		上传中
     onLoading (event, file, fileList) {
@@ -176,17 +197,11 @@ export default {
       }
     },
     handleFormatError (file) {
-//			this.$Notice.warning({
-//      title: '文件格式不正确',
-//      desc: '文件 ' + file.name + ' 格式不正确，请上传 jpg 或 png 格式的图片。'
-//  	});
       this.$Message.error('请上传正确格式的文件！');
     },
 //		上传成功
     handleSuccess (res, file) {
-//			console.log(res)
-//			console.log(file)
-//			alert(111)
+      this.$router.push({ path: '../publish',query:{articleID:res.id}})
     }
   },
 

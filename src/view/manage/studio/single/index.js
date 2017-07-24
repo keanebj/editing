@@ -71,6 +71,16 @@ export default {
     ...mapState(['catelog'])
   },
   methods: {
+    getCatalog() {
+      this.$http.get('/api/catalog').then(res => {
+        console.log("获取栏目列表："+JSON.stringify(res.data))
+      },err => {
+        this.$Notice.error({
+          title: '错误',
+          desc: err.message || '获取错误'
+        })
+      })
+    },
     request() {
       this.isLoading = true
       this.$http.get('/api/studio/' + this.id).then(({ data }) => {
@@ -173,7 +183,12 @@ export default {
     }
   },
   created() {
+    this.getCatalog()
     this.id = this.$route.params.id
-    if (this.id !== '0') this.request()
+    if (this.id !== '0') {
+      this.request()
+      
+    }
+    
   }
 }
