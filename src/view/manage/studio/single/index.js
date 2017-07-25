@@ -19,6 +19,8 @@ export default {
     };
     return {
       id: 0,
+      resetPWD:false,
+      resetWord:'重置',
       isSubmit: false,
       isLoading: false,
       catalogs: {},
@@ -46,7 +48,7 @@ export default {
           trigger: 'blur'
         }],
         password: [{
-            required: true,
+            // required: true,
             message: '密码不能为空',
             trigger: 'blur'
           },
@@ -58,7 +60,7 @@ export default {
           }
         ],
         passwordConfirm: [{
-            required: true,
+            // required: true,
             message: '确认密码不能为空',
             trigger: 'blur'
           },
@@ -104,6 +106,17 @@ export default {
     }
   },
   methods: {
+    resetPassword(){
+      if(!this.resetPWD){
+        this.resetWord = '取消重置'
+      }
+      else{
+        this.resetWord = '重置'
+      }
+      this.resetPWD = !this.resetPWD     
+      this.formValidate.password = ''
+      this.formValidate.passwordConfirm = ''       
+    },
     request() {
       this.isLoading = true
       this.$http.get('/api/studio/' + this.id).then(({

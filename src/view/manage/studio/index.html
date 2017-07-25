@@ -15,9 +15,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(item,index) in data">
+      <tr v-for="(item,index) in data" class="tr-hover">
         <th scope="row">
-          <img v-if="item.logofile" height="50" :src="$conf.host + item.logofile" alt="">
+          <div class="sutdio-logo">
+          <img v-if="item.logofile" height="60" :src="$conf.host + item.logofile" alt="">
+          </div>
         </th>
         <td>{{item.studioname}}</td>
         <td>{{item.url}}</td>

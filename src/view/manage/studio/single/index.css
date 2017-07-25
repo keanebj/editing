@@ -1,0 +1,12 @@
+.reset-pwd{
+    margin-bottom: 35px;
+}
+.reset-pwd label{
+    color: #999;
+    width: 100px;
+}
+.reset-pwd span{
+    margin-left: 80px;
+    cursor: pointer;
+    color: #2d8cf0;
+}

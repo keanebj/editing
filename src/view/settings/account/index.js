@@ -172,12 +172,7 @@ export default {
             this.disabledM = true
             this.$Notice.success({
               title: '成功',
-              desc: res.data.message || '信息修改成功'
-            })
-          } else if (res.data.status == 0) {
-            this.$Notice.error({
-              title: '错误',
-              desc: res.data.message || '修改失败'
+              desc: '信息修改成功'
             })
           } else {
             this.$Notice.error({
@@ -207,12 +202,7 @@ export default {
             this.disabledM = true
             this.$Notice.success({
               title: '成功',
-              desc: res.data.message || '信息修改成功'
-            })
-          } else if (res.data.status == 0) {
-            this.$Notice.error({
-              title: '错误',
-              desc: res.data.message || '信息修改失败'
+              desc: '信息修改成功'
             })
           } else {
             this.$Notice.error({

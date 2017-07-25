@@ -1,0 +1,11 @@
+.sutdio-logo{
+    padding: 5px 0;
+    border: 1px solid #ddd;
+}
+.sutdio-logo img{
+    display: block;
+    margin: 0 auto;
+}
+.tr-hover:hover{
+  background:#f5f5f5;
+}
