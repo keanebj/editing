@@ -70,9 +70,9 @@
       <tr v-for="(item,index) in contentList" :index="item.ID" class="tr-hover">
         <th scope="row" style="position: relative">
           <Icon v-if="item.topflag" type="flag" style="position:absolute;top:10px;left:10px;color:#F95759;font-size:20px;">top</Icon>
-          <router-link :to="{path:'../article',query:{id:item.id}}" v-if="roleType == 'Edit'"> <img width="120" :src="item.cover"></router-link>
-          <router-link :to="{path:'../notice',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'Notice'"> <img width="120" :src="item.cover"></router-link>
-          <router-link :to="{path:'../article',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'College'"> <img width="120" :src="item.cover"></router-link>
+          <router-link :to="{path:'../article',query:{id:item.id}}" v-if="roleType == 'Edit'"> <img  height="50" :src="item.cover"></router-link>
+          <router-link :to="{path:'../notice',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'Notice'"> <img  height="50" :src="item.cover"></router-link>
+          <router-link :to="{path:'../article',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'College'"> <img  height="50" :src="item.cover"></router-link>
         </th>
         <th scope="row" id="title">
           <router-link :to="{path:'../article',query:{id:item.id}}" v-if="roleType == 'Edit'">{{item.title}}</router-link>
