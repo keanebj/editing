@@ -1,0 +1,27 @@
+.vue-cropper{
+  display: inline-block
+}
+.vue-cropper-crop{
+  height: 400px
+}
+.vue-cropper-modal .ivu-modal-body{
+  padding: 0
+}
+.vue-cropper-modal .ivu-modal-footer{
+  position: relative
+}
+.vue-cropper-drop-area{
+  display: inline-block;
+}
+.vue-cropper-drop-area input{
+  display: none
+}
+.vue-cropper-progress{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top:0;
+  background: rgba(255,255,255,0.8);
+  padding: 16px 25px;
+}

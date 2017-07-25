@@ -15,12 +15,12 @@
       <Form-item label="LOGO" prop="logofile">
         <img v-if="formValidate.logofile" style="max-width:100px;border:1px solid #eee" :src="$conf.host + formValidate.logofile"
         />
-        <image-crop-upload :width="300" :height="200" :cropUploadSuccess="cropUploadSuccess" :cropUploadFail="cropUploadFail">
+        <cropper-upload :width="300" :height="200" :cropUploadSuccess="cropUploadSuccess" :cropUploadFail="cropUploadSuccess">
           <a v-if="formValidate.logofile" href="javascript:void(0)">
             <Icon type="edit"></Icon>
           </a>
           <Button v-else type="primary" shape="circle" icon="ios-download-outline">上传</Button>
-        </image-crop-upload>
+        </cropper-upload>
         建议logo长宽比为3:2
       </Form-item>
 
@@ -45,7 +45,6 @@
       </Form-item>
     </Form>
     </Col>
-
   </Row>
 
   <Spin size="large" fix v-if="isLoading">

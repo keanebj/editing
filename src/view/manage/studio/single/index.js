@@ -1,7 +1,9 @@
+import CropperUpload from '@/components/cropperUpload/index.vue'
 import imageCropUpload from '@/components/imageCropUpload/index.vue'
 export default {
   name: 'ViewManageStudioId',
   components: {
+    'cropper-upload': CropperUpload,
     'image-crop-upload': imageCropUpload
   },
   data() {
@@ -126,7 +128,7 @@ export default {
       })
     },
     cancel() {
-      this.$refs['formValidate'].resetFields()
+      this.$router.push('/manage/studio')
     },
     submit() {
       this.$refs.formValidate.validate((valid) => {
@@ -149,6 +151,7 @@ export default {
             title: '成功',
             desc: data.message || '保存成功'
           })
+          this.$router.push('/manage/studio')
         } else {
           this.$Notice.error({
             title: '错误',
@@ -174,6 +177,7 @@ export default {
             title: '成功',
             desc: data.message || '保存成功'
           })
+          this.$router.push('/manage/studio')
         } else {
           this.$Notice.error({
             title: '错误',
@@ -188,20 +192,7 @@ export default {
         })
       })
     },
-    onSuccess(e, response, file, fileList) {
-      if (response.path) {
-        this.formValidate.logofile = response.path
-        this.$refs['formValidate'].validateField('logofile')
-      }
-    },
-    onError(e, error, file, fileList) {
-      this.$Notice.error({
-        title: '错误',
-        desc: error.message || '图片上传错误！'
-      })
-    },
-    cropUploadSuccess(e, response, field, ki) {
-      console.log(e, response)
+    cropUploadSuccess(response, field, ki) {
       if (response.path) {
         this.formValidate.logofile = response.path
         this.$refs['formValidate'].validateField('logofile')
