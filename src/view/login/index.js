@@ -48,9 +48,7 @@ export default {
       this.$http.post('http://mp.dev.hubpd.com/api/studio/login', reqParams)
         .then(res => {
           //设置用户身份等信息
-          if (res.data.status == 0) {
-            this.$Message.error(res.data.message);
-          } else if (res.data.status == 1) {
+          if (res.data.status == 1) {
             var userinfo = {
               id: res.data.id,
               roleType: res.data.operatortype,
@@ -67,6 +65,8 @@ export default {
             sessionStorage.setItem('userinfo', JSON.stringify(userinfo))
             this.$Message.success('登录成功!');
             this.$router.push('/home')
+          }else{
+            this.$Message.error(res.data.message);
           }
         }, err => {
           console.log('出错啦！' + JSON.stringify(err))
