@@ -22,7 +22,7 @@
       <Button-group style="float:left;margin-left: 10px;">
         <Button type="ghost" icon="ios-reload" @click="rotate()"></Button>
       </Button-group>
-      <div class="vue-cropper-drop-area" @dragleave="preventDefault" @dragover="preventDefault" @dragenter="preventDefault" @click="handleClick"
+      <div class="vue-cropper-drop-area" @dragleave="preventDefault" @dragover="preventDefault" @dragenter="preventDefault" @click="handleClick($event,'resel')"
         @drop="handleChange">
         <Button type="ghost" icon="ios-cloud-upload-outline">重新选择图片</Button>
       </div>
