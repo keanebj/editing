@@ -233,6 +233,10 @@ export default {
 //		上传成功
     handleSuccess (res, file) {
       if(res.status == 1){
+        this.$Notice.success({
+          title: res.message,
+          desc: false
+        })
         this.$router.push({ path: '../publish',query:{articleID:res.id}})
       }else{
         this.$Notice.error({
