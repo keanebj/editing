@@ -15,19 +15,19 @@
         <td style="width:70px">{{index+1}}</td>
         <th scope="row" style="width:200px">
           <img v-if="item.path" style="max-width:200px;" :src="$conf.host + item.path">
-          <image-crop-upload v-else :width="1400" :height="400" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :data="item">
+          <cropper-upload v-else :width="1412" :height="170" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :ki="item.id">
             <div class="imagePlaceholder">
               <div class="title">点击上传广告图片</div>
               <div class="sub-title">尺寸要求: 2000*800</div>
             </div>
-          </image-crop-upload>
+          </cropper-upload>
         </th>
         <th scope="row" style="width:20px;padding:0">
-          <image-crop-upload :width="1400" :height="400" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :data="item">
+          <cropper-upload :width="1412" :height="170" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :ki="item.id">
             <a v-if="item.path" href="javascript:void(0)">
               <Icon type="edit"></Icon>
             </a>
-          </image-crop-upload>
+          </cropper-upload>
         </th>
         <td style="width:320px">
           <Input v-if="item.isEdit" v-model="item.url" @on-blur="onBlur(index)" placeholder="请输入链接" style="width: 250px"></Input>

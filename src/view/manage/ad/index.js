@@ -1,5 +1,4 @@
-import imageCropUpload from '@/components/imageCropUpload/index.vue'
-
+import CropperUpload from '@/components/cropperUpload/index.vue'
 var itemTemplate = {
   id: null,
   path: '',
@@ -18,7 +17,7 @@ export default {
     }
   },
   components: {
-    'image-crop-upload': imageCropUpload
+    'cropper-upload': CropperUpload
   },
   computed: {
     isModify() {
@@ -124,13 +123,22 @@ export default {
       for (var k in m) {
         var item = m[k]
         if (!item.url) {
-          this.$Message.warning('请输入url')
+          this.$Notice.error({
+            title: '错误',
+            desc: '请输入url'
+          })
           continue
         } if (!match.test(item.url)) {
-          this.$Message.warning('请输入有效的url')
+          this.$Notice.error({
+            title: '错误',
+            desc: '请输入有效的url'
+          })
           continue
         } else if (!item.path) {
-          this.$Message.warning('请输入path')
+          this.$Notice.error({
+            title: '错误',
+            desc: '请输入path'
+          })
           continue
         }
 
@@ -212,12 +220,16 @@ export default {
         }
       }
     },
-    onSuccess(data, response, file, fileList) {
+    onSuccess(response, field, ki) {
       if (response.path) {
-        data.path = response.path
+        this.data.forEach((n) => {
+          if (n.id === ki) {
+            n.path = response.path
+          }
+        })
       }
     },
-    onError(data, error, file, fileList) {
+    onError(error, field, ki) {
       this.$Notice.error({
         title: '错误',
         desc: error.message || '图片上传错误！'
