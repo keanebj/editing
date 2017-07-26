@@ -76,7 +76,9 @@ export default {
       ratio: width / height,
       // 原图地址、生成图片地址
       sourceImg: null,
-      sourceImgUrl: ''
+      sourceImgUrl: '',
+      scaleX: 1,
+      scaleY: 1
     }
   },
   methods: {
@@ -229,6 +231,10 @@ export default {
     zoom(type) {
       if (type === 'in') this.cropper.zoom(0.1)
       if (type === 'out') this.cropper.zoom(-0.1)
+    },
+    scale(type) {
+      if (type === 'h') this.cropper.scaleX(this.scaleX = -this.scaleX)
+      if (type === 'v') this.cropper.scaleY(this.scaleY = -this.scaleY)
     },
     rotate() {
       this.cropper.rotate(90)

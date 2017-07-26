@@ -20,6 +20,10 @@
         <Button type="ghost" icon="ios-minus-outline" @click="zoom('out')"></Button>
       </Button-group>
       <Button-group style="float:left;margin-left: 10px;">
+        <Button type="ghost" @click="scale('h')"><i class="fa fa-arrows-h" aria-hidden="true"></i></Button>
+        <Button type="ghost" @click="scale('v')"><i class="fa fa-arrows-v" aria-hidden="true"></i></Button>
+      </Button-group>
+      <Button-group style="float:left;margin-left: 10px;">
         <Button type="ghost" icon="ios-reload" @click="rotate()"></Button>
       </Button-group>
       <div class="vue-cropper-drop-area" @dragleave="preventDefault" @dragover="preventDefault" @dragenter="preventDefault" @click="handleClick"

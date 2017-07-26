@@ -8,9 +8,8 @@ export default {
   },
   data() {
     const validatePassCheck = (rule, value, callback) => {
-      console.log(value, this.formValidate.passwordConfirm)
       if (value === '') {
-        callback(new Error('请再次输入密码'))
+        callback(new Error('确认密码不能为空'))
       } else if (value !== this.formValidate.password) {
         callback(new Error('两次输入密码不一致!'))
       } else {
@@ -30,15 +29,10 @@ export default {
         "password": "",
         "passwordConfirm": "",
         "studioname": "",
-        "usertype": "",
-        "tel": "",
-        "email": null,
         "url": "",
         "logofile": "",
-        "catalogid": '',
-        "catalogname": null,
-        "accountindex": '',
-        "addtime": ""
+        "catalogid": 0,
+        "accountindex": 0
       },
       ruleValidate: {
         username: [{
@@ -48,7 +42,7 @@ export default {
           trigger: 'blur'
         }],
         password: [{
-            // required: true,
+            required: true,
             message: '密码不能为空',
             trigger: 'blur'
           },
@@ -60,7 +54,7 @@ export default {
           }
         ],
         passwordConfirm: [{
-            // required: true,
+            required: true,
             message: '确认密码不能为空',
             trigger: 'blur'
           },
@@ -152,9 +146,14 @@ export default {
       })
     },
     save() {
-      delete this.formValidate.id
+      var data = Object.assign({}, this.formValidate)
+      delete data.id
+      if (!data.password) {
+        delete data.password
+        delete data.passwordConfirm
+      }
       this.isSubmit = true
-      this.$http.post('/api/studio', this.formValidate).then(({
+      this.$http.post('/api/studio', data).then(({
         data
       }) => {
         this.isSubmit = false

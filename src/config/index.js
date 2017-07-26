@@ -1,8 +1,9 @@
-import Env from './env'
-
+let env = process.env.NODE_ENV
+const host = env === 'development' ? 'http://mp.dev.hubpd.com/' : env === 'production' ? 'http://mp.dev.hubpd.com/' : 'https://debug.url.com'
+const root = env === 'development' ? '' : '/newmedia'
 let config = {
-    env: Env,
-    host: 'http://mp.dev.hubpd.com/',
-    root: 'newmedia'
+    env: env,
+    host: host,
+    root: root
 }
 export default config

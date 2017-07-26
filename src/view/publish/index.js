@@ -120,8 +120,7 @@ export default {
 
     this.editor=UE.getEditor("editor",{
       //此处可以定制工具栏的功能，若不设置，则默认是全部的功能
-      // UEDITOR_HOME_URL: '/static/ueditor1_4_3_3-utf8-jsp/',
-      UEDITOR_HOME_URL: '/${this.$conf.root}/static/ueditor1_4_3_3-utf8-jsp/', 
+      UEDITOR_HOME_URL: `${this.$conf.root}/static/ueditor1_4_3_3-utf8-jsp/`, 
       emotionLocalization: true,
       scaleEnabled: true,
     })

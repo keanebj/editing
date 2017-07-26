@@ -109,9 +109,9 @@
   display: inline-block;
 }
 
-.ivu-modal-header {
+/* .ivu-modal-header {
   background: #f3f3f3;
-}
+} */
 
 .cover-container {
   border: 1px solid #dddee1;
@@ -195,7 +195,7 @@
   height: 23vw;
   padding: 10px 15px;
 }
-
+/* 
 .ivu-modal-content .ivu-modal-body {
   height: 30vw;
   width: auto;
@@ -235,7 +235,7 @@
 .ivu-modal-content .ivu-modal-close .ivu-icon-ios-close-empty {
   font-size: 25px;
   color: #757575;
-}
+} */
 
 .set-max-height {
   border: 1px solid #ccc;
