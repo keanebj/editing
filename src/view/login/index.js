@@ -55,7 +55,7 @@ export default {
               username: res.data.operator,
               password: this.formItem.password,
               // studioLogo: this.$conf.host + res.data.logo || ''
-              studioLogo: res.data.logo || ''
+              studioLogo: res.data.operatortype == "Manage" ? '' : res.data.logo
             }
 
             this.$store.commit('set', { userinfo })

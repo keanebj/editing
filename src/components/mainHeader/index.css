@@ -1,5 +1,6 @@
-.layout-ceiling-main a {
-  float: right!important;
+.layout-ceiling-main .studio-logo {
+   float: left!important; 
+   margin-right: 5px;
 }
 .studio-logo {
   width: 50px;
