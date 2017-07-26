@@ -4,7 +4,7 @@
     <slot></slot>
     <input type="file" @change="handleChange" ref="fileinput">
   </div>
-  <Modal title="图片裁剪" v-model="visible" :mask-closable="false" class-name="vue-cropper-modal" width="800">
+  <Modal title="图片裁剪" v-model="visible" :mask-closable="false" class-name="vue-cropper-modal" width="500">
     <div class="vue-cropper-crop">
       <img ref="image" :src="sourceImgUrl">
     </div>
