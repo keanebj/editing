@@ -1,6 +1,6 @@
 import VueQArt from 'vue-qart'
 import ScrollBar from '@/view/scroll/index.vue'
-import cropperUpload from '@/components/cropperUpload/index.vue'
+import imageCropUpload from '@/components/imageCropUpload/index.vue'
 import '../../../static/ueditor1_4_3_3-utf8-jsp/ueditor.config.js'
 import '../../../static/ueditor1_4_3_3-utf8-jsp/ueditor.all.js'
 import '../../../static/ueditor1_4_3_3-utf8-jsp/lang/zh-cn/zh-cn.js'
@@ -10,7 +10,7 @@ export default {
   components:{
     ScrollBar,
     VueQArt,
-    cropperUpload
+    imageCropUpload
   },
   data () {
     return {
@@ -100,7 +100,7 @@ export default {
       isHideKeyword:true,
       temptimer:null,
       placeauthor:'每个作者最多5个字',
-      placekeyword:'每个关键词最多5个字'
+      placekeyword:'每个关键词最多5个字',
     }
   },
   created(){
@@ -108,7 +108,10 @@ export default {
     this.$http.get("/api/studio/"+this.$store.state.userinfo.id).then((response) => {
       this.studioName = response.data.studio.studioname;
     }, (response) => {
-      this.$Message.error(error.data.message);
+      this.$Notice.error({
+        title: error.data.message,
+        desc: false
+      })
     })
   },
   mounted(){
@@ -121,7 +124,6 @@ export default {
     this.editor=UE.getEditor("editor",{
       //此处可以定制工具栏的功能，若不设置，则默认是全部的功能
       UEDITOR_HOME_URL: '/static/ueditor1_4_3_3-utf8-jsp/',
-      // UEDITOR_HOME_URL: `/${this.$conf.root}/static/ueditor1_4_3_3-utf8-jsp/`, 
       emotionLocalization: true,
       scaleEnabled: true,
     })
@@ -162,8 +164,11 @@ export default {
           This.editor.execCommand('inserthtml',This.formTop.content);
         })
 
-      }, (response) => {
-        this.$Message.error(response.data.message);
+      }, (error) => {
+        this.$Notice.error({
+          title: error.data.message,
+          desc: false
+        })
       });
     }else{
       this.editor.ready(function(){
@@ -191,7 +196,9 @@ export default {
     //清除定时器
     clearInterval(this.timer);
     clearInterval(this.temptimer);
-    this.editor.destroy();
+    let This=this;
+    setTimeout(function(){This.editor.destroy();},1000)
+
   },
   methods: {
     goBack(){
@@ -208,8 +215,11 @@ export default {
           this.previewCon[0].content = data.content;
           this.previewCon[0].time = data.addtime;
           this.previewCon[0].studioname = this.studioName;
-        }, (response) => {
-          this.$Message.error(response.data.message);
+        }, (error) => {
+          this.$Notice.error({
+            title: error.data.message,
+            desc: false
+          })
         });
         this.previewContent=true;
         var ele = this.elements;
@@ -227,7 +237,10 @@ export default {
         },200)
       }else{
 //    	不显示预览
-        this.$Message.info('保存后才能预览');
+        this.$Notice.warning({
+          title: '保存后才能预览',
+          desc: false
+        })
       }
     },
     fromContent:function(){
@@ -240,7 +253,10 @@ export default {
       var srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i;
       //未匹配到图片
       if(!imgArr){
-        this.$Message.warning('正文还没有图片');
+        this.$Notice.warning({
+          title: '正文还没有图片',
+          desc: false
+        })
       }else{
         this.previewCon[1]=[];
         //匹配到了图片,把图片路径放到数组中
@@ -255,13 +271,13 @@ export default {
     fromLocal:function(){
       this.localModal=true;
     },
-    onError(error, fileid, ki) {
+    onError(data, error, file, fileList) {
       this.$Notice.error({
         title: '错误',
         desc: error.message || '图片上传错误！'
       })
     },
-    onSuccess(response, fileid, ki) {
+    onSuccess(data, response, file, fileList) {
       if (response.path) {
         this.formTop.cover = 'http://mp.dev.hubpd.com/' + response.path;
       }
@@ -275,7 +291,10 @@ export default {
         this.contentModal=false;
       }else{
         //未选择封面，提示选择
-        this.$Message.warning('请选择封面');
+        this.$Notice.warning({
+          title: '请选择封面',
+          desc: false
+        })
       }
     },
     closeContentPop:function(){
@@ -414,7 +433,10 @@ abstractWordCount:function(event){
       this.formTop.currentAbstractCount=length;
     },
     handleError:function(error, file, fileList){
-      this.$Message.error('上传失败');
+      this.$Notice.error({
+        title: '上传失败',
+        desc: false
+      })
     },
     handleSuccess (res, file){
       this.localDefaultSrc="http://mp.dev.hubpd.com/"+file.response.path;
@@ -439,7 +461,10 @@ abstractWordCount:function(event){
       let content=this.editor.getContent();
       let title=this.formTop.title;
       if(!content && !title){
-        this.$Message.warning("标题和正文为空,无法生成摘要");
+        this.$Notice.warning({
+          title:"标题和正文为空,无法生成摘要",
+          desc: false
+        });
       }else{
         //interface://获得正文的摘要:需要发送请求给后台，参数：正文内容  返回：摘要内容
           this.$http.post("/api/content/summary",{content: content,title:title}
@@ -452,7 +477,10 @@ abstractWordCount:function(event){
           this.formTop.summary=response.data.summary.toString();
           this.formTop.currentAbstractCount=Math.ceil(this.gblen(response.data.summary,120,'summary'))>60?60:Math.ceil(this.gblen(response.data.summary,120,'summary'));
         },(error) => {
-          this.$Message.error(error.data.message);
+            this.$Notice.error({
+              title:error.data.message,
+              desc: false
+            });
         });
       }
     },
@@ -462,8 +490,9 @@ abstractWordCount:function(event){
         //已经保存了，可以发布
         this.$http.put("/api/content/publish/"+this.articleID
         ).then((response) => {
-            console.log(response);
             this.$Notice.success({title:response.data.message,desc: false});
+            //发布成功：跳转到内容管理
+            this.$router.push("manage/content");
           }, (error) => {
             this.$Notice.error({title:error.data.message,desc: false});
           });
@@ -543,7 +572,10 @@ abstractWordCount:function(event){
           this.config.value="http://mp.dev.hubpd.com/notice?id="+this.articleID;
           this.qCode = true;
         }else{
-          this.$Message.error('此文章暂时不能分享');
+          this.$Notice.warning({
+            title: '此文章暂时不能分享',
+            desc: false
+          })
         }
     },
     //滚动条
@@ -680,27 +712,6 @@ abstractWordCount:function(event){
       return len;
     }
   },
-/*  directives:{
-    //直接绑定函数，作用等同于update,不做准备工作和扫尾工作
-    myDirective1(val){
-      console.log(val)
-    },
-    demo:{
-      bind(el,binding,vnode){
-        //第一次绑定到元素的准备工作
-       // console.log(binding);
-        el.innerHTML=binding.value;
-      },
-      update(el, binding, vnode, oldVnode){
-      //在绑定到元素后立即以初始值第一次调用，然后每次example2变化都会调用update
-        console.log(binding);
-        //el.innerHTML=binding.value;
-    },
-    unbind(){
-     //销毁前的清理工作
-    }
-    }
-  }*/
 }
 
 String.prototype.Trim = function()
