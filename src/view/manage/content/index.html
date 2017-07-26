@@ -68,12 +68,12 @@
     <tbody>
       <tr v-for="(item,index) in contentList" :index="item.ID" class="tr-hover">
         <th scope="row" style="position: relative">
-          <Icon v-if="item.topflag" type="flag" style="position:absolute;top:0px;left:0px;color:#F95759;font-size:20px;">top</Icon>
-          <router-link :to="{path:'../article',query:{id:item.id}}" v-if="roleType == 'Edit'"><div style="overflow: hidden;width:170px;height:113px;"><div style="width:170px;height:113px;display: table-cell;vertical-align: middle;"><img width="170" :src="item.cover"></div></div></router-link>
-          <router-link :to="{path:'../notice',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'Notice'"><div style="overflow: hidden;width:170px;height:113px;"><div style="width:170px;height:113px;overflow: hidden;display: table-cell;vertical-align: middle;"><img width="170" :src="item.cover"></div></div></router-link>
-          <router-link :to="{path:'../article',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'College'"><div style="overflow: hidden;width:170px;height:113px;"><div style="width:170px;height:113px;overflow: hidden;display: table-cell;vertical-align: middle;"><img width="170" :src="item.cover"></div></div></router-link>
+          <Icon v-if="item.topflag" type="flag" style="position:absolute;top:10px;left:10px;color:#F95759;font-size:20px;">top</Icon>
+          <router-link :to="{path:'../article',query:{id:item.id}}" v-if="roleType == 'Edit'"><img height="60" :src="item.cover"></router-link>
+          <router-link :to="{path:'../notice',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'Notice'"><img height="60" :src="item.cover"></router-link>
+          <router-link :to="{path:'../article',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'College'"><img height="60" :src="item.cover"></router-link>
         </th>
-        <th scope="row" id="title">
+        <th scope="row" id="title" width="30%">
           <router-link :to="{path:'../article',query:{id:item.id}}" v-if="roleType == 'Edit'">{{item.title}}</router-link>
           <router-link :to="{path:'../notice',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'Notice'">{{item.title}}</router-link>
           <router-link :to="{path:'../article',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'College'">{{item.title}}</router-link>

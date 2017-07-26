@@ -89,9 +89,9 @@
         <Input v-model="formTop.cover" type="text" class="hide"></Input>
         <div class="cover-container"><img :src="formTop.cover" width=227 height=128 v-if="formTop.cover != ''" /></div>
         <span class="m-r-20 main-color pointer" @click="fromContent">正文选择</span>
-        <image-crop-upload :width="478" :height="270" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048">
+        <cropper-upload :width="128" :height="128" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048">
           <span class="main-color pointer" @click="fromLocal">本地上传</span>
-        </image-crop-upload>
+        </cropper-upload>
       </Form-item>
      <!-- <Modal v-model="localModal" width="600" id="localPop">
         <p slot="header">
