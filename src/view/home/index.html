@@ -33,7 +33,7 @@
   <Row>
     <Col span="24">
     <div class="home-ad">
-      <Carousel autoplay v-model="value2">
+      <!--<Carousel autoplay v-model="value2">
         <Carousel-item v-for="ad in adList" key="ad.id">
           <div class="demo-carousel">
           	<a :href="ad.url" target="_blank">
@@ -41,7 +41,23 @@
           	</a>
           </div>
         </Carousel-item>
-      </Carousel>
+      </Carousel>-->
+      <swiper :options="swiperOption"  ref="mySwiper"> 
+      	
+        <!-- 这部分放你要渲染的那些内容 -->  
+        <swiper-slide v-for="ad in adList"> 
+        	<a :href="ad.url" target="_blank">
+      			<img :src="$conf.host + ad.path">
+      		</a>
+        </swiper-slide>  
+        
+        <!-- 这是轮播的小圆点 -->  
+        <div class="swiper-pagination" slot="pagination"></div>  
+        
+    	</swiper>  
+    	<!-- 如果需要导航按钮 -->
+    		<div class="swiper-button-prev"></div>
+    		<div class="swiper-button-next"></div>
     </div>
     </Col>
   </Row>
@@ -53,7 +69,7 @@
     </div>
     <div class="home-tab-n" v-if="switchTab==0">
       <ul class="home-notices" ref="uls">
-        <li v-for="notice in noticeList" key="notice.id" :class="{readed:notice.isReaded}" @click="readed($event,notice.id)">
+        <li v-for="(notice,index) in noticeList" key="notice.id" :class="{readed:notice.isReaded}" @click="readed($event,notice.id,index)">
           <router-link :to="{path:'./notice',query:{id:notice.id}}" target="_blank">
 	          <i></i>
 	          <span class="home-notice-content">
@@ -72,7 +88,7 @@
     </div>
     <div class="home-tab-d" v-if="switchTab==1">
       <ul class="home-notices">
-        <li v-for="college in collegeList" key="college.id" :class="{readed: college.isReaded}" @click="readed($event,college.id)">
+        <li v-for="(college,index) in collegeList" key="college.id" :class="{readed: college.isReaded}" @click="readed($event,college.id,index)">
           <router-link :to="{path:'./notice',query:{id:college.id}}" target="_blank">
 	          <i></i>
 	          <span class="home-notice-content">

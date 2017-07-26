@@ -90,7 +90,7 @@
     width: 100%;
 }
 .home-ad img{
-	height: 170px;
+	/*height: 170px;*/
 }
 .home-title span{
     position: absolute;    
@@ -223,4 +223,15 @@
 }
 .publish a:hover{
 	color: #fff;
+}
+
+.home-ad .swiper-button-prev,.home-ad .swiper-button-next{
+	  background-size: 100% 100%;
+	  width: 25px;
+	  height: 25px;
+	  margin-top: -12.5px;
+	  display: none;
+}
+.home-ad:hover .swiper-button-prev,.home-ad:hover .swiper-button-next{
+	display: block;
 }

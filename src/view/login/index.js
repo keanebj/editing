@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import Cookies from 'js-cookie'
 export default {
   data() {
     return {
@@ -65,6 +66,8 @@ export default {
             sessionStorage.setItem('token', res.data.token)
             sessionStorage.setItem('userinfo', JSON.stringify(userinfo))
             this.$Message.success('登录成功!');
+            Cookies.remove('clickedNo');//删除对应的cookie
+            Cookies.remove('clickedCo');//删除对应的cookie
             this.$router.push('/home')
           }else{
             this.$Message.error(res.data.message);
