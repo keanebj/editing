@@ -89,42 +89,10 @@
         <Input v-model="formTop.cover" type="text" class="hide"></Input>
         <div class="cover-container"><img :src="formTop.cover" width=128 height=128 v-if="formTop.cover != ''" /></div>
         <span class="m-r-20 main-color pointer" @click="fromContent">正文选择</span>
-        <cropper-upload :width="128" :height="128" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048">
+        <cropper-upload :width="478" :height="270" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048">
           <span class="main-color pointer" @click="fromLocal">本地上传</span>
         </cropper-upload>
       </Form-item>
-     <!-- <Modal v-model="localModal" width="600" id="localPop">
-        <p slot="header">
-          <span>本地上传</span>
-        </p>
-        <Row :gutter="34" style="margin-top:20px;">
-          <Col span="16">
-          <div class="content-pic">
-            <img :src="localDefaultSrc" class="m-b-10">
-          </div>
-
-          </Col>
-          <Col span="8">
-          <div class="content-pic">
-            <span>预览封面</span>
-            <img class="m-t-20" :src="localDefaultSrc">
-          </div>
-          </Col>
-        </Row>
-        <div style="position:relative">
-          <label>图片大小2M以内支持PNG、JPG、JPEG格式<br/>
-            您上传的图片自动会生成128*128像素的图片,请注意图片是否清晰
-          </label>
-          <Upload action="http://mp.dev.hubpd.com/api/image/upload" :headers="headers" ref="upload" id="localUpload" :show-upload-list="false"
-            :on-success="handleSuccess" :on-error="handleError" :format="['jpg','jpeg','png']" :max-size="2048" :on-format-error="handleFormatError"
-            :on-exceeded-size="handleMaxSize">
-            <Button style="position:absolute;right:5%;top:0;" type="ghost" icon="ios-cloud-upload-outline" @click="fromLocal">本地上传</Button>
-          </Upload>
-        </div>
-        <p slot="footer">
-          <Button type="primary" shape="circle" @click="clickLocalCoverOk">确定</Button>
-        </p>
-      </Modal>-->
       <Modal v-model="contentModal" width="600" id="contentPop" :closable="false">
         <p slot="header">
           <span>正文选择</span>
@@ -141,7 +109,7 @@
           </div>
         </div>
         <p slot="footer">
-          <cropper-upload :width="128" :height="128" :image="baseimg" :noSel="noSel" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048">
+          <cropper-upload :width="478" :height="270" :image="baseimg" :noSel="noSel" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048">
             <Button type="primary" shape="circle" @click="clickCoverOk">确定</Button>
           </cropper-upload>
         </p>

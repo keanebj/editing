@@ -1,12 +1,6 @@
 <section>
   <div class="set-con" @mousewheel="scrollBar($event)" ref="setCon">
     <div class="set-posi" ref="onscroll" @mousedown.prevent="mouseScroll($event)">
-    	<!--//  魏征霖修改部分结束
-//  魏征霖修改部分
-//  魏征霖修改部分
-//  魏征霖修改部分
-//  魏征霖修改部分
-//  魏征霖修改部分-->
       <div v-if="previewCon.title"  class="yulan">
       	<h1  class="yulan-tit">{{ previewCon.title }}</h1>
       	<div class="yulan-xinxi">
@@ -15,18 +9,12 @@
       	</div>
       	<div v-html="previewCon.content"></div>
       </div>
-      <!--//  魏征霖修改部分结束
-//  魏征霖修改部分
-//  魏征霖修改部分
-//  魏征霖修改部分
-//  魏征霖修改部分
-//  魏征霖修改部分-->
       <div v-else>
         <Row :gutter="34">
         <Col span="8" v-for="(value,key) in previewCon" :index="key" :key="key">
         <div class="content-pic" :index="key" @click="selectCover(key)">
-          <div style="width: 100%;height: 120px;text-align:center;vertical-align:middle;overflow: hidden;">
-            <img :src="value.src" :index="key" :class="[i == key?'active-border':'']"/>
+          <div style="width: 100%;height: 120px;text-align:center;vertical-align:middle;">
+            <img height="118" :src="value.src" :index="key" :class="[i == key?'active-border':'']"/>
           </div>
         <div class="center" :index="key" style="font-size:2em"><Icon :class="[i == key ? 'active-color':'']" type="ios-checkmark-outline" ref=""></Icon></div>
         </div>
