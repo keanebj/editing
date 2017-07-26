@@ -42,7 +42,7 @@
         <div class="btn-icon preview-btn-icon " @click="showPreviewContent" @mouseover="hidepreview =false" @mouseout="hidepreview = true"></div>
         </div>
       </div>
-      <Modal v-model="previewContent" width="768" :class-name="tabView">
+      <Modal v-model="previewContent" width="768" :class-name="tabView" class="previewContent">
         <p slot="header" ref="scrollWarp">
           <span :class="{ select: tabView == 'pc' }" @click="changeView('pc')">pc样式预览</span>
           <span :class="{ select: tabView == 'mobile' }" @click="changeView('mobile')">移动端样式预览</span>
