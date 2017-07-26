@@ -18,11 +18,13 @@ export default {
       headToken: {token:'64fb2b381e2727d69f720439e0553353fe38647f0835233c'},//携带头部
       uploadModal: false,//上传对话框
       beforeUpload: false,//上传之前参数
-      roleType:'Edit'
+      roleType:'Edit',
     }
   },
   created () {
     this.roleType=this.$store.state.userinfo.roleType;
+    this.token=this.$store.state.token;
+    this.headToken.token=this.$store.state.token;
   },
   mounted () {
     var span5 =  document.querySelector(".ivu-col-span-5")
@@ -56,11 +58,17 @@ export default {
                 token:this.token
               }
             }).then((response)=>{
-              this.$Message.success(response.data.message);
+              this.$Notice.success({
+                title: response.data.message,
+                desc: false
+              })
               //重新加载列表
               this.getContentList();
             },(error)=>{
-              this.$Message.success(error.data.message);
+              this.$Notice.error({
+                title: error.data.message,
+                desc: false
+              })
             })
         },
         onCancel: () => {
@@ -82,11 +90,17 @@ export default {
               }
             }
           ).then((response)=>{
-              this.$Message.success(response.data.message);
+              this.$Notice.success({
+                title: response.data.message,
+                desc: false
+              })
               //重新加载列表
               this.getContentList();
             },(error)=>{
-              this.$Message.success(error.data.message);
+              this.$Notice.error({
+                title: error.data.message,
+                desc: false
+              })
             })
               break;
         case 'top':
@@ -97,11 +111,17 @@ export default {
               }
             }
           ).then((response)=>{
-            this.$Message.success(response.data.message);
+              this.$Notice.success({
+                title: response.data.message,
+                desc: false
+              })
               //重新加载列表
               this.getContentList();
           },(error)=>{
-            this.$Message.success(error.data.message);
+              this.$Notice.error({
+                title: error.data.message,
+                desc: false
+              })
           })
           break;
         case 'drop':
@@ -111,11 +131,19 @@ export default {
                 token:this.token
               }
             }).then((response)=>{
-            this.$Message.success(response.data.message);
+              this.$Notice.success({
+                title: response.data.message,
+                desc: false
+              })
+              //撤回取消置顶
+              this.operateContent('canceltop');
               //重新加载列表
               this.getContentList();
           },(error)=>{
-            this.$Message.success(error.data.message);
+              this.$Notice.error({
+                title: error.data.message,
+                desc: false
+              })
           })
           break;
         case 'delete':
@@ -197,11 +225,28 @@ export default {
       }
     },
     handleFormatError (file) {
-      this.$Message.error('请上传正确格式的文件！');
+      this.$Notice.error({
+        title: '请上传正确格式的文件！',
+        desc: false
+      })
     },
 //		上传成功
     handleSuccess (res, file) {
-      this.$router.push({ path: '../publish',query:{articleID:res.id}})
+      if(res.status == 1){
+        this.$router.push({ path: '../publish',query:{articleID:res.id}})
+      }else{
+        this.$Notice.error({
+          title: res.message,
+          desc: false
+        })
+      }
+
+    },
+    handleError(res, file){
+      this.$Notice.error({
+        title: '上传失败！',
+        desc: false
+      })
     }
   },
 

@@ -10,9 +10,7 @@
           <input type="text" value="*.doc、*.docx、*.ppt、*.pptx" disabled="" />
           <Upload
             ref="upload"
-            action="http://mp.dev.hubpd.com/api/content/import
-
-"
+            action="http://mp.dev.hubpd.com/api/content/import"
             :before-upload="beforeLoad"
             :show-upload-list="true"
             accept=".doc,.docx,.ppt,.pptx"
@@ -21,6 +19,7 @@
             :format="['doc','docx','ppt','pptx']"
             :on-format-error="handleFormatError"
             :on-success="handleSuccess"
+            :on-error="handleError"
             :headers="headToken">
             <Button type="info" icon="ios-cloud-upload-outline">上传文件</Button>
           </Upload>
@@ -69,10 +68,10 @@
     <tbody>
       <tr v-for="(item,index) in contentList" :index="item.ID" class="tr-hover">
         <th scope="row" style="position: relative">
-          <Icon v-if="item.topflag" type="flag" style="position:absolute;top:10px;left:10px;color:#F95759;font-size:20px;">top</Icon>
-          <router-link :to="{path:'../article',query:{id:item.id}}" v-if="roleType == 'Edit'"> <img  height="60" :src="item.cover"></router-link>
-          <router-link :to="{path:'../notice',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'Notice'"> <img  height="60" :src="item.cover"></router-link>
-          <router-link :to="{path:'../article',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'College'"> <img  height="60" :src="item.cover"></router-link>
+          <Icon v-if="item.topflag" type="flag" style="position:absolute;top:0px;left:0px;color:#F95759;font-size:20px;">top</Icon>
+          <router-link :to="{path:'../article',query:{id:item.id}}" v-if="roleType == 'Edit'"><div style="overflow: hidden;width:170px;height:113px;"><div style="width:170px;height:113px;display: table-cell;vertical-align: middle;"><img width="170" :src="item.cover"></div></div></router-link>
+          <router-link :to="{path:'../notice',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'Notice'"><div style="overflow: hidden;width:170px;height:113px;"><div style="width:170px;height:113px;overflow: hidden;display: table-cell;vertical-align: middle;"><img width="170" :src="item.cover"></div></div></router-link>
+          <router-link :to="{path:'../article',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'College'"><div style="overflow: hidden;width:170px;height:113px;"><div style="width:170px;height:113px;overflow: hidden;display: table-cell;vertical-align: middle;"><img width="170" :src="item.cover"></div></div></router-link>
         </th>
         <th scope="row" id="title">
           <router-link :to="{path:'../article',query:{id:item.id}}" v-if="roleType == 'Edit'">{{item.title}}</router-link>
@@ -92,7 +91,6 @@
         </td>
         <td>
           <router-link :to="{path:'../publish',query:{articleID:item.id}}"><Icon type="edit" style="font-size:1.1em;color: #F95759;"></Icon></router-link>
-
           <Dropdown style="margin-left: 15px" trigger="click" @on-click="operateContent">
             <a href="javascript:void(0)" @click="getOperateContentID(item.id)">
               <Icon type="ios-gear-outline" style="font-size:1.2em;color: #F95759;"></Icon>
