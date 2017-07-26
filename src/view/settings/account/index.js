@@ -141,7 +141,8 @@ export default {
             this.catalog = studioInfo.catalogname
             let _preImg = {
               status: 'finished',
-              url: this.$conf.host + studioInfo.logofile
+              // url: this.$conf.host + studioInfo.logofile
+              url: studioInfo.logofile
             }
             this.uploadList.push(_preImg)
             this.uploadImg = _preImg.url

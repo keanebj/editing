@@ -157,7 +157,9 @@ export default {
           aspectRatio: this.width / this.height,
           viewMode: 1,
           dragMode: 'move',
-          autoCropArea: 1
+          autoCropArea: 1,
+          minContainerWidth: 550,
+          minContainerHeight: 260,
         })
         this.visible = true
       }

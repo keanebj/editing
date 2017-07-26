@@ -42,7 +42,7 @@
         <div class="btn-icon preview-btn-icon " @click="showPreviewContent" @mouseover="hidepreview =false" @mouseout="hidepreview = true"></div>
         </div>
       </div>
-      <Modal v-model="previewContent" width="768" :class-name="tabView">
+      <Modal v-model="previewContent" width="768" :class-name="tabView" class="previewContent">
         <p slot="header" ref="scrollWarp">
           <span :class="{ select: tabView == 'pc' }" @click="changeView('pc')">pc样式预览</span>
           <span :class="{ select: tabView == 'mobile' }" @click="changeView('mobile')">移动端样式预览</span>
@@ -87,7 +87,7 @@
       </Form-item>
       <Form-item label="封面" prop="cover">
         <Input v-model="formTop.cover" type="text" class="hide"></Input>
-        <div class="cover-container"><img :src="formTop.cover" width=128 height=128 v-if="formTop.cover != ''" /></div>
+        <div class="cover-container"><img :src="formTop.cover" width=227 height=128 v-if="formTop.cover != ''" /></div>
         <span class="m-r-20 main-color pointer" @click="fromContent">正文选择</span>
         <cropper-upload :width="128" :height="128" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048">
           <span class="main-color pointer" @click="fromLocal">本地上传</span>
@@ -141,7 +141,10 @@
           </div>
         </div>
         <p slot="footer">
-          <Button type="primary" shape="circle" @click="clickCoverOk">确定</Button>
+          <!--<image-crop-upload :width="128" :height="128" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048">
+           &lt;!&ndash; <span class="main-color pointer" @click="fromLocal">本地上传</span>&ndash;&gt;
+            <Button type="primary" shape="circle" @click="clickCoverOk">确定</Button>
+          </image-crop-upload>-->
         </p>
       </Modal>
 

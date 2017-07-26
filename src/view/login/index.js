@@ -54,7 +54,8 @@ export default {
               roleType: res.data.operatortype,
               username: res.data.operator,
               password: this.formItem.password,
-              studioLogo: this.$conf.host + res.data.logo || ''
+              // studioLogo: this.$conf.host + res.data.logo || ''
+              studioLogo: res.data.logo || ''
             }
 
             this.$store.commit('set', { userinfo })
