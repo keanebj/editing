@@ -1,6 +1,6 @@
 import VueQArt from 'vue-qart'
 import ScrollBar from '@/view/scroll/index.vue'
-import imageCropUpload from '@/components/imageCropUpload/index.vue'
+import cropperUpload from '@/components/cropperUpload/index.vue'
 import '../../../static/ueditor1_4_3_3-utf8-jsp/ueditor.config.js'
 import '../../../static/ueditor1_4_3_3-utf8-jsp/ueditor.all.js'
 import '../../../static/ueditor1_4_3_3-utf8-jsp/lang/zh-cn/zh-cn.js'
@@ -10,7 +10,7 @@ export default {
   components:{
     ScrollBar,
     VueQArt,
-    imageCropUpload
+    cropperUpload
   },
   data () {
     return {
@@ -271,13 +271,13 @@ export default {
     fromLocal:function(){
       this.localModal=true;
     },
-    onError(data, error, file, fileList) {
+    onError(error, fileid, ki) {
       this.$Notice.error({
         title: '错误',
         desc: error.message || '图片上传错误！'
       })
     },
-    onSuccess(data, response, file, fileList) {
+    onSuccess(response, fileid, ki) {
       if (response.path) {
         this.formTop.cover = 'http://mp.dev.hubpd.com/' + response.path;
       }

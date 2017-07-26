@@ -156,8 +156,8 @@ export default {
           viewMode: 1,
           dragMode: 'move',
           autoCropArea: 1,
-          minContainerWidth: 500,
-          minContainerHeight: 250,
+          minContainerWidth: 550,
+          minContainerHeight: 260,
         })
         this.visible = true
       }
