@@ -17468,7 +17468,7 @@ UE.plugins['autoheight'] = function () {
 
         });
         //修复内容过多时，回到顶部，顶部内容被工具栏遮挡问题
-        var lastScrollY;
+       /* var lastScrollY;
         window.onscroll = function(){
             if(lastScrollY === null){
                 lastScrollY = this.scrollY
@@ -17476,7 +17476,7 @@ UE.plugins['autoheight'] = function () {
                 me.window.scrollTo(0,0);
                 lastScrollY = null;
             }
-        }
+        }*/
     });
 
 
