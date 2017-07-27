@@ -14,7 +14,7 @@
         <Input v-model="formValidate.passwordConfirm" placeholder="······" type="password"></Input>
       </Form-item>
       <Form-item label="LOGO" prop="logofile">
-        <img v-if="formValidate.logofile" style="max-width:100px;border:1px solid #eee" :src="$conf.host + formValidate.logofile"
+        <img v-if="formValidate.logofile" style="max-width:100px;border:1px solid #eee" :src="formValidate.logofile"
         />
         <cropper-upload :width="300" :height="200" :cropUploadSuccess="cropUploadSuccess" :cropUploadFail="cropUploadSuccess">
           <a v-if="formValidate.logofile" href="javascript:void(0)">

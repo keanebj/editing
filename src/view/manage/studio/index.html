@@ -18,7 +18,7 @@
       <tr v-for="(item,index) in data" class="tr-hover">
         <th scope="row">
           <div class="sutdio-logo">
-          <img v-if="item.logofile" height="60" :src="$conf.host + item.logofile" alt="">
+          <img v-if="item.logofile" height="60" :src="item.logofile" alt="">
           </div>
         </th>
         <td>{{item.studioname}}</td>
