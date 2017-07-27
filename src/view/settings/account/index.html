@@ -25,8 +25,20 @@
       <Modal title="查看图片" v-model="visible">
         <img :src="uploadImg" v-if="visible" style="width: 100%">
       </Modal>
-    </div>
+    </div>    
     <Form ref="formValidateM" :model="formValidateM" label-position="left" :rules="ruleValidateM" :label-width="100">
+      <!-- <Form-item label="LOGO" prop="logofile">
+        <img v-if="formValidateM.logofile" style="max-width:100px;border:1px solid #eee" :src="formValidateM.logofile"
+        />
+        <cropper-upload :width="300" :height="200" :cropUploadSuccess="cropUploadSuccess" :cropUploadFail="cropUploadSuccess">
+          <a v-if="formValidateM.logofile" href="javascript:void(0)">
+            <Icon type="edit"></Icon>
+          </a>
+          <Button v-else type="primary" shape="circle" icon="ios-download-outline">上传</Button>
+        </cropper-upload>
+        建议logo长宽比为3:2
+      </Form-item> -->
+
       <div class="account">
         <label>工作室名称</label>
         <label>{{studioName}}</label>

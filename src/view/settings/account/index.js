@@ -1,9 +1,13 @@
+import CropperUpload from '@/components/cropperUpload/index.vue'
 import {
   mapState
 } from 'vuex'
 
 export default {
   name: 'ViewSettingsAccount',
+  components: {
+    'cropper-upload': CropperUpload
+  },
   data() {
     return {
       disabledM: true,
@@ -30,12 +34,18 @@ export default {
       formValidateM: {
         id: 3,
         name: '',
-        tel: ''
+        tel: '',
+        logofile: ''
       },
       ruleValidateM: {
         name: [{
           required: true,
           message: '姓名不能为空',
+          trigger: 'blur'
+        }],
+        logofile: [{
+          required: true,
+          message: 'LOGO不能为空',
           trigger: 'blur'
         }],
         tel: [{
@@ -139,10 +149,11 @@ export default {
             this.account = studioInfo.username
             this.URL = studioInfo.url
             this.catalog = studioInfo.catalogname
+            this.formValidateM.logofile = studioInfo.logofile
             let _preImg = {
               status: 'finished',
-              // url: this.$conf.host + studioInfo.logofile
               url: studioInfo.logofile
+              // url: studioInfo.logofile
             }
             this.uploadList.push(_preImg)
             this.uploadImg = _preImg.url
@@ -166,6 +177,7 @@ export default {
         fullname: this.formValidateM.name,
         tel: this.formValidateM.tel,
         logofile: this.uploadImg
+        // logofile: this.formValidateM.logofile
       };
       this.$http.put('http://mp.dev.hubpd.com/api/studio/' + this.userinfo.id, reqParams)
         .then(res => {
@@ -283,7 +295,14 @@ export default {
     handleReset(name) {
       this.$refs[name].resetFields();
     },
-
+    cropUploadSuccess(response, field, ki) {
+      console.log(JSON.stringify(response))
+      if (response.path) {
+        this.formValidateM.logofile = this.$conf.host + response.path
+        this.$refs['formValidateM'].validateField('logofile')
+      }
+    },
+    cropUploadFail(e, resData, field, ki) {},
   },
   created() {
     if (this.userinfo.roleType == 'Edit') {
