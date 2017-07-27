@@ -3,7 +3,7 @@
   }
   .layout-container {
     padding: 50px;
-    min-height: 520px;
+    min-height: 510px;
   }
   .layout-breadcrumb {
     padding: 10px 15px 0;
@@ -60,7 +60,7 @@
 .layout-footer-top{
   font-size: 16px;
   color: #999;
-  padding: 10px 0 20px;
+  padding: 10px 0 30px;
 }
 .layout-footer-top .item{
   display: inline-block;
