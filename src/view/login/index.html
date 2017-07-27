@@ -3,18 +3,22 @@
   <Form ref="formItem" :model="formItem" :rules="formRules" class="login">
     <Form-item prop="username">
       <Input v-model="formItem.username" placeholder="请填写用户名" @on-enter="handleSubmit('formItem')">
-       <Icon type="ios-person-outline" slot="prepend"></Icon> 
+      <Icon type="ios-person-outline" slot="prepend"></Icon>
       </Input>
     </Form-item>
     <Form-item prop="password">
-      <Input v-model="formItem.password" placeholder="请填写密码" type="password" @on-enter="handleSubmit('formItem')">      
-       <Icon type="ios-locked-outline" slot="prepend"></Icon> 
+      <Input v-model="formItem.password" placeholder="请填写密码" type="password" @on-enter="handleSubmit('formItem')">
+      <Icon type="ios-locked-outline" slot="prepend"></Icon>
       </Input>
     </Form-item>
     <Form-item>
-      <Button type="primary" @click="handleSubmit('formItem')" :disabled="loginDisabled" 
-      :class="{'login-btn':true,disabled:loginDisabled}">登录</Button>
+      <Button type="primary" @click="handleSubmit('formItem')" :disabled="loginDisabled" :class="{'login-btn':true,disabled:loginDisabled}">登录</Button>
       <!-- <Button type="ghost" @click="handleReset('formItem')" style="margin-left: 8px">取消</Button> -->
     </Form-item>
   </Form>
+  <Spin size="large"  v-if="isLoading">
+  <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
+  <div>Loading</div>
+</Spin>
 </Card>
+

@@ -3,6 +3,7 @@
   }
   .layout-container {
     padding: 50px;
+    min-height: 520px;
   }
   .layout-breadcrumb {
     padding: 10px 15px 0;
@@ -20,7 +21,7 @@
   }
 
   .layout-ceiling {
-    padding: 25px 50px;
+    padding: 20px 50px;
     overflow: hidden;
     box-shadow: 1px 0 1px #999999
   }
@@ -54,12 +55,12 @@
   }
 .layout-footer{
   text-align: center;
-  padding: 10px 0 20px;
+  padding: 10px 0 0px;
 }
 .layout-footer-top{
   font-size: 16px;
   color: #999;
-  padding: 10px 0 15px;
+  padding: 10px 0 20px;
 }
 .layout-footer-top .item{
   display: inline-block;
@@ -73,6 +74,8 @@
 .layout-footer-bottom {
   background: #F3F3F3;
   color: #9ea7b4;
+  line-height: 50px;
+  height: 50px;
 }
 
 
@@ -101,4 +104,11 @@
 }
 .ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu){
   border-right:none!important;
+}
+.ivu-menu-item, .ivu-menu-submenu .ivu-menu-submenu-title{
+  font-size: 16px!important;
+}
+
+.ivu-menu-submenu .ivu-menu-item{
+  font-size: 14px!important;
 }

@@ -3,6 +3,7 @@ import Cookies from 'js-cookie'
 export default {
   data() {
     return {
+      isLoading:false,
       loginDisabled:false,
       formItem: {
         username: '',
@@ -42,12 +43,13 @@ export default {
     },
     // 登录请求发送
     submitLogin() {
+      this.isLoading = true
       let reqParams = {
         username: this.formItem.username,
         password: this.formItem.password
       };
       this.$http.post('http://mp.dev.hubpd.com/api/studio/login', reqParams)
-        .then(res => {
+        .then(res => {          
           //设置用户身份等信息
           if (res.data.status == 1) {
             var userinfo = {
@@ -72,7 +74,9 @@ export default {
           }else{
             this.$Message.error(res.data.message);
           }
+          // this.isLoading = false
         }, err => {
+          this.isLoading = false
           console.log('出错啦！' + JSON.stringify(err))
         })
     }

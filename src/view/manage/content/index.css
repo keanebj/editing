@@ -111,3 +111,6 @@
 .column-left{
   text-align: left!important;
 }
+ .table thead th{
+  font-size: 14px!important;
+}

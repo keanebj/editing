@@ -45,7 +45,7 @@
       <swiper :options="swiperOption"  ref="mySwiper"> 
       	
         <!-- 这部分放你要渲染的那些内容 -->  
-        <swiper-slide v-for="ad in adList"> 
+        <swiper-slide v-for="ad in adList"  key="ad.id"> 
         	<a :href="ad.url" target="_blank">
       			<img :src="$conf.host + ad.path">
       		</a>

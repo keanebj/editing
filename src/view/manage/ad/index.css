@@ -15,3 +15,9 @@
 .imagePlaceholder .sub-title{
   font-size: 12px;
 }
+ .table thead th{
+  font-size: 14px!important;
+}
+.add-ad-position{
+  font-size: 14px;
+}
