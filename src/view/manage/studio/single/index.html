@@ -27,7 +27,6 @@
         </cropper-upload>
         建议logo长宽比为3:2
       </Form-item>
-
       <Form-item label="工作室" prop="studioname">
         <Input v-model="formValidate.studioname" placeholder="工作室名称编辑"></Input>
       </Form-item>
@@ -44,13 +43,12 @@
       </Form-item>
 
       <Form-item style="margin-top: 80px;">
-        <Button type="primary" shape="circle" @click="submit" :loading="isSubmit">提交</Button>
+        <Button type="primary" shape="circle" @click="submit" :loading="isSubmit" style="margin-left:70px;">提交</Button>
         <Button type="ghost" shape="circle" style="margin-left: 20px" @click="cancel">取消</Button>
       </Form-item>
     </Form>
     </Col>
   </Row>
-
   <Spin size="large" fix v-if="isLoading">
     <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
     <div>Loading</div>
