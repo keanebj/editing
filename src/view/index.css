@@ -38,8 +38,8 @@
   }
 
   .layout-ceiling-main a {
-    color: #9ba7b5;
-    float: left
+    color: #757575;
+    float: left;
   }
   .layout-ceiling-main a img {
     height: 40px;
@@ -50,8 +50,9 @@
     margin-right: 20px;
   }
   .layout-ceiling-main a.nickname{
-    font-size: 16px;
+    font-size: 18px;
     margin-right: 10px;
+    color:#333;
   }
 .layout-footer{
   text-align: center;

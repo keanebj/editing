@@ -23,7 +23,7 @@
           <a v-if="formValidate.logofile" href="javascript:void(0)">
             <Icon type="edit"></Icon>
           </a>
-          <Button v-else type="primary" shape="circle" icon="ios-download-outline">上传</Button>
+          <Button v-else type="primary" shape="circle" icon="plus-round">上传</Button>
         </cropper-upload>
         建议logo长宽比为3:2
       </Form-item>
@@ -43,7 +43,7 @@
         <Input v-model="formValidate.accountindex" placeholder="请输入中央厨房指数" number></Input>
       </Form-item>
 
-      <Form-item>
+      <Form-item style="margin-top: 80px;">
         <Button type="primary" shape="circle" @click="submit" :loading="isSubmit">提交</Button>
         <Button type="ghost" shape="circle" style="margin-left: 20px" @click="cancel">取消</Button>
       </Form-item>
