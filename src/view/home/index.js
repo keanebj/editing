@@ -7,14 +7,46 @@ export default {
     swiperSlide  
 	},  
   created() {
-
+//    判断进入公告还是学院
+		if (this.$route.query.switchTab == undefined) {
+			this.switchTab = 0
+		}else{
+			this.switchTab = this.$route.query.switchTab;
+		}
+		
+		this.$http({
+      method: 'GET',
+      url: "/api/content/count"
+    }).then((response) => {
+    	this.articleTot = response.data.total;
+    })
+		
+		
+//		请求工作室总数\
+		this.$http.get('/api/studio').then(({ data }) => {
+	    if (data.status) {
+	      this.studioTotal = data.total
+	    } else {
+	      this.$Notice.error({
+	        title: '错误',
+	        desc: data.message || '工作室数请求错误'
+	      })
+	    }
+	    this.isLoading = false
+	  }, () => {
+	    this.$Notice.error({
+	      title: '错误',
+	      desc: '工作室数请求错误'
+	    })
+	    this.isLoading = false
+	  })
 //  this.roleFlag = this.$store.state.roleType;
 //		console.log(this.$store.state.roleType)
   },
   computed: {
   	swiper() {  
   		return this.$refs.mySwiper.swiper;  
-		} 
+		}
   },
   data() {
     return {
@@ -27,7 +59,7 @@ export default {
       pageIndexG: 1,//学院当前页
       pageSize: 8,//每页的个数
       noticeTotal: 0,//公告总数
-      articleTotal:8869,//学院总数
+      articleTotal:0,//学院总数
       studioTotal:35,//工作室总数
       accountIndex:100,//中央厨房号指数
       noticeList:[],//公告列表
@@ -47,6 +79,7 @@ export default {
       },
       clickedNo: [],//存储当前被点击后的notice
       clickedCo: [],//存储当前被点击后的学院
+     	articleTot: 0//总发文数
     }
   },
   methods: {
@@ -109,7 +142,6 @@ export default {
         }
 	    }).then((response) => {
 	      //给学院的内容赋值
-	      console.log(response.data)
 				this.collegeList = response.data.contents;
 				this.articleTotal = response.data.total;
 				if (this.articleTotal == undefined) {
@@ -158,6 +190,8 @@ export default {
       	this.getCollege();
     },
     readed (ev, cooid, index) {
+    	var ele = ev.target.parentNode.parentNode.nodeName == "LI" ? ev.target.parentNode.parentNode : ev.target;
+		  ele.className = "readed";
     	if (this.switchTab == 0) {
       	var inde1 = index + (this.pageIndexX-1)*8;
       	this.noticeList[inde1].isReaded = true;

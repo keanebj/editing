@@ -3,6 +3,8 @@ export default {
   name: 'Notice',
   created () {
 //	var id = this.$route.query.ID;
+		console.log(this.$route.query.switchTab)
+		this.switchTab = this.$route.query.switchTab;
   },
   mounted(){
 
@@ -12,7 +14,7 @@ export default {
     span19.className = "layout-content-warp ivu-col ivu-col-span-24";
 
         this.noticeID=this.$route.query.id;
-
+				console.log(this.noticeID)
         //ajax获得后台公告的内容
         this.$http({
           method: 'GET',
@@ -21,8 +23,8 @@ export default {
 	          token:"e3ad42c53a7f513682900121a5d768d41c9ee7a584d49865"
 	        }
         }).then((response) => {
-        	console.log(response.data.content.content)
           //给公告的内容赋值
+          console.log(response)
 					this.title=response.data.content.title;
           this.content=response.data.content.content;
         })
@@ -34,7 +36,9 @@ export default {
       type:'notice',
       noticeID:-1,
       title:'',
-      content:''
+      content:'',
+      switchTab: 0
+      
     }
   },
   computed: {
@@ -42,7 +46,11 @@ export default {
   },
   methods: {
     goBack(){
-      this.$router.push('/home')
+    	if (this.$route.query.switchTab == undefined) {
+    		this.$router.go(-1)
+    	}else{
+      		   this.$router.push({path:'/home', query: { switchTab:  this.switchTab}})
+    	}
     }
   }
 }

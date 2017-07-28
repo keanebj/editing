@@ -20,7 +20,7 @@
       <span style="color:#F95759;" :class="{hide:hideTip}">正文不能为空</span>
       </Col>
       <Col span="7" class="m-t-20">
-      <Button type="ghost" class="publish-btn" shape="circle" icon="paper-airplane" @click="publish('formTop')" style="color:#F95759;border-color:#F95759;">发布</Button>
+      <Button type="ghost" class="publish-btn" shape="circle" icon="paper-airplane" @click="publish('formTop')" style="color:#F95759;border-color:#F95759;font-size: 15px;">发布</Button>
 
       <div class="pull-right">
         <div style="position: relative;display: inline-block;">
@@ -87,12 +87,12 @@
       </Form-item>
       <Form-item label="封面" prop="cover">
         <Input v-model="formTop.cover" type="text" class="hide"></Input>
-        <div class="cover-container"><img :src="formTop.cover" width=128 height=128 v-if="formTop.cover != ''" /></div>
-        <span class="m-r-20 main-color pointer" @click="fromContent">正文选择</span>
+        <div class="cover-container" style="margin-bottom: 10px;"><img :src="formTop.cover" style="display: block;" width=305 height=171 v-if="formTop.cover != ''" /></div>
+        <Button type="ghost" shape="circle" class="m-r-20 main-color pointer" @click="fromContent">正文选择</Button>
         <cropper-upload :width="478" :height="270" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048">
-          <span class="main-color pointer" @click="fromLocal">本地上传</span>
+          <Button type="ghost" shape="circle" class="main-color pointer" @click="fromLocal">本地上传</Button>
         </cropper-upload>
-      </Form-item>
+      </Form-item> 
       <Modal v-model="contentModal" width="600" id="contentPop" :closable="false">
         <p slot="header">
           <span>正文选择</span>
@@ -117,7 +117,7 @@
 
       <Form-item label="摘要" prop="summary">
         <Input v-model="formTop.summary" type="textarea" :autosize="{minRows: 5,maxRows: 5}" :maxlength="summaryMaxCount" @on-change="abstractWordCount"></Input>
-        <span class="main-color pointer" @click="renderAbstract">生成摘要</span>
+        <Button type="ghost" shape="circle" class="main-color pointer" style="margin-top: 10px;" @click="renderAbstract">生成摘要</Button>
         <label style="position:absolute;right:20px;bottom:20%;color:#ccc"><span class="active-color">{{formTop.currentAbstractCount}}</span>/60</label>
       </Form-item>
 

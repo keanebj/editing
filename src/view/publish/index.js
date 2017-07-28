@@ -558,7 +558,7 @@ abstractWordCount:function(event){
                 //新建
                 this.$http.post('/api/content',this.formTop)
                 .then((response) => {
-                    this.$Notice.success({title:response.data.message,desc: false});
+                    this.$Notice.success({title:'保存成功',desc: false});
                     this.articleID=response.data.id;
                 }, (response) => {
                     this.$Notice.error({title:error.data.message,desc: false});

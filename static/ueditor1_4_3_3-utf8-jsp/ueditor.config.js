@@ -56,7 +56,7 @@
         'directionalityltr', 'directionalityrtl', 'indent', '|',
         'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
         'link',  'anchor', '|',
-         'insertimage', 'attachment', 'map', 'insertcode',  'pagebreak', 'template', 'background', '|',
+         'insertimage', 'insertvideo', 'attachment', 'map', 'insertcode',  'pagebreak', 'template', 'background', '|',
         'horizontal', 'date', 'time', 'spechars',  '|',
         'inserttable', '|',
          'searchreplace', 'help'

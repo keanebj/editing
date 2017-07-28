@@ -13,7 +13,7 @@
     <div class="home-title articles">
       <img src="../../assets/home-t-2.png">
       <span class="title-t-1">总发文数</span>
-      <span class="title-t-2" v-text="articleTotal"></span>
+      <span class="title-t-2" v-text="articleTot"></span>
     </div>
     </Col>
     <Col span="8">
@@ -70,7 +70,7 @@
     <div class="home-tab-n" v-if="switchTab==0">
       <ul class="home-notices" ref="uls">
         <li v-for="(notice,index) in noticeList" key="notice.id" :class="{readed:notice.isReaded}" @click="readed($event,notice.id,index)">
-          <router-link :to="{path:'./notice',query:{id:notice.id}}" target="_blank">
+          <router-link :to="{path:'./notice',query:{id:notice.id,switchTab:0}}" target="_blank">
 	          <i></i>
 	          <span class="home-notice-content">
 						  {{notice.title}}
@@ -89,7 +89,7 @@
     <div class="home-tab-d" v-if="switchTab==1">
       <ul class="home-notices">
         <li v-for="(college,index) in collegeList" key="college.id" :class="{readed: college.isReaded}" @click="readed($event,college.id,index)">
-          <router-link :to="{path:'./notice',query:{id:college.id}}" target="_blank">
+          <router-link :to="{path:'./notice',query:{id:college.id,switchTab:1}}" target="_blank">
 	          <i></i>
 	          <span class="home-notice-content">
 							{{college.title}}
