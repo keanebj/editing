@@ -58,8 +58,8 @@
   color:#333;
 }
 
-.ivu-form-item {
-  margin-top: 10px;
+.media-account .ivu-form-item {
+  margin: 10px 0 20px 0;
 }
 
 .account-btn {
@@ -140,7 +140,7 @@
 .margin-left-40{
   margin-left: 40px!important;
 }
-.ivu-upload{
+.upload-logo .ivu-upload{
    height: 20px; 
 }
 

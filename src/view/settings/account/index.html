@@ -2,7 +2,7 @@
   <Row style="margin-left:50px;width:600px">
     <Col span="18">
     <div v-show="roleType == 1" class="media-account">
-      <div class="account upload-logo">
+      <!-- <div class="account upload-logo">
         <label>LOGO</label>
         <div class="demo-upload-list" v-for="item in uploadList">
           <div v-if="item.status === 'finished'">
@@ -15,7 +15,7 @@
           <div v-else>
             <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
           </div>
-        </div>
+        </div> 
         <Upload ref="upload" :headers="uploadHeaders" :show-upload-list="false" :on-success="handleSuccess" :format="['jpg','jpeg','png']"
           :max-size="2048" :on-format-error="handleFormatError" :on-exceeded-size="handleMaxSize" :before-upload="handleBeforeUpload"
           action="http://mp.dev.hubpd.com/api/image/upload" style="display: inline-block;width:58px;">
@@ -24,12 +24,12 @@
           </div>
         </Upload>
         <span class="file-tips">建议logo长宽比为3:2</span>
-        <Modal title="查看图片" v-model="visible">
+        <Modal title="查看图片" v-model="visible" >
           <img :src="uploadImg" v-if="visible" style="width: 100%">
-        </Modal>
+        </Modal>-->
       </div>
       <Form ref="formValidateM" :model="formValidateM" label-position="left" :rules="ruleValidateM" :label-width="100">
-        <!-- <Form-item label="LOGO" prop="logofile">
+         <Form-item label="LOGO" prop="logofile">
         <img v-if="formValidateM.logofile" style="max-width:100px;border:1px solid #eee" :src="formValidateM.logofile"
         />
         <cropper-upload :width="300" :height="200" :cropUploadSuccess="cropUploadSuccess" :cropUploadFail="cropUploadSuccess">
@@ -39,7 +39,7 @@
           <Button v-else type="primary" shape="circle" icon="ios-download-outline">上传</Button>
         </cropper-upload>
         建议logo长宽比为3:2
-      </Form-item> -->
+      </Form-item> 
 
         <div class="account">
           <label>工作室名称</label>
