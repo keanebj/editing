@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="23px" viewBox="0 0 22 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>编辑</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="运营内容管理" transform="translate(-1690.000000, -477.000000)" stroke-width="1.5" stroke="#79A3E0">
+            <g id="公告内容" transform="translate(395.000000, 412.000000)">
+                <g id="1" transform="translate(0.000000, 2.000000)">
+                    <g id="操作" transform="translate(1296.000000, 64.721519)">
+                        <g id="编辑">
+                            <path d="M10,20 C15.5228475,20 20,15.5228475 20,10 C20,4.4771525 15.5228475,0 10,0 C4.4771525,0 0,4.4771525 0,10" id="Oval" stroke-linecap="round" transform="translate(10.000000, 10.000000) rotate(180.000000) translate(-10.000000, -10.000000) "></path>
+                            <polygon id="Path-3" stroke-linecap="round" stroke-linejoin="round" points="5.83333333 14.1666667 7.08333333 10.4166667 13.1150729 4.38492711 15 2.5 17.5 5 9.58333333 12.9166667"></polygon>
+                            <polygon id="Path-4" points="12.9166667 4.58333333 15.4166667 7.08333333 10 12.5 7.5 10"></polygon>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

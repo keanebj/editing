@@ -41,7 +41,8 @@ export default {
           message: '账号不能为空',
           trigger: 'blur'
         }],
-        password: [{
+        password: [
+          {
             required: true,
             message: '密码不能为空',
             trigger: 'blur'
@@ -53,7 +54,8 @@ export default {
             trigger: 'blur'
           }
         ],
-        passwordConfirm: [{
+        passwordConfirm: [
+          {
             required: true,
             message: '确认密码不能为空',
             trigger: 'blur'
@@ -235,7 +237,11 @@ export default {
     this.fetchCatalogs()
     this.id = this.$route.params.id
     if (this.id !== '0') {
+      this.resetPWD = false
       this.request()
+    }
+    else{
+      this.resetPWD = true
     }
   }
 }

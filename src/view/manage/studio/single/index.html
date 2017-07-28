@@ -6,7 +6,10 @@
       <Form-item label="账号" prop="username">
         <Input v-model="formValidate.username"  placeholder="请输入账号名称"></Input>
       </Form-item>
-      <div class="reset-pwd" ><label>密码</label><span @click="resetPassword" v-text="resetWord"></span></div>
+      <div class="reset-pwd" v-if="this.id != '0'">
+        <label>密码</label>
+        <span @click="resetPassword" v-text="resetWord"></span>
+      </div>
       <Form-item label="新密码" prop="password" v-if="resetPWD">
         <Input v-model="formValidate.password" placeholder="······" type="password"></Input>
       </Form-item>

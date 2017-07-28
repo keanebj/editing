@@ -95,7 +95,7 @@
             <a href="javascript:void(0)" @click="getOperateContentID(item.id)">
               <Icon type="ios-gear-outline" style="font-size:1.2em;color: #F95759;"></Icon>
             </a>
-            <Dropdown-menu slot="list" >
+            <Dropdown-menu slot="list">
               <Dropdown-item v-if="item.topflag" name="canceltop" >取消置顶</Dropdown-item>
               <Dropdown-item v-else="item.topflag" name="top" >置顶</Dropdown-item>
               <div v-if="item.status == 'Publish'"><Dropdown-item name="drop" >撤回</Dropdown-item></div>
