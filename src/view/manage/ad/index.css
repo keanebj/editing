@@ -24,3 +24,6 @@
 .icon-size{
     width: 18px;
 }
+.tr-hover:hover{
+  background:#f5f5f5;
+}

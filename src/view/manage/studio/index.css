@@ -1,6 +1,7 @@
 .sutdio-logo{
     padding: 5px 0;
     border: 1px solid #ddd;
+    min-height: 72px;
 }
 .sutdio-logo img{
     display: block;

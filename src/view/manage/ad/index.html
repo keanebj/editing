@@ -11,10 +11,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(item,index) in data">
+      <tr v-for="(item,index) in data" class="tr-hover">
         <td style="width:70px">{{index+1}}</td>
         <th scope="row" style="width:300px">
-          <img v-if="item.path" style="max-width:200px;height:60px;" :src="$conf.host + item.path">
+          <img v-if="item.path" style="max-width:200px;height:66px;" :src="$conf.host + item.path">
           <cropper-upload v-else :width="1412" :height="170" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :ki="item.id">
             <div class="imagePlaceholder">
               <div class="title">点击上传广告图片</div>
