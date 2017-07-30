@@ -28,8 +28,19 @@
   background:#dddee1;
 }
 
+.icon-edit, .icon-set{
+  width: 18px;
 
-
+}
+.btn-create span{
+  padding-left:20px;
+  position: relative;
+}
+.icon-create{
+    position: absolute;
+    width: 18px;
+    left: 0px;
+}
 /*上传部分*/
 .upload_doc{
   margin: 0px auto;

@@ -1,8 +1,14 @@
 <section>
   <Row>
     <Col span="12"  class="manage_con_col">
-    <Button type="primary" size="large" shape="circle" icon="ios-plus-outline" @click="createArticle">新建</Button>
-    <Button type="ghost" size="large" shape="circle" icon="ios-download-outline" @click="uploadModal=true">导入</Button>
+    <Button type="primary" size="large" shape="circle" class="btn-create" @click="createArticle">
+      <img src="../../../assets/operator/create.svg" class="icon-create"></img>
+      新建
+    </Button>
+    <Button type="ghost" size="large" shape="circle" class="btn-create" @click="uploadModal=true">
+      <img src="../../../assets/operator/import.svg" class="icon-create"></img>
+      导入
+    </Button>
     <Modal v-model="uploadModal" title="导入" width="450" class="upload_doc_mask">
       <div class="upload_doc">
         选择文件：
@@ -90,10 +96,14 @@
           <span v-else>人民日报中央厨房</span>
         </td>
         <td>
-          <router-link :to="{path:'../publish',query:{articleID:item.id}}"><Icon type="edit" style="font-size:1.1em;color: #79A3E0;"></Icon></router-link>
+          <router-link :to="{path:'../publish',query:{articleID:item.id}}">
+            <img src="../../../assets/operator/edit.svg" class="icon-edit">
+            <!-- <Icon type="edit" style="font-size:1.1em;color: #79A3E0;"></Icon> -->
+          </router-link>
           <Dropdown style="margin-left: 15px" trigger="click" @on-click="operateContent">
             <a href="javascript:void(0)" @click="getOperateContentID(item.id)">
-              <Icon type="ios-gear-outline" style="font-size:1.2em;color: #79A3E0;"></Icon>
+              <img src="../../../assets/operator/set.svg" class="icon-set">
+              <!-- <Icon type="ios-gear-outline" style="font-size:1.2em;color: #79A3E0;"></Icon> -->
             </a>
             <Dropdown-menu slot="list">
               <Dropdown-item v-if="item.topflag" name="canceltop" >取消置顶</Dropdown-item>
