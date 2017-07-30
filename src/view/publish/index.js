@@ -384,29 +384,22 @@ export default {
 //    if(!this.isRepeat(this.formTop.authorArr)){
 //      this.isHideAuthor=true;
 //    }
-//修改部分
-			if(this.isRepeat(this.formTop.authorArr,this.author.Trim())){
-          //有重复
-          if(this.formTop.authorArr.length <3){
-            //隐藏掉不为空
-            this.$refs.authorTip.innerHTML="作者不能重复";
-            this.isHideAuthor=false;
-          }
-        }else{
-          //没重复
-          if(this.formTop.authorArr.length >= 3){
-            return;
-          }
-          this.formTop.authorArr.push(this.author.Trim());
-          this.author='';
-          let This=this;
-          this.temptimer=setTimeout(function(){
-            let padleft=This.$refs.authorContainer.clientWidth;
-            This.$refs.authorInput.style.paddingLeft=padleft+'px';
-          },200);
-
-          this.isHideAuthor=true;
-        }	
+			if (this.formTop.authorArr.length == 0 && this.$refs.authorInput.value != '') {
+				this.formTop.authorArr.push(this.author.Trim());
+	      this.author='';
+	      let This=this;
+	      this.temptimer=setTimeout(function(){
+	        let padleft=This.$refs.authorContainer.clientWidth;
+	        This.$refs.authorInput.style.paddingLeft=padleft+'px';
+	      },200);
+	
+	      this.isHideAuthor=true;
+			}else{
+				this.author='';
+	      if(!this.isRepeat(this.formTop.authorArr)){
+	        this.isHideAuthor=true;
+	      }
+			}
     },
     keywordBlur:function(){
       this.keyword='';
