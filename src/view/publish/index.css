@@ -315,7 +315,15 @@
 .ivu-modal-wrap.mobile .set-con img {
   width: 90%;
 }
-
+.ivu-modal-wrap.mobile p span{
+  font-size: 12px !important;
+}
+.ivu-modal-wrap.mobile embed{
+  width:90% !important;
+  height:auto !important;
+  display: block;
+  margin: 10px auto;
+}
 
 /*滚动条*/
 
