@@ -110,7 +110,7 @@ export default {
 	        onOk: () => {
 	          this.cancleTOp()
 	        }
-	      })  
+	      })
 //        this.$http.put("/api/content/top/"+contentid,{contentid:contentid,method:''},
 //          {
 //            headers:{
@@ -213,6 +213,12 @@ export default {
           token:this.token
         }
       }).then((response) => {
+        //如果pageindex比总页数还多
+        if((response.data.total%this.pageSize == 0) && this.pageIndex == response.data.total/this.pageSize +1){
+          this.pageIndex--;
+          this.getContentList();
+        }
+
         this.total=response.data.total;
         //格式化time
         if(response.data.contents && response.data.contents.length){

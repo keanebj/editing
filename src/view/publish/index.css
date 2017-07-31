@@ -400,6 +400,7 @@
   border: none;
   padding: 0 60px 10px 40px;
   box-shadow: none;
+  font-size:20px;
 }
 
 #titleContent .ivu-input:focus {
