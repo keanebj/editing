@@ -147,6 +147,7 @@ export default {
             this.formValidateM.tel = studioInfo.tel
             this.studioName = studioInfo.studioname
             this.account = studioInfo.username
+            this.formValidateM.name = studioInfo.username
             this.URL = studioInfo.url
             this.catalog = studioInfo.catalogname || '未绑定'
             this.formValidateM.logofile = studioInfo.logofile

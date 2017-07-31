@@ -31,7 +31,7 @@ export default {
         "studioname": "",
         "url": "",
         "logofile": "",
-        "catalogid": 0,
+        "catalogname":'',
         "accountindex": 0
       },
       ruleValidate: {
@@ -148,6 +148,7 @@ export default {
       })
     },
     save() {
+      this.formValidate.catalogname = this.catalogs[this.formValidate.catalogid].name
       var data = Object.assign({}, this.formValidate)
       delete data.id
       if (!data.password) {
@@ -182,6 +183,7 @@ export default {
     },
     update() {
       this.isSubmit = true
+      this.formValidate.catalogname = this.catalogs[this.formValidate.catalogid].name
       this.$http.put('/api/studio/' + this.id, this.formValidate).then(({
         data
       }) => {
