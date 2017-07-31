@@ -2,7 +2,8 @@
   display: inline-block
 }
 .vue-cropper-crop{
-  /*height: 400px*/
+  height: 400px;
+  position: relative;
 }
 .vue-cropper-modal .ivu-modal-body{
   padding: 0
@@ -27,7 +28,7 @@
 }
 /*魏征霖修改*/
 .cropper-container{
-	margin: 30px auto;
+	margin: 0 auto;
 }
 .crop_footer{
 	padding: 10px;
