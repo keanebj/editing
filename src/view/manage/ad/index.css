@@ -1,6 +1,6 @@
 .imagePlaceholder{
   width: 200px;
-  height: 80px;
+  height: 66px;
   background: #E7E7E7;
   border: 1px solid #CCCCCC;
   text-align: center;
@@ -10,7 +10,7 @@
 }
 .imagePlaceholder .title{
   font-size: 16px;
-  padding-top: 18px;
+  padding-top: 12px;
 }
 .imagePlaceholder .sub-title{
   font-size: 12px;

@@ -81,9 +81,9 @@
     margin: 0;
     padding: 0;
 }
-.home-title{    
+.home-title{
     width: 100%;
-    color: #fff;   
+    color: #fff;
     position: relative;
 }
 .home-title img,.home-ad img{
@@ -93,7 +93,7 @@
 	/*height: 170px;*/
 }
 .home-title span{
-    position: absolute;    
+    position: absolute;
 }
 .home-ad {
     margin:3% 0;
@@ -108,8 +108,8 @@
     padding: 10px 0 15px;
 }
 .home-notices:after{
-    content:""; 
-    display:block; 
+    content:"";
+    display:block;
     clear:both;
 }
 .home-notices li{
@@ -122,12 +122,13 @@
 }
 
 .home-notices li i{
-    width: 16px;
+    width: 5%;
     background-image: url(../../assets/gg.svg);
-    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
     height: 16px;
-    float: left;   
-    margin-top: 2px; 
+    margin-top: 2px;
+    float: left;
 }
 .home-notices li.readed i{
     background-image: url(../../assets/gg-1.svg);
@@ -194,7 +195,7 @@
 .home-tab span.active{
     border: 1px solid #F95759;
     color: #F95759;
-    
+
 }
 .ivu-page-item-jump-next, .ivu-page-item-jump-prev, .ivu-page-next, .ivu-page-prev,.ivu-page-item{
     border: none!important;
@@ -218,7 +219,7 @@
 }
 .home-pager span{
     float: right;
-    line-height: 24px;    
+    line-height: 24px;
 }
 .ivu-carousel-list{
     min-height: 100px;

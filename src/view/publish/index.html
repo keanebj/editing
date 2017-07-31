@@ -87,7 +87,7 @@
       </Form-item>
       <Form-item label="封面" prop="cover">
         <Input v-model="formTop.cover" type="text" class="hide"></Input>
-        <div class="cover-container" style="margin-bottom: 10px;"><img :src="formTop.cover" style="display: block;" width=305 height=171 v-if="formTop.cover != ''" /></div>
+        <div class="cover-container" style="margin-bottom: 10px;"><img :src="formTop.cover" style="display: block;" width="100%" v-if="formTop.cover != ''" /></div>
         <Button type="ghost" shape="circle" class="m-r-20 main-color pointer" @click="fromContent">正文选择</Button>
         <cropper-upload :width="478" :height="270" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048">
           <Button type="ghost" shape="circle" class="main-color pointer" @click="fromLocal">本地上传</Button>
