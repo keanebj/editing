@@ -89,7 +89,9 @@ export default {
           if (data.catalogs) {
             var catalogs = {}
             data.catalogs.forEach(n => {
-              catalogs[n.id] = n
+              catalogs[n.id] = Object.assign(n, {
+                cname: n.alias.split('_')[1]
+              })
             })
           }
           this.catalogs = catalogs
