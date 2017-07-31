@@ -6,7 +6,7 @@ export default {
     'iIndex'
   ],
   created () {
-		
+
   },
   data () {
     return {
@@ -34,8 +34,6 @@ export default {
   methods: {
     selectCover:function(index){
       this.i=index;
-      console.log("点击封面i===="+this.i)
-      console.log("点击封面tempi===="+this.tempi)
       this.contentCoverSrc=this.previewCon[index].src;
     },
     scrollBar: function (e) {
