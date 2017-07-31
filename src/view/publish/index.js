@@ -333,6 +333,11 @@ export default {
         this.formTop.authorArr.pop();
       }
     },
+    deleteKeyword:function(){
+      if(!this.keyword){
+        this.formTop.keywordArr.pop();
+      }
+    },
     closeAuthor:function(index){
       this.formTop.authorArr.splice(index,1);
       let This=this;
