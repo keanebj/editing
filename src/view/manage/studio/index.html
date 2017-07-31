@@ -1,6 +1,9 @@
 <section>
-  <router-link to="/manage/studio/0">
-    <Button type="primary" size="large" shape="circle" icon="ios-plus-outline">新建</Button>
+  <router-link to="/manage/studio/0">    
+    <Button type="primary" size="large" shape="circle" class="btn-create">
+      <img src="../../../assets/operator/create.svg" class="icon-create"></img>
+      新建
+    </Button>
   </router-link>
 
   <table class="table" style="margin-top:20px;">
@@ -18,7 +21,7 @@
       <tr v-for="(item,index) in data" class="tr-hover">
         <th scope="row">
           <div class="sutdio-logo">
-          <img v-if="item.logofile" height="60" :src="item.logofile" alt="">
+            <img v-if="item.logofile" height="60" :src="item.logofile" alt="">
           </div>
         </th>
         <td>{{item.studioname}}</td>
@@ -27,11 +30,13 @@
         <td>{{catalogs[item.catalogid]?catalogs[item.catalogid]['name']:'未绑定'}}</td>
         <td style="font-size:15px;">
           <router-link :to="'/manage/studio/'+item.id">
-            <Icon type="edit"></Icon>
+            <!-- <Icon type="edit"></Icon> -->
+            <img src="../../../assets/operator/edit.svg" class="icon-size">
           </router-link>
-          <Tooltip content="删除" placement="top" style="margin-left:15px;">
+          <Tooltip content="删除" placement="top" style="margin-left:5px;">
             <a href="javascript:void(0)" @click="onRemove(index)">
-              <Icon type="ios-trash-outline"></Icon>
+              <!-- <Icon type="ios-trash-outline"></Icon> -->
+              <img src="../../../assets/operator/del.svg" class="icon-size">
             </a>
           </Tooltip>
         </td>
@@ -41,7 +46,7 @@
 
   <Page size="small" :total="total" show-total @on-change="onChangePage" style="float:right"></Page>
 
-  <Spin  size="large" fix v-if="isLoading">
+  <Spin size="large" fix v-if="isLoading">
     <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
     <div>Loading</div>
   </Spin>

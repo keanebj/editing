@@ -31,7 +31,7 @@ export default {
         "studioname": "",
         "url": "",
         "logofile": "",
-        "catalogid": 0,
+        "catalogname":'',
         "accountindex": 0
       },
       ruleValidate: {
@@ -41,7 +41,8 @@ export default {
           message: '账号不能为空',
           trigger: 'blur'
         }],
-        password: [{
+        password: [
+          {
             required: true,
             message: '密码不能为空',
             trigger: 'blur'
@@ -53,7 +54,8 @@ export default {
             trigger: 'blur'
           }
         ],
-        passwordConfirm: [{
+        passwordConfirm: [
+          {
             required: true,
             message: '确认密码不能为空',
             trigger: 'blur'
@@ -109,7 +111,7 @@ export default {
       }
       this.resetPWD = !this.resetPWD     
       this.formValidate.password = ''
-      this.formValidate.passwordConfirm = ''       
+      this.formValidate.passwordConfirm = ''
     },
     request() {
       this.isLoading = true
@@ -146,6 +148,7 @@ export default {
       })
     },
     save() {
+      this.formValidate.catalogname = this.catalogs[this.formValidate.catalogid].name
       var data = Object.assign({}, this.formValidate)
       delete data.id
       if (!data.password) {
@@ -180,6 +183,7 @@ export default {
     },
     update() {
       this.isSubmit = true
+      this.formValidate.catalogname = this.catalogs[this.formValidate.catalogid].name
       this.$http.put('/api/studio/' + this.id, this.formValidate).then(({
         data
       }) => {
@@ -235,7 +239,11 @@ export default {
     this.fetchCatalogs()
     this.id = this.$route.params.id
     if (this.id !== '0') {
+      this.resetPWD = false
       this.request()
+    }
+    else{
+      this.resetPWD = true
     }
   }
 }

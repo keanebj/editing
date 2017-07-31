@@ -11,7 +11,8 @@ ajax.interceptors.request.use(function (config) {
   var path = config.url.replace(config.baseURL, '')
   if (whitelist.indexOf(path) < 0) {
     if (!store.state.token) {
-      window.location.href = '/login'
+      console.log(this.$conf.host)
+      window.location.href = '/newmedia/login'
       // return config
     }
     config.headers['token'] = store.state.token || ''
@@ -24,7 +25,8 @@ ajax.interceptors.request.use(function (config) {
 // Add a response interceptor
 ajax.interceptors.response.use(function (response) {
   if (response.data && response.data.status && response.data.status === 100) {
-    window.location.href = '/login'
+    console.log(this.$conf.host)
+    window.location.href = '/newmedia/login'
   }
   return response
 }, function (error) {

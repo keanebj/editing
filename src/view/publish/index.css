@@ -138,7 +138,11 @@
   display: inline-block;
   cursor: pointer;
 }
-.publish-btn:hover{
+#publish-btn{
+  color: #F95759 !important;
+  border-color:#F95759 !important;
+}
+#publish-btn:hover{
   color: #fff !important;
   background: #F95759 !important;
 }
@@ -235,7 +239,7 @@
 .previewContent .ivu-modal-content .ivu-modal-close .ivu-icon-ios-close-empty {
   font-size: 25px;
   color: #757575;
-} */
+}
 
 .set-max-height {
   border: 1px solid #ccc;
@@ -486,3 +490,8 @@
   outline: none;
    -webkit-appearance: none;
 }*/
+.pointer.main-color{
+	color: #F95759!important;
+	border-color: #F95759!important;
+	padding: 5px 10px!important;
+}

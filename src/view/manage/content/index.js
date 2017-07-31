@@ -78,30 +78,58 @@ export default {
     getOperateContentID:function(id){
       this.contentId=id;
     },
+    cancleTOp() {
+      let contentid=this.contentId;	        this.$http.put("/api/content/top/"+contentid,{contentid:contentid,method:''},
+        {
+          headers:{
+            token:this.token
+          }
+        }
+      ).then((response)=>{
+          this.$Notice.success({
+            title: response.data.message,
+            desc: false
+          })
+          //重新加载列表
+          this.getContentList();
+        },(error)=>{
+          this.$Notice.error({
+            title: error.data.message,
+            desc: false
+          })
+        })
+    },
     operateContent:function(type){
       let contentid=this.contentId;
       switch (type){
         case 'canceltop':
           //需要取消置顶的接口
-          this.$http.put("/api/content/top/"+contentid,{contentid:contentid,method:''},
-            {
-              headers:{
-                token:this.token
-              }
-            }
-          ).then((response)=>{
-              this.$Notice.success({
-                title: response.data.message,
-                desc: false
-              })
-              //重新加载列表
-              this.getContentList();
-            },(error)=>{
-              this.$Notice.error({
-                title: error.data.message,
-                desc: false
-              })
-            })
+        this.$Modal.confirm({
+	        title: '确认取消置顶',
+	        content: '是否取消置顶？',
+	        onOk: () => {
+	          this.cancleTOp()
+	        }
+	      })  
+//        this.$http.put("/api/content/top/"+contentid,{contentid:contentid,method:''},
+//          {
+//            headers:{
+//              token:this.token
+//            }
+//          }
+//        ).then((response)=>{
+//            this.$Notice.success({
+//              title: response.data.message,
+//              desc: false
+//            })
+//            //重新加载列表
+//            this.getContentList();
+//          },(error)=>{
+//            this.$Notice.error({
+//              title: error.data.message,
+//              desc: false
+//            })
+//          })
               break;
         case 'top':
           this.$http.put("/api/content/top/"+contentid,{contentid:contentid,method:'top'},

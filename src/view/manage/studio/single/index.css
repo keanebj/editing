@@ -1,5 +1,7 @@
 .reset-pwd{
-    margin-bottom: 35px;
+    margin: 25px 0;
+    font-size: 14px!important;
+    padding-top: 10px;
 }
 .reset-pwd label{
     color: #999;
@@ -9,4 +11,10 @@
     margin-left: 80px;
     cursor: pointer;
     color: #2d8cf0;
+}
+.ivu-form .ivu-form-item-label{
+    font-size: 14px!important;
+}
+.ivu-btn{
+    padding: 8px 20px!important;
 }

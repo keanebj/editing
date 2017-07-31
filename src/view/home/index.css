@@ -104,6 +104,8 @@
 }
 .home-tab{
     color:  #999999;
+    border-bottom: 1px solid #CCCCCC;
+    padding: 10px 0 15px;
 }
 .home-notices:after{
     content:""; 
@@ -113,17 +115,19 @@
 .home-notices li{
     float: left;
     width: 100%;
-    padding: 16px 0;
+    padding: 20px 0;
     color: #333333;
     border-bottom: 1px solid #CCCCCC;
+    font-size: 14px!important;
 }
 
 .home-notices li i{
-    width: 5%;
+    width: 16px;
     background-image: url(../../assets/gg.svg);
     background-size: 100% 100%;
     height: 16px;
-    float: left;
+    float: left;   
+    margin-top: 2px; 
 }
 .home-notices li.readed i{
     background-image: url(../../assets/gg-1.svg);
@@ -155,13 +159,14 @@
     left: 0;
     right: 0;
     margin:auto;
-    font-size: 28px;
+    font-size: 36px;
     text-align: center;
+    letter-spacing: 5px;
 }
 .title-t-1{
     width: 70%;
     height: 50px;
-    font-size: 18px;
+    font-size: 22px;
     top: 5%;
     left: 5%;
     opacity: .7;
@@ -173,7 +178,7 @@
     bottom: 0;
     left: 0;
     margin:auto;
-    font-size: 28px;
+    font-size: 42px;
     text-align: center;
 }
 .home-tab span{
@@ -183,7 +188,7 @@
     border-radius: 50px;
     height: 25px;
     line-height: 25px;
-    font-size: 14px;
+    font-size: 16px;
     cursor: pointer;
 }
 .home-tab span.active{
@@ -234,4 +239,7 @@
 }
 .home-ad:hover .swiper-button-prev,.home-ad:hover .swiper-button-next{
 	display: block;
+}
+.home-pager{
+    font-size: 14px!important;
 }

@@ -69,6 +69,11 @@ body {
     *margin-right: 5px;
 }
 
+/*隐藏本地上传*/
+#tabHeads span[data-content-id="upload"]{
+  display: none;
+}
+
 .tabhead span.focus {
     height: 31px;
     border-bottom: none;

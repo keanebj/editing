@@ -6,7 +6,10 @@
       <Form-item label="账号" prop="username">
         <Input v-model="formValidate.username"  placeholder="请输入账号名称"></Input>
       </Form-item>
-      <div class="reset-pwd" ><label>密码</label><span @click="resetPassword" v-text="resetWord"></span></div>
+      <div class="reset-pwd" v-if="this.id != '0'">
+        <label>密码</label>
+        <span @click="resetPassword" v-text="resetWord"></span>
+      </div>
       <Form-item label="新密码" prop="password" v-if="resetPWD">
         <Input v-model="formValidate.password" placeholder="······" type="password"></Input>
       </Form-item>
@@ -20,11 +23,10 @@
           <a v-if="formValidate.logofile" href="javascript:void(0)">
             <Icon type="edit"></Icon>
           </a>
-          <Button v-else type="primary" shape="circle" icon="ios-download-outline">上传</Button>
+          <Button v-else type="primary" shape="circle" icon="plus-round">上传</Button>
         </cropper-upload>
         建议logo长宽比为3:2
       </Form-item>
-
       <Form-item label="工作室" prop="studioname">
         <Input v-model="formValidate.studioname" placeholder="工作室名称编辑"></Input>
       </Form-item>
@@ -40,14 +42,13 @@
         <Input v-model="formValidate.accountindex" placeholder="请输入中央厨房指数" number></Input>
       </Form-item>
 
-      <Form-item>
-        <Button type="primary" shape="circle" @click="submit" :loading="isSubmit">提交</Button>
+      <Form-item style="margin-top: 80px;">
+        <Button type="primary" shape="circle" @click="submit" :loading="isSubmit" style="margin-left:70px;">提交</Button>
         <Button type="ghost" shape="circle" style="margin-left: 20px" @click="cancel">取消</Button>
       </Form-item>
     </Form>
     </Col>
   </Row>
-
   <Spin size="large" fix v-if="isLoading">
     <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
     <div>Loading</div>

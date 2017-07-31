@@ -1,6 +1,7 @@
 .sutdio-logo{
     padding: 5px 0;
     border: 1px solid #ddd;
+    min-height: 72px;
 }
 .sutdio-logo img{
     display: block;
@@ -8,4 +9,19 @@
 }
 .tr-hover:hover{
   background:#f5f5f5;
+}
+ .table thead th{
+  font-size: 14px!important;
+}
+.btn-create span{
+  padding-left:20px;
+  position: relative;
+}
+.icon-create{
+    position: absolute;
+    width: 18px;
+    left: 0px;
+}
+.icon-size{
+    width: 18px;
 }

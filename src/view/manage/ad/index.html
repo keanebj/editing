@@ -6,15 +6,15 @@
         <th>BANNER</th>
         <th></th>
         <th>URL</th>
-        <th>时间</th>
+        <!-- <th>时间</th> -->
         <th>操作</th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(item,index) in data">
+      <tr v-for="(item,index) in data" class="tr-hover">
         <td style="width:70px">{{index+1}}</td>
-        <th scope="row" style="width:200px">
-          <img v-if="item.path" style="max-width:200px;" :src="$conf.host + item.path">
+        <th scope="row" style="width:300px">
+          <img v-if="item.path" style="max-width:200px;height:66px;" :src="$conf.host + item.path">
           <cropper-upload v-else :width="1412" :height="170" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :ki="item.id">
             <div class="imagePlaceholder">
               <div class="title">点击上传广告图片</div>
@@ -33,23 +33,22 @@
           <Input v-if="item.isEdit" v-model="item.url" @on-blur="onBlur(index)" placeholder="请输入链接" style="width: 250px"></Input>
           <span v-else @dblclick="item.isEdit=true">{{item.url}}</span>
         </td>
-        <td>{{item.showtime}}</td>
+        <!-- <td>{{item.showtime}}</td> -->
         <td style="font-size:20px;">
           <Tooltip content="删除" placement="top">
             <a href="javascript:void(0)" @click="onRemove(index)">
-              <Icon type="ios-trash-outline"></Icon>
+              <img src="../../../assets/operator/del.svg" class="icon-size">
             </a>
           </Tooltip>
         </td>
       </tr>
     </tbody>
   </table>
-  <a href="javascript:;" @click="onAdd" v-if="data.length<5">
+  <a href="javascript:;" @click="onAdd" v-if="data.length<5" class="add-ad-position">
     <Icon type="plus-round"></Icon> 添加广告位</a>
   <div style="padding: 30px;">
-    <Button :disabled="!isModify" type="primary" size="large" shape="circle" icon="ios-plus-outline" @click="onSubmit" :loading="isSubmit">提交</Button>
-    <Button :disabled="!isModify" style="margin-left:20px;" type="ghost" size="large" shape="circle" icon="ios-download-outline"
-      @click="onCancel">取消</Button>
+    <Button :disabled="!isModify" type="primary" size="large" shape="circle" @click="onSubmit" :loading="isSubmit">提交</Button>
+    <Button :disabled="!isModify" style="margin-left:20px;" type="ghost" size="large" shape="circle" @click="onCancel">取消</Button>
   </div>
 
   <Spin  size="large" fix v-if="isLoading">

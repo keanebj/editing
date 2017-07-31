@@ -15,6 +15,7 @@
 }
 #title a{
   color: #495060;
+  text-align: left;
 }
 .hide{
   display: none;
@@ -27,8 +28,19 @@
   background:#dddee1;
 }
 
+.icon-edit, .icon-set{
+  width: 18px;
 
-
+}
+.btn-create span{
+  padding-left:20px;
+  position: relative;
+}
+.icon-create{
+    position: absolute;
+    width: 18px;
+    left: 0px;
+}
 /*上传部分*/
 .upload_doc{
   margin: 0px auto;
@@ -110,4 +122,23 @@
 
 .column-left{
   text-align: left!important;
+}
+ .table thead th{
+  font-size: 14px!important;
+}
+.manage_con_col{
+	color: #999;
+}
+.manage_con_col button:nth-child(1){
+	
+}
+.manage_con_col button:nth-child(2){
+	margin-left: 15px;
+	border-color: #F95759!important;
+	color: #F95759!important;
+}
+
+.publish-back, .offline-back{
+  display: inline-block;
+  margin-left:6px;
 }

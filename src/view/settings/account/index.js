@@ -147,13 +147,13 @@ export default {
             this.formValidateM.tel = studioInfo.tel
             this.studioName = studioInfo.studioname
             this.account = studioInfo.username
+            // this.formValidateM.name = studioInfo.username
             this.URL = studioInfo.url
-            this.catalog = studioInfo.catalogname
+            this.catalog = studioInfo.catalogname || '未绑定'
             this.formValidateM.logofile = studioInfo.logofile
             let _preImg = {
               status: 'finished',
               url: studioInfo.logofile
-              // url: studioInfo.logofile
             }
             this.uploadList.push(_preImg)
             this.uploadImg = _preImg.url
@@ -176,12 +176,12 @@ export default {
         studioname: this.studioName,
         fullname: this.formValidateM.name,
         tel: this.formValidateM.tel,
-        logofile: this.uploadImg
-        // logofile: this.formValidateM.logofile
+        logofile: this.formValidateM.logofile
       };
       this.$http.put('http://mp.dev.hubpd.com/api/studio/' + this.userinfo.id, reqParams)
         .then(res => {
           if (res.data.status == 1) {
+            this.userinfo.studioLogo = reqParams.logofile
             this.disabledM = true
             this.$Notice.success({
               title: '成功',
@@ -242,12 +242,13 @@ export default {
       this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
     },
     handleSuccess(res, file) {
+      this.disabledM = false
       console.log(JSON.stringify(res.path))
       this.$Notice.success({
         title: '成功',
         desc: res.message || '上传成功'
       })
-      file.url = 'http://mp.dev.hubpd.com/' + res.path;
+      file.url = this.$conf.host + res.path;      
       this.uploadImg = file.url;
       this.hideImg = true;
       // file.name = res.name;
@@ -297,6 +298,7 @@ export default {
     },
     cropUploadSuccess(response, field, ki) {
       console.log(JSON.stringify(response))
+      this.disabledM = false
       if (response.path) {
         this.formValidateM.logofile = this.$conf.host + response.path
         this.$refs['formValidateM'].validateField('logofile')
@@ -315,6 +317,15 @@ export default {
     }
   },
   mounted() {
-    this.uploadList = this.$refs.upload.fileList;
+  	//用于显示左侧
+    var span5 =  document.querySelector(".ivu-col-span-5");
+    var span19 =  document.querySelector(".ivu-col-span-19");
+    if(!span19){
+      span19 =  document.querySelector(".ivu-col-span-24");
+    }
+    span5.style.display = 'block';
+    span19.className = "layout-content-warp ivu-col ivu-col-span-19";
+    
+    // this.uploadList = this.$refs.upload.fileList;
   }
 }

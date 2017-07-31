@@ -162,7 +162,7 @@ export default {
           viewMode: 1,
           dragMode: 'move',
           autoCropArea: 1,
-          minContainerWidth: 700,
+          minContainerWidth: 760,
           minContainerHeight: 400,
         })
         this.isLoading = false
