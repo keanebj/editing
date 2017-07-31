@@ -164,7 +164,7 @@ export default {
 
         this.titleContentCount = Math.ceil(this.gblen(data.title,44,'title')) > 22 ? 22:Math.ceil(this.gblen(data.title,44,'title'));
         this.editor.ready(function(){
-          This.editor.execCommand('inserthtml',This.formTop.content);
+          This.editor.execCommand('inserthtml',This.formTop.content,true);
         })
 
       }, (error) => {
@@ -392,7 +392,7 @@ export default {
 	        let padleft=This.$refs.authorContainer.clientWidth;
 	        This.$refs.authorInput.style.paddingLeft=padleft+'px';
 	      },200);
-	
+
 	      this.isHideAuthor=true;
 			}else{
 				this.author='';
