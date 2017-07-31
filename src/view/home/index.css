@@ -122,13 +122,14 @@
 }
 
 .home-notices li i{
-    width: 5%;
+    width: 20px;
     background-image: url(../../assets/gg.svg);
     background-repeat: no-repeat;
     background-position: center center;
-    height: 16px;
+    height: 18px;
     margin-top: 2px;
     float: left;
+    margin-right: 3px;
 }
 .home-notices li.readed i{
     background-image: url(../../assets/gg-1.svg);
