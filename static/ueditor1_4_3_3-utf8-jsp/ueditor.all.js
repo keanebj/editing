@@ -17658,7 +17658,7 @@ UE.plugins['video'] = function (){
                 break;
             case 'embed':
                 str = '<embed ' + (id ? 'id="' + id+'"' : '') + 'type="application/x-shockwave-flash" class="' + classname + '" pluginspage="http://www.macromedia.com/go/getflashplayer"' +
-                    ' src="' +  utils.html(url) + '" width="' + width  + '" height="' + height  + '"'  + (align ? ' style="float:' + align + '"': '') +
+                    ' src="' +  utils.html(url) + '" style="width:'+width+'px;height:'+height+'px"'  + (align ? ' style="float:' + align + '"': '') +
                     ' wmode="transparent" play="true" loop="false" menu="false" allowscriptaccess="never" allowfullscreen="true" >';
                 break;
             case 'video':

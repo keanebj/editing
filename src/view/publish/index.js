@@ -613,7 +613,7 @@ abstractWordCount:function(event){
           }
           this.$refs.shareHide.$el.children[1].children[0].style.top = (195 - scrollTop) + 'px';
 
-          this.config.value="http://mp.dev.hubpd.com/notice?id="+this.articleID;
+          this.config.value="http://mp.dev.hubpd.com/newmedia/notice?id="+this.articleID;
           this.qCode = true;
         }else{
           this.$Notice.warning({

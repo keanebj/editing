@@ -6,7 +6,7 @@
   </div>
   <Modal title="图片裁剪" v-model="visible" :mask-closable="false" class-name="vue-cropper-modal" width="760">
     <div v-show="!isLoading" class="vue-cropper-crop">
-      <img ref="image" :src="sourceImgUrl">
+      <img style="max-width:100%;max-height:100%" ref="image" :src="sourceImgUrl">
     </div>
     <div v-show="isLoading" class="vue-cropper-crop">
       <Spin fix>

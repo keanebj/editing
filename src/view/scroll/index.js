@@ -37,6 +37,7 @@ export default {
       this.contentCoverSrc=this.previewCon[index].src;
     },
     scrollBar: function (e) {
+    	
       if (this.$refs.setCon.clientHeight >= this.$refs.onscroll.clientHeight) {
         return;
       }else{
@@ -62,8 +63,8 @@ export default {
             this.$refs.scrollCon.style.top = -scTop + 'px';
             this.$refs.onscroll.style.top = t + 'px';
           }
-        }else if (e.detail) {
-          if (e.detail > 0) {
+        }else if (e.detail == 0) {
+          if (e.deltaY > 0) {
             let t = this.$refs.onscroll.offsetTop;
             t -= 20;
             if ( t <= -(this.$refs.onscroll.clientHeight - this.$refs.setCon.clientHeight)){
@@ -73,11 +74,11 @@ export default {
             let scTop = scale*(this.$refs.scroll.clientHeight - this.$refs.scrollCon.clientHeight)
             this.$refs.scrollCon.style.top = -scTop + 'px';
             this.$refs.onscroll.style.top = t + 'px';
-          }else if (e.detail < 0) {
+          }else if (e.deltaY < 0) {
             let t = this.$refs.onscroll.offsetTop;
             t += 20;
-            if ( t <= -(this.$refs.onscroll.clientHeight - this.$refs.setCon.clientHeight)){
-              t = this.$refs.setCon.clientHeight - this.$refs.onscroll.clientHeight;
+            if ( t >= 0) {
+              t = 0
             }
             let scale = t/(this.$refs.onscroll.clientHeight - this.$refs.setCon.clientHeight);
             let scTop = scale*(this.$refs.scroll.clientHeight - this.$refs.scrollCon.clientHeight)
