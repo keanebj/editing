@@ -137,3 +137,8 @@
 	border-color: #F95759!important;
 	color: #F95759!important;
 }
+
+.publish-back, .offline-back{
+  display: inline-block;
+  margin-left:6px;
+}

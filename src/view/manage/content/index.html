@@ -86,7 +86,8 @@
         </th>
         <td>{{item.author}}</td>
         <td>{{item.addtime}}</td>
-        <td class="column-left">
+        <!-- class="column-left" -->
+        <td>
           <div v-if="item.status == 'Draft'"><span class="draft-back">草稿</span></div>
           <div v-else-if="item.status == 'Publish'"><span class="publish-back">已发表</span></div>
           <div v-else-if="item.status == 'Offline'"><span class="offline-back">已撤回</span></div>

@@ -47,9 +47,8 @@
   <a href="javascript:;" @click="onAdd" v-if="data.length<5" class="add-ad-position">
     <Icon type="plus-round"></Icon> 添加广告位</a>
   <div style="padding: 30px;">
-    <Button :disabled="!isModify" type="primary" size="large" shape="circle" icon="ios-plus-outline" @click="onSubmit" :loading="isSubmit">提交</Button>
-    <Button :disabled="!isModify" style="margin-left:20px;" type="ghost" size="large" shape="circle" icon="ios-download-outline"
-      @click="onCancel">取消</Button>
+    <Button :disabled="!isModify" type="primary" size="large" shape="circle" @click="onSubmit" :loading="isSubmit">提交</Button>
+    <Button :disabled="!isModify" style="margin-left:20px;" type="ghost" size="large" shape="circle" @click="onCancel">取消</Button>
   </div>
 
   <Spin  size="large" fix v-if="isLoading">
