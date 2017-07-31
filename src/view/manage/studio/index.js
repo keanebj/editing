@@ -62,6 +62,9 @@ export default {
             title: '成功',
             desc: data.message || '删除成功'
           })
+          if (this.total > 0) {
+            this.total--
+          }
           this.data.splice(index, 1)
         } else {
           this.$Notice.error({
