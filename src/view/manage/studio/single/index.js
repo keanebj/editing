@@ -111,7 +111,7 @@ export default {
       }
       this.resetPWD = !this.resetPWD     
       this.formValidate.password = ''
-      this.formValidate.passwordConfirm = ''       
+      this.formValidate.passwordConfirm = ''
     },
     request() {
       this.isLoading = true

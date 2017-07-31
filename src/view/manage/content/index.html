@@ -73,7 +73,7 @@
     </thead>
     <tbody>
       <tr v-for="(item,index) in contentList" :index="item.ID" class="tr-hover">
-        <th scope="row" style="position: relative">
+        <th scope="row" width="20%" style="position: relative">
           <Icon v-if="item.topflag" type="flag" style="position:absolute;top:10px;left:10px;color:#F95759;font-size:20px;">top</Icon>
           <router-link :to="{path:'../article',query:{id:item.id}}" v-if="roleType == 'Edit'"><img height="60" :src="item.cover"></router-link>
           <router-link :to="{path:'../notice',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'Notice'"><img height="60" :src="item.cover"></router-link>
@@ -84,9 +84,8 @@
           <router-link :to="{path:'../notice',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'Notice'">{{item.title}}</router-link>
           <router-link :to="{path:'../article',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'College'">{{item.title}}</router-link>
         </th>
-        <td>{{item.author}}</td>
-        <td>{{item.addtime}}</td>
-        <!-- class="column-left" -->
+        <td width="10%">{{item.author}}</td>
+        <td width="10%">{{item.addtime}}</td>
         <td>
           <div v-if="item.status == 'Draft'"><span class="draft-back">草稿</span></div>
           <div v-else-if="item.status == 'Publish'"><span class="publish-back">已发表</span></div>
