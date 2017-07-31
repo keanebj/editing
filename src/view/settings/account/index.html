@@ -1,33 +1,7 @@
 <section>
   <Row style="margin-left:50px;width:600px">
     <Col span="18">
-    <div v-show="roleType == 1" class="media-account">
-      <!-- <div class="account upload-logo">
-        <label>LOGO</label>
-        <div class="demo-upload-list" v-for="item in uploadList">
-          <div v-if="item.status === 'finished'">
-            <img :src="item.url">
-            <div class="demo-upload-list-cover">
-              <Icon type="ios-eye-outline" @click.native="handleView(item.name)"></Icon>
-              <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
-            </div>
-          </div>
-          <div v-else>
-            <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
-          </div>
-        </div> 
-        <Upload ref="upload" :headers="uploadHeaders" :show-upload-list="false" :on-success="handleSuccess" :format="['jpg','jpeg','png']"
-          :max-size="2048" :on-format-error="handleFormatError" :on-exceeded-size="handleMaxSize" :before-upload="handleBeforeUpload"
-          action="http://mp.dev.hubpd.com/api/image/upload" style="display: inline-block;width:58px;">
-          <div style="width: 58px;height:58px;line-height: 58px;">
-            <img src="../../../assets/img-edit.svg">
-          </div>
-        </Upload>
-        <span class="file-tips">建议logo长宽比为3:2</span>
-        <Modal title="查看图片" v-model="visible" >
-          <img :src="uploadImg" v-if="visible" style="width: 100%">
-        </Modal>-->
-      </div>
+    <div v-show="roleType == 1" class="media-account">      
       <Form ref="formValidateM" :model="formValidateM" label-position="left" :rules="ruleValidateM" :label-width="100">
          <Form-item label="LOGO" prop="logofile">
         <img v-if="formValidateM.logofile" style="max-width:100px;border:1px solid #eee" :src="formValidateM.logofile"
