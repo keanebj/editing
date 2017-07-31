@@ -67,7 +67,7 @@
           <label for="authors" class="author-container" style="position:absolute;z-index:9;padding-left:7px;max-width:100%;overflow:hidden;height:32px;font-size:12px;" ref="authorContainer">
             <span v-for="(item,index) in formTop.authorArr" style="margin-right:10px;">{{item}}<span @click.stop="closeAuthor(index)" :class="{hide:isHideClose}"><Icon type="close" class="main-color"></Icon></span></span>
           </label>
-          <input id="authors" :maxlength="authorMaxCount" :placeholder="placeauthor" class="ivu-input" v-model="author" @keyup="checkAuthorCount" @blur="authorBlur" ref="authorInput"></input>
+          <input id="authors" :maxlength="authorMaxCount" :placeholder="placeauthor" class="ivu-input" v-model="author" @keyup="checkAuthorCount" @blur="authorBlur" ref="authorInput" @keydown.delete="deleteAuthor"></input>
         </div>
         <span style="color:#F95759;" ref="authorTip" class="ivu-form-item-error-tip" :class="{hide:isHideAuthor}">作者不能重复</span>
       </Form-item>
@@ -92,7 +92,7 @@
         <cropper-upload :width="478" :height="270" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048">
           <Button type="ghost" shape="circle" class="main-color pointer" @click="fromLocal">本地上传</Button>
         </cropper-upload>
-      </Form-item> 
+      </Form-item>
       <Modal v-model="contentModal" width="600" id="contentPop" :closable="false">
         <p slot="header">
           <span>正文选择</span>
