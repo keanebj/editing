@@ -1,5 +1,5 @@
 <section>
-  <div class="set-con" @mousewheel="scrollBar($event)" ref="setCon">
+  <div class="set-con" @wheel.prevent="scrollBar($event)" ref="setCon">
     <div class="set-posi" ref="onscroll" @mousedown.prevent="mouseScroll($event)">
       <div v-if="previewCon.title"  class="yulan">
       	<h1  class="yulan-tit">{{ previewCon.title }}</h1>
