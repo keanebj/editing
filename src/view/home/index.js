@@ -4,7 +4,7 @@ export default {
   name: 'Home',
   components: {  
     swiper,  
-    swiperSlide  
+    swiperSlide
 	},  
   created() {
 

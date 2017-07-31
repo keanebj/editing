@@ -48,11 +48,7 @@ export default {
     },
     cropSuccess: Function,
     cropUploadSuccess: Function,
-    cropUploadFail: Function,
-    noSel:{
-      type: Boolean,
-      'default':false
-    }
+    cropUploadFail: Function
   },
   data() {
     let {
@@ -74,7 +70,8 @@ export default {
       },
       // 浏览器是否支持触屏事件
       isSupportTouch: document.hasOwnProperty("ontouchstart"),
-      uploading: false,
+      isLoading: true, // 正在加载图片
+      uploading: false, // 是否上传中
       progress: 0, // 上传状态及进度
       // 需求图宽高比
       ratio: width / height,
@@ -91,16 +88,6 @@ export default {
       return false;
     },
     handleClick(e,resel) {
-      if(this.noSel){
-        return;
-      }
-      if (this.image && resel!='resel') {
-        this.sourceImgUrl = this.image
-        setTimeout(() => {
-          this.startCrop()
-        }, 1000)
-        return;
-      }
       if (e.target !== this.$refs.fileinput) {
         e.preventDefault();
         if (document.activeElement !== this.$els) {
@@ -139,6 +126,8 @@ export default {
     },
     // 设置图片源
     setSourceImg(file) {
+      this.visible = true
+      this.isLoading = true
       let fr = new FileReader();
       fr.onload = (e) => {
         this.sourceImgUrl = fr.result
@@ -160,6 +149,7 @@ export default {
             title: '错误',
             desc: '图片最低像素为（宽*高）：' + width + '*' + height
           })
+          this.visible = false
           return false
         }
         this.sourceImg = img
@@ -172,10 +162,10 @@ export default {
           viewMode: 1,
           dragMode: 'move',
           autoCropArea: 1,
-          minContainerWidth: 550,
-          minContainerHeight: 260,
+          minContainerWidth: 700,
+          minContainerHeight: 400,
         })
-        this.visible = true
+        this.isLoading = false
       }
     },
     // 生成需求图片
