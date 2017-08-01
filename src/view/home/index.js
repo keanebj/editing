@@ -84,9 +84,7 @@ export default {
   },
   methods: {
     getNotice () {
-      this.$http({
-	      method: 'GET',
-	      url: "/api/content/notice",
+      this.$http.get("/api/content/notice", {
 	      params: {
 	      	pagesize: this.pageSize,
 	      	pageindex: (this.pageIndexX-1),

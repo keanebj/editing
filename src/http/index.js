@@ -16,7 +16,7 @@ ajax.interceptors.request.use(function (config) {
       isWhite = true
     }
   })
-  if (isWhite) {
+  if (!isWhite) {
     if (!store.state.token) {
       router.replace('/login')
       // window.location.href = `${config.env}/login`

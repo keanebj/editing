@@ -67,7 +67,7 @@ export default {
             })
             localStorage.setItem('token', res.data.token)
             localStorage.setItem('userinfo', JSON.stringify(userinfo))
-
+            console.log(this.$store.state)
            // localStorage.setItem('token',res.data.token)
 
             this.$Message.success('登录成功!');
