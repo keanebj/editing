@@ -19,7 +19,6 @@ export default {
     return {}
   },
   beforeCreate() {
-
     //监听浏览器的返回按钮
     window.addEventListener("popstate", function (e) {
       location.reload();
@@ -61,7 +60,6 @@ export default {
     logOut(e) {
       this.$http.get('http://mp.dev.hubpd.com/api/studio/logout')
         .then(res => {
-          console.log('退出结果：' + JSON.stringify(res.data))
           if (res.data.status == 1) {
             localStorage.removeItem("token")
             this.$store.commit('set', {
@@ -73,7 +71,6 @@ export default {
           }
           this.$router.push('/login')
         }, err => {
-          console.log('出错啦！' + err)
           this.$Message.error(JSON.stringify(err))
         })
     }

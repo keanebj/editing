@@ -16,10 +16,9 @@ ajax.interceptors.request.use(function (config) {
       isWhite = true
     }
   })
-  if (isWhite) {
+  if (!isWhite) {
     if (!store.state.token) {
       router.replace('/login')
-      // window.location.href = `${config.env}/login`
       return config
     }
     config.headers['token'] = store.state.token || ''
@@ -32,7 +31,6 @@ ajax.interceptors.request.use(function (config) {
 // Add a response interceptor
 ajax.interceptors.response.use(function (response) {
   if (response.data && response.data.status && response.data.status === 100) {
-    // window.location.href = `${config.env}/login`
     router.replace('/login')
   }
   return response
