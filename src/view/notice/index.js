@@ -18,7 +18,7 @@ export default {
         //ajax获得后台公告的内容
         this.$http({
           method: 'GET',
-          url: "http://mp.dev.hubpd.com/api/content/" + this.noticeID,
+          url: "http://mp.dev.hubpd.com/api/content/notice/" + this.noticeID,
           headers:{
 	          token:"e3ad42c53a7f513682900121a5d768d41c9ee7a584d49865"
 	        }
