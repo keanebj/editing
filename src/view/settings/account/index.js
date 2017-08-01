@@ -39,7 +39,7 @@ export default {
       },
       ruleValidateM: {
         name: [{
-          required: true,
+          // required: true,
           message: '姓名不能为空',
           trigger: 'blur'
         }],
@@ -49,7 +49,7 @@ export default {
           trigger: 'blur'
         }],
         tel: [{
-            required: true,
+            // required: true,
             message: '电话不能为空',
             trigger: 'blur'
           },

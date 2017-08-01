@@ -6,7 +6,7 @@
         <th>BANNER</th>
         <th></th>
         <th>URL</th>
-        <!-- <th>时间</th> -->
+         <th>时间</th> 
         <th>操作</th>
       </tr>
     </thead>
@@ -33,7 +33,7 @@
           <Input v-if="item.isEdit" v-model="item.url" @on-blur="onBlur(index)" placeholder="请输入链接" style="width: 250px"></Input>
           <span v-else @dblclick="item.isEdit=true">{{item.url}}</span>
         </td>
-        <!-- <td>{{item.showtime}}</td> -->
+         <td>{{item.ordertime}}</td> 
         <td style="font-size:20px;">
           <Tooltip content="删除" placement="top">
             <a href="javascript:void(0)" @click="onRemove(index)">
