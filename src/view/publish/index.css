@@ -268,7 +268,6 @@
 
 .set-con p {
   font-size: 12px;
-  text-indent: 24px;
   word-break: break-all;
 }
 
@@ -287,7 +286,6 @@
   position: absolute;
   width: 92%;
 }
-
 
 /*在手机上预览*/
 .ivu-modal-wrap.mobile .ivu-modal-content .ivu-modal-body {
@@ -471,8 +469,6 @@
 }
 
 .share_hide .ivu-modal-body div {
-  margin-top: 10px;
-  margin-bottom: 10px;
   font-size: 14px;
 }
 

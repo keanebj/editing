@@ -32,9 +32,12 @@
           <div class="btn-icon share-btn-icon m-r-10" @click="share" @mouseover="hideshare =false" @mouseout="hideshare = true">
 
           <Modal v-model="qCode" class="share_hide" width="auto" :closable="false" ref="shareHide">
-            <vue-q-art :config="config" :downloadButton="downloadButton" style="text-align: center;"></vue-q-art>
+            <div style="text-align:center;">
+              <div id='code'></div>
+              <canvas id="canvas"></canvas>
+            </div>
             <div>
-              <input type="text" v-model="config.value" ref="copyInput" readonly /><span @click="CopyUrl($event)">复制</span>
+              <input type="text" v-model="codes" ref="copyInput" readonly /><span @click="CopyUrl($event)">复制</span>
             </div>
             <p>链接有效时间为<span>2小时</span><br />通过扫描二维码和复制文章链接<br />可以将文章转发给成员观看</p>
           </Modal>

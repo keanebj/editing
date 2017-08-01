@@ -1,25 +1,23 @@
-import VueQArt from 'vue-qart'
+import QRCode from 'qrcode'
 import ScrollBar from '@/view/scroll/index.vue'
 import cropperUpload from '@/components/cropperUpload/index.vue'
 import '../../../static/ueditor1_4_3_3-utf8-jsp/ueditor.config.js'
 import '../../../static/ueditor1_4_3_3-utf8-jsp/ueditor.all.js'
 import '../../../static/ueditor1_4_3_3-utf8-jsp/lang/zh-cn/zh-cn.js'
 import '../../../static/ueditor1_4_3_3-utf8-jsp/ueditor.parse.min.js'
+import Vue from 'vue'
+Vue.use(QRCode)
 export default {
   name: 'ViewPublish',
   components:{
     ScrollBar,
-    VueQArt,
+    QRCode,
     cropperUpload
   },
   data () {
     return {
       //二维码
-      config: {
-        value: 'http://www.baidu.com',
-        imagePath: require('../../assets/erweima.png'),
-        filter: 'color',
-      },
+      codes:'',
       roleType: 'Edit',
       articleID: -1,
       downloadButton: false,
@@ -35,7 +33,7 @@ export default {
       publishChannels: ['人民日报中央厨房'],
       publishLabels: {
         Notice: '公告',
-        College: '中央厨房号学院'
+        College: '人民日报中央厨房'
       },
       titleMaxCount:22,
       summaryMaxCount:60,
@@ -166,7 +164,6 @@ export default {
         this.editor.ready(function(){
           This.editor.execCommand('inserthtml',This.formTop.content,true);
         })
-
       }, (error) => {
         this.$Notice.error({
           title: error.data.message,
@@ -204,6 +201,13 @@ export default {
 
   },
   methods: {
+    useqrcode(url){
+      var canvas = document.getElementById('canvas');
+      QRCode.toCanvas(canvas, url, function (error) {
+        if (error) console.error(error)
+        console.log('success!');
+      })
+    },
     goBack(){
       this.$router.push('/')
     },
@@ -613,7 +617,8 @@ abstractWordCount:function(event){
           }
           this.$refs.shareHide.$el.children[1].children[0].style.top = (195 - scrollTop) + 'px';
 
-          this.config.value="http://mp.dev.hubpd.com/newmedia/notice?id="+this.articleID;
+          this.useqrcode("http://mp.dev.hubpd.com/newmedia/notice?id="+this.articleID);
+          this.codes="http://mp.dev.hubpd.com/newmedia/notice?id="+this.articleID;
           this.qCode = true;
         }else{
           this.$Notice.warning({
