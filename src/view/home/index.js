@@ -22,7 +22,7 @@ export default {
     })
 		
 		
-//		请求工作室总数\
+//		请求工作室总数
 		this.$http.get('/api/studio').then(({ data }) => {
 	    if (data.status) {
 	      this.studioTotal = data.total
