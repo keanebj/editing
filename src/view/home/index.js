@@ -2,10 +2,10 @@ import Cookies from 'js-cookie'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 export default {
   name: 'Home',
-  components: {  
-    swiper,  
+  components: {
+    swiper,
     swiperSlide
-	},  
+	},
   created() {
 //    判断进入公告还是学院
 		if (this.$route.query.switchTab == undefined) {
@@ -13,15 +13,15 @@ export default {
 		}else{
 			this.switchTab = this.$route.query.switchTab;
 		}
-		
+
 		this.$http({
       method: 'GET',
       url: "/api/content/count"
     }).then((response) => {
     	this.articleTot = response.data.total;
     })
-		
-		
+
+
 //		请求工作室总数
 		this.$http.get('/api/studio').then(({ data }) => {
 	    if (data.status) {
@@ -44,8 +44,8 @@ export default {
 //		console.log(this.$store.state.roleType)
   },
   computed: {
-  	swiper() {  
-  		return this.$refs.mySwiper.swiper;  
+  	swiper() {
+  		return this.$refs.mySwiper.swiper;
 		}
   },
   data() {
@@ -71,7 +71,7 @@ export default {
           initialSlide: 1,
           loop: true,
 					nextButton: '.swiper-button-next',
-    			prevButton: '.swiper-button-prev',	
+    			prevButton: '.swiper-button-prev',
           pagination: '.swiper-pagination',
           paginationClickable :true,
           autoplayDisableOnInteraction : false,
@@ -84,9 +84,7 @@ export default {
   },
   methods: {
     getNotice () {
-      this.$http({
-	      method: 'GET',
-	      url: "/api/content/notice",
+      this.$http.get("/api/content/notice", {
 	      params: {
 	      	pagesize: this.pageSize,
 	      	pageindex: (this.pageIndexX-1),
@@ -116,7 +114,7 @@ export default {
 				}
 				//				改变颜色
 				if (Cookies.get('clickedNo') != undefined) {
-					
+
 					var cookieGet = Cookies.get('clickedNo').split(",");
 					for (let i = 0; i < cookieGet.length; i++) {
 						this.clickedNo.push(parseInt(cookieGet[i]))
@@ -125,7 +123,7 @@ export default {
 			     	}
 			    }
 				}
-				
+
 				this.pageTotalX = Math.ceil(this.noticeTotal / this.pageSize);
 	    },(err) => {
         console.log('出错啦！'+err)
@@ -157,7 +155,7 @@ export default {
 				}
 				//				改变颜色
 				if (Cookies.get('clickedCo') != undefined) {
-					
+
 					var cookieGet = Cookies.get('clickedCo').split(",");
 					for (let i = 0; i < cookieGet.length; i++) {
 						this.clickedCo.push(parseInt(cookieGet[i]))
@@ -195,14 +193,14 @@ export default {
     	if (this.switchTab == 0) {
       	var inde1 = index + (this.pageIndexX-1)*8;
       	this.noticeList[inde1].isReaded = true;
-      	
+
 		  	if (this.clickedNo.length == 0) {
 		  		this.clickedNo.push(inde1);
 		  	}else{
 		  		var hasIn = true;
 		  		for (var i=0;i<this.clickedNo.length;i++) {
 			  		if (inde1 == this.clickedNo[i]) {
-			  			
+
 			  			hasIn = false;
 			  		}
 			  	}
@@ -215,14 +213,14 @@ export default {
       }else{
       	var inde2 = index + (this.pageIndexG-1)*8;
       	this.collegeList[inde2].isReaded = true;
-      	
+
       	if (this.clickedCo.length == 0) {
 		  		this.clickedCo.push(inde2);
 		  	}else{
 		  		var hasIn = true;
 		  		for (var i=0;i<this.clickedCo.length;i++) {
 			  		if (inde2 == this.clickedCo[i]) {
-			  			
+
 			  			hasIn = false;
 			  		}
 			  	}
