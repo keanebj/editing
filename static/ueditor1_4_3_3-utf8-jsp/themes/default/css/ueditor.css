@@ -1681,6 +1681,7 @@ div.edui-box {
 .edui-default .edui-autotypesetpicker-body td {
     font-size: 12px;
     word-wrap:break-word;
+    text-align: left;
 }
 
 .edui-default .edui-autotypesetpicker-body td input {
