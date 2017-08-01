@@ -49,7 +49,7 @@ export default {
     	if (this.$route.query.switchTab == undefined) {
     		this.$router.go(-1)
     	}else{
-      		   this.$router.push({path:'/home', query: { switchTab:  this.switchTab}})
+      		   this.$router.push({path:'/', query: { switchTab:  this.switchTab}})
     	}
     }
   }

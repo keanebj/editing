@@ -52,7 +52,7 @@ export default {
       }
     },
     goHome() {
-      this.$router.push('/home')
+      this.$router.push('/')
     },
     goAccount() {
       this.$router.push('/settings/account')

@@ -205,7 +205,7 @@ export default {
   },
   methods: {
     goBack(){
-      this.$router.push('/home')
+      this.$router.push('/')
     },
     showPreviewContent:function(){
       //获得编辑器中的内容:这里的预览需要写一个界面（待完善。。。）

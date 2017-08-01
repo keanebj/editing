@@ -14,7 +14,7 @@ const RouterConfig = {
 const router = new Router(RouterConfig)
 var currentRouter = null
 router.toReferrer = function () {
-  if (!currentRouter) router.push({path: '/home'})
+  if (!currentRouter) router.push({path: '/'})
   else router.push({path: currentRouter})
 }
 router.beforeEach((to, from, next) => {

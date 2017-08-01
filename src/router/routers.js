@@ -18,7 +18,7 @@ export default [
     children: [
       {
         name: 'home',
-        path: '/home',
+        path: '',
         meta: {
           title: '首页'
         },
