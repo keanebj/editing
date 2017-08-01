@@ -144,3 +144,7 @@
   display: inline-block;
   margin-left:6px;
 }
+.content-logo{
+    /* padding: 5px; */
+    border: 1px solid #ddd;
+}
