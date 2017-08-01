@@ -245,3 +245,6 @@
 .home-pager{
     font-size: 14px!important;
 }
+.home-ad .swiper-pagination-bullet-active{
+	background: #fff;
+}
