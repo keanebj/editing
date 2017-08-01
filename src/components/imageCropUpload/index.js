@@ -50,7 +50,7 @@ const mimes = {
     // canvas.toDataURL 返回的默认格式就是 image/png
     return new Blob([ia], { type: mime });
   };
-
+import conf from '@/config'
 export default {
   name: 'ComponentsImageCropUpload',
   props: {
@@ -69,7 +69,7 @@ export default {
     // 上传地址
     url: {
       type: String,
-      'default': 'http://mp.dev.hubpd.com/api/image/upload'
+      'default': `${conf.host}api/image/upload`
     },
     // 其他要上传文件附带的数据，对象格式
     params: {

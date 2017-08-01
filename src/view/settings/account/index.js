@@ -23,7 +23,7 @@ export default {
         'url': ''
       }],
       uploadHeaders: {
-        token: sessionStorage.getItem('token')
+        token: localStorage.getItem('token')
       },
       imgName: '',
       visible: false,

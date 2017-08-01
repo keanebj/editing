@@ -6,13 +6,21 @@ var ajax = axios.create({
   baseURL: config.host,
   timeout: 30000
 })
+import router from '@/router'
 // Add a request interceptor
 ajax.interceptors.request.use(function (config) {
   var path = config.url.replace(config.baseURL, '')
-  if (whitelist.indexOf(path) < 0) {
+  var isWhite = false
+  whitelist.forEach(n => {
+    if (path.indexOf(n) >= 0) {
+      isWhite = true
+    }
+  })
+  if (isWhite) {
     if (!store.state.token) {
-      window.location.href = '/newmedia/login'
-      // return config
+      router.replace('/login')
+      // window.location.href = `${config.env}/login`
+      return config
     }
     config.headers['token'] = store.state.token || ''
   }
@@ -24,7 +32,8 @@ ajax.interceptors.request.use(function (config) {
 // Add a response interceptor
 ajax.interceptors.response.use(function (response) {
   if (response.data && response.data.status && response.data.status === 100) {
-    window.location.href = '/newmedia/login'
+    // window.location.href = `${config.env}/login`
+    router.replace('/login')
   }
   return response
 }, function (error) {

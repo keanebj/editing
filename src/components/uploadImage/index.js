@@ -1,10 +1,11 @@
+import conf from '@/config'
 export default {
   name: 'ComponentsUploadImage',
   props: {
     onSuccess: Function,
     onError: Function,
     action: {
-      default: 'http://mp.dev.hubpd.com/api/image/upload'
+      default: `${conf.host}api/image/upload`
     },
     accept: {
       default: ''

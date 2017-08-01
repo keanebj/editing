@@ -2,8 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import menu from '../config/menu'
 Vue.use(Vuex)
-var token = sessionStorage.getItem('token') || ''
-var userinfo = sessionStorage.getItem('userinfo') || '{}'
+var token = localStorage.getItem('token') || ''
+var userinfo = localStorage.getItem('userinfo') || '{}'
 userinfo = JSON.parse(userinfo)
 const store = new Vuex.Store({
   state: {

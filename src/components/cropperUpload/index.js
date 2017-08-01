@@ -1,6 +1,6 @@
 import Cropper from 'cropperjs'
 import 'cropperjs/dist/cropper.css'
-
+import conf from '@/config'
 export default {
   name: 'ComponentsCropperUpload',
   props: {
@@ -16,7 +16,7 @@ export default {
     // 上传地址
     url: {
       type: String,
-      'default': 'http://mp.dev.hubpd.com/api/image/upload'
+      'default': `${conf.host}api/image/upload`
     },
     // 其他要上传文件附带的数据，对象格式
     params: {
@@ -223,6 +223,11 @@ export default {
           }
           client.send(formData)
         }).then((resData) => {
+          if (resData.status && resData.status === 100) {
+            // window.location.href = `${this.$conf.env}/login`
+            this.$router.push('/login')
+            return false
+          }
           this.cropUploadSuccess && this.visible && this.cropUploadSuccess(resData, this.field, this.ki)
           this.visible = false
           this.uploading = false

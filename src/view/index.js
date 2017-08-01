@@ -63,7 +63,7 @@ export default {
         .then(res => {
           console.log('退出结果：' + JSON.stringify(res.data))
           if (res.data.status == 1) {
-            sessionStorage.removeItem("token")
+            localStorage.removeItem("token")
             this.$store.commit('set', {
               token: ''
             })

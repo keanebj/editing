@@ -48,7 +48,7 @@ export default {
         username: this.formItem.username,
         password: this.formItem.password
       };
-      this.$http.post('http://mp.dev.hubpd.com/api/studio/login', reqParams)
+      this.$http.post('/api/studio/login', reqParams)
         .then(res => {          
           //设置用户身份等信息
           if (res.data.status == 1) {
@@ -65,8 +65,8 @@ export default {
             this.$store.commit('set', {
               token: res.data.token
             })
-            sessionStorage.setItem('token', res.data.token)
-            sessionStorage.setItem('userinfo', JSON.stringify(userinfo))
+            localStorage.setItem('token', res.data.token)
+            localStorage.setItem('userinfo', JSON.stringify(userinfo))
 
            // localStorage.setItem('token',res.data.token)
 

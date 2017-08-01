@@ -31,7 +31,10 @@
         </th>
         <td style="width:320px">
           <Input v-if="item.isEdit" v-model="item.url" @on-blur="onBlur(index)" placeholder="请输入链接" style="width: 250px"></Input>
-          <span v-else @dblclick="item.isEdit=true">{{item.url}}</span>
+          <span v-else @dblclick="item.isEdit=true">
+            <span v-if="item.url">{{item.url}}</span>
+            <span v-else>双击输入链接</span>
+          </span>
         </td>
          <td>{{item.ordertime}}</td> 
         <td style="font-size:20px;">
