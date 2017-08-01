@@ -12,9 +12,17 @@ const RouterConfig = {
   routes: routers
 }
 const router = new Router(RouterConfig)
+var currentRouter = null
+router.toReferrer = function () {
+  if (!currentRouter) router.push({path: '/home'})
+  else router.push({path: currentRouter})
+}
 router.beforeEach((to, from, next) => {
     iView.LoadingBar.start()
     util.title(to.meta.title)
+    if (to.name !== 'login') {
+      currentRouter = to.path
+    }
     next()
 })
 router.afterEach(() => {
@@ -24,5 +32,4 @@ router.afterEach(() => {
   store.commit('breadcrumb', currentRoutePath)
   store.commit('menu', router.currentRoute)
 })
-
 export default router

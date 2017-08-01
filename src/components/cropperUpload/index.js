@@ -224,7 +224,6 @@ export default {
           client.send(formData)
         }).then((resData) => {
           if (resData.status && resData.status === 100) {
-            // window.location.href = `${this.$conf.env}/login`
             this.$router.push('/login')
             return false
           }

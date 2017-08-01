@@ -73,7 +73,7 @@ export default {
             this.$Message.success('登录成功!');
             Cookies.remove('clickedNo');//删除对应的cookie
             Cookies.remove('clickedCo');//删除对应的cookie
-            this.$router.push('/home')
+            this.$router.toReferrer()
           }else{
             this.$Message.error(res.data.message);
           }
