@@ -325,6 +325,9 @@
 .ivu-modal-wrap.mobile p span{
   font-size: 12px !important;
 }
+.ivu-modal-wrap.pc embed{
+	margin: 10px auto;
+}
 .ivu-modal-wrap.mobile embed{
   width:90% !important;
   height:auto !important;
