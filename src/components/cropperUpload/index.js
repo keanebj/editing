@@ -48,7 +48,11 @@ export default {
     },
     cropSuccess: Function,
     cropUploadSuccess: Function,
-    cropUploadFail: Function
+    cropUploadFail: Function,
+    noSel:{
+      type: Boolean,
+      'default':false
+    }
   },
   data() {
     let {
@@ -88,6 +92,16 @@ export default {
       return false;
     },
     handleClick(e,resel) {
+      if(this.noSel){
+        return;
+      }
+      if (this.image && resel!='resel') {
+        this.sourceImgUrl = this.image
+        setTimeout(() => {
+          this.startCrop()
+        }, 1000)
+        return;
+      }
       if (e.target !== this.$refs.fileinput) {
         e.preventDefault();
         if (document.activeElement !== this.$els) {
@@ -165,6 +179,7 @@ export default {
           minContainerWidth: 760,
           minContainerHeight: 400,
         })
+        this.visible = true;
         this.isLoading = false
       }
     },
