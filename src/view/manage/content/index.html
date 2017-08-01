@@ -73,13 +73,13 @@
     </thead>
     <tbody>
       <tr v-for="(item,index) in contentList" :index="item.ID" class="tr-hover">
-        <th scope="row" width="20%" style="position: relative">
+        <th scope="row" width="15%" style="position: relative">
           <Icon v-if="item.topflag" type="flag" style="position:absolute;top:10px;left:10px;color:#F95759;font-size:20px;">top</Icon>
           <router-link :to="{path:'../article',query:{id:item.id}}" v-if="roleType == 'Edit'"><img height="60" :src="item.cover" class="content-logo"></router-link>
           <router-link :to="{path:'../notice',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'Notice'"><img height="60" :src="item.cover" class="content-logo"></router-link>
           <router-link :to="{path:'../article',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'College'"><img height="60" :src="item.cover" class="content-logo"></router-link>
         </th>
-        <th scope="row" id="title" width="26%" style="text-align:left;">
+        <th scope="row" id="title" width="37%" style="text-align:left;">
           <router-link :to="{path:'../article',query:{id:item.id}}" v-if="roleType == 'Edit'">{{item.title}}</router-link>
           <router-link :to="{path:'../notice',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'Notice'">{{item.title}}</router-link>
           <router-link :to="{path:'../article',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'College'">{{item.title}}</router-link>
@@ -93,7 +93,7 @@
         </td>
         <td v-if="roleType == 'Manage'">
           <span v-if="item.label == 'Notice' ">公告</span>
-          <span v-else>人民日报中央厨房</span>
+          <span v-else>中央厨房号学院</span>
         </td>
         <td>
           <router-link :to="{path:'../publish',query:{articleID:item.id}}">

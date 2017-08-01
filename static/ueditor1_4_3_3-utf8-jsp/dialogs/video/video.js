@@ -120,7 +120,7 @@
             align = findFocus("videoFloat","name");
         if(!url) return false;
         //判断url是否是视频格式(截取最后三位)MP4，HLS ， MOV，MP4，MP4V，M4V，MKV|AVI|FLV|F4V|3GP |RM|RMVB|RA|RAM |MPG|MPEG|MPE|VOB|DAT|WMV|WM|ASF|ASX
-        let reg=/\w+[swf|mp4|HLS|MOV|MP4V|M4V|MKV|AVI|FLV|F4V|3GP|RM|RMVB|RA|RAM |MPG|MPEG|MPE|VOB|DAT|WMV|WM|ASF|ASX]$/i;
+        let reg=/\w+\.swf$/i;
         if(!reg.test(url)){
           alert("视频地址不正确");
           return false;
