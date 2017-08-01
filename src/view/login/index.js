@@ -67,6 +67,9 @@ export default {
             })
             sessionStorage.setItem('token', res.data.token)
             sessionStorage.setItem('userinfo', JSON.stringify(userinfo))
+
+           // localStorage.setItem('token',res.data.token)
+
             this.$Message.success('登录成功!');
             Cookies.remove('clickedNo');//删除对应的cookie
             Cookies.remove('clickedCo');//删除对应的cookie
