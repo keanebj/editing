@@ -150,8 +150,8 @@ export default {
         //给数据值
         this.formTop.title = data.title;
         this.formTop.publishchannel = data.channel;
-        this.formTop.authorArr=data.author.split(" ");
-        this.formTop.keywordArr=data.keyword.split(" ");
+        this.formTop.authorArr=data.author.split(/\s+/g);
+        this.formTop.keywordArr=data.keyword.split(/\s+/g);
         this.formTop.cover = data.cover;
         this.formTop.summary = data.summary;
         this.formTop.content = data.content;
@@ -391,10 +391,6 @@ export default {
       }
     },
     authorBlur:function(){
-//    this.author='';
-//    if(!this.isRepeat(this.formTop.authorArr)){
-//      this.isHideAuthor=true;
-//    }
 			if (this.formTop.authorArr.length == 0 && this.$refs.authorInput.value != '' && this.author.Trim()) {
 				this.formTop.authorArr.push(this.author.Trim());
 	      this.author='';
@@ -413,9 +409,20 @@ export default {
 			}
     },
     keywordBlur:function(){
-      this.keyword='';
-      if(!this.isRepeat(this.formTop.keywordArr)){
+      if (this.formTop.keywordArr.length == 0 && this.$refs.keywordInput.value != '' && this.keyword.Trim()) {
+        this.formTop.keywordArr.push(this.keyword.Trim());
+        this.keyword='';
+        let This=this;
+        this.temptimer=setTimeout(function(){
+          let padleft=This.$refs.keywordContainer.clientWidth;
+          This.$refs.keywordInput.style.paddingLeft=padleft+'px';
+        },200);
         this.isHideKeyword=true;
+      }else {
+        this.keyword = '';
+        if (!this.isRepeat(this.formTop.keywordArr)) {
+          this.isHideKeyword = true;
+        }
       }
     },
     closeKeyword:function(index){
