@@ -579,6 +579,7 @@ abstractWordCount:function(event){
             }
           }
           else if (valid) {
+            alert(this.articleID );
               if(this.articleID > -1){
                 //更新
                 this.$http.put("/api/content/"+this.articleID,this.formTop
@@ -611,7 +612,26 @@ abstractWordCount:function(event){
     },
     share: function () {
         //需要访问后台
+        this.$http.put("/api/content/share/"+this.articleID).then((response) => {
+          console.log(response);
+          // var scrollTop=0;
+          // if(document.documentElement&&document.documentElement.scrollTop)
+          // {
+          //   scrollTop=document.documentElement.scrollTop;
+          // }
+          // else if(document.body)
+          // {
+          //   scrollTop=document.body.scrollTop;
+          // }
+          // this.$refs.shareHide.$el.children[1].children[0].style.top = (195 - scrollTop) + 'px';
 
+          // this.useqrcode("http://localhost:8080/share?id="+this.articleID);
+          // this.codes="http://localhost:8080/sahre?id="+this.articleID
+          // this.qCode = true;           
+        }, (error) => {
+          this.$Notice.error(error.data.message);
+            
+       });
 
 
 

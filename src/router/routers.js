@@ -87,6 +87,14 @@ export default [
           title: '文章',
         },
         component: require('@/view/article/index.vue'),
+      },
+      {
+        name:'share',
+        path: '/share',
+        meta: {
+          title: '分享',
+        },
+        component: require('@/view/share/index.vue'),
       }
     ]
   }

@@ -252,7 +252,7 @@ export default {
       }
       span5.style.display = 'block';
       span19.className = "layout-content-warp ivu-col ivu-col-span-19";
-    },500)
+    },1000)
      this.getNotice();
      this.getCollege();
      this.getAdlist();

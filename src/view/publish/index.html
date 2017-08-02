@@ -75,7 +75,7 @@
         </div>
         <span style="color:#F95759;" ref="authorTip" class="ivu-form-item-error-tip" :class="{hide:isHideAuthor}">作者不能重复</span>
       </Form-item>
-      <Form-item label="关键字（关键字最多5个，空格键添加）" v-if="roleType == 'Edit'">
+      <Form-item label="关键词（关键词最多5个，空格键添加）" v-if="roleType == 'Edit'">
         <div style="position:relative">
           <label for="keywords" class="keyword-container" style="position:absolute;z-index:9;padding-left:7px;max-width:100%;overflow:hidden;height:32px;font-size:12px;" ref="keywordContainer">
             <span v-for="(item,index) in formTop.keywordArr" style="margin-right:5px;">{{item}}<span @click.stop="closeKeyword(index)" :class="{hide:isHideKeyClose}"><Icon type="close" class="main-color"></Icon></span></span>

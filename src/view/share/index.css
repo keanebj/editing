@@ -1,0 +1,33 @@
+.header{
+    margin: 10px 0;
+}
+.right{
+    padding-left:20px;
+}
+.header img,
+.footer img,
+.right img
+{
+    width: 100%;
+}
+.right img:first-child{
+    margin-bottom: 20px;
+}
+.con_new p{    
+    text-align: left;
+    text-indent: 20px;
+    font-size: 14px;
+    line-height: 24px;
+    margin: 14px 0;
+}
+.con_new{    
+    text-align: center;
+}
+.con_new img{
+    width: 70%;
+}
+
+/*手机端样式*/
+@media screen and (max-width: 300px) {
+   
+}
