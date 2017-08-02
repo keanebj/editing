@@ -78,7 +78,7 @@ export default {
     getOperateContentID:function(id){
       this.contentId=id;
     },
-    cancleTOp() {
+    cancleTop(tip) {
       let contentid=this.contentId;	        this.$http.put("/api/content/top/"+contentid,{contentid:contentid,method:''},
         {
           headers:{
@@ -86,10 +86,12 @@ export default {
           }
         }
       ).then((response)=>{
-          this.$Notice.success({
+        if(!tip){
+            this.$Notice.success({
             title: response.data.message,
             desc: false
           })
+        }
           //重新加载列表
           this.getContentList();
         },(error)=>{
@@ -108,28 +110,9 @@ export default {
 	        title: '确认取消置顶',
 	        content: '是否取消置顶？',
 	        onOk: () => {
-	          this.cancleTOp()
+	          this.cancleTop()
 	        }
 	      })
-//        this.$http.put("/api/content/top/"+contentid,{contentid:contentid,method:''},
-//          {
-//            headers:{
-//              token:this.token
-//            }
-//          }
-//        ).then((response)=>{
-//            this.$Notice.success({
-//              title: response.data.message,
-//              desc: false
-//            })
-//            //重新加载列表
-//            this.getContentList();
-//          },(error)=>{
-//            this.$Notice.error({
-//              title: error.data.message,
-//              desc: false
-//            })
-//          })
               break;
         case 'top':
           this.$http.put("/api/content/top/"+contentid,{contentid:contentid,method:'top'},
@@ -164,7 +147,7 @@ export default {
                 desc: false
               })
               //撤回取消置顶
-              this.operateContent('canceltop');
+              this.cancleTop('notip');
               //重新加载列表
               this.getContentList();
           },(error)=>{

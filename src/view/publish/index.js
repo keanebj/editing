@@ -151,7 +151,10 @@ export default {
         this.formTop.title = data.title;
         this.formTop.publishchannel = data.channel;
         this.formTop.authorArr=data.author.split(/\s+/g);
-        this.formTop.keywordArr=data.keyword.split(/\s+/g);
+        if (data.keyword != null) {
+        	this.formTop.keywordArr=data.keyword.split(/\s+/g);
+        }
+
         this.formTop.cover = data.cover;
         this.formTop.summary = data.summary;
         this.formTop.content = data.content;

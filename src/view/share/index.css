@@ -49,5 +49,12 @@
    .article .shareContent{
      font-size:12px !important;
    }
+   .layout-content{
+       margin:0;
+   }
+   .layout-content-main{
+       margin:0;
+       padding:0;
+   }
 
 }
