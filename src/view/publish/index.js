@@ -1,25 +1,23 @@
-import VueQArt from 'vue-qart'
+import QRCode from 'qrcode'
 import ScrollBar from '@/view/scroll/index.vue'
 import cropperUpload from '@/components/cropperUpload/index.vue'
 import '../../../static/ueditor1_4_3_3-utf8-jsp/ueditor.config.js'
 import '../../../static/ueditor1_4_3_3-utf8-jsp/ueditor.all.js'
 import '../../../static/ueditor1_4_3_3-utf8-jsp/lang/zh-cn/zh-cn.js'
 import '../../../static/ueditor1_4_3_3-utf8-jsp/ueditor.parse.min.js'
+import Vue from 'vue'
+Vue.use(QRCode)
 export default {
   name: 'ViewPublish',
   components:{
     ScrollBar,
-    VueQArt,
+    QRCode,
     cropperUpload
   },
   data () {
     return {
       //二维码
-      config: {
-        value: 'http://www.baidu.com',
-        imagePath: require('../../assets/erweima.png'),
-        filter: 'color',
-      },
+      codes:'',
       roleType: 'Edit',
       articleID: -1,
       downloadButton: false,
@@ -35,7 +33,7 @@ export default {
       publishChannels: ['人民日报中央厨房'],
       publishLabels: {
         Notice: '公告',
-        College: '中央厨房号学院'
+        College: '中央厨房融媒体学院'
       },
       titleMaxCount:22,
       summaryMaxCount:60,
@@ -65,7 +63,7 @@ export default {
           { required: true, message: '封面不能为空', trigger: 'blur' }
         ],
         title:[
-          { required: true, message: '标题不能为空', trigger: 'change' }
+          { required: true, message: '标题不能为空', trigger: 'blur' }
         ],
         label: [
           { required: true, message: '标签不能为空', trigger: 'blur' }
@@ -152,8 +150,11 @@ export default {
         //给数据值
         this.formTop.title = data.title;
         this.formTop.publishchannel = data.channel;
-        this.formTop.authorArr=data.author.split(" ");
-        this.formTop.keywordArr=data.keyword.split(" ");
+        this.formTop.authorArr=data.author.split(/\s+/g);
+        if (data.keyword != null) {
+        	this.formTop.keywordArr=data.keyword.split(/\s+/g);
+        }
+
         this.formTop.cover = data.cover;
         this.formTop.summary = data.summary;
         this.formTop.content = data.content;
@@ -166,7 +167,6 @@ export default {
         this.editor.ready(function(){
           This.editor.execCommand('inserthtml',This.formTop.content,true);
         })
-
       }, (error) => {
         this.$Notice.error({
           title: error.data.message,
@@ -204,8 +204,15 @@ export default {
 
   },
   methods: {
+    useqrcode(url){
+      var canvas = document.getElementById('canvas');
+      QRCode.toCanvas(canvas, url, function (error) {
+        if (error) console.error(error)
+        console.log('success!');
+      })
+    },
     goBack(){
-      this.$router.push('/home')
+      this.$router.push('/')
     },
     showPreviewContent:function(){
       //获得编辑器中的内容:这里的预览需要写一个界面（待完善。。。）
@@ -251,7 +258,6 @@ export default {
       //判断是否有图片？正则匹配到数组
       let reg=/<img\b[^>]*src\s*=\s*"[^>"]*\.(?:png|jpg|jpeg|gif)"[^>]*>/gi;
       let content=this.editor.getContent();
-      //let content='<p>wijifdf</p><img src="http://www.w3school.com.cn/i/ct_css_selector.gif"/><i class="dfdf"></i><img src="http://pagead2.googlesyndication.com/sadbundle/$dns%3Doff$/2192791104758210524/1-3.png"/><div>fdfdf</div>';
       let imgArr=content.match(reg);
       var srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i;
       //未匹配到图片
@@ -388,11 +394,7 @@ export default {
       }
     },
     authorBlur:function(){
-//    this.author='';
-//    if(!this.isRepeat(this.formTop.authorArr)){
-//      this.isHideAuthor=true;
-//    }
-			if (this.formTop.authorArr.length == 0 && this.$refs.authorInput.value != '') {
+			if (this.formTop.authorArr.length == 0 && this.$refs.authorInput.value != '' && this.author.Trim()) {
 				this.formTop.authorArr.push(this.author.Trim());
 	      this.author='';
 	      let This=this;
@@ -410,9 +412,20 @@ export default {
 			}
     },
     keywordBlur:function(){
-      this.keyword='';
-      if(!this.isRepeat(this.formTop.keywordArr)){
+      if (this.formTop.keywordArr.length == 0 && this.$refs.keywordInput.value != '' && this.keyword.Trim()) {
+        this.formTop.keywordArr.push(this.keyword.Trim());
+        this.keyword='';
+        let This=this;
+        this.temptimer=setTimeout(function(){
+          let padleft=This.$refs.keywordContainer.clientWidth;
+          This.$refs.keywordInput.style.paddingLeft=padleft+'px';
+        },200);
         this.isHideKeyword=true;
+      }else {
+        this.keyword = '';
+        if (!this.isRepeat(this.formTop.keywordArr)) {
+          this.isHideKeyword = true;
+        }
       }
     },
     closeKeyword:function(index){
@@ -582,7 +595,7 @@ abstractWordCount:function(event){
                 //新建
                 this.$http.post('/api/content',this.formTop)
                 .then((response) => {
-                    this.$Notice.success({title:'保存成功',desc: false});
+                    this.$Notice.success({title:response.data.message,desc: false});
                     this.articleID=response.data.id;
                 }, (response) => {
                     this.$Notice.error({title:error.data.message,desc: false});
@@ -600,27 +613,36 @@ abstractWordCount:function(event){
       document.execCommand("Copy");
     },
     share: function () {
-        if(this.articleID > 0){
-          //可以分享
-          var scrollTop=0;
-          if(document.documentElement&&document.documentElement.scrollTop)
-          {
-            scrollTop=document.documentElement.scrollTop;
-          }
-          else if(document.body)
-          {
-            scrollTop=document.body.scrollTop;
-          }
-          this.$refs.shareHide.$el.children[1].children[0].style.top = (195 - scrollTop) + 'px';
+        //需要访问后台
+        this.$http.put("/api/content/share/"+this.articleID).then((response) => {
+          if(response.data.status == 1){
+              //分享成功
+              var scrollTop=0;
+              if(document.documentElement&&document.documentElement.scrollTop)
+              {
+                scrollTop=document.documentElement.scrollTop;
+              }
+              else if(document.body)
+              {
+                scrollTop=document.body.scrollTop;
+              }
+              this.$refs.shareHide.$el.children[1].children[0].style.top = (195 - scrollTop) + 'px';
 
-          this.config.value="http://mp.dev.hubpd.com/newmedia/notice?id="+this.articleID;
-          this.qCode = true;
-        }else{
-          this.$Notice.warning({
-            title: '此文章暂时不能分享',
-            desc: false
-          })
-        }
+              this.useqrcode("http://mp.dev.hubpd.com/newmedia/share?id="+response.data.token);
+              this.codes="http://mp.dev.hubpd.com/newmedia/share?id="+response.data.token;
+              this.qCode = true;
+            }else{
+               this.$Notice.warning({
+                title: response.data.message,
+                desc: false
+               })
+            }
+        }, (error) => {
+            this.$Notice.warning({
+                title: error.data.message,
+                desc: false
+            })
+       });
     },
     //滚动条
     changeView: function (view) {
@@ -707,6 +729,11 @@ abstractWordCount:function(event){
       //需要转换为字符
       let count=this.gblen(this.formTop.title,44,'title');
       this.titleContentCount=Math.ceil(count)>22 ? 22:Math.ceil(count);
+    },
+    removetrim:function(){
+      if(!this.formTop.title.Trim()){
+        this.formTop.title='';
+      }
     },
     //转为字符：中文1个 英文0.5个
     gblen:function(str,max,name){

@@ -1,0 +1,60 @@
+.header{
+    margin: 10px 0;
+}
+.right{
+    padding-left:20px;
+}
+.header img,
+.footer img,
+.right img
+{
+    width: 100%;
+}
+.right img:first-child{
+    margin-bottom: 20px;
+}
+.con_new{
+    text-align: center;
+}
+.con_new img{
+    width: 70%;
+}
+
+.con_new p{
+  text-align: left;
+  font-size: 14px;
+  line-height: 24px;
+  margin: 14px 0;
+}
+
+/*鎵嬫満绔牱寮�*/
+@media screen and (max-width: 768px) {
+   .footer{
+     display: none;
+   }
+   .article .orginTit{
+      font-size:16px;
+   }
+  .shareContent p{
+    text-indent: 0px;
+    text-align: left;
+    font-size: 12px;
+    line-height: 20px !important;
+    margin: 4px 0;
+  }
+  .shareContent p span{
+    font-size: 12px;
+    line-height: 20px !important;
+  }
+   .article .shareContent{
+     font-size:12px !important;
+   }
+   .layout-content{
+       margin:0;
+   }
+   .layout-content-main{
+       margin:0;
+       padding:0;
+   }
+
+}

@@ -267,8 +267,7 @@
 }
 
 .set-con p {
-  font-size: 12px;
-  text-indent: 24px;
+  font-size: 14px;
   word-break: break-all;
 }
 
@@ -287,7 +286,6 @@
   position: absolute;
   width: 92%;
 }
-
 
 /*在手机上预览*/
 .ivu-modal-wrap.mobile .ivu-modal-content .ivu-modal-body {
@@ -322,8 +320,23 @@
   width: 90%;
   height: auto;
 }
+.ivu-modal-wrap.mobile{
+  font-size: 12px !important;
+  line-height:16px;
+}
+.ivu-modal-wrap.mobile h1,.ivu-modal-wrap.mobile h2,.ivu-modal-wrap.mobile h3,
+.ivu-modal-wrap.mobile h4,.ivu-modal-wrap.mobile h5,.ivu-modal-wrap.mobile h6{
+  font-size: 16px !important;
+}
+.ivu-modal-wrap.mobile p{
+  font-size: 12px;
+  line-height:20px !important;
+  margin-top:4px !important;
+  margin-bottom:4px !important;
+}
 .ivu-modal-wrap.mobile p span{
   font-size: 12px !important;
+  line-height:16px !important;
 }
 .ivu-modal-wrap.pc embed{
 	margin: 10px auto;
@@ -333,6 +346,11 @@
   height:auto !important;
   display: block;
   margin: 10px auto;
+}
+
+.cover-tip{
+  margin-left:10px;
+  color:#F95759;
 }
 
 /*滚动条*/
@@ -471,8 +489,6 @@
 }
 
 .share_hide .ivu-modal-body div {
-  margin-top: 10px;
-  margin-bottom: 10px;
   font-size: 14px;
 }
 

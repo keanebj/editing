@@ -11,7 +11,7 @@
     <Row :gutter="34">
       <Col span="17" class="m-t-20">
       <Form-item label="" prop="title">
-        <Input id="titleContent" v-model="formTop.title" :maxlength="titleMaxCount" class="title-input" placeholder="请输入标题" @on-change="getTitleContent"></Input>
+        <Input id="titleContent" v-model="formTop.title" :maxlength="titleMaxCount" class="title-input" placeholder="请输入标题" @on-change="getTitleContent" @on-blur="removetrim"></Input>
         <span class="limit-words">
           <span>{{titleContentCount}}</span>/22
         </span>
@@ -32,9 +32,12 @@
           <div class="btn-icon share-btn-icon m-r-10" @click="share" @mouseover="hideshare =false" @mouseout="hideshare = true">
 
           <Modal v-model="qCode" class="share_hide" width="auto" :closable="false" ref="shareHide">
-            <vue-q-art :config="config" :downloadButton="downloadButton" style="text-align: center;"></vue-q-art>
+            <div style="text-align:center;">
+              <div id='code'></div>
+              <canvas id="canvas"></canvas>
+            </div>
             <div>
-              <input type="text" v-model="config.value" ref="copyInput" readonly /><span @click="CopyUrl($event)">复制</span>
+              <input type="text" v-model="codes" ref="copyInput" readonly /><span @click="CopyUrl($event)">复制</span>
             </div>
             <p>链接有效时间为<span>2小时</span><br />通过扫描二维码和复制文章链接<br />可以将文章转发给成员观看</p>
           </Modal>
@@ -72,7 +75,7 @@
         </div>
         <span style="color:#F95759;" ref="authorTip" class="ivu-form-item-error-tip" :class="{hide:isHideAuthor}">作者不能重复</span>
       </Form-item>
-      <Form-item label="关键字（关键字最多5个，空格键添加）" v-if="roleType == 'Edit'">
+      <Form-item label="关键词（关键词最多5个，空格键添加）" v-if="roleType == 'Edit'">
         <div style="position:relative">
           <label for="keywords" class="keyword-container" style="position:absolute;z-index:9;padding-left:7px;max-width:100%;overflow:hidden;height:32px;font-size:12px;" ref="keywordContainer">
             <span v-for="(item,index) in formTop.keywordArr" style="margin-right:5px;">{{item}}<span @click.stop="closeKeyword(index)" :class="{hide:isHideKeyClose}"><Icon type="close" class="main-color"></Icon></span></span>
@@ -93,6 +96,7 @@
         <cropper-upload :width="478" :height="270" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048">
           <Button type="ghost" shape="circle" class="main-color pointer" @click="fromLocal">本地上传</Button>
         </cropper-upload>
+        <span style="padding-left:10px;color:#F95759;">建议图片比例3：2</span>
       </Form-item>
       <Modal v-model="contentModal" width="600" id="contentPop" :closable="false">
         <p slot="header">

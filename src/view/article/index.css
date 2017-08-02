@@ -1,6 +1,9 @@
 .header{
     margin: 10px 0;
 }
+.right{
+    padding-left:20px;
+}
 .header img,
 .footer img,
 .right img

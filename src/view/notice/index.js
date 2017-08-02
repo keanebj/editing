@@ -14,19 +14,22 @@ export default {
     span19.className = "layout-content-warp ivu-col ivu-col-span-24";
 
         this.noticeID=this.$route.query.id;
-				console.log(this.noticeID)
         //ajax获得后台公告的内容
         this.$http({
           method: 'GET',
-          url: "http://mp.dev.hubpd.com/api/content/notice/" + this.noticeID,
+          url: "api/content/notice/" + this.noticeID,
           headers:{
 	          token:"e3ad42c53a7f513682900121a5d768d41c9ee7a584d49865"
 	        }
         }).then((response) => {
           //给公告的内容赋值
-          console.log(response)
 					this.title=response.data.content.title;
           this.content=response.data.content.content;
+        }, () => {
+        	this.$Notice.error({
+	          title: '错误',
+	          desc: '数据列表请求错误'
+	        })
         })
 
 
@@ -37,8 +40,7 @@ export default {
       noticeID:-1,
       title:'',
       content:'',
-      switchTab: 0
-      
+      switchTab: 0      
     }
   },
   computed: {
@@ -49,7 +51,7 @@ export default {
     	if (this.$route.query.switchTab == undefined) {
     		this.$router.go(-1)
     	}else{
-      		   this.$router.push({path:'/home', query: { switchTab:  this.switchTab}})
+      		   this.$router.push({path:'/', query: { switchTab:  this.switchTab}})
     	}
     }
   }

@@ -1,6 +1,6 @@
 export default [{
   name: '首页',
-  path: '/home',
+  path: '/',
   icon: 'ios-home-outline',
   authority:'Manage Edit'
 }, {

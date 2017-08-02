@@ -160,11 +160,13 @@ export default {
         this.requestCount--
         if (this.requestCount <= 0) this.isSubmit = false
         if (data.status) {
+          console.log(data)
           item.id = data.id
           // item.showtime = new Date()
           item.pathOld = item.path
           item.urlOld = item.url
           item.isEdit = false
+          item.ordertime = data.edittime
         } else {
           this.$Notice.error({
             title: '错误',
@@ -191,6 +193,7 @@ export default {
           item.pathOld = item.path
           item.urlOld = item.url
           item.isEdit = false
+          item.ordertime = data.edittime
         } else {
           this.$Notice.error({
             title: '错误',

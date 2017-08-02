@@ -17,6 +17,8 @@ img {
  border: 0 none;
  height: 100%;
 }
-
+.edui-default .edui-autotypesetpicker-body td{
+	text-align: left;
+}
 /*#edui1_imagescale{display:none !important;}*/
 /*去除点击图片后出现的拉伸边框*/
