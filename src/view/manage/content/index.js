@@ -19,6 +19,8 @@ export default {
       uploadModal: false,//上传对话框
       beforeUpload: false,//上传之前参数
       roleType:'Edit',
+      hidenodata:true,
+      hidenofound:true
     }
   },
   created () {
@@ -187,7 +189,9 @@ export default {
       this.getContentList();
 
     },
-    getContentList:function(){
+    getContentList:function(type){
+      this.hidenofound=true;
+      this.hidenodata=true;
       this.$http({
         method: 'GET',
         url:"/api/content",
@@ -196,6 +200,26 @@ export default {
           token:this.token
         }
       }).then((response) => {
+        //如果没数据
+        if(type =='search' && response.data.total == 0){
+          this.hidenofound=false;
+           this.hidenodata=true;
+           //没有查询到数据
+          this.isActiveHide=true;
+          this.contentList=response.data.contents;
+          return;
+        }else if(response.data.total == 0){
+          this.hidenofound=true;
+           this.hidenodata=false;
+           //没有查询到数据
+          this.isActiveHide=true;
+          this.contentList=response.data.contents;
+          return;
+        }
+
+
+
+
         //如果pageindex比总页数还多
         if((response.data.total%this.pageSize == 0) && this.pageIndex == response.data.total/this.pageSize +1){
           this.pageIndex--;
