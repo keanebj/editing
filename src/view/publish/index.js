@@ -63,7 +63,7 @@ export default {
           { required: true, message: '封面不能为空', trigger: 'blur' }
         ],
         title:[
-          { required: true, message: '标题不能为空', trigger: 'change' }
+          { required: true, message: '标题不能为空', trigger: 'blur' }
         ],
         label: [
           { required: true, message: '标签不能为空', trigger: 'blur' }
@@ -585,7 +585,7 @@ abstractWordCount:function(event){
                 //新建
                 this.$http.post('/api/content',this.formTop)
                 .then((response) => {
-                    this.$Notice.success({title:'保存成功',desc: false});
+                    this.$Notice.success({title:response.data.message,desc: false});
                     this.articleID=response.data.id;
                 }, (response) => {
                     this.$Notice.error({title:error.data.message,desc: false});
@@ -711,6 +711,11 @@ abstractWordCount:function(event){
       //需要转换为字符
       let count=this.gblen(this.formTop.title,44,'title');
       this.titleContentCount=Math.ceil(count)>22 ? 22:Math.ceil(count);
+    },
+    removetrim:function(){
+      if(!this.formTop.title.Trim()){
+        this.formTop.title='';
+      }
     },
     //转为字符：中文1个 英文0.5个
     gblen:function(str,max,name){

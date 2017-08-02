@@ -98,12 +98,10 @@
         <td>
           <router-link :to="{path:'../publish',query:{articleID:item.id}}">
             <img src="../../../assets/operator/edit.svg" class="icon-edit">
-            <!-- <Icon type="edit" style="font-size:1.1em;color: #79A3E0;"></Icon> -->
           </router-link>
           <Dropdown style="margin-left: 5px" trigger="click" @on-click="operateContent">
             <a href="javascript:void(0)" @click="getOperateContentID(item.id)">
               <img src="../../../assets/operator/set.svg" class="icon-set">
-              <!-- <Icon type="ios-gear-outline" style="font-size:1.2em;color: #79A3E0;"></Icon> -->
             </a>
             <Dropdown-menu slot="list">
               <Dropdown-item v-if="item.topflag" name="canceltop" >取消置顶</Dropdown-item>
