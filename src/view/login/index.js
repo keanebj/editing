@@ -3,8 +3,8 @@ import Cookies from 'js-cookie'
 export default {
   data() {
     return {
-      isLoading:false,
-      loginDisabled:false,
+      isLoading: false,
+      loginDisabled: false,
       formItem: {
         username: '',
         password: ''
@@ -28,10 +28,10 @@ export default {
       }
     }
   },
-  methods: {    
+  methods: {
     handleSubmit(name) {
       this.$refs[name].validate((valid) => {
-        if (valid) {          
+        if (valid) {
           this.submitLogin();
         } else {
           this.$Message.error('表单验证失败!');
@@ -49,7 +49,7 @@ export default {
         password: this.formItem.password
       };
       this.$http.post('/api/studio/login', reqParams)
-        .then(res => {          
+        .then(res => {
           //设置用户身份等信息
           if (res.data.status == 1) {
             var userinfo = {
@@ -67,17 +67,14 @@ export default {
             })
             localStorage.setItem('token', res.data.token)
             localStorage.setItem('userinfo', JSON.stringify(userinfo))
-            console.log(this.$store.state)
-           // localStorage.setItem('token',res.data.token)
-
             this.$Message.success('登录成功!');
             Cookies.remove('clickedNo');//删除对应的cookie
             Cookies.remove('clickedCo');//删除对应的cookie
             this.$router.toReferrer()
-          }else{
+          } else {
             this.$Message.error(res.data.message);
           }
-          // this.isLoading = false
+          this.isLoading = false
         }, err => {
           this.isLoading = false
           console.log('出错啦！' + JSON.stringify(err))

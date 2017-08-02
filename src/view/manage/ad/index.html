@@ -2,18 +2,18 @@
   <table class="table" style="margin-top:20px;">
     <thead>
       <tr>
-        <th>序号</th>
-        <th>BANNER</th>
-        <th></th>
-        <th>URL</th>
+        <th style="width:70px">序号</th>
+        <th style="width:200px">BANNER</th>
+        <th style="width:20px"></th>
+        <th style="width:320px">URL</th>
          <th>时间</th> 
-        <th>操作</th>
+        <th style="width:68px">操作</th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="(item,index) in data" class="tr-hover">
-        <td style="width:70px">{{index+1}}</td>
-        <th scope="row" style="width:300px">
+        <td>{{index+1}}</td>
+        <th scope="row">
           <img v-if="item.path" style="max-width:200px;height:66px;" :src="$conf.host + item.path">
           <cropper-upload v-else :width="1412" :height="170" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :ki="item.id">
             <div class="imagePlaceholder">
@@ -22,14 +22,14 @@
             </div>
           </cropper-upload>
         </th>
-        <th scope="row" style="width:20px;padding:0">
+        <th scope="row" style="padding:0">
           <cropper-upload :width="1412" :height="170" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :ki="item.id">
             <a v-if="item.path" href="javascript:void(0)">
               <Icon type="edit"></Icon>
             </a>
           </cropper-upload>
         </th>
-        <td style="width:320px">
+        <td>
           <Input v-if="item.isEdit" v-model="item.url" @on-blur="onBlur(index)" placeholder="请输入链接" style="width: 250px"></Input>
           <span v-else @dblclick="item.isEdit=true">
             <span v-if="item.url">{{item.url}}</span>
