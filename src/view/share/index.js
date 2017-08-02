@@ -24,7 +24,7 @@ export default {
     span19.className = "layout-content-warp ivu-col ivu-col-span-24";
     this.noticeID = this.$route.query.id;
     //ajax获得分享的内容
-    this.$http.get("http://mp.dev.hubpd.com/api/content/" + this.noticeID)
+    this.$http.get("/api/content/share/" + this.noticeID)
       .then((response) => {
         this.title = response.data.content.title;
         this.content = response.data.content.content;

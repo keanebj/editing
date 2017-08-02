@@ -613,50 +613,34 @@ abstractWordCount:function(event){
     share: function () {
         //需要访问后台
         this.$http.put("/api/content/share/"+this.articleID).then((response) => {
-          console.log(response);
-          // var scrollTop=0;
-          // if(document.documentElement&&document.documentElement.scrollTop)
-          // {
-          //   scrollTop=document.documentElement.scrollTop;
-          // }
-          // else if(document.body)
-          // {
-          //   scrollTop=document.body.scrollTop;
-          // }
-          // this.$refs.shareHide.$el.children[1].children[0].style.top = (195 - scrollTop) + 'px';
+          if(response.data.status == 1){
+              //分享成功
+              var scrollTop=0;
+              if(document.documentElement&&document.documentElement.scrollTop)
+              {
+                scrollTop=document.documentElement.scrollTop;
+              }
+              else if(document.body)
+              {
+                scrollTop=document.body.scrollTop;
+              }
+              this.$refs.shareHide.$el.children[1].children[0].style.top = (195 - scrollTop) + 'px';
 
-          // this.useqrcode("http://localhost:8080/share?id="+this.articleID);
-          // this.codes="http://localhost:8080/sahre?id="+this.articleID
-          // this.qCode = true;           
+              this.useqrcode("http://mp.dev.hubpd.com/newmedia/share?id="+response.data.token);
+              this.codes="http://mp.dev.hubpd.com/newmedia/share?id="+response.data.token;
+              this.qCode = true;
+            }else{
+               this.$Notice.warning({
+                title: response.data.message,
+                desc: false
+               })
+            }
         }, (error) => {
-          this.$Notice.error(error.data.message);
-            
+            this.$Notice.warning({
+                title: error.data.message,
+                desc: false
+            })
        });
-
-
-
-        if(this.articleID > 0){
-          //可以分享
-          var scrollTop=0;
-          if(document.documentElement&&document.documentElement.scrollTop)
-          {
-            scrollTop=document.documentElement.scrollTop;
-          }
-          else if(document.body)
-          {
-            scrollTop=document.body.scrollTop;
-          }
-          this.$refs.shareHide.$el.children[1].children[0].style.top = (195 - scrollTop) + 'px';
-
-          this.useqrcode("http://mp.dev.hubpd.com/newmedia/notice?id="+this.articleID);
-          this.codes="http://mp.dev.hubpd.com/newmedia/notice?id="+this.articleID;
-          this.qCode = true;
-        }else{
-          this.$Notice.warning({
-            title: '此文章暂时不能分享',
-            desc: false
-          })
-        }
     },
     //滚动条
     changeView: function (view) {
