@@ -610,6 +610,11 @@ abstractWordCount:function(event){
       document.execCommand("Copy");
     },
     share: function () {
+        //需要访问后台
+
+
+
+
         if(this.articleID > 0){
           //可以分享
           var scrollTop=0;

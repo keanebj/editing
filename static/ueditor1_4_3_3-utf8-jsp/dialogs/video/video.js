@@ -119,8 +119,8 @@
             url=$G('videoUrl').value,
             align = findFocus("videoFloat","name");
         if(!url) return false;
-        //判断url是否是视频格式(截取最后三位)MP4，HLS ， MOV，MP4，MP4V，M4V，MKV|AVI|FLV|F4V|3GP |RM|RMVB|RA|RAM |MPG|MPEG|MPE|VOB|DAT|WMV|WM|ASF|ASX
-        let reg=/\w+\.swf$/i;
+        //判断url是否是视频格式(截取最后三位)MP4,swf
+        let reg=/.+(\.swf|\.mp4)$/i;
         if(!reg.test(url)){
           alert("视频地址不正确");
           return false;
@@ -274,17 +274,30 @@
      */
     function createPreviewVideo(url){
         if ( !url )return;
-
-        var conUrl = convert_url(url);
-        conUrl = utils.unhtmlForUrl(conUrl);
-
-        $G("preview").innerHTML = '<div class="previewMsg"><span>'+lang.urlError+'</span></div>'+
-        '<embed class="previewVideo" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"' +
-            ' src="' + conUrl + '"' +
+        //判断是不是mp4
+        let reg=/\w+\.mp4$/i;
+        if(reg.test(url)){
+          //如果是mp4格式的
+          $G("preview").innerHTML = '<div class="previewMsg"><span>'+lang.urlError+'</span></div>'+
+            '<video class="previewVideo" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"' +
+            ' src="' + url + '"' +
             ' width="' + 420  + '"' +
             ' height="' + 280  + '"' +
             ' wmode="transparent" play="true" loop="false" menu="false" allowscriptaccess="never" allowfullscreen="true" >' +
-        '</embed>';
+            '</video>';
+
+        }else{
+            var conUrl = convert_url(url);
+            conUrl = utils.unhtmlForUrl(conUrl);
+
+            $G("preview").innerHTML = '<div class="previewMsg"><span>'+lang.urlError+'</span></div>'+
+            '<embed class="previewVideo" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"' +
+                ' src="' + conUrl + '"' +
+                ' width="' + 420  + '"' +
+                ' height="' + 280  + '"' +
+                ' wmode="transparent" play="true" loop="false" menu="false" allowscriptaccess="never" allowfullscreen="true" >' +
+            '</embed>';
+        }
     }
 
 
