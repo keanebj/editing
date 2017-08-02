@@ -16,13 +16,8 @@ export default {
         this.noticeID=this.$route.query.id;
 				console.log(this.noticeID)
         //ajax获得后台公告的内容
-        this.$http({
-          method: 'GET',
-          url: "http://mp.dev.hubpd.com/api/content/notice/" + this.noticeID,
-          headers:{
-	          token:"e3ad42c53a7f513682900121a5d768d41c9ee7a584d49865"
-	        }
-        }).then((response) => {
+        this.$http.get("http://mp.dev.hubpd.com/api/content/notice/" + this.noticeID)
+        .then((response) => {
           //给公告的内容赋值
           console.log(response)
 					this.title=response.data.content.title;
@@ -37,8 +32,7 @@ export default {
       noticeID:-1,
       title:'',
       content:'',
-      switchTab: 0
-      
+      switchTab: 0      
     }
   },
   computed: {
