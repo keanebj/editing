@@ -92,6 +92,7 @@ export default {
         }
 	    }).then((response) => {
 	      //给公告的内容赋值
+	      console.log(response)
 				this.noticeList = response.data.contents;
 				this.noticeTotal = response.data.total;
 				if (this.noticeTotal == undefined) {

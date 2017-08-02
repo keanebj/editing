@@ -14,14 +14,22 @@ export default {
     span19.className = "layout-content-warp ivu-col ivu-col-span-24";
 
         this.noticeID=this.$route.query.id;
-				console.log(this.noticeID)
         //ajax获得后台公告的内容
-        this.$http.get("http://mp.dev.hubpd.com/api/content/notice/" + this.noticeID)
-        .then((response) => {
+        this.$http({
+          method: 'GET',
+          url: "api/content/notice/" + this.noticeID,
+          headers:{
+	          token:"e3ad42c53a7f513682900121a5d768d41c9ee7a584d49865"
+	        }
+        }).then((response) => {
           //给公告的内容赋值
-          console.log(response)
 					this.title=response.data.content.title;
           this.content=response.data.content.content;
+        }, () => {
+        	this.$Notice.error({
+	          title: '错误',
+	          desc: '数据列表请求错误'
+	        })
         })
 
 
