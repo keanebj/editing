@@ -96,6 +96,7 @@
         <cropper-upload :width="478" :height="270" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048">
           <Button type="ghost" shape="circle" class="main-color pointer" @click="fromLocal">本地上传</Button>
         </cropper-upload>
+        <span style="padding-left:10px;color:#F95759;">建议图片比例3：2</span>
       </Form-item>
       <Modal v-model="contentModal" width="600" id="contentPop" :closable="false">
         <p slot="header">

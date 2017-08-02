@@ -579,7 +579,6 @@ abstractWordCount:function(event){
             }
           }
           else if (valid) {
-            alert(this.articleID );
               if(this.articleID > -1){
                 //更新
                 this.$http.put("/api/content/"+this.articleID,this.formTop
