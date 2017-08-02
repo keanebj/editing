@@ -33,7 +33,7 @@ export default {
       publishChannels: ['人民日报中央厨房'],
       publishLabels: {
         Notice: '公告',
-        College: '人民日报中央厨房'
+        College: '中央厨房号学院'
       },
       titleMaxCount:22,
       summaryMaxCount:60,
@@ -255,7 +255,6 @@ export default {
       //判断是否有图片？正则匹配到数组
       let reg=/<img\b[^>]*src\s*=\s*"[^>"]*\.(?:png|jpg|jpeg|gif)"[^>]*>/gi;
       let content=this.editor.getContent();
-      //let content='<p>wijifdf</p><img src="http://www.w3school.com.cn/i/ct_css_selector.gif"/><i class="dfdf"></i><img src="http://pagead2.googlesyndication.com/sadbundle/$dns%3Doff$/2192791104758210524/1-3.png"/><div>fdfdf</div>';
       let imgArr=content.match(reg);
       var srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i;
       //未匹配到图片
@@ -396,7 +395,7 @@ export default {
 //    if(!this.isRepeat(this.formTop.authorArr)){
 //      this.isHideAuthor=true;
 //    }
-			if (this.formTop.authorArr.length == 0 && this.$refs.authorInput.value != '') {
+			if (this.formTop.authorArr.length == 0 && this.$refs.authorInput.value != '' && this.author.Trim()) {
 				this.formTop.authorArr.push(this.author.Trim());
 	      this.author='';
 	      let This=this;
