@@ -13,14 +13,19 @@
 .right img:first-child{
     margin-bottom: 20px;
 }
-.con_new{
-    text-align: center;
-}
 .con_new img{
     width: 70%;
 }
-
+.con_new ol{
+  list-style: decimal;
+}
+.con_new ul{
+  list-style: disc;
+}
 .con_new p{
+  text-indent: 0px;
+}
+.con_new{
   text-align: left;
   font-size: 14px;
   line-height: 24px;

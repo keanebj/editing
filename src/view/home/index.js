@@ -18,11 +18,20 @@ export default {
 			this.switchTab = this.$route.query.switchTab;
 		}
 
-		this.$http({
-      method: 'GET',
-      url: "/api/content/count"
-    }).then((response) => {
-    	this.articleTot = response.data.total;
+		this.$http.get("/api/content/count").then(({ data }) => {
+			if (data.status) {
+				this.articleTot = data.total;
+			}else{
+				this.$Notice.error({
+	        title: '错误',
+	        desc: data.message || '数据请求错误'
+	      })
+			}
+    }, () => {
+    	this.$Notice.error({
+        title: '错误',
+        desc: data.message || '数据请求错误'
+      })
     })
 
 
@@ -126,14 +135,17 @@ export default {
 						}
 					}
 					//				改变颜色
+					
 					if (Cookies.get('clickedNo') != undefined) {
-
 						var cookieGet = Cookies.get('clickedNo').split(",");
+						this.clickedNo = cookieGet;
 						for (let i = 0; i < cookieGet.length; i++) {
-							this.clickedNo.push(parseInt(cookieGet[i]))
-				     	if ( (this.pageIndexX-1)*8<= cookieGet[i] <this.pageIndexX*8) {
-				     		this.noticeList[cookieGet[i]].isReaded = true;
-				     	}
+							
+							for (let j = 0; j < this.noticeList.length; j++) {
+								if (cookieGet[i] == this.noticeList[j].id) {
+									this.noticeList[j].isReaded = true;
+								}
+							}
 				    }
 					}
 					this.pageTotalX = Math.ceil(this.noticeTotal / this.pageSize);
@@ -183,13 +195,15 @@ export default {
 					}
 					//				改变颜色
 					if (Cookies.get('clickedCo') != undefined) {
-
 						var cookieGet = Cookies.get('clickedCo').split(",");
+						
+						this.clickedCo = cookieGet;
 						for (let i = 0; i < cookieGet.length; i++) {
-							this.clickedCo.push(parseInt(cookieGet[i]))
-				     	if ( (this.pageIndexG-1)*8<= cookieGet[i] <this.pageIndexG*8) {
-				     		this.collegeList[cookieGet[i]].isReaded = true;
-				     	}
+							for (let j = 0; j < this.collegeList.length; j++) {
+								if (cookieGet[i] == this.collegeList[j].id) {
+									this.collegeList[j].isReaded = true;
+								}
+							}
 				    }
 					}
 					this.pageTotalG = Math.ceil(this.articleTotal / this.pageSize);
@@ -211,9 +225,19 @@ export default {
     },
     getAdlist () {
       this.$http.get('/api/advertise').then((res) => {
-        this.adList = res.data.advertises;
+      	if (res.data.status) {
+      		this.adList = res.data.advertises;
+      	}else{
+      		this.$Notice.error({
+            title: '错误',
+            desc: response.data.message || '数据列表请求错误'
+          })
+      	}
       },(err) => {
-        console.log('出错啦！'+err)
+        this.$Notice.error({
+	        title: '错误',
+	        desc: err.message || '数据列表请求错误'
+	      })
       });
     },
     changePageNotice (page){
@@ -228,41 +252,33 @@ export default {
     	var ele = ev.target.parentNode.parentNode.nodeName == "LI" ? ev.target.parentNode.parentNode : ev.target;
 		  ele.className = "readed";
     	if (this.switchTab == 0) {
-      	var inde1 = index + (this.pageIndexX-1)*8;
-      	this.noticeList[inde1].isReaded = true;
-
 		  	if (this.clickedNo.length == 0) {
-		  		this.clickedNo.push(inde1);
+		  		this.clickedNo.push(this.collegeList[index].id);
 		  	}else{
 		  		var hasIn = true;
 		  		for (var i=0;i<this.clickedNo.length;i++) {
-			  		if (inde1 == this.clickedNo[i]) {
-
+			  		if (this.noticeList[index].id == this.clickedNo[i]) {
 			  			hasIn = false;
 			  		}
 			  	}
 		  		if (hasIn) {
-		  			this.clickedNo.push(inde1);
+		  			this.clickedNo.push(this.noticeList[index].id);
 		  		}
 		  	}
 		  	Cookies.set('clickedNo',this.clickedNo.join(','))
-//		  	console.log(Cookies.get('clickedNo'))
-      }else{
-      	var inde2 = index + (this.pageIndexG-1)*8;
-      	this.collegeList[inde2].isReaded = true;
-
+		  	
+     }else{
       	if (this.clickedCo.length == 0) {
-		  		this.clickedCo.push(inde2);
+		  		this.clickedCo.push(this.collegeList[index].id);
 		  	}else{
 		  		var hasIn = true;
 		  		for (var i=0;i<this.clickedCo.length;i++) {
-			  		if (inde2 == this.clickedCo[i]) {
-
+			  		if (this.collegeList[index].id == this.clickedCo[i]) {
 			  			hasIn = false;
 			  		}
 			  	}
 		  		if (hasIn) {
-		  			this.clickedCo.push(inde2);
+		  			this.clickedCo.push(this.collegeList[index].id);
 		  		}
 		  	}
 		  	Cookies.set('clickedCo',this.clickedCo.join(','))

@@ -31,22 +31,23 @@ export default {
     span19.className = "layout-content-warp ivu-col ivu-col-span-24";
 this.noticeID=this.$route.query.id;
 	    //ajax获得后台公告的内容
-	    this.$http({
-	      method: 'GET',
-	      url: "api/content/" + this.noticeID,
-	      headers:{
-	          token:"e3ad42c53a7f513682900121a5d768d41c9ee7a584d49865"
-	        }
-	    }).then((response) => {
-	    	console.log(response.data)
+	    this.$http.get("api/content/" + this.noticeID).then(({ data }) => {
 	      //给公告的内容赋值
-					this.title=response.data.content.title;
-	      this.content=response.data.content.content;
+	      if (data.status) {
+	      	this.title=data.content.title;
+	      	this.content=data.content.content;
+	      }else{
+	      	this.$Notice.error({
+            title: '错误',
+            desc: data.message || '数据请求错误'
+          })
+	      }
+					
 	    }, () => {
 	    	this.$Notice.error({
-          title: '错误',
-          desc: '数据列表请求错误'
-        })
+	        title: '错误',
+	        desc: data.message || '数据请求错误'
+	      })
 	    })
 	  }
 }
