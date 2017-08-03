@@ -38,7 +38,7 @@
       </div>
       <Button type="primary" @click="createImg">确定</Button>
       <div class="vue-cropper-progress" v-if="uploading">
-        <Progress :percent="progress" :stroke-width="5" status="active"></Progress>
+        <Progress :percent="progress"status="active" hide-info></Progress>
       </div>
     </div>
   </Modal>
