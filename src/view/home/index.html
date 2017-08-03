@@ -68,42 +68,52 @@
       <span v-bind:class="{ active: switchTab == 1 }" v-on:click="switchTab = 1">中央厨房融媒体学院</span>
     </div>
     <div class="home-tab-n" v-if="switchTab==0">
-      <ul class="home-notices" ref="uls">
-        <li v-for="(notice,index) in noticeList" key="notice.id" :class="{readed:notice.isReaded}" @click="readed($event,notice.id,index)">
-          <router-link :to="{path:'./notice',query:{id:notice.id,switchTab:0}}" target="_blank">
-	          <i></i>
-	          <span class="home-notice-content" :title="notice.title">
-						  {{notice.title}}
-					  </span>
-	          <span class="home-notice-date">
-						  {{notice.addtime}}
-					  </span>
-			</router-link>
-        </li>
-      </ul>
-      <div class="home-pager">
-        <Page :total="noticeTotal" size="small" :current="pageIndexX" @on-change="changePageNotice" :page-size="pageSize"></Page>
-        <span>共{{pageTotalX}}页 </span>
-      </div>
+    	<div  v-show="noticeList.length > 0">
+	      <ul class="home-notices" ref="uls">
+	        <li v-for="(notice,index) in noticeList" key="notice.id" :class="{readed:notice.isReaded}" @click="readed($event,notice.id,index)">
+	          <router-link :to="{path:'./notice',query:{id:notice.id,switchTab:0}}" target="_blank">
+		          <i></i>
+		          <span class="home-notice-content" :title="notice.title">
+							  {{notice.title}}
+						  </span>
+		          <span class="home-notice-date">
+							  {{notice.addtime}}
+						  </span>
+				</router-link>
+	        </li>
+	      </ul>
+	      <div class="home-pager">
+	        <Page :total="noticeTotal" size="small" :current="pageIndexX" @on-change="changePageNotice" :page-size="pageSize"></Page>
+	        <span>共{{pageTotalX}}页 </span>
+	      </div>
+	    </div>
+	    <div class="home-nodata center"  :class="{hide:nodataNotice}" style="margin-top: 30px;">
+    		<img src="../../assets/error/no-data.svg" alt="" />
+    	</div>
     </div>
     <div class="home-tab-d" v-if="switchTab==1">
-      <ul class="home-notices">
-        <li v-for="(college,index) in collegeList" key="college.id" :class="{readed: college.isReaded}" @click="readed($event,college.id,index)">
-          <router-link :to="{path:'./article',query:{id:college.id,switchTab:1}}" target="_blank">
-	          <i></i>
-	          <span class="home-notice-content"  :title="college.title">
-							{{college.title}}
-						</span>
-	          <span class="home-notice-date">
-							{{college.addtime}}
-						</span>
-					</router-link>
-        </li>
-      </ul>
-      <div class="home-pager">
-        <Page :total="articleTotal" size="small" @on-change="changePageCollege" :page-size="pageSize"></Page>
-        <span>共{{pageTotalG}}页</span>
-      </div>
+    	<div  v-show="collegeList.length > 0">
+	      <ul class="home-notices">
+	        <li v-for="(college,index) in collegeList" key="college.id" :class="{readed: college.isReaded}" @click="readed($event,college.id,index)">
+	          <router-link :to="{path:'./article',query:{id:college.id,switchTab:1}}" target="_blank">
+		          <i></i>
+		          <span class="home-notice-content"  :title="college.title">
+								{{college.title}}
+							</span>
+		          <span class="home-notice-date">
+								{{college.addtime}}
+							</span>
+						</router-link>
+	        </li>
+	      </ul>
+	      <div class="home-pager">
+	        <Page :total="articleTotal" size="small" @on-change="changePageCollege" :page-size="pageSize"></Page>
+	        <span>共{{pageTotalG}}页</span>
+	      </div>
+	    </div>
+	    <div class="home-nodata center"  :class="{hide:nodataCollege}" style="margin-top: 30px;">
+    		<img src="../../assets/error/no-data.svg" alt="" />
+    	</div>
     </div>
     </Col>
   </Row>

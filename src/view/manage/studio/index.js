@@ -8,7 +8,8 @@ export default {
       pagesize: 10,
       total: 0,
       isLoading: true,
-      catalogs: {}
+      catalogs: {},
+      nodata: true
     }
   },
   computed: {
@@ -26,6 +27,12 @@ export default {
         }
       }).then(({ data }) => {
         if (data.status) {
+          this.isLoading = false
+        	if(data.total ==0){
+	      		this.nodata=false;
+	      	}else{
+	      		this.nodata=true;
+	      	}
           this.total = data.total
           this.data = data.studios
           this.data[0].catalogid = 15725

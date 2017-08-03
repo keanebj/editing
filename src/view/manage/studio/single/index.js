@@ -23,6 +23,8 @@ export default {
       isSubmit: false,
       isLoading: false,
       catalogs: {},
+      disabledS: true,
+      firstLoad :true,
       formValidate: {
         "id": 0,
         "username": "",
@@ -102,6 +104,15 @@ export default {
     }
   },
   methods: {
+    allowSubmit(e) {  
+      if (this.disabledS && !this.firstLoad) {
+        this.disabledS = false
+        this.firstLoad = false
+      }
+      else{
+        this.firstLoad = false
+      }
+    },
     resetPassword(){
       if(!this.resetPWD){
         this.resetWord = '取消重置'
@@ -243,6 +254,7 @@ export default {
       this.request()
     }
     else{
+      this.firstLoad = false
       this.resetPWD = true
     }
   }

@@ -1,4 +1,5 @@
 <section>
+  <div v-if="data.length>0">
   <table class="table" style="margin-top:20px;">
     <thead>
       <tr>
@@ -9,7 +10,7 @@
          <th>时间</th> 
         <th style="width:68px">操作</th>
       </tr>
-    </thead>
+    </thead>    
     <tbody>
       <tr v-for="(item,index) in data" class="tr-hover">
         <td>{{index+1}}</td>
@@ -47,13 +48,34 @@
       </tr>
     </tbody>
   </table>
-  <a href="javascript:;" @click="onAdd" v-if="data.length<5" class="add-ad-position">
+   <a href="javascript:;" @click="onAdd" v-if="data.length<5" class="add-ad-position">
     <Icon type="plus-round"></Icon> 添加广告位</a>
   <div style="padding: 30px;">
     <Button :disabled="!isModify" type="primary" size="large" shape="circle" @click="onSubmit" :loading="isSubmit">提交</Button>
     <Button :disabled="!isModify" style="margin-left:20px;" type="ghost" size="large" shape="circle" @click="onCancel">取消</Button>
   </div>
-
+  </div>
+  <div v-else>    
+    <table class="table" style="margin-top:20px;">
+    <thead>
+      <tr>
+        <th style="width:70px">序号</th>
+        <th style="width:200px">BANNER</th>
+        <th style="width:20px"></th>
+        <th style="width:320px">URL</th>
+         <th>时间</th> 
+        <th style="width:68px">操作</th>
+      </tr>
+    </thead>  
+    </table>
+    <a href="javascript:;" @click="onAdd" class="add-ad-position" style="margin-left: 20px;">
+    <Icon type="plus-round"></Icon> 添加广告位</a>
+    <div class="error-studio">
+      <img src="../../../assets/error/no-data.svg">
+      <p>暂无广告</p>
+    </div>
+  </div> 
+  
   <Spin  size="large" fix v-if="isLoading">
     <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
     <div>Loading</div>

@@ -341,7 +341,7 @@
 .ivu-modal-wrap.pc embed{
 	margin: 10px auto;
 }
-.ivu-modal-wrap.mobile embed{
+.ivu-modal-wrap.mobile embed,.ivu-modal-wrap.mobile video{
   width:90% !important;
   height:auto !important;
   display: block;

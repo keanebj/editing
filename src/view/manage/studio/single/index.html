@@ -4,17 +4,17 @@
 
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" label-position="left" :label-width="100">
       <Form-item label="账号" prop="username">
-        <Input v-model="formValidate.username"  placeholder="请输入账号名称"></Input>
+        <Input v-model="formValidate.username" @on-change="allowSubmit"  placeholder="请输入账号名称"></Input>
       </Form-item>
       <div class="reset-pwd" v-if="this.id != '0'">
         <label>密码</label>
         <span @click="resetPassword" v-text="resetWord"></span>
       </div>
       <Form-item label="新密码" prop="password" v-if="resetPWD">
-        <Input v-model="formValidate.password" placeholder="······" type="password"></Input>
+        <Input v-model="formValidate.password" @on-change="allowSubmit" placeholder="······" type="password"></Input>
       </Form-item>
       <Form-item label="确认密码" prop="passwordConfirm" v-if="resetPWD">
-        <Input v-model="formValidate.passwordConfirm" placeholder="······" type="password"></Input>
+        <Input v-model="formValidate.passwordConfirm" @on-change="allowSubmit" placeholder="······" type="password"></Input>
       </Form-item>
       <Form-item label="LOGO" prop="logofile">
         <img v-if="formValidate.logofile" style="max-width:100px;border:1px solid #eee" :src="formValidate.logofile"
@@ -28,23 +28,23 @@
         建议logo长宽比为3:2
       </Form-item>
       <Form-item label="工作室" prop="studioname">
-        <Input v-model="formValidate.studioname" placeholder="工作室名称编辑"></Input>
+        <Input v-model="formValidate.studioname" @on-change="allowSubmit" placeholder="工作室名称编辑"></Input>
       </Form-item>
       <Form-item label="URL" prop="url">
-        <Input v-model="formValidate.url" placeholder="URL地址编辑"></Input>
+        <Input v-model="formValidate.url" @on-change="allowSubmit" placeholder="URL地址编辑"></Input>
       </Form-item>
       <Form-item label="栏目绑定" prop="catalogid">
-        <Select v-model="formValidate.catalogid" number placeholder="请选择">
+        <Select v-model="formValidate.catalogid" number placeholder="请选择" @on-change="allowSubmit">
           <Option v-for="option in catalogs" key="option.id" :value="option.id">{{option.name}}</Option>
       </Select>
       </Form-item>
       <Form-item label="中央厨房指数" prop="accountindex">
-        <Input v-model="formValidate.accountindex" placeholder="请输入中央厨房指数" number></Input>
+        <Input v-model="formValidate.accountindex" @on-change="allowSubmit" placeholder="请输入中央厨房指数" number></Input>
       </Form-item>
 
       <Form-item style="margin-top: 80px;">
-        <Button type="primary" shape="circle" @click="submit" :loading="isSubmit" style="margin-left:70px;">提交</Button>
-        <Button type="ghost" shape="circle" style="margin-left: 20px" @click="cancel">取消</Button>
+        <Button type="primary" :disabled="disabledS" shape="circle" @click="submit" :loading="isSubmit" style="margin-left:70px;">提交</Button>
+        <Button type="ghost" :disabled="disabledS" shape="circle" style="margin-left: 20px" @click="cancel">取消</Button>
       </Form-item>
     </Form>
     </Col>

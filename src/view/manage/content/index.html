@@ -43,7 +43,7 @@
     支持word文档、ppt文件导入
     </Col>
     <Col span="12">
-    <Input icon="ios-search" placeholder="输入搜索关键字，按enter键查询" style="width:250px;float:right" @on-enter="getContentList" @on-click="getContentList" v-model="searchValue"></Input>
+    <Input icon="ios-search" placeholder="输入搜索关键字，按enter键查询" style="width:250px;float:right" @on-enter="getContentList('search')" @on-click="getContentList('search')" v-model="searchValue"></Input>
     </Col>
   </Row>
   <Row style="margin:30px 0;">
@@ -72,26 +72,28 @@
       </tr>
     </thead>
     <tbody>
+      <tr :class="{hide:hidenodata}"><td style="border-bottom:none;" colspan="6"><img src="../../../assets/error/no-data.svg"/></td></tr>
+      <tr :class="{hide:hidenofound}"><td style="border-bottom:none;"  colspan="6"><img src="../../../assets/error/not-found.svg"/></td></tr>
       <tr v-for="(item,index) in contentList" :index="item.ID" class="tr-hover">
-        <th scope="row" width="15%" style="position: relative">
+        <th scope="row" width="15%" style="position: relative;padding: 0.75rem;">
           <Icon v-if="item.topflag" type="flag" style="position:absolute;top:0px;left:0px;color:#F95759;font-size:20px;">top</Icon>
           <router-link :to="{path:'../article',query:{id:item.id}}" v-if="roleType == 'Edit'"><img height="60" :src="item.cover" class="content-logo"></router-link>
           <router-link :to="{path:'../notice',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'Notice'"><img height="60" :src="item.cover" class="content-logo"></router-link>
           <router-link :to="{path:'../article',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'College'"><img height="60" :src="item.cover" class="content-logo"></router-link>
         </th>
-        <th scope="row" id="title" width="37%" style="text-align:left;">
+        <th scope="row" id="title" width="35%" style="text-align:left;">
           <router-link :to="{path:'../article',query:{id:item.id}}" v-if="roleType == 'Edit'">{{item.title}}</router-link>
           <router-link :to="{path:'../notice',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'Notice'">{{item.title}}</router-link>
           <router-link :to="{path:'../article',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'College'">{{item.title}}</router-link>
         </th>
-        <td width="10%">{{item.author}}</td>
-        <td width="10%">{{item.addtime}}</td>
-        <td>
+        <td style="padding: 0.75rem;">{{item.author}}</td>
+        <td style="padding: 0.75rem;">{{item.addtime}}</td>
+        <td width="8%">
           <div v-if="item.status == 'Draft'"><span class="draft-back">草稿</span></div>
           <div v-else-if="item.status == 'Publish'"><span class="publish-back">已发表</span></div>
           <div v-else-if="item.status == 'Offline'"><span class="offline-back">已撤回</span></div>
         </td>
-        <td v-if="roleType == 'Manage'">
+        <td v-if="roleType == 'Manage'" style="padding: 0.75rem;">
           <span v-if="item.label == 'Notice' ">公告</span>
           <span v-else>中央厨房融媒体学院</span>
         </td>

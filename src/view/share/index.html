@@ -1,4 +1,5 @@
 <section>
+   <div v-if="noData">
   <Row :gutter="34">
     <Col :xs="0" :sm="6" :md="6" :lg="6">
     <a class="go-back" href="javascript:void(0)" @click="goBack">
@@ -34,4 +35,14 @@
     </div>
     </Col>
   </Row>
+  </div>
+  <div v-else>
+    <Row  type="flex" justify="center">
+      <div class="error">
+        <img src="../../assets/error/404.png"><br>
+        <p>您访问的页面不存在</p>
+      </div>
+
+    </Row>
+  </div>
 </section>

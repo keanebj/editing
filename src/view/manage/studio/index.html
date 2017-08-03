@@ -5,7 +5,10 @@
       新建
     </Button>
   </router-link>
-
+	<div class="studio-nodata center" :class="{hide:nodata}" style="margin-top: 50px;">
+		<img src="../../../assets/error/no-data.svg" alt="" />
+	</div>
+<div v-if="total > 0">
   <table class="table" style="margin-top:20px;">
     <thead>
       <tr>
@@ -47,7 +50,7 @@
   </table>
 
   <Page size="small" :total="total" show-total @on-change="onChangePage" style="float:right"></Page>
-
+</div> 	
   <Spin size="large" fix v-if="isLoading">
     <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
     <div>Loading</div>

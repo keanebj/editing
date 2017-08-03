@@ -112,7 +112,7 @@ export default {
       }
     },
     getOperatorInfo() {
-      this.$http.get('http://mp.dev.hubpd.com/api/studio/' + this.userinfo.id, {
+      this.$http.get('/api/studio/' + this.userinfo.id, {
           username: this.userinfo.username
         })
         .then(res => {
@@ -137,7 +137,7 @@ export default {
         })
     },
     getStudioInfo() {
-      this.$http.get('http://mp.dev.hubpd.com/api/studio/' + this.userinfo.id, {
+      this.$http.get('/api/studio/' + this.userinfo.id, {
           username: this.userinfo.username
         })
         .then(res => {
@@ -178,7 +178,7 @@ export default {
         tel: this.formValidateM.tel,
         logofile: this.formValidateM.logofile
       };
-      this.$http.put('http://mp.dev.hubpd.com/api/studio/' + this.userinfo.id, reqParams)
+      this.$http.put('/api/studio/' + this.userinfo.id, reqParams)
         .then(res => {
           if (res.data.status == 1) {
             this.userinfo.studioLogo = reqParams.logofile
@@ -209,7 +209,7 @@ export default {
         tel: this.formValidate.tel,
         email: this.formValidate.mail
       };
-      this.$http.put('http://mp.dev.hubpd.com/api/studio/' + this.userinfo.id, reqParams)
+      this.$http.put('/api/studio/' + this.userinfo.id, reqParams)
         .then(res => {
           if (res.data.status == 1) {
             this.disabledM = true
