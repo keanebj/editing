@@ -86,14 +86,14 @@
           <router-link :to="{path:'../notice',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'Notice'">{{item.title}}</router-link>
           <router-link :to="{path:'../article',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'College'">{{item.title}}</router-link>
         </th>
-        <td width="10%">{{item.author}}</td>
-        <td width="10%">{{item.addtime}}</td>
+        <td style="padding: 0.75rem;">{{item.author}}</td>
+        <td style="padding: 0.75rem;">{{item.addtime}}</td>
         <td width="8%">
           <div v-if="item.status == 'Draft'"><span class="draft-back">草稿</span></div>
           <div v-else-if="item.status == 'Publish'"><span class="publish-back">已发表</span></div>
           <div v-else-if="item.status == 'Offline'"><span class="offline-back">已撤回</span></div>
         </td>
-        <td v-if="roleType == 'Manage'" width="13%" style="padding: 0.75rem;">
+        <td v-if="roleType == 'Manage'" style="padding: 0.75rem;">
           <span v-if="item.label == 'Notice' ">公告</span>
           <span v-else>中央厨房融媒体学院</span>
         </td>
