@@ -3,8 +3,14 @@ import {
 } from 'vuex'
 export default {
   name: 'share',
-  data(){
-    noData:false
+  data() {
+    return {
+      type: 'notice',
+      shareId: -1,
+      title: '',
+      content: '',
+      noData: false
+    }
   },
   created() {
     this.shareId = this.$route.query.id;
@@ -29,15 +35,7 @@ export default {
             desc: false
         })
     });
-  },
-  data() {
-    return {
-      type: 'notice',
-      shareId: -1,
-      title: '',
-      content: ''
-    }
-  },
+  },  
   methods: {
     goBack() {
       this.$router.push('/manage/content')
