@@ -7,6 +7,10 @@ export default {
     swiperSlide
 	},
   created() {
+  	this.getNotice();
+    this.getCollege();
+    this.getAdlist();
+
 //    判断进入公告还是学院
 		if (this.$route.query.switchTab == undefined) {
 			this.switchTab = 0
@@ -79,7 +83,9 @@ export default {
       },
       clickedNo: [],//存储当前被点击后的notice
       clickedCo: [],//存储当前被点击后的学院
-     	articleTot: 0//总发文数
+     	articleTot: 0,//总发文数
+     	nodataNotice:true,
+     	nodataCollege:true
     }
   },
   methods: {
@@ -92,42 +98,56 @@ export default {
         }
 	    }).then((response) => {
 	      //给公告的内容赋值
-	      console.log(response)
-				this.noticeList = response.data.contents;
-				this.noticeTotal = response.data.total;
-				if (this.noticeTotal == undefined) {
-					this.noticeTotal = 1;
-				}
+	      if (response.data.status == 1) {
+	      	if(response.data.total ==0){
+	      		this.nodataNotice=false;
+	      		return;
+	      	}else{
+	      		this.nodataNotice=true;
+	      	}
+					this.noticeList = response.data.contents;
+					this.noticeTotal = response.data.total;
+					if (this.noticeTotal == undefined) {
+						this.noticeTotal = 1;
+					}
 
-				//判断身份
-				if (response.data.operatortype == "Edit") {
-					this.roleFlag = 1;
-				}else{
-					this.roleFlag = 0;
-				}
+					//判断身份
+					if (response.data.operatortype == "Edit") {
+						this.roleFlag = 1;
+					}else{
+						this.roleFlag = 0;
+					}
 
-				if (response.data.contents&&response.data.total) {
-					for (let i = 0; i < response.data.contents.length; i++) {
-						if (response.data.contents[i].addtime != null) {
-							response.data.contents[i].addtime = response.data.contents[i].addtime.substring(0,16)
+					if (response.data.contents&&response.data.total) {
+						for (let i = 0; i < response.data.contents.length; i++) {
+							if (response.data.contents[i].addtime != null) {
+								response.data.contents[i].addtime = response.data.contents[i].addtime.substring(0,16)
+							}
 						}
 					}
-				}
-				//				改变颜色
-				if (Cookies.get('clickedNo') != undefined) {
+					//				改变颜色
+					if (Cookies.get('clickedNo') != undefined) {
 
-					var cookieGet = Cookies.get('clickedNo').split(",");
-					for (let i = 0; i < cookieGet.length; i++) {
-						this.clickedNo.push(parseInt(cookieGet[i]))
-			     	if ( (this.pageIndexX-1)*8<= cookieGet[i] <this.pageIndexX*8) {
-			     		this.noticeList[cookieGet[i]].isReaded = true;
-			     	}
-			    }
-				}
-
-				this.pageTotalX = Math.ceil(this.noticeTotal / this.pageSize);
+						var cookieGet = Cookies.get('clickedNo').split(",");
+						for (let i = 0; i < cookieGet.length; i++) {
+							this.clickedNo.push(parseInt(cookieGet[i]))
+				     	if ( (this.pageIndexX-1)*8<= cookieGet[i] <this.pageIndexX*8) {
+				     		this.noticeList[cookieGet[i]].isReaded = true;
+				     	}
+				    }
+					}
+					this.pageTotalX = Math.ceil(this.noticeTotal / this.pageSize);
+				}else{
+	      	this.$Notice.error({
+            title: '错误',
+            desc: response.data.message || '数据列表请求错误'
+          })
+	      }
 	    },(err) => {
-        console.log('出错啦！'+err)
+        this.$Notice.error({
+	        title: '错误',
+	        desc: err.message || '数据列表请求错误'
+	      })
       })
     },
     getCollege () {
@@ -141,33 +161,49 @@ export default {
         }
 	    }).then((response) => {
 	      //给学院的内容赋值
-				this.collegeList = response.data.contents;
-				this.articleTotal = response.data.total;
-				if (this.articleTotal == undefined) {
-					this.articleTotal = 1;
-				}
+	      if (response.data.status == 1) {
+	      	if(response.data.total ==0){
+	      		this.nodataCollege=false;
+	      		return;
+	      	}else{
+	      		this.nodataCollege=true;
+	      	}
+					this.collegeList = response.data.contents;
+					this.articleTotal = response.data.total;
+					if (this.articleTotal == undefined) {
+						this.articleTotal = 1;
+					}
 
-				if (response.data.contents&&response.data.total) {
-					for (let i = 0; i < response.data.contents.length; i++) {
-						if (response.data.contents[i].addtime != null) {
-							response.data.contents[i].addtime = response.data.contents[i].addtime.substring(0,16);
+					if (response.data.contents&&response.data.total) {
+						for (let i = 0; i < response.data.contents.length; i++) {
+							if (response.data.contents[i].addtime != null) {
+								response.data.contents[i].addtime = response.data.contents[i].addtime.substring(0,16);
+							}
 						}
 					}
-				}
-				//				改变颜色
-				if (Cookies.get('clickedCo') != undefined) {
+					//				改变颜色
+					if (Cookies.get('clickedCo') != undefined) {
 
-					var cookieGet = Cookies.get('clickedCo').split(",");
-					for (let i = 0; i < cookieGet.length; i++) {
-						this.clickedCo.push(parseInt(cookieGet[i]))
-			     	if ( (this.pageIndexG-1)*8<= cookieGet[i] <this.pageIndexG*8) {
-			     		this.collegeList[cookieGet[i]].isReaded = true;
-			     	}
-			    }
-				}
-				this.pageTotalG = Math.ceil(this.articleTotal / this.pageSize);
+						var cookieGet = Cookies.get('clickedCo').split(",");
+						for (let i = 0; i < cookieGet.length; i++) {
+							this.clickedCo.push(parseInt(cookieGet[i]))
+				     	if ( (this.pageIndexG-1)*8<= cookieGet[i] <this.pageIndexG*8) {
+				     		this.collegeList[cookieGet[i]].isReaded = true;
+				     	}
+				    }
+					}
+					this.pageTotalG = Math.ceil(this.articleTotal / this.pageSize);
+				}else{
+	      	this.$Notice.error({
+            title: '错误',
+            desc: response.data.message || '数据列表请求错误'
+          })
+	      }
 	    },(err) => {
-        console.log('出错啦！'+err)
+        this.$Notice.error({
+	        title: '错误',
+	        desc: err.message || '数据列表请求错误'
+	      })
       })
     },
     getNoticeURL (id){
@@ -253,8 +289,5 @@ export default {
       span5.style.display = 'block';
       span19.className = "layout-content-warp ivu-col ivu-col-span-19";
     },1000)
-     this.getNotice();
-     this.getCollege();
-     this.getAdlist();
   }
 }

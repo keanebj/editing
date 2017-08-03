@@ -248,3 +248,9 @@
 .home-ad .swiper-pagination-bullet-active{
 	background: #fff;
 }
+.home-nodata.hide{
+	display: none;
+}
+/*.home-nodata.hide{
+	display: block;
+}*/
