@@ -6,6 +6,7 @@ import '../../../static/ueditor1_4_3_3-utf8-jsp/ueditor.all.js'
 import '../../../static/ueditor1_4_3_3-utf8-jsp/lang/zh-cn/zh-cn.js'
 import '../../../static/ueditor1_4_3_3-utf8-jsp/ueditor.parse.min.js'
 import Vue from 'vue'
+import Cookies from 'js-cookie'
 Vue.use(QRCode)
 export default {
   name: 'ViewPublish',
@@ -69,7 +70,7 @@ export default {
           { required: true, message: '标签不能为空', trigger: 'blur' }
         ],
       },
-      localDefaultSrc:'http://mp.dev.hubpd.com/product/images/logo_login.png',
+      localDefaultSrc:'',
       elements: [],
       previewCon: [
         {
@@ -108,7 +109,7 @@ export default {
     this.roleType=this.$store.state.userinfo.roleType;
     this.$http.get("/api/studio/"+this.$store.state.userinfo.id).then((response) => {
       this.studioName = response.data.studio.studioname;
-    }, (response) => {
+    }, (error) => {
       this.$Notice.error({
         title: error.data.message,
         desc: false
@@ -140,6 +141,28 @@ export default {
     //判断一下是编辑还是草稿通过文章的id
     if(this.$route.query.articleID){
       this.articleID=this.$route.query.articleID;
+    }
+
+    //import
+    if(this.$route.query.type == 'import'){
+      this.formTop.title = Cookies.get('title');
+      this.formTop.publishchannel = Cookies.get('channel');
+      if (Cookies.get('keyword')!= null) {
+        this.formTop.keywordArr=Cookies.get('keyword').split(/\s+/g);
+      }
+      this.formTop.summary = Cookies.get('summary');
+      this.formTop.content = Cookies.get('content');
+      this.formTop.label = '';
+      if(Cookies.get('summary')){
+        this.formTop.currentAbstractCount = Math.ceil(this.gblen(Cookies.get('summary'),120,'summary')) >60?60:Math.ceil(this.gblen(Cookies.get('summary'),120,'summary'));
+      }
+
+      this.titleContentCount = Math.ceil(this.gblen(Cookies.get('title'),44,'title')) > 22 ? 22:Math.ceil(this.gblen(Cookies.get('title'),44,'title'));
+      this.editor.ready(function(){
+        This.editor.execCommand('inserthtml',This.formTop.content,true);
+      })
+      return;
+
     }
 
     //编辑：发出ajax请求
@@ -293,7 +316,7 @@ export default {
     },
     onSuccess(response, fileid, ki) {
       if (response.path) {
-        this.formTop.cover = 'http://mp.dev.hubpd.com/' + response.path;
+        this.formTop.cover = this.$conf.host + response.path;
       }
     },
     getBase64Image(img) {
@@ -501,7 +524,7 @@ abstractWordCount:function(event){
       })
     },
     handleSuccess (res, file){
-      this.localDefaultSrc="http://mp.dev.hubpd.com/"+file.response.path;
+      this.localDefaultSrc=this.$conf.host+file.response.path;
     },
     handleFormatError (file) {
       this.$Notice.warning({
@@ -530,11 +553,6 @@ abstractWordCount:function(event){
       }else{
         //interface://获得正文的摘要:需要发送请求给后台，参数：正文内容  返回：摘要内容
           this.$http.post("/api/content/summary",{content: content,title:title}
-          // ,{
-            // headers:{
-            //   token:this.token
-            // }
-        // }
         ).then((response) => {
           this.formTop.summary=response.data.summary.toString();
           this.formTop.currentAbstractCount=Math.ceil(this.gblen(response.data.summary,120,'summary'))>60?60:Math.ceil(this.gblen(response.data.summary,120,'summary'));
@@ -633,8 +651,8 @@ abstractWordCount:function(event){
               }
               this.$refs.shareHide.$el.children[1].children[0].style.top = (195 - scrollTop) + 'px';
 
-              this.useqrcode("http://mp.dev.hubpd.com/"+this.$conf.root+"share?id="+response.data.token);
-              this.codes="http://mp.dev.hubpd.com/"+this.$conf.root+"share?id="+response.data.token;
+              this.useqrcode(this.$conf.host+"/share?id="+response.data.token);
+              this.codes=this.$conf.host+"/share?id="+response.data.token;
               this.qCode = true;
             }else{
                this.$Notice.warning({
