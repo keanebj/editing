@@ -5,7 +5,7 @@ export default {
     onSuccess: Function,
     onError: Function,
     action: {
-      default: `${conf.host}${conf.apiRoot}/api/image/upload`
+      default: `${conf.host}${conf.serverRoot}api/image/upload`
     },
     accept: {
       default: ''
