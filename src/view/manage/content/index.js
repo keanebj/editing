@@ -216,10 +216,6 @@ export default {
           this.contentList=response.data.contents;
           return;
         }
-
-
-
-
         //如果pageindex比总页数还多
         if((response.data.total%this.pageSize == 0) && this.pageIndex == response.data.total/this.pageSize +1){
           this.pageIndex--;
