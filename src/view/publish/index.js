@@ -144,7 +144,7 @@ export default {
     }
 
     //import
-    if(this.$route.query.type == 'import'){
+    if(this.$route.query.type == 'import' && this.articleID == -1){
       this.formTop.title = Cookies.get('title');
       this.formTop.publishchannel = Cookies.get('channel');
       if (Cookies.get('keyword')!= null) {
@@ -651,8 +651,8 @@ abstractWordCount:function(event){
               }
               this.$refs.shareHide.$el.children[1].children[0].style.top = (195 - scrollTop) + 'px';
 
-              this.useqrcode(this.$conf.host+"/share?id="+response.data.token);
-              this.codes=this.$conf.host+"/share?id="+response.data.token;
+              this.useqrcode(this.$conf.host+"newmedia/share?id="+response.data.token);
+              this.codes=this.$conf.host+"newmedia/share?id="+response.data.token;
               this.qCode = true;
             }else{
                this.$Notice.warning({

@@ -277,7 +277,7 @@ export default {
         Cookies.set('title',res.content.title);
         Cookies.set('content',res.content.content);
         Cookies.set('channel',res.content.channel);
-        Cookies.set('summary',res.content.summary);
+        Cookies.set('summary',res.content.summary == null?'':res.content.summary);
         Cookies.set('keyword',res.content.keyword);
 
         this.$router.push({ path: '../publish',query:{type:'import'}})
