@@ -69,7 +69,7 @@ export default {
     // 上传地址
     url: {
       type: String,
-      'default': `${conf.host}${conf.apiRoot}/api/image/upload`
+      'default': `${conf.host}${conf.serverRoot}api/image/upload`
     },
     // 其他要上传文件附带的数据，对象格式
     params: {
