@@ -1,4 +1,5 @@
 <section>
+  <div v-if="data.length>0">
   <table class="table" style="margin-top:20px;">
     <thead>
       <tr>
@@ -47,13 +48,20 @@
       </tr>
     </tbody>
   </table>
+  </div>
+  <div v-else>
+    <div class="error-studio">
+      <img src="../../../assets/error/no-data.svg">
+      <p>暂无内容</p>
+    </div>
+  </div>
   <a href="javascript:;" @click="onAdd" v-if="data.length<5" class="add-ad-position">
     <Icon type="plus-round"></Icon> 添加广告位</a>
   <div style="padding: 30px;">
     <Button :disabled="!isModify" type="primary" size="large" shape="circle" @click="onSubmit" :loading="isSubmit">提交</Button>
     <Button :disabled="!isModify" style="margin-left:20px;" type="ghost" size="large" shape="circle" @click="onCancel">取消</Button>
   </div>
-
+  
   <Spin  size="large" fix v-if="isLoading">
     <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
     <div>Loading</div>

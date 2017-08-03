@@ -5,7 +5,7 @@
       新建
     </Button>
   </router-link>
-
+  <div v-if="data.length>0">
   <table class="table" style="margin-top:20px;">
     <thead>
       <tr>
@@ -47,7 +47,13 @@
   </table>
 
   <Page size="small" :total="total" show-total @on-change="onChangePage" style="float:right"></Page>
-
+  </div>
+  <div v-else>
+    <div class="error-studio">
+      <img src="../../../assets/error/no-data.svg">
+      <p>暂无内容</p>
+    </div>
+  </div>
   <Spin size="large" fix v-if="isLoading">
     <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
     <div>Loading</div>
