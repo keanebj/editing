@@ -25,7 +25,7 @@
         <th scope="row">
           <div class="sutdio-logo">
             <a target="_blank" :href="'https://studio.hubpd.com/' + (catalogs[item.catalogid]?catalogs[item.catalogid]['cname']:'')">
-              <img v-if="item.logofile" height="60" :src="item.logofile" alt="">
+              <img v-if="item.logofile" height="60" :src="$conf.host + $conf.serverRoot + item.logofile" alt="">
             </a>
           </div>
         </th>

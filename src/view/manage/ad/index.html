@@ -15,7 +15,7 @@
       <tr v-for="(item,index) in data" class="tr-hover">
         <td>{{index+1}}</td>
         <th scope="row">
-          <div v-if="item.path" class="imagePlaceholder" :style="{backgroundImage:'url('+$conf.host + item.path+')'}"></div>
+          <div v-if="item.path" class="imagePlaceholder" :style="{backgroundImage:'url('+$conf.host +  $conf.serverRoot + item.path+')'}"></div>
           <cropper-upload v-else :width="1412" :height="170" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :ki="item.id">
             <div class="imagePlaceholder">
               <div class="title">点击上传广告图片</div>
