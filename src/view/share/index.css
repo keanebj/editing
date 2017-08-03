@@ -61,6 +61,10 @@
    .article .shareContent{
      font-size:12px !important;
    }
+  .article .shareContent video{
+    width:70% !important;
+    height: auto;
+  }
    .layout-content{
        margin:0;
    }
