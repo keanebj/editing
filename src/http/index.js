@@ -3,7 +3,7 @@ import store from '../store'
 import axios from 'axios'
 import whitelist from './api-whitelist'
 var ajax = axios.create({
-  baseURL: config.host,
+  baseURL: config.host + config.apiRoot,
   timeout: 30000
 })
 import router from '@/router'
