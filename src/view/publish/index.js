@@ -10,7 +10,7 @@ import Cookies from 'js-cookie'
 Vue.use(QRCode)
 export default {
   name: 'ViewPublish',
-  components:{
+  components: {
     ScrollBar,
     QRCode,
     cropperUpload
@@ -316,7 +316,7 @@ export default {
     },
     onSuccess(response, fileid, ki) {
       if (response.path) {
-        this.formTop.cover = this.$conf.host + response.path;
+        this.formTop.cover = response.path;
       }
     },
     getBase64Image(img) {
@@ -571,6 +571,14 @@ abstractWordCount:function(event){
         this.$http.put("/api/content/publish/"+this.articleID
         ).then((response) => {
             this.$Notice.success({title:response.data.message,desc: false});
+            
+            if (this.formTop.label == "Notice") {
+            	let cookieGet = Cookies.get('clickedNo');
+            	Cookies.set('clickedNo', cookieGet+','+this.articleID);
+            }else if (this.formTop.label == "College"){
+            	let cookieGet = Cookies.get('clickedCo');
+            	Cookies.set('clickedCo', cookieGet+','+this.articleID);
+            }
             //发布成功：跳转到内容管理
             this.$router.push("manage/content");
           }, (error) => {

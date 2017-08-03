@@ -300,7 +300,7 @@ export default {
       console.log(JSON.stringify(response))
       this.disabledM = false
       if (response.path) {
-        this.formValidateM.logofile = this.$conf.host + response.path
+        this.formValidateM.logofile = response.path
         this.$refs['formValidateM'].validateField('logofile')
       }
     },
