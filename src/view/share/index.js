@@ -5,7 +5,6 @@ export default {
   name: 'share',
   data() {
     return {
-      type: 'notice',
       shareId: -1,
       title: '',
       content: '',

@@ -651,8 +651,8 @@ abstractWordCount:function(event){
               }
               this.$refs.shareHide.$el.children[1].children[0].style.top = (195 - scrollTop) + 'px';
 
-              this.useqrcode(this.$conf.host+this.$conf.root+"/share?id="+response.data.token);
-              this.codes=this.$conf.host+this.$conf.root+"/share?id="+response.data.token;
+              this.useqrcode(this.$conf.host+this.$conf.root+"share?id="+response.data.token);
+              this.codes=this.$conf.host+this.$conf.root+"share?id="+response.data.token;
 
               this.qCode = true;
             }else{
