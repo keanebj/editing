@@ -3,18 +3,25 @@ import {
 } from 'vuex'
 export default {
   name: 'Article',
-  created() {},
+  created() {
+  	this.switchTab = this.$route.query.switchTab;
+  },
   data() {
     return {
       type: 'notice',
       noticeID: -1,
       title: '',
-      content: ''
+      content: '',
+      switchTab: 1
     }
   },
   methods: {
-    goBack() {
-      this.$router.push('/manage/content')
+    goBack(){
+    	if (this.$route.query.switchTab == undefined) {
+    		this.$router.go(-1)
+    	}else{
+      		   this.$router.push({path:'/', query: { switchTab:  this.switchTab}})
+    	}
     }
   },
   mounted() {

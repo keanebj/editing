@@ -2,8 +2,6 @@ import { mapState } from 'vuex'
 export default {
   name: 'Notice',
   created () {
-//	var id = this.$route.query.ID;
-		console.log(this.$route.query.switchTab)
 		this.switchTab = this.$route.query.switchTab;
   },
   mounted(){
