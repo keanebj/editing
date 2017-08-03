@@ -27,6 +27,7 @@ export default {
         }
       }).then(({ data }) => {
         if (data.status) {
+          this.isLoading = false
         	if(data.total ==0){
 	      		this.nodata=false;
 	      	}else{
