@@ -67,10 +67,10 @@
   float: left;
 }
 .upload_doc_con .ivu-btn{
-  padding: 4px 8px;
+  padding: 4px 8px !important;
 }
 .upload_doc_mask .ivu-modal-body{
-  height: 200px;
+  height: 160px;
 }
 .upload_doc_mask .ivu-modal-header-inner{
   color: #777;
@@ -132,7 +132,7 @@
 	color: #999;
 }
 .manage_con_col button:nth-child(1){
-	
+
 }
 .manage_con_col button:nth-child(2){
 	margin-left: 15px;
