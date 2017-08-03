@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie'
 export default {
   name: 'ViewManageContent',
   data () {
@@ -81,7 +82,8 @@ export default {
       this.contentId=id;
     },
     cancleTop(tip) {
-      let contentid=this.contentId;	        this.$http.put("/api/content/top/"+contentid,{contentid:contentid,method:''},
+      let contentid=this.contentId;
+      this.$http.put("/api/content/top/"+contentid,{contentid:contentid,method:''},
         {
           headers:{
             token:this.token
@@ -192,9 +194,7 @@ export default {
     getContentList:function(type){
       this.hidenofound=true;
       this.hidenodata=true;
-      this.$http({
-        method: 'GET',
-        url:"/api/content",
+      this.$http.get("/api/content",{
         params:{status:this.status,value:this.searchValue,pagesize:this.pageSize,pageindex:this.pageIndex-1},
         headers:{
           token:this.token
@@ -274,7 +274,15 @@ export default {
           title: res.message,
           desc: false
         })
-        this.$router.push({ path: '../publish',query:{articleID:res.id}})
+        console.log(res);
+        Cookies.set('title',res.content.title);
+        localStorage.setItem('content',res.content.content);
+        //Cookies.set('content',res.content.content);
+        Cookies.set('channel',res.content.channel);
+        Cookies.set('summary',res.content.summary == null?'':res.content.summary);
+        Cookies.set('keyword',res.content.keyword);
+
+        this.$router.push({ path: '../publish',query:{type:'import'}})
       }else{
         this.$Notice.error({
           title: res.message,
