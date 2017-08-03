@@ -10,7 +10,7 @@ import Cookies from 'js-cookie'
 Vue.use(QRCode)
 export default {
   name: 'ViewPublish',
-  components:{
+  components: {
     ScrollBar,
     QRCode,
     cropperUpload
@@ -316,7 +316,7 @@ export default {
     },
     onSuccess(response, fileid, ki) {
       if (response.path) {
-        this.formTop.cover = this.$conf.host + response.path;
+        this.formTop.cover = response.path;
       }
     },
     getBase64Image(img) {

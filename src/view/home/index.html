@@ -36,7 +36,7 @@
         <Carousel-item v-for="ad in adList" key="ad.id">
           <div class="demo-carousel">
           	<a :href="ad.url" target="_blank">
-          		<img :src="$conf.host + ad.path">
+          		<img :src="ad.path">
           	</a>
           </div>
         </Carousel-item>
