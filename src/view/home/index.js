@@ -210,7 +210,7 @@ export default {
       this.$router.push({path:'/notice?'+id})
     },
     getAdlist () {
-      this.$http.get('http://mp.dev.hubpd.com/api/advertise').then((res) => {
+      this.$http.get('/api/advertise').then((res) => {
         this.adList = res.data.advertises;
       },(err) => {
         console.log('出错啦！'+err)

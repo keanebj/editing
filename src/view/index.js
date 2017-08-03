@@ -58,7 +58,7 @@ export default {
       this.$router.push('/settings/account')
     },
     logOut(e) {
-      this.$http.get('http://mp.dev.hubpd.com/api/studio/logout')
+      this.$http.get('/api/studio/logout')
         .then(res => {
           if (res.data.status == 1) {
             localStorage.removeItem("token")

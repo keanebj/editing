@@ -16,7 +16,7 @@
           <input type="text" value="*.doc、*.docx、*.ppt、*.pptx" disabled="" />
           <Upload
             ref="upload"
-            action="http://mp.dev.hubpd.com/api/content/import"
+            :action="$conf.host + $conf.apiRoot + '/api/content/import'"
             :before-upload="beforeLoad"
             :show-upload-list="true"
             accept=".doc,.docx,.ppt,.pptx"

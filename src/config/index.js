@@ -4,6 +4,7 @@ const root = env === 'development' ? '' : ''
 let config = {
     env: env,
     host: host,
-    root: root
+    root: root,
+    apiRoot: 'media'
 }
 export default config

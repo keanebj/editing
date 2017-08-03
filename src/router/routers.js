@@ -97,6 +97,13 @@ export default [
         component: require('@/view/share/index.vue'),
       }
     ]
+  }, {
+    name: '404',
+    path: '*',
+    meta: {
+      title: '404'
+    },
+    component: require('@/view/404/index.vue')
   }
 ]
 
