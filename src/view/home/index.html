@@ -45,7 +45,7 @@
         <!-- 这部分放你要渲染的那些内容 -->  
         <swiper-slide v-for="ad in adList"  key="ad.id"> 
         	<a :href="ad.url" target="_blank">
-      			<img :src="$conf.host + $conf.serverRoot + ad.path">
+      			<img :src="ad.path">
       		</a>
         </swiper-slide>
         <!-- 这是轮播的小圆点 -->  
