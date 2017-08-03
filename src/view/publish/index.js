@@ -151,7 +151,9 @@ export default {
         this.formTop.keywordArr=Cookies.get('keyword').split(/\s+/g);
       }
       this.formTop.summary = Cookies.get('summary');
-      this.formTop.content = Cookies.get('content');
+     // this.formTop.content = Cookies.get('content');
+
+      this.formTop.content = localStorage.getItem('content');
       this.formTop.label = '';
       if(Cookies.get('summary')){
         this.formTop.currentAbstractCount = Math.ceil(this.gblen(Cookies.get('summary'),120,'summary')) >60?60:Math.ceil(this.gblen(Cookies.get('summary'),120,'summary'));
@@ -161,12 +163,10 @@ export default {
       this.editor.ready(function(){
         This.editor.execCommand('inserthtml',This.formTop.content,true);
       })
-      return;
-
     }
 
     //编辑：发出ajax请求
-    if(this.articleID > 0) {
+    else if(this.articleID > 0) {
       this.$http.get("/api/content/"+this.articleID).then((response) => {
         let data = response.data.content;
 
@@ -198,7 +198,7 @@ export default {
       });
     }else{
       this.editor.ready(function(){
-        This.editor.execCommand('inserthtml',This.formTop.content);
+        This.editor.execCommand('inserthtml',This.formTop.content,true);
       })
     }
 
@@ -651,8 +651,14 @@ abstractWordCount:function(event){
               }
               this.$refs.shareHide.$el.children[1].children[0].style.top = (195 - scrollTop) + 'px';
 
+            if(this.$conf.host.indexOf('http://mp.dev.hubpd.com') >-1){
               this.useqrcode(this.$conf.host+"newmedia/share?id="+response.data.token);
               this.codes=this.$conf.host+"newmedia/share?id="+response.data.token;
+            }else{
+              this.useqrcode(this.$conf.host+"share?id="+response.data.token);
+              this.codes=this.$conf.host+"share?id="+response.data.token;
+            }
+
               this.qCode = true;
             }else{
                this.$Notice.warning({
