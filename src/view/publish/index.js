@@ -638,7 +638,7 @@ abstractWordCount:function(event){
               this.qCode = true;
             }else{
                this.$Notice.warning({
-                title: response.data.message,
+                title: '保存后才能分享！',
                 desc: false
                })
             }
