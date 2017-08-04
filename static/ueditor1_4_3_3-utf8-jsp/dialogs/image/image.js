@@ -113,6 +113,7 @@
 
     /* 初始化对其方式的点击事件 */
     function initAlign(){
+        setAlign('center');
         /* 点击align图标 */
         domUtils.on($G("alignIcon"), 'click', function(e){
             var target = e.target || e.srcElement;
@@ -124,7 +125,7 @@
 
     /* 设置对齐方式 */
     function setAlign(align){
-        align = align || 'none';
+        align = align || 'center';
         var aligns = $G("alignIcon").children;
         for(i = 0; i < aligns.length; i++){
             if(aligns[i].getAttribute('data-align') == align) {
