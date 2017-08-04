@@ -3,7 +3,7 @@ export default [
     name: 'login',
     path: '/login',
     meta: {
-      title: 'login'
+      title: '自媒体平台-登录'
     },
     component: require('@/view/login/index.vue')
 
@@ -12,7 +12,7 @@ export default [
     name: 'main',
     path: '/',
     meta: {
-      title: '首页'
+      title: '自媒体'
     },
     component: require('@/view/index.vue'),
     children: [
@@ -20,7 +20,7 @@ export default [
         name: 'home',
         path: '',
         meta: {
-          title: '首页'
+          title: '自媒体平台'
         },
         component: require('@/view/home/index.vue')
       },
