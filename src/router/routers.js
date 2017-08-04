@@ -1,5 +1,4 @@
-export default [
-  {
+export default [{
     name: 'login',
     path: '/login',
     meta: {
@@ -15,8 +14,7 @@ export default [
       title: '自媒体'
     },
     component: require('@/view/index.vue'),
-    children: [
-      {
+    children: [{
         name: 'home',
         path: '',
         meta: {
@@ -73,7 +71,7 @@ export default [
         component: require('@/view/settings/account/index.vue')
       },
       {
-        name:'notice',
+        name: 'notice',
         path: '/notice',
         meta: {
           title: '公告',
@@ -81,7 +79,7 @@ export default [
         component: require('@/view/notice/index.vue'),
       },
       {
-        name:'article',
+        name: 'article',
         path: '/article',
         meta: {
           title: '文章',
@@ -106,4 +104,3 @@ export default [
     component: require('@/view/404/index.vue')
   }
 ]
-
