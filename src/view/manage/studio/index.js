@@ -12,7 +12,15 @@ export default {
       nodata: true
     }
   },
-  computed: {
+  computed:{
+    pageCount:function(){
+      let remainder=this.total%this.pagesize;
+      if(remainder){
+        return Math.ceil(this.total/this.pagesize);
+      }else{
+        return Math.floor(this.total/this.pagesize);
+      }
+    }
   },
   methods: {
     /**

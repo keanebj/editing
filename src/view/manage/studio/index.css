@@ -37,3 +37,6 @@
     width: 25%;
     margin-bottom:30px;
 }
+.ivu-page-total{
+    display: none!important;
+}
