@@ -72,7 +72,7 @@ export default {
             Cookies.remove('clickedCo');//删除对应的cookie
             this.$router.toReferrer()
           } else {
-            this.$Message.error(res.data.message);
+            this.$Message.error('您填写的账号或密码不正确，请再次尝试');
           }
           this.isLoading = false
         }, err => {
