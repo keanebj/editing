@@ -3,7 +3,7 @@
 	position: absolute;
 	right: 15px;
 	top: 10px;
-	height: 23vw;
+	height: 410px;
 	border-right: 1px solid #ccc;
 }
 .scrollBar_con{
@@ -15,12 +15,6 @@
 	left: 5px;
 	background: #ccc;
 }
-/*//  魏征霖修改部分结束
-//  魏征霖修改部分
-//  魏征霖修改部分
-//  魏征霖修改部分
-//  魏征霖修改部分
-//  魏征霖修改部分*/
 .yulan-tit{
 	font-size: 18px;
 	text-align: center;
@@ -45,9 +39,3 @@
 	margin-left: 5px;
 	margin-right: 5px;
 }
-/*//  魏征霖修改部分结束
-//  魏征霖修改部分
-//  魏征霖修改部分
-//  魏征霖修改部分
-//  魏征霖修改部分
-//  魏征霖修改部分*/

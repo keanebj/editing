@@ -115,12 +115,15 @@
 .home-notices li{
     float: left;
     width: 100%;
-    padding: 20px 0;
     color: #333333;
     border-bottom: 1px solid #CCCCCC;
     font-size: 14px!important;
 }
-
+.home-notices li>a{
+	display: block;
+	height: 60px;
+	padding: 20px 0;
+}
 .home-notices li i{
     width: 20px;
     background-image: url(../../assets/gg.svg);

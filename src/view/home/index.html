@@ -68,7 +68,7 @@
     	<div  v-show="noticeList.length > 0">
 	      <ul class="home-notices" ref="uls">
 	        <li v-for="(notice,index) in noticeList" key="notice.id" :class="{readed:notice.isReaded}" @click="readed($event,notice.id,index)">
-	          <router-link :to="{path:'./notice',query:{id:notice.id,switchTab:0}}" target="_blank">
+	          <router-link :to="{path:'./notice',query:{id:notice.id}}" target="_blank">
 		          <i></i>
 		          <span class="home-notice-content" :title="notice.title">
 							  {{notice.title}}
@@ -93,7 +93,7 @@
     	<div  v-show="collegeList.length > 0">
 	      <ul class="home-notices">
 	        <li v-for="(college,index) in collegeList" key="college.id" :class="{readed: college.isReaded}" @click="readed($event,college.id,index)">
-	          <router-link :to="{path:'./article',query:{id:college.id,switchTab:1}}" target="_blank">
+	          <router-link :to="{path:'./article',query:{id:college.id}}" target="_blank">
 		          <i></i>
 		          <span class="home-notice-content"  :title="college.title">
 								{{college.title}}
