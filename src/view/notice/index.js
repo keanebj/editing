@@ -2,7 +2,6 @@ import { mapState } from 'vuex'
 export default {
   name: 'Notice',
   created () {
-		this.switchTab = this.$route.query.switchTab;
   },
   mounted(){
 
@@ -30,8 +29,6 @@ export default {
 		        desc: data.message || '数据请求错误'
 		      })
         })
-
-
   },
   data () {
     return {
@@ -47,11 +44,7 @@ export default {
   },
   methods: {
     goBack(){
-    	if (this.$route.query.switchTab == undefined) {
-    		this.$router.go(-1)
-    	}else{
-      		   this.$router.push({path:'/', query: { switchTab:  this.switchTab}})
-    	}
+    	this.$router.go(-1)
     }
   }
 }
