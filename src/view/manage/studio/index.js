@@ -35,7 +35,7 @@ export default {
 	      	}
           this.total = data.total
           this.data = data.studios
-          this.data[0].catalogid = 15725
+          // this.data[0].catalogid = 15725
         } else {
           this.$Notice.error({
             title: '错误',
@@ -90,7 +90,7 @@ export default {
       this.pageindex = page - 1
       this.fetchCollection()
     },
-    fetchCatalogs () {
+    fetchCatalogs (init) {
       this.$http.get('/api/catalog').then(({ data }) => {
         if (data.status) {
           if (data.catalogs) {
@@ -102,13 +102,13 @@ export default {
             })
           }
           this.catalogs = catalogs
-          console.log(this.catalogs)
+          
         }
       })
     }
   },
   created() {
-    this.fetchCollection()
     this.fetchCatalogs()
+    this.fetchCollection()
   }
 }
