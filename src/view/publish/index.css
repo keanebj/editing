@@ -267,15 +267,17 @@
 }
 
 .set-con p {
-  font-size: 14px;
   word-break: break-all;
 }
-
+.set-con ol.list-paddingleft-2{
+	list-style: decimal;
+}
+.set-con ul.list-paddingleft-2{
+	list-style: disc;
+}
 .set-con .yulan img {
-  width: 80%;
+  max-width: 100%;
   height: auto;
-  display: block;
-  margin: 10px auto;
 }
 
 .ivu-modal {
@@ -317,7 +319,7 @@
 }
 
 .ivu-modal-wrap.mobile .set-con .yulan img {
-  width: 90%;
+  max-width: 100%;
   height: auto;
 }
 .ivu-modal-wrap.mobile{
