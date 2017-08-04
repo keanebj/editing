@@ -34,7 +34,7 @@ export default {
         if (valid) {
           this.submitLogin();
         } else {
-          this.$Message.error('表单验证失败!');
+          this.$Message.error('您填写的账号或密码不正确，请再次尝试!');
         }
       })
     },
