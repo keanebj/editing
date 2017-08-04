@@ -102,6 +102,7 @@ export default {
             })
           }
           this.catalogs = catalogs
+          console.log(this.catalogs)
         }
       })
     }
