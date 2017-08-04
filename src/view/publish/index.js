@@ -617,7 +617,11 @@ abstractWordCount:function(event){
                 //更新
                 this.$http.put("/api/content/"+this.articleID,this.formTop
                ).then((response) => {
-                    this.$Notice.success({title:response.data.message,desc: false});
+               		if (response.data.status == 1) {
+               			this.$Notice.success({title:response.data.message,desc: false});
+               		}else{
+               			this.$Notice.error({title:response.data.message,desc: false});
+               		}
                     //this.articleID=response.data.id;
                 }, (error) => {
                     this.$Notice.error({title:error.data.message,desc: false});
@@ -626,7 +630,13 @@ abstractWordCount:function(event){
                 //新建
                 this.$http.post('/api/content',this.formTop)
                 .then((response) => {
-                    this.$Notice.success({title:response.data.message,desc: false});
+                    console.log(response.data)
+                    if (response.data.status == 1) {
+                    	this.$Notice.success({title:'保存成功',desc: false});
+                    }else{
+                    	this.$Notice.error({title:response.data.message,desc: false});
+                    }
+                   
                     this.articleID=response.data.id;
                 }, (response) => {
                     this.$Notice.error({title:error.data.message,desc: false});
