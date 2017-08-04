@@ -54,7 +54,7 @@ export default {
     onRemove(index) {
       this.$Modal.confirm({
         title: '确认删除',
-        content: '是否删除该条数据？',
+        content: '确认删除该工作室？',
         onOk: () => {
           this.requestRemove(index)
         }

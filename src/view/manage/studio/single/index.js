@@ -221,6 +221,7 @@ export default {
     },
     cropUploadSuccess(response, field, ki) {
       if (response.path) {
+        this.disabledS = false
         this.formValidate.logofile = response.path
         this.$refs['formValidate'].validateField('logofile')
       }
