@@ -236,11 +236,6 @@ export default {
     },
     goBack(){
       this.$router.go(-1);
-      /*if(this.$route.query.type == 'edit'){
-        this.$router.push('/manage/content')
-      }else{
-        this.$router.push('/')
-      }*/
     },
     showPreviewContent:function(){
       //获得编辑器中的内容:这里的预览需要写一个界面（待完善。。。）
@@ -571,7 +566,7 @@ abstractWordCount:function(event){
         this.$http.put("/api/content/publish/"+this.articleID
         ).then((response) => {
             this.$Notice.success({title:response.data.message,desc: false});
-            
+
             if (this.formTop.label == "Notice") {
             	let cookieGet = Cookies.get('clickedNo');
             	Cookies.set('clickedNo', cookieGet+','+this.articleID);
@@ -580,7 +575,7 @@ abstractWordCount:function(event){
             	Cookies.set('clickedCo', cookieGet+','+this.articleID);
             }
             //发布成功：跳转到内容管理
-            this.$router.push("manage/content");
+            this.$router.go("manage/content");
           }, (error) => {
             this.$Notice.error({title:error.data.message,desc: false});
           });
@@ -636,7 +631,7 @@ abstractWordCount:function(event){
                     }else{
                     	this.$Notice.error({title:response.data.message,desc: false});
                     }
-                   
+
                     this.articleID=response.data.id;
                 }, (response) => {
                     this.$Notice.error({title:error.data.message,desc: false});
