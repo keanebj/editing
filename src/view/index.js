@@ -36,12 +36,12 @@ export default {
     }
   },
   created() {
-    if (!this.token) {
-      this.$router.push('/login')
-    }
-    if (this.userinfo.username == undefined || this.userinfo.username == null) {
-      this.$router.push('/login')
-    }
+    // if (!this.token) {
+    //   this.$router.push('/login')
+    // }
+    // if (this.userinfo.username == undefined || this.userinfo.username == null) {
+    //   this.$router.push('/login')
+    // }
   },
   methods: {
     onSelect(e) {
