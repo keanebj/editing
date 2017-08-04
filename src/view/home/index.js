@@ -290,6 +290,7 @@ export default {
     //用于显示左侧
     var span5 =  document.querySelector(".ivu-col-span-5");
     var span19 =  document.querySelector(".ivu-col-span-19");
+    
     if(!span19){
       span19 =  document.querySelector(".ivu-col-span-24");
     }

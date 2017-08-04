@@ -254,3 +254,13 @@
 /*.home-nodata.hide{
 	display: block;
 }*/
+.home-nodata{
+	margin-top: 30px;
+}
+.home-nodata img{
+	width: 30%;
+}
+.home-nodata p{
+	font-size: 18px;
+	margin-top: 30px;
+}
