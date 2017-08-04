@@ -288,7 +288,7 @@ export default {
         } else {
           this.$Notice.error({
             title: '错误',
-            desc: '表单验证失败'
+            desc: '信息输入不正确'
           })
         }
       })
@@ -325,7 +325,5 @@ export default {
     }
     span5.style.display = 'block';
     span19.className = "layout-content-warp ivu-col ivu-col-span-19";
-    
-    // this.uploadList = this.$refs.upload.fileList;
   }
 }
