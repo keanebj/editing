@@ -71,7 +71,7 @@
 #localPop .ivu-btn-primary {
   background-color: #F95759;
   border-color: #F95759;
-  margin: 20px 0;
+  margin: 10px 0;
 }
 
 #localPop label {
@@ -203,9 +203,9 @@
 }
 
 #contentPop .ivu-modal-content .ivu-modal-body {
-  height: 30vw;
+  height: 400px;
   width: auto;
-  padding: 35px 15px 15px;
+  padding: 25px 15px 15px;
 }
 
 .previewContent .ivu-modal-content .ivu-modal-footer {
@@ -262,6 +262,7 @@
 .set-con {
   padding: 10px 20px;
   height: 430px;
+  margin: 10px 0 0 0;
   overflow: hidden;
   position: relative;
 }

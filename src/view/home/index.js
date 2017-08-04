@@ -15,6 +15,7 @@ export default {
 		this.roleType=this.$store.state.userinfo.roleType;
 		if (this.roleType == 'Edit') {
 //			请求中央厨房号指数
+			this.roleFlag = 1;
 			this.$http.get('/api/studio/' + this.$store.state.userinfo.id).then(({ data }) => {
 		    if (data.status == 1) {
 		    	if (data.studio.accountindex == null) {
@@ -38,6 +39,7 @@ export default {
 		  })
 		}else{
 			//		请求工作室总数
+			this.roleFlag = 0;
 			this.$http.get('/api/studio').then(({ data }) => {
 		    if (data.status) {
 		      this.studioTotal = data.total
@@ -73,7 +75,6 @@ export default {
       })
     })
 		
-		console.log(this.$store.state.userinfo.roleType)
 		
 
 //  this.roleFlag = this.$store.state.roleType;
@@ -96,8 +97,8 @@ export default {
       pageSize: 8,//每页的个数
       noticeTotal: 0,//公告总数
       articleTotal:0,//学院总数
-      studioTotal:35,//工作室总数
-      accountIndex:100,//中央厨房号指数
+      studioTotal:0,//工作室总数
+      accountIndex:0,//中央厨房号指数
       noticeList:[],//公告列表
       collegeList:[],//学院列表
       adList:[],//广告列表
@@ -146,9 +147,9 @@ export default {
 
 					//判断身份
 					if (response.data.operatortype == "Edit") {
-						this.roleFlag = 1;
+						
 					}else{
-						this.roleFlag = 0;
+						
 					}
 
 					if (response.data.contents&&response.data.total) {

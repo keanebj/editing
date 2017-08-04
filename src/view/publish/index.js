@@ -241,12 +241,22 @@ export default {
       if (this.articleID > -1) {
 //    	保存显示预览(后台返回数据问题)
         this.$http.get("/api/content/"+this.articleID).then((response) => {
+        	console.log(response)
           let data = response.data.content;
+          console.log(data)
           //给数据值
-          this.previewCon[0].title = data.title;
-          this.previewCon[0].content = data.content;
-          this.previewCon[0].time = data.addtime;
-          this.previewCon[0].studioname = this.studioName;
+          if (response.data.operatortype == "Edit") {
+          	this.previewCon[0].title = data.title;
+	          this.previewCon[0].content = data.content;
+	          this.previewCon[0].time = data.addtime;
+	          this.previewCon[0].studioname = this.studioName;
+	          this.previewCon[0].author = data.author;
+	          this.previewCon[0].channel = data.channel;
+          }else{
+//        	console.log(this.previewCon[0].content)
+          	this.previewCon[0].title = data.title;
+          	this.previewCon[0].content = data.content;
+          }
         }, (error) => {
           this.$Notice.error({
             title: error.data.message,

@@ -18,14 +18,18 @@
     <Col span="8">
     <div class="home-title studios">
       <img src="../../assets/home-t-3.png">
-      <div v-if="roleFlag==0">
-        <span class="title-t-1">工作室总数</span>
-        <span class="title-t-2" v-text="studioTotal"></span>
-      </div>
-      <div v-else>
-        <span class="title-t-1">中央厨房号指数</span>
-        <span class="title-t-2" v-text="accountIndex"></span>
-      </div>
+      <transition name="fade">
+	      <div v-if="roleFlag==0">
+	        <span class="title-t-1">工作室总数</span>
+	        <span class="title-t-2" v-text="studioTotal"></span>
+	      </div>
+	    </transition> 
+	    <transition name="fade">
+	      <div  v-if="roleFlag==1">
+	        <span class="title-t-1">中央厨房号指数</span>
+	        <span class="title-t-2" v-text="accountIndex"></span>
+	      </div>
+	    </transition> 
     </div>
     </Col>
   </Row>
