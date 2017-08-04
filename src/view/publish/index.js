@@ -151,10 +151,9 @@ export default {
         this.formTop.keywordArr=Cookies.get('keyword').split(/\s+/g);
       }
       this.formTop.summary = Cookies.get('summary');
-     // this.formTop.content = Cookies.get('content');
 
       this.formTop.content = localStorage.getItem('content');
-      this.formTop.label = '';
+      this.formTop.label = 'Notice';
       if(Cookies.get('summary')){
         this.formTop.currentAbstractCount = Math.ceil(this.gblen(Cookies.get('summary'),120,'summary')) >60?60:Math.ceil(this.gblen(Cookies.get('summary'),120,'summary'));
       }
@@ -575,7 +574,7 @@ abstractWordCount:function(event){
             	Cookies.set('clickedCo', cookieGet+','+this.articleID);
             }
             //发布成功：跳转到内容管理
-            this.$router.go("manage/content");
+            this.$router.replace("/manage/content");
           }, (error) => {
             this.$Notice.error({title:error.data.message,desc: false});
           });
@@ -625,13 +624,11 @@ abstractWordCount:function(event){
                 //新建
                 this.$http.post('/api/content',this.formTop)
                 .then((response) => {
-                    console.log(response.data)
                     if (response.data.status == 1) {
                     	this.$Notice.success({title:'保存成功',desc: false});
                     }else{
                     	this.$Notice.error({title:response.data.message,desc: false});
                     }
-
                     this.articleID=response.data.id;
                 }, (response) => {
                     this.$Notice.error({title:error.data.message,desc: false});
