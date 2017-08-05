@@ -8,7 +8,7 @@
     <a href="javascript:;" v-if="studioLogo == ''" class="nickname" v-text="userName" 
     @click="goAccount"></a>
     <img v-else :src="studioLogo" class="studio-logo"
-    @click="goAccount">
+    @click="goAccount" :title="studioName">
     <a href="javascript:;" @click="logOut" class="logout">退出</a>
   </div>
 </div>

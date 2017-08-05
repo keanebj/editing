@@ -14,6 +14,10 @@ export default {
     userName: {
       type: String,
       default: '熊老师'
+    },
+    studioName: {
+    	type: String,
+      default: '熊老师'
     }
   },
   methods: {},
