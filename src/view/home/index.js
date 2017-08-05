@@ -7,6 +7,14 @@ export default {
     swiperSlide
 	},
   created() {
+		if (!this.$store.state.token) {
+			this.$router.push('/login')
+			return;
+    }
+    if (this.$store.state.userinfo.username == undefined || this.$store.state.userinfo.username == null) {
+			this.$router.push('/login')
+			return;
+    }
   	this.$store.articleBack = false;
   	this.getNotice();
     this.getCollege();
@@ -313,6 +321,7 @@ export default {
   	}
   },
   mounted () {
+		if(this.$store.state.token){
     //用于显示左侧
     var span5 =  document.querySelector(".ivu-col-span-5");
     var span19 =  document.querySelector(".ivu-col-span-19");
@@ -331,6 +340,7 @@ export default {
       }
       span5.style.display = 'block';
       span19.className = "layout-content-warp ivu-col ivu-col-span-19";
-    },1000)
+		},1000)
+		}
   }
 }

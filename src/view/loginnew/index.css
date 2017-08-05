@@ -1,0 +1,111 @@
+   .login {
+     width: 300px;
+     margin: 20px auto 0;
+   }
+
+   .ivu-card-bordered {
+     border: none!important;
+   }
+
+   .ivu-card-head p {
+     text-align: center;
+     color: #F95759!important;
+     font-size: 20px!important;
+     letter-spacing: 2px;
+   }
+
+   .disabled {
+     background-color: #d9d9d9!important;
+     border-color: #d9d9d9!important;
+   }
+
+   .login-btn {
+     width: 100%!important;
+     border-radius: 100px!important;
+   }
+
+   .ivu-card-head {
+     display: none;
+   }
+
+   .ivu-card-body {
+     padding: 0!important;
+   }
+
+   .inner-page img {
+     width: 100%;
+   }
+
+   .inner-page {
+     overflow-x: hidden;
+   }
+
+   .wrap {
+     position: relative;
+   }
+
+   .login-form {
+     position: absolute;
+     top: 30%;
+     right: 10%;
+     width: 385px;
+     background: #fff;
+     border-radius: 10px;
+     letter-spacing: 5px;
+     padding-top: 10px;
+   }
+
+   .login-txt {
+     text-align: center;
+     color: #F95759;
+     font-size: 18px;
+   }
+
+   .ivu-form-item-content {
+     text-align: center!important;
+   }
+   .login-form .ivu-input-group-prepend {
+     border: none!important;
+     background: #fff;
+   }
+   .ivu-input {
+     border: none!important;
+     background: #fff!important;
+     border-bottom: 1px solid #ccc!important;
+     border-radius: none!important;
+     border-radius: 0!important;
+   }
+   input:focus {
+     background-color: #30D2C4!important;
+   }
+   .remember-pwd {
+     padding: 5px 0;
+   }
+   .remember-pwd>div {
+     display: inline-block;
+     line-height: 14px;
+   }
+   .r-radio {
+     float: left;
+   }
+   .r-radio img,
+   .r-radio span {
+     float: left;
+   }
+   .r-test {
+     float: right;
+   }
+   .r-test img,
+   .r-test span {
+     float: left;
+   }
+   .remember-pwd img {
+     margin-right: 5px;
+   }
+   .clearfix:after {
+     content: ".";
+     display: block;
+     height: 0;
+     clear: both;
+     visibility: hidden
+   }
