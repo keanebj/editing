@@ -328,22 +328,27 @@ export default {
         var ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0, img.width, img.height);
         var ext = img.src.substring(img.src.lastIndexOf(".")+1).toLowerCase();
-        var dataURL = canvas.toDataURL("image/"+ext);
+        var dataURL='';
+        try{
+          dataURL = canvas.toDataURL("image/"+ext);
+        }catch(error){
+            
+        }
         return dataURL;
     },
     clickCoverOk:function(e){
       //选择的封面显示在文本域中
       if(this.iIndex[0]>=0){
-        //this.formTop.cover=this.iIndex[1];
         //转为base64
-        var image = new Image();   
-        //如果是跨域的图片就访问后台的接口，发图片下载下来,然后访问服务器上的图片
-        if(this.iIndex[1].indexOf(this.$conf.host) == -1){
+          var image = new Image();   
           this.noSel=true;
-          this.$http.post('/api/image/upload',{remoteurl:this.iIndex[1]}).then((response)=>{
+          this.$http.post('/api/image/base64',{url:this.iIndex[1]}).then((response)=>{
              this.noSel=false;
-            image.src = response.data.path;
-            this.baseimg = this.getBase64Image(image);      
+            this.baseimg = response.data.text;
+            if(!response.data.text){
+               image.src = this.iIndex[1];
+               this.baseimg=this.getBase64Image(image);
+            }
             this.tempi=this.iIndex[0];
             this.i=this.iIndex[0];
             this.contentModal=false;
@@ -353,14 +358,6 @@ export default {
             },500)
                   
           })
-        }else{
-           this.noSel=false;
-          image.src = this.iIndex[1];
-          this.baseimg = this.getBase64Image(image);
-          this.tempi=this.iIndex[0];
-          this.i=this.iIndex[0];
-          this.contentModal=false;
-        }
       }else{
         this.noSel=true;
         //未选择封面，提示选择
@@ -604,7 +601,6 @@ abstractWordCount:function(event){
         		}else{
         			this.$Notice.error({title:error.data.message,desc: false});
         		}
-	           
           }, (error) => {
             this.$Notice.error({title:error.data.message,desc: false});
           });
@@ -624,16 +620,16 @@ abstractWordCount:function(event){
         this.$refs[name].validate((valid) => {
           if(!this.formTop.content){
             if(!hideTip){
-              this.$Notice.error({title:'保存失败，请检查格式是否正确!',desc: false});
+              this.$Notice.error({title:'保存失败，请将内容填写完整',desc: false});
             }
             this.hideTip=false;
           }else if(!this.isHideKeyword){
             if(!hideTip){
-              this.$Notice.error({title:'保存失败，请检查格式是否正确!',desc: false});
+              this.$Notice.error({title:'保存失败，请将内容填写完整',desc: false});
             }
           }else if(!this.isHideAuthor){
             if(!hideTip){
-              this.$Notice.error({title:'保存失败，请检查格式是否正确!',desc: false});
+              this.$Notice.error({title:'保存失败，请将内容填写完整',desc: false});
             }
           }
           else if (valid) {
@@ -666,7 +662,7 @@ abstractWordCount:function(event){
               }
           } else {
             if(!hideTip) {
-              this.$Notice.error({title:'保存失败，请检查格式是否正确!',desc: false});
+              this.$Notice.error({title:'保存失败，请将内容填写完整',desc: false});
             }
           }
         })

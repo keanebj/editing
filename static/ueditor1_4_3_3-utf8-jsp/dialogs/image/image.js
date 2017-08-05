@@ -23,6 +23,7 @@
         var tabs = $G('tabhead').children;
         for (var i = 0; i < tabs.length; i++) {
             domUtils.on(tabs[i], "click", function (e) {
+                setAlign('center');
                 var target = e.target || e.srcElement;
                 setTabFocus(target.getAttribute('data-content-id'));
             });
