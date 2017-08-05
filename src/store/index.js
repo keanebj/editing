@@ -13,7 +13,8 @@ const store = new Vuex.Store({
     breadcrumb: [],
     userinfo: userinfo,
     token: token,
-    isActive: false
+    isActive: false,
+    articleId: ''
   },
   getters: {},
   mutations: {

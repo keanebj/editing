@@ -11,9 +11,14 @@ import router from '@/router'
 ajax.interceptors.request.use(function (config) {
   var path = config.url.replace(config.baseURL, '')
   var isWhite = false
+  console.log(store.state.articleId)
   whitelist.forEach(n => {
     if (path.indexOf(n) >= 0) {
-      isWhite = true
+    	if (path.indexOf(store.state.articleId) > -1) {
+    		isWhite = false
+    	}else{
+    		isWhite = true
+    	}
     }
   })
   if (!isWhite) {

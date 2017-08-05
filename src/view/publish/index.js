@@ -241,9 +241,7 @@ export default {
       if (this.articleID > -1) {
 //    	保存显示预览(后台返回数据问题)
         this.$http.get("/api/content/"+this.articleID).then((response) => {
-        	console.log(response)
           let data = response.data.content;
-          console.log(data)
           //给数据值
           if (response.data.operatortype == "Edit") {
           	this.previewCon[0].title = data.title;
@@ -574,17 +572,21 @@ abstractWordCount:function(event){
         //已经保存了，可以发布
         this.$http.put("/api/content/publish/"+this.articleID
         ).then((response) => {
-            this.$Notice.success({title:response.data.message,desc: false});
-
-            if (this.formTop.label == "Notice") {
-            	let cookieGet = Cookies.get('clickedNo');
-            	Cookies.set('clickedNo', cookieGet+','+this.articleID);
-            }else if (this.formTop.label == "College"){
-            	let cookieGet = Cookies.get('clickedCo');
-            	Cookies.set('clickedCo', cookieGet+','+this.articleID);
-            }
-            //发布成功：跳转到内容管理
-            this.$router.replace("/manage/content");
+        		if (response.data.status == 1) {
+        			this.$Notice.success({title:response.data.message,desc: false});
+	            if (this.formTop.label == "Notice") {
+	            	let cookieGet = Cookies.get('clickedNo');
+	            	Cookies.set('clickedNo', cookieGet+','+this.articleID);
+	            }else if (this.formTop.label == "College"){
+	            	let cookieGet = Cookies.get('clickedCo');
+	            	Cookies.set('clickedCo', cookieGet+','+this.articleID);
+	            }
+	            //发布成功：跳转到内容管理
+	            this.$router.replace("/manage/content");
+        		}else{
+        			this.$Notice.error({title:error.data.message,desc: false});
+        		}
+	            
           }, (error) => {
             this.$Notice.error({title:error.data.message,desc: false});
           });
@@ -656,6 +658,7 @@ abstractWordCount:function(event){
       document.execCommand("Copy");
     },
     share: function () {
+    	this.$store.state.articleId = this.articleID;//改变id 魏征霖
         //需要访问后台
         this.$http.put("/api/content/share/"+this.articleID).then((response) => {
           if(response.data.status == 1){
