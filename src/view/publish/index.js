@@ -603,13 +603,13 @@ abstractWordCount:function(event){
         ).then((response) => {
         		if (response.data.status == 1) {
         			this.$Notice.success({title:response.data.message,desc: false});
-	            if (this.formTop.label == "Notice") {
-	            	let cookieGet = Cookies.get('clickedNo');
-	            	Cookies.set('clickedNo', cookieGet+','+this.articleID);
-	            }else if (this.formTop.label == "College"){
-	            	let cookieGet = Cookies.get('clickedCo');
-	            	Cookies.set('clickedCo', cookieGet+','+this.articleID);
-	            }
+//	            if (this.formTop.label == "Notice") {
+//	            	let cookieGet = Cookies.get('clickedNo');
+//	            	Cookies.set('clickedNo', cookieGet+','+this.articleID);
+//	            }else if (this.formTop.label == "College"){
+//	            	let cookieGet = Cookies.get('clickedCo');
+//	            	Cookies.set('clickedCo', cookieGet+','+this.articleID);
+//	            }
 	            //发布成功：跳转到内容管理
 	            this.$router.push("/manage/content");
         		}else{
