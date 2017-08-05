@@ -1,5 +1,7 @@
 <section>
-  <Form ref="formTop" :model="formTop" label-position="top" :rules="ruleValidate">
+   <MainHeader :logOut="logOut" :userName="userinfo.username"
+  :goHome="goHome" :goAccount="goAccount" :studioLogo="userinfo.studioLogo"></MainHeader>
+  <Form ref="formTop" :model="formTop" label-position="top" :rules="ruleValidate" style="padding:30px 85px 0;">
     <Row :gutter="34">
       <Col span="6">
       <a class="go-back" href="javascript:void(0)" @click="goBack">
@@ -129,4 +131,6 @@
       </Col>
     </Row>
   </Form>
+   <MainFooter></MainFooter>
 </section>
+
