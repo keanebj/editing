@@ -67,6 +67,7 @@ export default {
     let tempImgFormat = allowImgFormat.indexOf(imgFormat) === -1 ? 'jpg' : imgFormat
     this.imgFormat = tempImgFormat
     return {
+      linkimg:'',
       visible: false,
       cropper: null,
       headers: {
@@ -93,12 +94,21 @@ export default {
     },
     handleClick(e,resel,linkimg) {
       if(linkimg == 'linkimg'){
+        this.linkimg=linkimg;
+      }
+      if(this.linkimg == 'linkimg' && resel =='resel'){
+           //正文重新选择
+          this.visible=false;
+          //调用父组件方法
+          this.$emit('fromContent');
+          return;
+       }
+      if(linkimg == 'linkimg'){
         this.sourceImgUrl = this.image;
         setTimeout(() => {
           this.startCrop()
         }, 1000)
         return;
-
       }else{
         if(this.noSel){
           return;
