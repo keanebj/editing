@@ -25,7 +25,8 @@
       <tr v-for="(item,index) in data" class="tr-hover tr-studio">
         <th scope="row">
           <div class="sutdio-logo">
-            <a target="_blank" :href="'https://studio.hubpd.com/' + (catalogs[item.catalogid]?catalogs[item.catalogid]['cname']:'')">
+            <a target="_blank" :href="item.url">
+            <!-- <a target="_blank" :href="'https://studio.hubpd.com/' + (catalogs[item.catalogid]?catalogs[item.catalogid]['cname']:'')"> -->
               <img v-if="item.logofile" height="60" :src="item.logofile" alt="">
             </a>
           </div>
@@ -33,7 +34,7 @@
         <td><a style="color:#495060" target="_blank" :href="'https://studio.hubpd.com/' + (catalogs[item.catalogid]?catalogs[item.catalogid]['cname']:'')">{{item.studioname}}</a></td>
         <td>{{item.url}}</td>
         <td>{{item.addtime}}</td>
-        <td>{{catalogs[item.catalogid]?catalogs[item.catalogid]['name']:'未绑定'}}</td>
+         <td>{{catalogs[item.catalogid]?catalogs[item.catalogid]['name']:'未绑定'}}</td> 
         <td style="font-size:15px;">
           <router-link :to="'/manage/studio/'+item.id">
             <!-- <Icon type="edit"></Icon> -->
