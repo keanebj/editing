@@ -2,7 +2,7 @@ export default [{
     name: 'login',
     path: '/login',
     meta: {
-      title: '融合号平台-登录'
+      title: '融合号-登录'
     },
     component: require('@/view/login/index.vue')
 
@@ -19,7 +19,7 @@ export default [{
         name: 'home',
         path: '',
         meta: {
-          title: '融合号平台'
+          title: '融合号'
         },
         component: require('@/view/home/index.vue')
       },
