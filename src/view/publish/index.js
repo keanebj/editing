@@ -162,7 +162,7 @@ export default {
         this.formTop.currentAbstractCount = Math.ceil(this.gblen(Cookies.get('summary'),120,'summary')) >60?60:Math.ceil(this.gblen(Cookies.get('summary'),120,'summary'));
       }
 
-      this.titleContentCount = Math.ceil(this.gblen(Cookies.get('title'),44,'title')) > 22.5 ? 22:Math.ceil(this.gblen(Cookies.get('title'),44,'title'));
+      this.titleContentCount = Math.ceil(this.gblen(Cookies.get('title'),44,'title')) > 22 ? 22:Math.ceil(this.gblen(Cookies.get('title'),44,'title'));
       this.editor.ready(function(){
         This.editor.execCommand('inserthtml',This.formTop.content,true);
       })
@@ -336,7 +336,7 @@ export default {
         try{
           dataURL = canvas.toDataURL("image/"+ext);
         }catch(error){
-            
+
         }
         return dataURL;
     },
@@ -344,7 +344,7 @@ export default {
       //选择的封面显示在文本域中
       if(this.iIndex[0]>=0){
         //转为base64
-          var image = new Image();   
+          var image = new Image();
           this.noSel=true;
           this.$http.post('/api/image/base64',{url:this.iIndex[1]}).then((response)=>{
              this.noSel=false;
@@ -358,9 +358,9 @@ export default {
             this.contentModal=false;
             let This=this.$refs.corup;
             setTimeout(function(){
-              This.handleClick(e,'','linkimg');  
+              This.handleClick(e,'','linkimg');
             },500)
-                  
+
           })
       }else{
         this.noSel=true;
