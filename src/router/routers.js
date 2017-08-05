@@ -7,6 +7,8 @@ export default [{
     component: require('@/view/login/index.vue')
 
   },
+
+
   {
     name: 'main',
     path: '/',

@@ -114,8 +114,8 @@
           </div>
         </div>
         <p slot="footer">
-          <cropper-upload :width="478" :height="270" :image="baseimg" :noSel="noSel" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048">
-            <Button type="primary" shape="circle" @click="clickCoverOk">确定</Button>
+          <cropper-upload ref="corup" :width="478" :height="270" :image="baseimg" :noSel="noSel" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048">
+            <Button type="primary" shape="circle" @click="clickCoverOk($event)">确定</Button>
           </cropper-upload>
         </p>
       </Modal>

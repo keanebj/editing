@@ -25,7 +25,7 @@ export default {
     }, false);
   },
   mounted() {
-    if (window.location.href.indexOf('publish') > -1) {
+    /*if (window.location.href.indexOf('publish') > -1) {
       this.$store.commit('set', {
         isActive: true
       })
@@ -33,7 +33,7 @@ export default {
       this.$store.commit('set', {
         isActive: false
       })
-    }
+    }*/
   },
   created() {
     // if (!this.token) {

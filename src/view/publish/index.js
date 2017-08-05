@@ -117,7 +117,7 @@ export default {
     })
   },
   mounted(){
-    //用于隐藏左侧
+   //用于隐藏左侧
     var span5 =  document.querySelector(".ivu-col-span-5")
     var span19 =  document.querySelector(".ivu-col-span-19")
     span5.style.display = 'none';
@@ -289,7 +289,7 @@ export default {
       let reg=/<img\b[^>]*src\s*=\s*"[^>"]*\.(?:png|jpg|jpeg|gif)"[^>]*>/gi;
       let content=this.editor.getContent();
       let imgArr=content.match(reg);
-      var srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i;
+      let srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i;
       //未匹配到图片
       if(!imgArr){
         this.$Notice.warning({
@@ -331,18 +331,36 @@ export default {
         var dataURL = canvas.toDataURL("image/"+ext);
         return dataURL;
     },
-    clickCoverOk:function(){
+    clickCoverOk:function(e){
       //选择的封面显示在文本域中
       if(this.iIndex[0]>=0){
         //this.formTop.cover=this.iIndex[1];
         //转为base64
-        var image = new Image();
-        image.src = this.iIndex[1];
-        this.baseimg = this.getBase64Image(image);
-        this.noSel=false;
-        this.tempi=this.iIndex[0];
-        this.i=this.iIndex[0];
-        this.contentModal=false;
+        var image = new Image();   
+        //如果是跨域的图片就访问后台的接口，发图片下载下来,然后访问服务器上的图片
+        if(this.iIndex[1].indexOf(this.$conf.host) == -1){
+          this.noSel=true;
+          this.$http.post('/api/image/upload',{remoteurl:this.iIndex[1]}).then((response)=>{
+             this.noSel=false;
+            image.src = response.data.path;
+            this.baseimg = this.getBase64Image(image);      
+            this.tempi=this.iIndex[0];
+            this.i=this.iIndex[0];
+            this.contentModal=false;
+            let This=this.$refs.corup;
+            setTimeout(function(){
+              This.handleClick(e,'','linkimg');  
+            },500)
+                  
+          })
+        }else{
+           this.noSel=false;
+          image.src = this.iIndex[1];
+          this.baseimg = this.getBase64Image(image);
+          this.tempi=this.iIndex[0];
+          this.i=this.iIndex[0];
+          this.contentModal=false;
+        }
       }else{
         this.noSel=true;
         //未选择封面，提示选择
@@ -572,6 +590,7 @@ abstractWordCount:function(event){
         //已经保存了，可以发布
         this.$http.put("/api/content/publish/"+this.articleID
         ).then((response) => {
+<<<<<<< Updated upstream
         		if (response.data.status == 1) {
         			this.$Notice.success({title:response.data.message,desc: false});
 	            if (this.formTop.label == "Notice") {
@@ -587,6 +606,19 @@ abstractWordCount:function(event){
         			this.$Notice.error({title:error.data.message,desc: false});
         		}
 	            
+=======
+            this.$Notice.success({title:response.data.message,desc: false});
+
+            if (this.formTop.label == "Notice") {
+            	let cookieGet = Cookies.get('clickedNo');
+            	Cookies.set('clickedNo', cookieGet+','+this.articleID);
+            }else if (this.formTop.label == "College"){
+            	let cookieGet = Cookies.get('clickedCo');
+            	Cookies.set('clickedCo', cookieGet+','+this.articleID);
+            }
+            //发布成功：跳转到内容管理
+            this.$router.push('/test');
+>>>>>>> Stashed changes
           }, (error) => {
             this.$Notice.error({title:error.data.message,desc: false});
           });
