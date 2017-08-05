@@ -72,8 +72,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr :class="{hide:hidenodata}"><td style="border-bottom:none;font-size: 18px;color: #333;" colspan="6"><img src="../../../assets/error/no-data.svg" style="margin-top:30px;width: 30%;"/><br/>暂无内容</td></tr>
-      <tr :class="{hide:hidenofound}"><td style="border-bottom:none;font-size: 18px;color: #333;" colspan="6"><img src="../../../assets/error/not-found.svg" style="margin-top:30px;width: 30%;"/><br/>没有搜索到相关内容</td></tr>
+      <tr :class="{hide:hidenodata}"><td style="border-bottom:none;font-size: 18px;color: #333;" colspan="6"><img src="../../../assets/error/no-data.svg" style="margin-top:80px;width: 30%;"/><br/><br/>暂无内容</td></tr>
+      <tr :class="{hide:hidenofound}"><td style="border-bottom:none;font-size: 18px;color: #333;" colspan="6"><img src="../../../assets/error/not-found.svg" style="margin-top:80px;width: 30%;"/><br/><br/>没有搜索到相关内容</td></tr>
       <tr v-for="(item,index) in contentList" :index="item.ID" class="tr-hover">
         <th scope="row" width="15%" style="position: relative;padding: 0.75rem;">
           <Icon v-if="item.topflag" type="flag" style="position:absolute;top:0px;left:0px;color:#F95759;font-size:20px;">top</Icon>
