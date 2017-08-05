@@ -34,7 +34,7 @@ export default {
       publishChannels: ['人民日报中央厨房'],
       publishLabels: {
         Notice: '公告',
-        College: '中央厨房融媒体学院'
+        College: '融媒体学院'
       },
       titleMaxCount:22,
       summaryMaxCount:60,
@@ -54,7 +54,7 @@ export default {
         currentAbstractCount:0,
         title:'',
         content:'',
-        label:'Notice'
+        label:''
       },
       ruleValidate: {
         authorArr: [
@@ -104,9 +104,13 @@ export default {
       baseimg:'',
       noSel:false
   }
-  },
+},
   created(){
     this.roleType=this.$store.state.userinfo.roleType;
+    if(this.$store.state.userinfo.roleType == 'Manage'){
+        this.formTop.label='Notice';
+    }
+
     this.$http.get("/api/studio/"+this.$store.state.userinfo.id).then((response) => {
       this.studioName = response.data.studio.studioname;
     }, (error) => {
@@ -158,7 +162,7 @@ export default {
         this.formTop.currentAbstractCount = Math.ceil(this.gblen(Cookies.get('summary'),120,'summary')) >60?60:Math.ceil(this.gblen(Cookies.get('summary'),120,'summary'));
       }
 
-      this.titleContentCount = Math.ceil(this.gblen(Cookies.get('title'),44,'title')) > 22 ? 22:Math.ceil(this.gblen(Cookies.get('title'),44,'title'));
+      this.titleContentCount = Math.ceil(this.gblen(Cookies.get('title'),44,'title')) > 22.5 ? 22:Math.ceil(this.gblen(Cookies.get('title'),44,'title'));
       this.editor.ready(function(){
         This.editor.execCommand('inserthtml',This.formTop.content,true);
       })
