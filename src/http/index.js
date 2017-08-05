@@ -10,12 +10,20 @@ import router from '@/router'
 // Add a request interceptor
 ajax.interceptors.request.use(function (config) {
   var path = config.url.replace(config.baseURL, '')
+  var method = config.method
   var isWhite = false
-  whitelist.forEach(n => {
-    if (path.indexOf(n) >= 0) {
-      isWhite = true
+  
+  for (var i in whitelist) {
+  	var n = whitelist[i];
+  	if (path.startsWith(n.path)) {
+    	if (n.method&&n.method.indexOf(method) == -1) {
+    		isWhite = false
+    	}else{
+    		isWhite = true
+    		break;
+    	}
     }
-  })
+  }
   if (!isWhite) {
     if (!store.state.token) {
       router.replace('/login')

@@ -44,7 +44,14 @@
 
       <Form-item style="margin-top: 80px;">
         <Button type="primary" :disabled="disabledS" shape="circle" @click="submit" :loading="isSubmit" style="margin-left:70px;">提交</Button>
-        <Button type="ghost" :disabled="disabledS" shape="circle" style="margin-left: 20px" @click="cancel">取消</Button>
+        <Button type="ghost" :disabled="disabledS" shape="circle" 
+        v-bind:style="{
+          'margin-left':'20px',
+          'color':disabledS?'#bbbec4!important':'',
+          'background-color':disabledS?'#f7f7f7!important':'',
+          'border-color':disabledS?'#dddee1!important':''
+        }" 
+        @click="cancel">取消</Button>
       </Form-item>
     </Form>
     </Col>

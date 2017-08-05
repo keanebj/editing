@@ -7,17 +7,59 @@ export default {
     swiperSlide
 	},
   created() {
+  	this.$store.articleBack = false;
   	this.getNotice();
     this.getCollege();
     this.getAdlist();
-
-//    判断进入公告还是学院
-		if (this.$route.query.switchTab == undefined) {
-			this.switchTab = 0
+		
+//		判断身份
+		this.roleType=this.$store.state.userinfo.roleType;
+		if (this.roleType == 'Edit') {
+//			请求中央厨房号指数
+			this.roleFlag = 1;
+			this.$http.get('/api/studio/' + this.$store.state.userinfo.id).then(({ data }) => {
+		    if (data.status == 1) {
+		    	if (data.studio.accountindex == null) {
+		    		this.accountIndex = 0;
+		    	}else{
+		    		this.accountIndex = data.studio.accountindex;
+		    	}
+		    } else {
+		      this.$Notice.error({
+		        title: '错误',
+		        desc: data.message || '工作室数请求错误'
+		      })
+		    }
+		    this.isLoading = false
+		  }, () => {
+		    this.$Notice.error({
+		      title: '错误',
+		      desc: '工作室数请求错误'
+		    })
+		    this.isLoading = false
+		  })
 		}else{
-			this.switchTab = this.$route.query.switchTab;
+			//		请求工作室总数
+			this.roleFlag = 0;
+			this.$http.get('/api/studio').then(({ data }) => {
+		    if (data.status) {
+		      this.studioTotal = data.total
+		    } else {
+		      this.$Notice.error({
+		        title: '错误',
+		        desc: data.message || '工作室数请求错误'
+		      })
+		    }
+		    this.isLoading = false
+		  }, () => {
+		    this.$Notice.error({
+		      title: '错误',
+		      desc: '工作室数请求错误'
+		    })
+		    this.isLoading = false
+		  })
 		}
-
+//		文章总数
 		this.$http.get("/api/content/count").then(({ data }) => {
 			if (data.status) {
 				this.articleTot = data.total;
@@ -33,26 +75,9 @@ export default {
         desc: data.message || '数据请求错误'
       })
     })
+		
+		
 
-
-//		请求工作室总数
-		this.$http.get('/api/studio').then(({ data }) => {
-	    if (data.status) {
-	      this.studioTotal = data.total
-	    } else {
-	      this.$Notice.error({
-	        title: '错误',
-	        desc: data.message || '工作室数请求错误'
-	      })
-	    }
-	    this.isLoading = false
-	  }, () => {
-	    this.$Notice.error({
-	      title: '错误',
-	      desc: '工作室数请求错误'
-	    })
-	    this.isLoading = false
-	  })
 //  this.roleFlag = this.$store.state.roleType;
 //		console.log(this.$store.state.roleType)
   },
@@ -73,8 +98,8 @@ export default {
       pageSize: 8,//每页的个数
       noticeTotal: 0,//公告总数
       articleTotal:0,//学院总数
-      studioTotal:35,//工作室总数
-      accountIndex:100,//中央厨房号指数
+      studioTotal:0,//工作室总数
+      accountIndex:0,//中央厨房号指数
       noticeList:[],//公告列表
       collegeList:[],//学院列表
       adList:[],//广告列表
@@ -94,7 +119,8 @@ export default {
       clickedCo: [],//存储当前被点击后的学院
      	articleTot: 0,//总发文数
      	nodataNotice:true,
-     	nodataCollege:true
+     	nodataCollege:true,
+     	roleType: 'Edit'
     }
   },
   methods: {
@@ -122,9 +148,9 @@ export default {
 
 					//判断身份
 					if (response.data.operatortype == "Edit") {
-						this.roleFlag = 1;
+						
 					}else{
-						this.roleFlag = 0;
+						
 					}
 
 					if (response.data.contents&&response.data.total) {
@@ -290,6 +316,7 @@ export default {
     //用于显示左侧
     var span5 =  document.querySelector(".ivu-col-span-5");
     var span19 =  document.querySelector(".ivu-col-span-19");
+    
     if(!span19){
       span19 =  document.querySelector(".ivu-col-span-24");
     }

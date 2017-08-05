@@ -2,15 +2,14 @@ import { mapState } from 'vuex'
 export default {
   name: 'Notice',
   created () {
-		this.switchTab = this.$route.query.switchTab;
+  	this.articleBack = this.$store.articleBack;
   },
   mounted(){
-
     var span5 =  document.querySelector(".ivu-col-span-5")
     var span19 =  document.querySelector(".ivu-col-span-19")
     span5.style.display = 'none';
     span19.className = "layout-content-warp ivu-col ivu-col-span-24";
-
+    
         this.noticeID=this.$route.query.id;
         //ajax获得后台公告的内容
         this.$http.get("api/content/notice/" + this.noticeID).then(({ data }) => {
@@ -30,8 +29,6 @@ export default {
 		        desc: data.message || '数据请求错误'
 		      })
         })
-
-
   },
   data () {
     return {
@@ -39,7 +36,8 @@ export default {
       noticeID:-1,
       title:'',
       content:'',
-      switchTab: 0      
+      switchTab: 0,
+      articleBack: false
     }
   },
   computed: {
@@ -47,11 +45,7 @@ export default {
   },
   methods: {
     goBack(){
-    	if (this.$route.query.switchTab == undefined) {
-    		this.$router.go(-1)
-    	}else{
-      		   this.$router.push({path:'/', query: { switchTab:  this.switchTab}})
-    	}
+    	this.$router.go(-1)
     }
   }
 }

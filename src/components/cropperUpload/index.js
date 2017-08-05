@@ -91,24 +91,33 @@ export default {
       e.preventDefault();
       return false;
     },
-    handleClick(e,resel) {
-      if(this.noSel){
-        return;
-      }
-      if (this.image && resel!='resel') {
-        this.sourceImgUrl = this.image
+    handleClick(e,resel,linkimg) {
+      if(linkimg == 'linkimg'){
+        this.sourceImgUrl = this.image;
         setTimeout(() => {
           this.startCrop()
         }, 1000)
         return;
-      }
-      if (e.target !== this.$refs.fileinput) {
-        e.preventDefault();
-        if (document.activeElement !== this.$els) {
-          this.$refs.fileinput.value = ''
-          this.$refs.fileinput.click();
+
+      }else{
+        if(this.noSel){
+          return;
         }
-      }
+        if (this.image && resel!='resel') {
+          this.sourceImgUrl = this.image
+          setTimeout(() => {
+            this.startCrop()
+          }, 1000)
+          return;
+        }
+        if (e.target !== this.$refs.fileinput) {
+          e.preventDefault();
+          if (document.activeElement !== this.$els) {
+            this.$refs.fileinput.value = ''
+            this.$refs.fileinput.click();
+          }
+        }
+       }
     },
     handleChange(e) {
       e.preventDefault();

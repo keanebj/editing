@@ -4,7 +4,7 @@ import {
 export default {
   name: 'Article',
   created() {
-  	this.switchTab = this.$route.query.switchTab;
+  	this.articleBack = this.$store.articleBack;
   },
   data() {
     return {
@@ -12,16 +12,13 @@ export default {
       noticeID: -1,
       title: '',
       content: '',
-      switchTab: 1
+      switchTab: 1,
+      articleBack: false
     }
   },
   methods: {
     goBack(){
-    	if (this.$route.query.switchTab == undefined) {
-    		this.$router.go(-1)
-    	}else{
-      		   this.$router.push({path:'/', query: { switchTab:  this.switchTab}})
-    	}
+    	this.$router.go(-1)
     }
   },
   mounted() {

@@ -1,13 +1,13 @@
 <div class="layout">
-  <MainHeader :logOut="logOut" :userName="userinfo.username" 
+  <MainHeader :logOut="logOut" :userName="userinfo.username"
   :goHome="goHome" :goAccount="goAccount" :studioLogo="userinfo.studioLogo"></MainHeader>
-  <div class="layout-container">
+  <div class="layout-container"  v-bind:style="{ minHeight: minHeight + 'px' }">
     <Row type="flex">
-      <i-col span="5" :class="{'hide':isActive}">
+      <i-col span="5">
         <ComponentsMainMenu :data="menu" :onSelect="onSelect" :roleType="userinfo.roleType"></ComponentsMainMenu>
       </i-col>
       <i-col span="19" :class="{'layout-content-warp':true,'set-width':isActive}">
-        <div class="layout-content">
+        <div class="layout-content" >
           <div class="layout-content-main">
             <transition name="slide-fade" mode="out-in">
               <router-view></router-view>

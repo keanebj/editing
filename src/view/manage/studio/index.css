@@ -28,3 +28,15 @@
 .tr-studio th{
     padding: 0.58rem 0.75rem!important;
 }
+.studio-nodata{
+    text-align: center;
+    font-size: 18px;
+    color:#333;
+}
+.studio-nodata img{
+    width: 25%;
+    margin-bottom:30px;
+}
+.ivu-page-total{
+    display: none!important;
+}

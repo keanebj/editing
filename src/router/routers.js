@@ -1,26 +1,25 @@
-export default [
-  {
+export default [{
     name: 'login',
     path: '/login',
     meta: {
-      title: '自媒体平台-登录'
+      title: '融合号-登录'
     },
     component: require('@/view/login/index.vue')
 
   },
+
   {
     name: 'main',
     path: '/',
     meta: {
-      title: '自媒体'
+      title: '融合号'
     },
     component: require('@/view/index.vue'),
-    children: [
-      {
+    children: [{
         name: 'home',
         path: '',
         meta: {
-          title: '自媒体平台'
+          title: '融合号'
         },
         component: require('@/view/home/index.vue')
       },
@@ -73,7 +72,7 @@ export default [
         component: require('@/view/settings/account/index.vue')
       },
       {
-        name:'notice',
+        name: 'notice',
         path: '/notice',
         meta: {
           title: '公告',
@@ -81,7 +80,7 @@ export default [
         component: require('@/view/notice/index.vue'),
       },
       {
-        name:'article',
+        name: 'article',
         path: '/article',
         meta: {
           title: '文章',
@@ -106,4 +105,3 @@ export default [
     component: require('@/view/404/index.vue')
   }
 ]
-

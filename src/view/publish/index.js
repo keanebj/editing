@@ -34,7 +34,7 @@ export default {
       publishChannels: ['人民日报中央厨房'],
       publishLabels: {
         Notice: '公告',
-        College: '中央厨房融媒体学院'
+        College: '融媒体学院'
       },
       titleMaxCount:22,
       summaryMaxCount:60,
@@ -54,7 +54,7 @@ export default {
         currentAbstractCount:0,
         title:'',
         content:'',
-        label:'Notice'
+        label:''
       },
       ruleValidate: {
         authorArr: [
@@ -104,9 +104,13 @@ export default {
       baseimg:'',
       noSel:false
   }
-  },
+},
   created(){
     this.roleType=this.$store.state.userinfo.roleType;
+    if(this.$store.state.userinfo.roleType == 'Manage'){
+        this.formTop.label='Notice';
+    }
+
     this.$http.get("/api/studio/"+this.$store.state.userinfo.id).then((response) => {
       this.studioName = response.data.studio.studioname;
     }, (error) => {
@@ -117,7 +121,7 @@ export default {
     })
   },
   mounted(){
-    //用于隐藏左侧
+   //用于隐藏左侧
     var span5 =  document.querySelector(".ivu-col-span-5")
     var span19 =  document.querySelector(".ivu-col-span-19")
     span5.style.display = 'none';
@@ -151,15 +155,14 @@ export default {
         this.formTop.keywordArr=Cookies.get('keyword').split(/\s+/g);
       }
       this.formTop.summary = Cookies.get('summary');
-     // this.formTop.content = Cookies.get('content');
 
       this.formTop.content = localStorage.getItem('content');
-      this.formTop.label = '';
+      this.formTop.label = 'Notice';
       if(Cookies.get('summary')){
         this.formTop.currentAbstractCount = Math.ceil(this.gblen(Cookies.get('summary'),120,'summary')) >60?60:Math.ceil(this.gblen(Cookies.get('summary'),120,'summary'));
       }
 
-      this.titleContentCount = Math.ceil(this.gblen(Cookies.get('title'),44,'title')) > 22 ? 22:Math.ceil(this.gblen(Cookies.get('title'),44,'title'));
+      this.titleContentCount = Math.ceil(this.gblen(Cookies.get('title'),44,'title')) > 22.5 ? 22:Math.ceil(this.gblen(Cookies.get('title'),44,'title'));
       this.editor.ready(function(){
         This.editor.execCommand('inserthtml',This.formTop.content,true);
       })
@@ -244,10 +247,18 @@ export default {
         this.$http.get("/api/content/"+this.articleID).then((response) => {
           let data = response.data.content;
           //给数据值
-          this.previewCon[0].title = data.title;
-          this.previewCon[0].content = data.content;
-          this.previewCon[0].time = data.addtime;
-          this.previewCon[0].studioname = this.studioName;
+          if (response.data.operatortype == "Edit") {
+          	this.previewCon[0].title = data.title;
+	          this.previewCon[0].content = data.content;
+	          this.previewCon[0].time = data.addtime;
+	          this.previewCon[0].studioname = this.studioName;
+	          this.previewCon[0].author = data.author;
+	          this.previewCon[0].channel = data.channel;
+          }else{
+//        	console.log(this.previewCon[0].content)
+          	this.previewCon[0].title = data.title;
+          	this.previewCon[0].content = data.content;
+          }
         }, (error) => {
           this.$Notice.error({
             title: error.data.message,
@@ -282,7 +293,7 @@ export default {
       let reg=/<img\b[^>]*src\s*=\s*"[^>"]*\.(?:png|jpg|jpeg|gif)"[^>]*>/gi;
       let content=this.editor.getContent();
       let imgArr=content.match(reg);
-      var srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i;
+      let srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i;
       //未匹配到图片
       if(!imgArr){
         this.$Notice.warning({
@@ -321,21 +332,36 @@ export default {
         var ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0, img.width, img.height);
         var ext = img.src.substring(img.src.lastIndexOf(".")+1).toLowerCase();
-        var dataURL = canvas.toDataURL("image/"+ext);
+        var dataURL='';
+        try{
+          dataURL = canvas.toDataURL("image/"+ext);
+        }catch(error){
+            
+        }
         return dataURL;
     },
-    clickCoverOk:function(){
+    clickCoverOk:function(e){
       //选择的封面显示在文本域中
       if(this.iIndex[0]>=0){
-        //this.formTop.cover=this.iIndex[1];
         //转为base64
-        var image = new Image();
-        image.src = this.iIndex[1];
-        this.baseimg = this.getBase64Image(image);
-        this.noSel=false;
-        this.tempi=this.iIndex[0];
-        this.i=this.iIndex[0];
-        this.contentModal=false;
+          var image = new Image();   
+          this.noSel=true;
+          this.$http.post('/api/image/base64',{url:this.iIndex[1]}).then((response)=>{
+             this.noSel=false;
+            this.baseimg = response.data.text;
+            if(!response.data.text){
+               image.src = this.iIndex[1];
+               this.baseimg=this.getBase64Image(image);
+            }
+            this.tempi=this.iIndex[0];
+            this.i=this.iIndex[0];
+            this.contentModal=false;
+            let This=this.$refs.corup;
+            setTimeout(function(){
+              This.handleClick(e,'','linkimg');  
+            },500)
+                  
+          })
       }else{
         this.noSel=true;
         //未选择封面，提示选择
@@ -565,17 +591,20 @@ abstractWordCount:function(event){
         //已经保存了，可以发布
         this.$http.put("/api/content/publish/"+this.articleID
         ).then((response) => {
-            this.$Notice.success({title:response.data.message,desc: false});
-
-            if (this.formTop.label == "Notice") {
-            	let cookieGet = Cookies.get('clickedNo');
-            	Cookies.set('clickedNo', cookieGet+','+this.articleID);
-            }else if (this.formTop.label == "College"){
-            	let cookieGet = Cookies.get('clickedCo');
-            	Cookies.set('clickedCo', cookieGet+','+this.articleID);
-            }
-            //发布成功：跳转到内容管理
-            this.$router.go("manage/content");
+        		if (response.data.status == 1) {
+        			this.$Notice.success({title:response.data.message,desc: false});
+	            if (this.formTop.label == "Notice") {
+	            	let cookieGet = Cookies.get('clickedNo');
+	            	Cookies.set('clickedNo', cookieGet+','+this.articleID);
+	            }else if (this.formTop.label == "College"){
+	            	let cookieGet = Cookies.get('clickedCo');
+	            	Cookies.set('clickedCo', cookieGet+','+this.articleID);
+	            }
+	            //发布成功：跳转到内容管理
+	            this.$router.replace("/manage/content");
+        		}else{
+        			this.$Notice.error({title:error.data.message,desc: false});
+        		}
           }, (error) => {
             this.$Notice.error({title:error.data.message,desc: false});
           });
@@ -595,16 +624,16 @@ abstractWordCount:function(event){
         this.$refs[name].validate((valid) => {
           if(!this.formTop.content){
             if(!hideTip){
-              this.$Notice.error({title:'保存失败，请检查格式是否正确!',desc: false});
+              this.$Notice.error({title:'保存失败，请将内容填写完整',desc: false});
             }
             this.hideTip=false;
           }else if(!this.isHideKeyword){
             if(!hideTip){
-              this.$Notice.error({title:'保存失败，请检查格式是否正确!',desc: false});
+              this.$Notice.error({title:'保存失败，请将内容填写完整',desc: false});
             }
           }else if(!this.isHideAuthor){
             if(!hideTip){
-              this.$Notice.error({title:'保存失败，请检查格式是否正确!',desc: false});
+              this.$Notice.error({title:'保存失败，请将内容填写完整',desc: false});
             }
           }
           else if (valid) {
@@ -625,13 +654,11 @@ abstractWordCount:function(event){
                 //新建
                 this.$http.post('/api/content',this.formTop)
                 .then((response) => {
-                    console.log(response.data)
                     if (response.data.status == 1) {
                     	this.$Notice.success({title:'保存成功',desc: false});
                     }else{
                     	this.$Notice.error({title:response.data.message,desc: false});
                     }
-
                     this.articleID=response.data.id;
                 }, (response) => {
                     this.$Notice.error({title:error.data.message,desc: false});
@@ -639,7 +666,7 @@ abstractWordCount:function(event){
               }
           } else {
             if(!hideTip) {
-              this.$Notice.error({title:'保存失败，请检查格式是否正确!',desc: false});
+              this.$Notice.error({title:'保存失败，请将内容填写完整',desc: false});
             }
           }
         })

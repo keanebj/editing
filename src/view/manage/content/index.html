@@ -13,7 +13,7 @@
       <div class="upload_doc">
         选择文件：
         <div class="upload_doc_con">
-          <input type="text" value="*.doc、*.docx、*.ppt、*.pptx" disabled="" />
+          <input type="text" value="" disabled="" />
           <Upload
             ref="upload"
             :action="$conf.host + $conf.serverRoot + 'api/content/import'"
@@ -72,8 +72,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr :class="{hide:hidenodata}"><td style="border-bottom:none;font-size: 18px;color: #333;" colspan="6"><img src="../../../assets/error/no-data.svg" style="margin-top:30px;width: 30%;"/><br/>暂无内容</td></tr>
-      <tr :class="{hide:hidenofound}"><td style="border-bottom:none;font-size: 18px;color: #333;" colspan="6"><img src="../../../assets/error/not-found.svg" style="margin-top:30px;width: 30%;"/><br/>没有搜索到相关内容</td></tr>
+      <tr :class="{hide:hidenodata}"><td style="border-bottom:none;font-size: 18px;color: #333;" colspan="6"><img src="../../../assets/error/no-data.svg" style="margin-top:80px;width: 30%;"/><br/><br/>暂无内容</td></tr>
+      <tr :class="{hide:hidenofound}"><td style="border-bottom:none;font-size: 18px;color: #333;" colspan="6"><img src="../../../assets/error/not-found.svg" style="margin-top:80px;width: 30%;"/><br/><br/>没有搜索到相关内容</td></tr>
       <tr v-for="(item,index) in contentList" :index="item.ID" class="tr-hover">
         <th scope="row" width="15%" style="position: relative;padding: 0.75rem;">
           <Icon v-if="item.topflag" type="flag" style="position:absolute;top:0px;left:0px;color:#F95759;font-size:20px;">top</Icon>
@@ -95,7 +95,7 @@
         </td>
         <td v-if="roleType == 'Manage'" width="140">
           <span v-if="item.label == 'Notice' ">公告</span>
-          <span v-else>中央厨房融媒体学院</span>
+          <span v-else>融媒体学院</span>
         </td>
         <td width="10%">
           <router-link :to="{path:'../publish',query:{articleID:item.id}}">

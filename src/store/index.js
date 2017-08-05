@@ -44,7 +44,8 @@ const store = new Vuex.Store({
       Object.assign(state, data)
     }
   },
-  actions: {}
+  actions: {},
+  articleBack: true
 })
 function recursiveBreadcrumb(key, val, data, index, result) {
   for (var i = 0, l = data.length; i < l; i++) {

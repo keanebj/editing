@@ -25,6 +25,7 @@ export default {
     }
   },
   created () {
+  	this.$store.articleBack = true;
     this.roleType=this.$store.state.userinfo.roleType;
     this.token=this.$store.state.token;
     this.headToken.token=this.$store.state.token;
@@ -140,25 +141,32 @@ export default {
           })
           break;
         case 'drop':
-          this.$http.put("/api/content/offline/"+contentid,{contentid:contentid},
-            {
-              headers:{
-                token:this.token
-              }
-            }).then((response)=>{
-              this.$Notice.success({
-                title: response.data.message,
-                desc: false
-              })
-              //撤回取消置顶
-              this.cancleTop('notip');
-              //重新加载列表
-              this.getContentList();
-          },(error)=>{
-              this.$Notice.error({
-                title: error.data.message,
-                desc: false
-              })
+          //出现确认弹框
+          this.$Modal.confirm({
+            title: '确认撤回',
+            content: '您确定要撤回？',
+            onOk: () => {
+              this.$http.put("/api/content/offline/"+contentid,{contentid:contentid},
+                {
+                  headers:{
+                    token:this.token
+                  }
+                }).then((response)=>{
+                  this.$Notice.success({
+                    title: response.data.message,
+                    desc: false
+                  })
+                  //撤回取消置顶
+                  this.cancleTop('notip');
+                  //重新加载列表
+                  this.getContentList();
+                },(error)=>{
+                  this.$Notice.error({
+                    title: error.data.message,
+                    desc: false
+                  })
+                })
+            }
           })
           break;
         case 'delete':

@@ -7,7 +7,7 @@
         <th style="width:200px">BANNER</th>
         <th style="width:20px"></th>
         <th style="width:320px">URL</th>
-         <th>时间</th> 
+        <th>时间</th> 
         <th style="width:68px">操作</th>
       </tr>
     </thead>    
@@ -52,7 +52,14 @@
     <Icon type="plus-round"></Icon> 添加广告位</a>
   <div style="padding: 30px;">
     <Button :disabled="!isModify" type="primary" size="large" shape="circle" @click="onSubmit" :loading="isSubmit">提交</Button>
-    <Button :disabled="!isModify" style="margin-left:20px;" type="ghost" size="large" shape="circle" @click="onCancel">取消</Button>
+    <Button :disabled="!isModify" 
+    v-bind:style="{
+      'margin-left':'20px',
+      'color':!isModify?'#bbbec4!important':'',
+      'background-color':!isModify?'#f7f7f7!important':'',
+      'border-color':!isModify?'#dddee1!important':''
+    }" 
+      type="ghost" size="large" shape="circle" @click="onCancel">取消</Button>
   </div>
   </div>
   <div v-else>    

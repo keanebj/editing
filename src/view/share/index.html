@@ -1,12 +1,5 @@
 <section>
    <div v-if="noData">
-  <Row :gutter="34">
-    <Col :xs="0" :sm="6" :md="6" :lg="6">
-    <a class="go-back" href="javascript:void(0)" @click="goBack">
-    <Icon type="arrow-left-a"></Icon>
-    返回</a>
-    </Col>
-  </Row>
   <Row type="flex" justify="center">
     <Col span="18" :xs="0">
     <div class="header">
@@ -16,7 +9,7 @@
   </Row>
   <Row type="flex" justify="center">
     <Col :xs="24" :sm="12" :md="12" :lg="12">
-    <div class="article">
+    <div class="article" style="margin: 0px 0 50px 0;">
       <div>
         <div class="con_new hidden-xs">
         	<h2 class="orginTit">{{ title }}</h2>

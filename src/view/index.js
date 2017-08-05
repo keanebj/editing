@@ -16,7 +16,9 @@ export default {
     ...mapState(['menu', 'userinfo', 'isActive', 'token'])
   },
   data() {
-    return {}
+    return {
+      minHeight:window.screen.height-310
+    }
   },
   beforeCreate() {
     //监听浏览器的返回按钮
@@ -25,7 +27,7 @@ export default {
     }, false);
   },
   mounted() {
-    if (window.location.href.indexOf('publish') > -1) {
+    /*if (window.location.href.indexOf('publish') > -1) {
       this.$store.commit('set', {
         isActive: true
       })
@@ -33,15 +35,15 @@ export default {
       this.$store.commit('set', {
         isActive: false
       })
-    }
+    }*/
   },
   created() {
-    if (!this.token) {
-      this.$router.push('/login')
-    }
-    if (this.userinfo.username == undefined || this.userinfo.username == null) {
-      this.$router.push('/login')
-    }
+    // if (!this.token) {
+    //   this.$router.push('/login')
+    // }
+    // if (this.userinfo.username == undefined || this.userinfo.username == null) {
+    //   this.$router.push('/login')
+    // }
   },
   methods: {
     onSelect(e) {

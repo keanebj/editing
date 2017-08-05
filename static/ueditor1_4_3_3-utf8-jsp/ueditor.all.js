@@ -17657,16 +17657,32 @@ UE.plugins['video'] = function (){
                     ' src="' + me.options.UEDITOR_HOME_URL+'themes/default/images/spacer.gif" style="background:url('+me.options.UEDITOR_HOME_URL+'themes/default/images/videologo.gif) no-repeat center center; border:1px solid gray;'+(align ? 'float:' + align + ';': '')+'" />'
                 break;
             case 'embed':
+              if(align =='center'){
+                  str = '<p style="text-align:center;"><embed ' + (id ? 'id="' + id+'"' : '') + 'type="application/x-shockwave-flash" class="' + classname + '" pluginspage="http://www.macromedia.com/go/getflashplayer"' +
+                    ' src="' +  utils.html(url) + '" style="width:'+width+'px;height:'+height+'px;float:'+align+'"' +
+                    ' wmode="transparent" play="true" loop="false" menu="false" allowscriptaccess="never" allowfullscreen="true" ></p>';
+
+              }else{
                 str = '<embed ' + (id ? 'id="' + id+'"' : '') + 'type="application/x-shockwave-flash" class="' + classname + '" pluginspage="http://www.macromedia.com/go/getflashplayer"' +
-                    ' src="' +  utils.html(url) + '" style="width:'+width+'px;height:'+height+'px"'  + (align ? ' style="float:' + align + '"': '') +
+                    ' src="' +  utils.html(url) + '" style="width:'+width+'px;height:'+height+'px;float:'+align+'"' +
                     ' wmode="transparent" play="true" loop="false" menu="false" allowscriptaccess="never" allowfullscreen="true" >';
+                }
                 break;
             case 'video':
                 var ext = url.substr(url.lastIndexOf('.') + 1);
                 if(ext == 'ogv') ext = 'ogg';
-                str = '<video' + (id ? ' id="' + id + '"' : '') + ' class="' + classname + ' video-js" ' + (align ? ' style="float:' + align + '"': '') +
+                  if(align =='center'){
+                      str = '<p style="text-align:center;"><video' + (id ? ' id="' + id + '"' : '') + ' class="' + classname + ' video-js" ' + (align ? ' style="float:' + align + '"': '') +
+                    ' controls preload="load" width="' + width + '" height="' + height + '" src="' + url + '" data-setup="{}">' +
+                    '<source src="' + url + '" type="video/' + ext + '" /></video></p>';
+
+                  }else{
+                    str = '<video' + (id ? ' id="' + id + '"' : '') + ' class="' + classname + ' video-js" ' + (align ? ' style="float:' + align + '"': '') +
                     ' controls preload="load" width="' + width + '" height="' + height + '" src="' + url + '" data-setup="{}">' +
                     '<source src="' + url + '" type="video/' + ext + '" /></video>';
+                  }
+                
+
                 break;
         }
         return str;
@@ -17762,18 +17778,17 @@ UE.plugins['video'] = function (){
     me.commands["insertvideo"] = {
         execCommand: function (cmd, videoObjs, type){
             videoObjs = utils.isArray(videoObjs)?videoObjs:[videoObjs];
-            var html = [],id = 'tmpVedio', cl,reg=/\w+\.mp4$/i;
+            var html = [],id = 'tmpVedio', cl,reg=/\w+\.mp4$/i,align=videoObjs[0].align;
             for(var i=0,vi,len = videoObjs.length;i<len;i++){
                 vi = videoObjs[i];
                 cl = (type == 'upload' ? 'edui-upload-video video-js vjs-default-skin':'edui-faked-video');
                 //html.push(creatInsertStr( vi.url, vi.width || 420,  vi.height || 280, id + i, null, cl, 'image'));
                 //判断是swf还是mp4
                 if(reg.test(vi.url)){
-                     html.push(creatInsertStr( vi.url, vi.width || 420,  vi.height || 280, id + i, null, cl, 'video'));
+                     html.push(creatInsertStr( vi.url, vi.width || 420,  vi.height || 280, id + i, align, cl, 'video'));
                 }else{
-                     html.push(creatInsertStr( vi.url, vi.width || 420,  vi.height || 280, id + i, null, cl, 'embed'));
+                     html.push(creatInsertStr( vi.url, vi.width || 420,  vi.height || 280, id + i, align, cl, 'embed'));
                 }
-
             }
             me.execCommand("inserthtml",html.join(""),true);
             var rng = this.selection.getRange();

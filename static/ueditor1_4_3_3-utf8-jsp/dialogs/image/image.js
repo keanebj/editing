@@ -23,6 +23,7 @@
         var tabs = $G('tabhead').children;
         for (var i = 0; i < tabs.length; i++) {
             domUtils.on(tabs[i], "click", function (e) {
+                setAlign('center');
                 var target = e.target || e.srcElement;
                 setTabFocus(target.getAttribute('data-content-id'));
             });
@@ -52,19 +53,23 @@
         }
         switch (id) {
             case 'remote':
+                setAlign('center');
                 remoteImage = remoteImage || new RemoteImage();
                 break;
             case 'upload':
-                setAlign(editor.getOpt('imageInsertAlign'));
+                setAlign('center');
+                //setAlign(editor.getOpt('imageInsertAlign'));
                 uploadImage = uploadImage || new UploadImage('queueList');
                 break;
             case 'online':
-                setAlign(editor.getOpt('imageManagerInsertAlign'));
+                setAlign('center');
+                //setAlign(editor.getOpt('imageManagerInsertAlign'));
                 onlineImage = onlineImage || new OnlineImage('imageList');
                 onlineImage.reset();
                 break;
             case 'search':
-                setAlign(editor.getOpt('imageManagerInsertAlign'));
+                setAlign('center');
+                //setAlign(editor.getOpt('imageManagerInsertAlign'));
                 searchImage = searchImage || new SearchImage();
                 break;
         }
@@ -113,6 +118,7 @@
 
     /* 初始化对其方式的点击事件 */
     function initAlign(){
+        setAlign('center');
         /* 点击align图标 */
         domUtils.on($G("alignIcon"), 'click', function(e){
             var target = e.target || e.srcElement;
@@ -124,7 +130,7 @@
 
     /* 设置对齐方式 */
     function setAlign(align){
-        align = align || 'none';
+        align = align || 'center';
         var aligns = $G("alignIcon").children;
         for(i = 0; i < aligns.length; i++){
             if(aligns[i].getAttribute('data-align') == align) {
