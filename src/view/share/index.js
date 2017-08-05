@@ -1,6 +1,7 @@
 import {
   mapState
 } from 'vuex'
+
 export default {
   name: 'share',
   data() {
@@ -8,7 +9,8 @@ export default {
       shareId: -1,
       title: '',
       content: '',
-      noData:true
+      noData:true,
+      notShared: false
     }
   },
   created() {
@@ -41,9 +43,5 @@ export default {
     }
   },
   mounted() {
-    var span5 = document.querySelector(".ivu-col-span-5")
-    var span19 = document.querySelector(".ivu-col-span-19")
-    span5.style.display = 'none';
-    span19.className = "layout-content-warp ivu-col ivu-col-span-24";
   }
 }
