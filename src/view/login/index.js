@@ -68,7 +68,8 @@ export default {
             this.$Message.success('登录成功!');
             Cookies.remove('clickedNo');//删除对应的cookie
             Cookies.remove('clickedCo');//删除对应的cookie
-            this.$router.toReferrer()
+           // this.$router.toReferrer()
+           this.$router.push('/')
           } else {
             this.$Message.error('您填写的账号或密码不正确，请再次尝试');
           }

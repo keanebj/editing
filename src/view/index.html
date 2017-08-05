@@ -1,7 +1,7 @@
 <div class="layout">
   <MainHeader :logOut="logOut" :userName="userinfo.username"
   :goHome="goHome" :goAccount="goAccount" :studioLogo="userinfo.studioLogo"></MainHeader>
-  <div class="layout-container">
+  <div class="layout-container"  v-bind:style="{ minHeight: minHeight + 'px' }">
     <Row type="flex">
       <i-col span="5">
         <ComponentsMainMenu :data="menu" :onSelect="onSelect" :roleType="userinfo.roleType"></ComponentsMainMenu>

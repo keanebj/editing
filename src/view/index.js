@@ -16,7 +16,9 @@ export default {
     ...mapState(['menu', 'userinfo', 'isActive', 'token'])
   },
   data() {
-    return {}
+    return {
+      minHeight:window.screen.height-310
+    }
   },
   beforeCreate() {
     //监听浏览器的返回按钮
