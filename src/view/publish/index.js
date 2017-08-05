@@ -672,7 +672,6 @@ abstractWordCount:function(event){
       document.execCommand("Copy");
     },
     share: function () {
-    	this.$store.state.articleId = this.articleID;//改变id 魏征霖
         //需要访问后台
         this.$http.put("/api/content/share/"+this.articleID).then((response) => {
           if(response.data.status == 1){

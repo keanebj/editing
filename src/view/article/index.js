@@ -4,6 +4,7 @@ import {
 export default {
   name: 'Article',
   created() {
+  	this.articleBack = this.$store.articleBack;
   },
   data() {
     return {
@@ -11,7 +12,8 @@ export default {
       noticeID: -1,
       title: '',
       content: '',
-      switchTab: 1
+      switchTab: 1,
+      articleBack: false
     }
   },
   methods: {

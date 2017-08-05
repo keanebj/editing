@@ -22,7 +22,7 @@ export default {
         }, {
           type: 'string',
           min: 4,
-          message: '密码长度不能小于6位',
+          message: '密码长度不能小于4位',
           trigger: 'blur'
         }]
       }
@@ -33,8 +33,6 @@ export default {
       this.$refs[name].validate((valid) => {
         if (valid) {
           this.submitLogin();
-        } else {
-          this.$Message.error('您填写的账号或密码不正确，请再次尝试!');
         }
       })
     },

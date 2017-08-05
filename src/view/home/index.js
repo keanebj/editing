@@ -7,6 +7,7 @@ export default {
     swiperSlide
 	},
   created() {
+  	this.$store.articleBack = false;
   	this.getNotice();
     this.getCollege();
     this.getAdlist();

@@ -2,6 +2,7 @@ import { mapState } from 'vuex'
 export default {
   name: 'Notice',
   created () {
+  	this.articleBack = this.$store.articleBack;
   },
   mounted(){
 
@@ -36,7 +37,8 @@ export default {
       noticeID:-1,
       title:'',
       content:'',
-      switchTab: 0      
+      switchTab: 0,
+      articleBack: false
     }
   },
   computed: {

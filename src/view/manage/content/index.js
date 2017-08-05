@@ -25,6 +25,7 @@ export default {
     }
   },
   created () {
+  	this.$store.articleBack = true;
     this.roleType=this.$store.state.userinfo.roleType;
     this.token=this.$store.state.token;
     this.headToken.token=this.$store.state.token;
