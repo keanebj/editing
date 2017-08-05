@@ -7,13 +7,20 @@ import '../../../static/ueditor1_4_3_3-utf8-jsp/lang/zh-cn/zh-cn.js'
 import '../../../static/ueditor1_4_3_3-utf8-jsp/ueditor.parse.min.js'
 import Vue from 'vue'
 import Cookies from 'js-cookie'
+import MainHeader from '@/components/mainHeader/index.vue'
+import MainFooter from '@/components/mainFooter/index.vue'
+import {
+  mapState
+} from 'vuex'
 Vue.use(QRCode)
 export default {
   name: 'ViewPublish',
   components: {
     ScrollBar,
     QRCode,
-    cropperUpload
+    cropperUpload,
+    MainHeader,
+    MainFooter
   },
   data () {
     return {
@@ -120,12 +127,15 @@ export default {
       })
     })
   },
+  computed: {
+    ...mapState(['menu', 'userinfo', 'isActive'])
+},
   mounted(){
    //用于隐藏左侧
-    var span5 =  document.querySelector(".ivu-col-span-5")
-    var span19 =  document.querySelector(".ivu-col-span-19")
-    span5.style.display = 'none';
-    span19.className = "layout-content-warp ivu-col ivu-col-span-24";
+    // var span5 =  document.querySelector(".ivu-col-span-5")
+    // var span19 =  document.querySelector(".ivu-col-span-19")
+    // span5.style.display = 'none';
+    // span19.className = "layout-content-warp ivu-col ivu-col-span-24";
 
     this.editor=UE.getEditor("editor",{
       //此处可以定制工具栏的功能，若不设置，则默认是全部的功能
@@ -798,6 +808,29 @@ abstractWordCount:function(event){
       if(!this.formTop.title.Trim()){
         this.formTop.title='';
       }
+    },
+    logOut(e) {
+      this.$http.get('/api/studio/logout')
+        .then(res => {
+          if (res.data.status == 1) {
+            localStorage.removeItem("token")
+            this.$store.commit('set', {
+              token: ''
+            })
+            this.$Message.success('退出成功')
+          } else {
+            this.$Message.error(res.data.message)
+          }
+          this.$router.push('/login')
+        }, err => {
+          this.$Message.error(JSON.stringify(err))
+        })
+    },
+    goHome() {
+      this.$router.push('/')
+    },
+    goAccount() {
+      this.$router.push('/settings/account')
     },
     //转为字符：中文1个 英文0.5个
     gblen:function(str,max,name){

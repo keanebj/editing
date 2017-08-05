@@ -7,13 +7,22 @@ export default [{
     component: require('@/view/login/index.vue')
   },
   {
+    name: 'publish',
+    path: '/publish',
+    meta: {
+      title: '发表'
+    },
+    component: require('@/view/publish/index.vue')
+   },
+  {
     name: 'loginnew',
     path: '/loginnew',
     meta: {
       title: '融合号-登录'
     },
     component: require('@/view/loginnew/index.vue')
-  },
+  }, 
+
   {
     name: 'main',
     path: '/',
@@ -28,14 +37,6 @@ export default [{
           title: '融合号'
         },
         component: require('@/view/home/index.vue')
-      },
-      {
-        name: 'publish',
-        path: '/publish',
-        meta: {
-          title: '发表'
-        },
-        component: require('@/view/publish/index.vue')
       },
       {
         name: 'manageContent',
