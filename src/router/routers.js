@@ -5,9 +5,15 @@ export default [{
       title: '融合号-登录'
     },
     component: require('@/view/login/index.vue')
-
   },
-
+  {
+    name: 'loginnew',
+    path: '/loginnew',
+    meta: {
+      title: '融合号-登录'
+    },
+    component: require('@/view/loginnew/index.vue')
+  },
   {
     name: 'main',
     path: '/',
@@ -88,9 +94,9 @@ export default [{
         component: require('@/view/article/index.vue'),
       }
     ]
-  }, 
+  },
   {
-    name:'share',
+    name: 'share',
     path: '/share',
     meta: {
       title: '分享',

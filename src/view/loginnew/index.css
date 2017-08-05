@@ -3,17 +3,6 @@
      margin: 20px auto 0;
    }
 
-   .ivu-card-bordered {
-     border: none!important;
-   }
-
-   .ivu-card-head p {
-     text-align: center;
-     color: #F95759!important;
-     font-size: 20px!important;
-     letter-spacing: 2px;
-   }
-
    .disabled {
      background-color: #d9d9d9!important;
      border-color: #d9d9d9!important;
@@ -24,13 +13,8 @@
      border-radius: 100px!important;
    }
 
-   .ivu-card-head {
-     display: none;
-   }
+  
 
-   .ivu-card-body {
-     padding: 0!important;
-   }
 
    .inner-page img {
      width: 100%;
@@ -61,21 +45,21 @@
      font-size: 18px;
    }
 
-   .ivu-form-item-content {
+   .wrap .ivu-form-item-content {
      text-align: center!important;
    }
    .login-form .ivu-input-group-prepend {
      border: none!important;
      background: #fff;
    }
-   .ivu-input {
+   .wrap .ivu-input {
      border: none!important;
      background: #fff!important;
      border-bottom: 1px solid #ccc!important;
      border-radius: none!important;
      border-radius: 0!important;
    }
-   input:focus {
+   .wrap input:focus {
      background-color: #30D2C4!important;
    }
    .remember-pwd {
