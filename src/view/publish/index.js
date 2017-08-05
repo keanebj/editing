@@ -61,7 +61,7 @@ export default {
           { required: true, message: ' '}
         ],
         cover: [
-          { required: true, message: '封面不能为空', trigger: 'blur' }
+          { required: true, message: '封面不能为空', trigger: 'change' }
         ],
         title:[
           { required: true, message: '标题不能为空', trigger: 'blur' }
@@ -601,7 +601,7 @@ abstractWordCount:function(event){
 	            	Cookies.set('clickedCo', cookieGet+','+this.articleID);
 	            }
 	            //发布成功：跳转到内容管理
-	            this.$router.replace("/manage/content");
+	            this.$router.push("/manage/content");
         		}else{
         			this.$Notice.error({title:error.data.message,desc: false});
         		}
