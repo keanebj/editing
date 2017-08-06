@@ -1,105 +1,147 @@
-   .login {
-     width: 300px;
-     margin: 20px auto 0;
-   }
+.first-screen{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url(../../assets/login/bg1.png) no-repeat;
+  background-size: cover;
+  background-position: center；
+}
+.first-screen .bg{
+  background: #000;
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+}
+.first-screen .mouse {
+    position: absolute;
+    bottom: 55px;
+    left: 50%;
+    -webkit-animation: slide-down 2s infinite ease-out;
+    animation: slide-down 2s infinite ease-out;
+}
+.login-box{
+  width: 385px;
+  height: 309px;
+  background: #FFF;
+  border-radius: 10px;
+  position: absolute;
+  right: 200px;
+  top: 50%;
+  margin-top: -150px;
+}
+.login-box h2{
+  font-family: STHeitiSC-Medium;
+  font-size: 30px;
+  color: #F95759;
+  text-align: center;
+  line-height: 2
+}
+.login-form{
+  padding: 20px;
+}
+.login-form .ivu-form-item{
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+.login-form .ivu-input-group-prepend{
+  background-color: transparent;
+  border: 0
+}
+.login-form .ivu-input{
+  border: 0;
+  font-size: 16px;
+}
+.login-form .ivu-form-item-content{
+  margin-bottom: 2px
+}
+.login-form .ivu-form-item-error .ivu-input-group-prepend{
+  border: 0px;
+}
+.login-form .ivu-form-item-error .ivu-input{
+  border: 0px;
+}
+.login-form .ivu-form-item .ivu-input:focus{
+  box-shadow: none
+}
+.login-form .form-extra{
+  font-size: 14px;
+  padding: 0 8px;
+  color: #F95759
+}
+.login-form .ivu-radio-wrapper{
+  font-size: 14px;
+  color: #aaa
+}
+.login-form .ivu-btn-ghost{
+  font-size: 20px;
+  color: #F95759 !important;
+  border: 1px solid #F95759 !important;
+  line-height: 37px !important;
+  padding: 0 35px !important;
+}
+.login-form .ivu-btn-ghost:hover{
+  background: #F95759 !important;
+  color: #FFF !important
+}
 
-   .disabled {
-     background-color: #d9d9d9!important;
-     border-color: #d9d9d9!important;
-   }
-
-   .login-btn {
-     width: 100%!important;
-     border-radius: 100px!important;
-   }
-
-   .inner-page img {
-     width: 100%;
-     border: none;
-   }
-
-   .inner-page {
-     overflow: hidden;
-   }
-
-   .wrap {
-     position: relative;
-   }
-
-   .login-form {
-     position: absolute;
-     top: 30%;
-     right: 5%;
-     width: 355px;
-     background: #fff;
-     border-radius: 10px;
-     letter-spacing: 5px;
-     padding-top: 10px;
-   }
-
-   .login-txt {
-     text-align: center;
-     color: #F95759;
-     font-size: 18px;
-   }
-
-   .wrap .ivu-form-item-content {
-     text-align: center!important;
-   }
-
-   .login-form .ivu-input-group-prepend {
-     border: none!important;
-     background: #fff;
-   }
-
-   .wrap .ivu-input {
-     border: none!important;
-     background: #fff!important;
-     border-bottom: 1px solid #ccc!important;
-     border-radius: none!important;
-     border-radius: 0!important;
-   }
-
-   .wrap input:focus {
-     background-color: #30D2C4!important;
-   }
-
-   .remember-pwd {
-     padding: 5px 0;
-     margin-bottom: 20px;
-   }
-
-   .remember-pwd>div {
-     display: inline-block;
-     line-height: 14px;
-   }
-
-   .r-radio {
-     float: left;
-   }
-
-   .r-radio img,
-   .r-radio span {
-     float: left;
-   }
-
-   .r-test {
-     float: right;
-   }
-
-   .r-test img,
-   .r-test span {
-     float: left;
-   }
-
-   .remember-pwd img {
-     margin-right: 5px;
-   }
-
-   .clearfix:after {
-     content: ".";
-     display: block;
-     height: 0;
-     clear: both;
-     visibility: hidden
-   }
+.remain{
+  position: relative;
+  margin-top: 100vh;
+  background: #FFF
+}
+.remain .remain-img{
+  display: block;
+  width: 100%
+}
+.login-container{
+  max-width: 80%;
+  margin: 0 auto;
+  padding: 40px 0
+}
+.title-head{
+  font-size: 30px;
+  position: relative;
+  color: #666;
+  margin-bottom: 20px;
+}
+.title-head::before{
+  position: absolute;
+  left: -30px;
+  top: 50%;
+  margin-top: -6px;
+  height: 15px;
+  width: 12px;
+  background: #4BB2EF;
+  content: ''
+}
+.friendLink a {
+  font-size: 20px;
+  color: #555;
+  display: block;
+  margin-bottom: 20px;
+}
+@keyframes slide-down {
+    0% {
+        opacity: 0;
+        -webkit-transform: translate3d(0,-10px,0);
+        transform: translate3d(0,-10px,0)
+    }
+    50% {
+        opacity: 1;
+        -webkit-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0)
+    }
+    80% {
+        opacity: 1
+    }
+    100% {
+        opacity: 0;
+        -webkit-transform: translate3d(0,8px,0);
+        transform: translate3d(0,8px,0)
+    }
+}

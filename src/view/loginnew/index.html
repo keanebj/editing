@@ -1,40 +1,50 @@
-<div class="wrap">
-  <div class="login-form">
-    <p class="login-txt">登录</p>
-    <Form ref="formItem" :model="formItem" :rules="formRules" class="login">
-      <Form-item prop="username">
-        <Input v-model="formItem.username" placeholder="请填写用户名" @on-enter="handleSubmit('formItem')">
-        <!-- <Icon type="ios-person-outline" slot="prepend"></Icon> -->
-        </Input>
-      </Form-item>
-      <Form-item prop="password">
-        <Input v-model="formItem.password" placeholder="请填写密码" type="password" @on-enter="handleSubmit('formItem')">
-        <!-- <Icon type="ios-locked-outline" slot="prepend"></Icon> -->
-        </Input>
-      </Form-item>
-      <div class="remember-pwd clearfix">
-        <div class="r-radio">
-          <img src="../../assets/login/rm.svg"><span>记住密码</span>
+<div class="login">
+  <div class="first-screen">
+    <div class="bg" :style="maskStyle"></div>
+    <div class="mouse">
+      <img src="../../assets/login/pull.svg" />
+    </div>
+    <div class="login-box">
+      <h2>登录</h2>
+      <Form class="login-form" ref="formItem" :model="formItem" :rules="formRules">
+        <Form-item prop="username">
+            <Input type="text" v-model="formItem.username" placeholder="账号" @on-enter="handleSubmit('formItem')">
+              <img src="../../assets/login/acc.svg"  slot="prepend">
+            </Input>
+        </Form-item>
+        <Form-item prop="password">
+            <Input type="password" v-model="formItem.password" placeholder="密码" @on-enter="handleSubmit('formItem')">
+                <img src="../../assets/login/pwd.svg"  slot="prepend">
+            </Input>
+        </Form-item>
+        <Row class="form-extra">
+            <Col span="12">
+              <Radio v-model="formItem.remember">记住密码</Radio>
+            </Col>
+            <Col span="12" style="text-align:right">
+              <img src="../../assets/login/test.svg" style="position: relative;top: 2px;"/> <span>申请内测</span>
+            </Col>
+        </Row>
+        <div style="text-align: center;margin-top:25px;">
+          <Button type="ghost" shape="circle" @click="handleSubmit('formItem')" :loading="isLoading">登录</Button>
         </div>
-        <div class="r-test">
-          <img src="../../assets/login/test.svg"><span>申请内测</span>
-        </div>
-      </div>
-      <Form-item>
-        <Button type="primary" @click="handleSubmit('formItem')" :disabled="loginDisabled" :class="{'login-btn':true,disabled:loginDisabled}"
-          style="width:100px!important;height:35px;margin:0 auto;">登录</Button>
-      </Form-item>
-    </Form>
-    <Spin size="large" v-if="isLoading">
-      <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
-      <div>Loading</div>
-    </Spin>
+      </Form>
+    </div>
   </div>
-
-  <div class="inner-page" v-bind:style="{'width':screenWidth+'px','height':screenHeight+'px'}">
-    <img src="../../assets/login/bg1.png">
-  </div>
-  <div class="inner-page" v-bind:style="{'width':screenWidth+'px','height':screenHeight+'px','display':'none'}">
-    <img src="../../assets/login/bg2.png">
+  <div class="remain">
+    <img class="remain-img" src="../../assets/login/bg2-1.png" alt="">
+    <img class="remain-img" src="../../assets/login/bg2-2.png" alt="">
+    <img class="remain-img" src="../../assets/login/bg2-3.png" alt="">
+    <img class="remain-img" src="../../assets/login/bg2-4.png" alt="">
+    <img class="remain-img" src="../../assets/login/bg2-5.png" alt="">
+    <div class="login-container friendLink">
+      <h3 class="title-head">友情链接</h3>
+      <Row class="form-extra">
+          <Col span="4" v-for="(item,index) in friendLinks" key="index">
+            <a href="javascript:;">{{item.name}}</a>
+          </Col>
+      </Row>
+    </div>
+    <MainFooter></MainFooter>
   </div>
 </div>
