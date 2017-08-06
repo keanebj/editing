@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Cookies from 'js-cookie'
+import {throttle} from 'lodash' // 函数节流
 import MainFooter from '@/components/mainFooter/index.vue'
 var username = localStorage.getItem('remember:username') || ''
 var password = localStorage.getItem('remember:password') || ''
@@ -179,13 +180,13 @@ export default {
     }
   },
   mounted() {
-    window.onscroll = () => {
+    window.onscroll = throttle(() => {
       var top = document.body.scrollTop
       var height = window.innerHeight
       var opacity = (top > height ? 0.5 : top / (height * 2))
       this.maskStyle = {
         opacity: opacity
       }
-    }
+    }, 100)
   }
 }
