@@ -13,15 +13,13 @@
      border-radius: 100px!important;
    }
 
-  
-
-
    .inner-page img {
      width: 100%;
+     border: none;
    }
 
    .inner-page {
-     overflow-x: hidden;
+     overflow: hidden;
    }
 
    .wrap {
@@ -31,8 +29,8 @@
    .login-form {
      position: absolute;
      top: 30%;
-     right: 10%;
-     width: 385px;
+     right: 5%;
+     width: 355px;
      background: #fff;
      border-radius: 10px;
      letter-spacing: 5px;
@@ -48,10 +46,12 @@
    .wrap .ivu-form-item-content {
      text-align: center!important;
    }
+
    .login-form .ivu-input-group-prepend {
      border: none!important;
      background: #fff;
    }
+
    .wrap .ivu-input {
      border: none!important;
      background: #fff!important;
@@ -59,33 +59,43 @@
      border-radius: none!important;
      border-radius: 0!important;
    }
+
    .wrap input:focus {
      background-color: #30D2C4!important;
    }
+
    .remember-pwd {
      padding: 5px 0;
+     margin-bottom: 20px;
    }
+
    .remember-pwd>div {
      display: inline-block;
      line-height: 14px;
    }
+
    .r-radio {
      float: left;
    }
+
    .r-radio img,
    .r-radio span {
      float: left;
    }
+
    .r-test {
      float: right;
    }
+
    .r-test img,
    .r-test span {
      float: left;
    }
+
    .remember-pwd img {
      margin-right: 5px;
    }
+
    .clearfix:after {
      content: ".";
      display: block;

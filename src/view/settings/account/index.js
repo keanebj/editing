@@ -182,6 +182,7 @@ export default {
         .then(res => {
           if (res.data.status == 1) {
             this.userinfo.studioLogo = reqParams.logofile
+            localStorage.setItem('userinfo', JSON.stringify(this.userinfo))
             this.disabledM = true
             this.$Notice.success({
               title: '成功',
@@ -295,6 +296,7 @@ export default {
     },
     handleReset(name) {
       this.$refs[name].resetFields();
+      this.formValidateM.logofile = this.userinfo.studioLogo
     },
     cropUploadSuccess(response, field, ki) {
       console.log(JSON.stringify(response))

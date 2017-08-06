@@ -17,7 +17,7 @@ export default {
   },
   data() {
     return {
-      minHeight:window.screen.height-310
+      minHeight: window.screen.height - 310
     }
   },
   beforeCreate() {
@@ -38,6 +38,7 @@ export default {
     }*/
   },
   created() {
+    this.getLocalUserInfo()
     // if (!this.token) {
     //   this.$router.push('/login')
     // }
@@ -46,6 +47,16 @@ export default {
     // }
   },
   methods: {
+    getLocalUserInfo() {
+      console.log('userinfo = ' + localStorage.getItem('userinfo'))
+      if (localStorage.getItem('userinfo')) {
+        let _userinfo = {}
+        _userinfo = JSON.parse(localStorage.getItem('userinfo'))
+        this.$store.commit('set', {
+          _userinfo
+        })
+      }
+    },
     onSelect(e) {
       if (e.path) {
         this.$router.push({
