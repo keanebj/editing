@@ -1,10 +1,100 @@
 import Vue from 'vue'
 import Cookies from 'js-cookie'
+import MainFooter from '@/components/mainFooter/index.vue'
+var friendLinks = [{
+  name: '中国青年网',
+  url: 'http://www.baidu.com'
+}, {
+  name: '中国青年网',
+  url: 'http://www.baidu.com'
+}, {
+  name: '中国青年网',
+  url: 'http://www.baidu.com'
+}, {
+  name: '中国青年网',
+  url: 'http://www.baidu.com'
+}, {
+  name: '中国青年网',
+  url: 'http://www.baidu.com'
+}, {
+  name: '中国青年网',
+  url: 'http://www.baidu.com'
+}, {
+  name: '中国青年网',
+  url: 'http://www.baidu.com'
+}, {
+  name: '中国青年网',
+  url: 'http://www.baidu.com'
+}, {
+  name: '中国青年网',
+  url: 'http://www.baidu.com'
+}, {
+  name: '中国青年网',
+  url: 'http://www.baidu.com'
+}, {
+  name: '中国青年网',
+  url: 'http://www.baidu.com'
+}, {
+  name: '中国青年网',
+  url: 'http://www.baidu.com'
+}, {
+  name: '中国青年网',
+  url: 'http://www.baidu.com'
+}, {
+  name: '中国青年网',
+  url: 'http://www.baidu.com'
+}, {
+  name: '中国青年网',
+  url: 'http://www.baidu.com'
+}, {
+  name: '中国青年网',
+  url: 'http://www.baidu.com'
+}, {
+  name: '中国青年网',
+  url: 'http://www.baidu.com'
+}, {
+  name: '中国青年网',
+  url: 'http://www.baidu.com'
+}, {
+  name: '中国青年网',
+  url: 'http://www.baidu.com'
+}, {
+  name: '中国青年网',
+  url: 'http://www.baidu.com'
+}, {
+  name: '中国青年网',
+  url: 'http://www.baidu.com'
+}, {
+  name: '中国青年网',
+  url: 'http://www.baidu.com'
+}, {
+  name: '中国青年网',
+  url: 'http://www.baidu.com'
+}, {
+  name: '中国青年网',
+  url: 'http://www.baidu.com'
+}, {
+  name: '中国青年网',
+  url: 'http://www.baidu.com'
+}, {
+  name: '中国青年网',
+  url: 'http://www.baidu.com'
+}, {
+  name: '中国青年网',
+  url: 'http://www.baidu.com'
+}, {
+  name: '中国青年网',
+  url: 'http://www.baidu.com'
+}, ]
 export default {
+  components: {
+    MainFooter
+  },
   data() {
     return {
       isLoading: false,
-      loginDisabled: false,
+      maskStyle: {opacity: 0},
+      friendLinks: friendLinks,
       formItem: {
         username: '',
         password: ''
@@ -36,30 +126,19 @@ export default {
         }
       })
     },
-    handleReset(name) {
-      this.$refs[name].resetFields();
-    },
     // 登录请求发送
     submitLogin() {
       this.isLoading = true
-      let reqParams = {
-        username: this.formItem.username,
-        password: this.formItem.password
-      };
-      this.$http.post('/api/studio/login', reqParams)
-        .then(res => {
-          //设置用户身份等信息
+      this.$http.post('/api/studio/login', this.formItem).then(res => {
           if (res.data.status == 1) {
             var userinfo = {
               id: res.data.id,
               roleType: res.data.operatortype,
               username: res.data.operator,
               password: this.formItem.password,
-              // studioLogo: this.$conf.host + res.data.logo || ''
-              studioLogo: res.data.operatortype == "Manage" ? '' : res.data.logo,
-              studioName: res.data.operatortype == "Manage" ? '' : res.data.studioname
+              studioLogo: res.data.operatortype == "Manage" ? '' : res.data.logo
             }
-						
+
             this.$store.commit('set', { userinfo })
             this.$store.commit('set', {
               token: res.data.token
@@ -69,18 +148,25 @@ export default {
             this.$Message.success('登录成功!');
             Cookies.remove('clickedNo');//删除对应的cookie
             Cookies.remove('clickedCo');//删除对应的cookie
-           // this.$router.toReferrer()
-           this.$router.push('/')
+            this.$router.push('/')
           } else {
             this.$Message.error('您填写的账号或密码不正确，请再次尝试');
           }
           this.isLoading = false
         }, err => {
           this.isLoading = false
-          console.log('出错啦！' + JSON.stringify(err))
+          this.$Message.error('您填写的账号或密码不正确，请再次尝试');
         })
     }
   },
-  created() { },
-  mounted() { }
+  mounted() {
+    window.onscroll = () => {
+      var top = document.body.scrollTop
+      var height = window.innerHeight
+      var opacity = (top > height ? 0.5 : top / (height * 2))
+      this.maskStyle = {
+        opacity: opacity
+      }
+    }
+  }
 }
