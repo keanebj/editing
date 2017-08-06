@@ -34,7 +34,7 @@ export default {
         "url": "",
         "logofile": "",
         "catalogname":'',
-        "accountindex": 0
+        "accountindex": ''
       },
       ruleValidate: {
         username: [{
@@ -96,7 +96,7 @@ export default {
         }],
         accountindex: [{
           type: 'number',
-          min: 1,
+          min: 0,
           message: '请输入数字',
           trigger: 'blur'
         }],
