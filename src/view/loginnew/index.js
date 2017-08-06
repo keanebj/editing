@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Cookies from 'js-cookie'
 import MainFooter from '@/components/mainFooter/index.vue'
+var username = localStorage.getItem('remember:username') || ''
+var password = localStorage.getItem('remember:password') || ''
+var remember = localStorage.getItem('remember') ? true : false
 var friendLinks = [{
   name: '中国青年网',
   url: 'http://www.baidu.com'
@@ -85,7 +88,7 @@ var friendLinks = [{
 }, {
   name: '中国青年网',
   url: 'http://www.baidu.com'
-}, ]
+}]
 export default {
   components: {
     MainFooter
@@ -93,11 +96,12 @@ export default {
   data() {
     return {
       isLoading: false,
-      maskStyle: {opacity: 0},
+      maskStyle: { opacity: 0 },
       friendLinks: friendLinks,
       formItem: {
-        username: '',
-        password: ''
+        username: username,
+        password: password,
+        remember: false
       },
       formRules: {
         username: [{
@@ -130,33 +134,48 @@ export default {
     submitLogin() {
       this.isLoading = true
       this.$http.post('/api/studio/login', this.formItem).then(res => {
-          if (res.data.status == 1) {
-            var userinfo = {
-              id: res.data.id,
-              roleType: res.data.operatortype,
-              username: res.data.operator,
-              password: this.formItem.password,
-              studioLogo: res.data.operatortype == "Manage" ? '' : res.data.logo
-            }
-
-            this.$store.commit('set', { userinfo })
-            this.$store.commit('set', {
-              token: res.data.token
-            })
-            localStorage.setItem('token', res.data.token)
-            localStorage.setItem('userinfo', JSON.stringify(userinfo))
-            this.$Message.success('登录成功!');
-            Cookies.remove('clickedNo');//删除对应的cookie
-            Cookies.remove('clickedCo');//删除对应的cookie
-            this.$router.push('/')
-          } else {
-            this.$Message.error('您填写的账号或密码不正确，请再次尝试');
+        if (res.data.status == 1) {
+          var userinfo = {
+            id: res.data.id,
+            roleType: res.data.operatortype,
+            username: res.data.operator,
+            password: this.formItem.password,
+            studioLogo: res.data.operatortype == "Manage" ? '' : res.data.logo
           }
-          this.isLoading = false
-        }, err => {
-          this.isLoading = false
+
+          this.$store.commit('set', { userinfo })
+          this.$store.commit('set', {
+            token: res.data.token
+          })
+          localStorage.setItem('token', res.data.token)
+          localStorage.setItem('userinfo', JSON.stringify(userinfo))
+          this.$Message.success('登录成功!')
+          Cookies.remove('clickedNo');//删除对应的cookie
+          Cookies.remove('clickedCo');//删除对应的cookie
+
+          // 记住密码
+          if (this.formItem.remember) {
+            localStorage.setItem('remember:username', this.formItem.username)
+            localStorage.setItem('remember:password', this.formItem.password)
+            localStorage.setItem('remember', 1)
+          } else {
+            localStorage.removeItem('remember:username')
+            localStorage.removeItem('remember:password')
+            localStorage.removeItem('remember')
+          }
+          
+          this.$router.push('/')
+        } else {
           this.$Message.error('您填写的账号或密码不正确，请再次尝试');
-        })
+        }
+        this.isLoading = false
+      }, err => {
+        this.isLoading = false
+        this.$Message.error('您填写的账号或密码不正确，请再次尝试');
+      })
+    },
+    onRemember() {
+      console.log('onRemember')
     }
   },
   mounted() {
