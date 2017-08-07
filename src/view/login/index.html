@@ -47,7 +47,7 @@
       <h3 class="title-head">友情链接</h3>
       <Row class="form-extra">
           <Col span="4" v-for="(item,index) in friendLinks" key="index">
-            <a href="javascript:;">{{item.name}}</a>
+            <a :href="item.url" target="_blank">{{item.name}}</a>
           </Col>
       </Row>
     </div>
