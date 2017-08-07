@@ -47,9 +47,12 @@
     </Col>
   </Row>
   <Row style="margin:30px 0;">
-    <Col span="12"> 发布渠道： <span style="font-weight:700">人民日报中央厨房</span>
+    <Col span="12" v-if="roleType != 'Manage'">
+    	<span>
+    		发布渠道： <span style="font-weight:700">人民日报中央厨房</span>
+    	</span>
     </Col>
-    <Col span="12">
+    <Col :span="num" v-if="roleType != 'Manage' ? num='12' : num='24'">
     <Radio-group style="float:right" v-model="status" @on-change="contentTypeList">
       <Radio label="" style="margin-right:30px;">全部文章</Radio>
       <Radio label="Publish" style="margin-right:30px;">已发表</Radio>
@@ -95,12 +98,13 @@
         </td>
         <td v-if="roleType == 'Manage'" width="140">
           <span v-if="item.label == 'Notice' ">公告</span>
-          <span v-else>融媒体学院</span>
+          <span v-else>中央厨房融媒体学院</span>
         </td>
         <td width="10%">
-          <router-link :to="{path:'../publish',query:{articleID:item.id}}">
+          <router-link :to="{path:'../publish',query:{articleID:item.id}}" v-if="item.status != 'Publish'">
             <img src="../../../assets/operator/edit.svg" class="icon-edit">
           </router-link>
+          <img src="../../../assets/operator/edit-disabled.svg" class="icon-edit" v-else>
           <Dropdown style="margin-left: 5px" trigger="click" @on-click="operateContent">
             <a href="javascript:void(0)" @click="getOperateContentID(item.id)">
               <img src="../../../assets/operator/set.svg" class="icon-set">

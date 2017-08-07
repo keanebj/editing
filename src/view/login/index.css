@@ -4,7 +4,7 @@
   top: 0;
   width: 100vw;
   height: 100vh;
-  background: url(../../assets/login/bg1.jpg) no-repeat;
+  background: url(../../assets/login/bg1.png) no-repeat;
   background-size: cover;
   background-position: center；
 }
@@ -16,8 +16,19 @@
   left: 50px;
   top: 30px;
 }
-
 .sys-txt {
+   position: absolute;
+  width: 460px;
+  height: 128px;
+  left: 0;
+  right: 0;
+  font-size: 40px;
+  color: #fff;
+  margin: 0 auto;
+  top: 30%;
+  text-align: center;
+}
+/* .sys-txt {
   position: absolute;
   width: 460px;
   height: 128px;
@@ -25,8 +36,15 @@
   right: 0;
   margin: 0 auto;
   top: 22%;
+} */
+.sys-logo-txt{
+    position: absolute;
+    font-family: "Microsoft Yahei";
+    top: 0;
+    font-size: 16PX;
+    right: 18%;
+    color: #F95759;
 }
-
 .sys-txt img {
   display: block;
   margin: 0 auto 28px auto;
@@ -51,14 +69,14 @@
 }
 
 .login-box {
-    width: 355px;
-    height: 305px;
+    width: 330px;
+    height: 300px;
     background: #FFF;
     border-radius: 10px;
     position: absolute;
-    right: 150px;
+    right: 40px;
     top: 50%;
-    margin-top: -150px;
+    margin-top: -170px;
 }
 
 .login-box h2 {

@@ -41,7 +41,7 @@ export default {
       publishChannels: ['人民日报中央厨房'],
       publishLabels: {
         Notice: '公告',
-        College: '融媒体学院'
+        College: '中央厨房融媒体学院'
       },
       titleMaxCount:22,
       summaryMaxCount:60,
@@ -140,7 +140,7 @@ export default {
     })
     let This=this;
     this.editor.addListener("contentChange", function () {
-        if(!This.editor.getContent()){
+        if(!This.editor.getContent() && This.editor.body.innerHTML.indexOf('<video') == -1){
             This.hideTip=false;
         }else{
           This.hideTip=true;
@@ -156,7 +156,7 @@ export default {
     if(this.$route.query.type == 'import' && this.articleID == -1){
       this.formTop.title = Cookies.get('title');
       this.formTop.publishchannel = Cookies.get('channel');
-      if (Cookies.get('keyword')!= null) {
+      if (Cookies.get('keyword')!= null && Cookies.get('keyword')!= 'null') {
         this.formTop.keywordArr=Cookies.get('keyword').split(/\s+/g);
       }
       this.formTop.summary = Cookies.get('summary');
@@ -260,9 +260,11 @@ export default {
 	          this.previewCon[0].author = data.author;
 	          this.previewCon[0].channel = data.channel;
           }else{
-//        	console.log(this.previewCon[0].content)
           	this.previewCon[0].title = data.title;
           	this.previewCon[0].content = data.content;
+          	this.previewCon[0].time = data.addtime;
+	          this.previewCon[0].studioname = this.studioName;
+	          this.previewCon[0].channel = data.channel;
           }
         }, (error) => {
           this.$Notice.error({
@@ -619,6 +621,10 @@ abstractWordCount:function(event){
     },
     save:function(name,hideTip){
       this.formTop.content=this.editor.getContent();
+      if(!this.formTop.content && this.editor.body.innerHTML.indexOf('<video') >-1){
+        this.formTop.content=this.editor.body.innerHTML;
+      }
+
       this.formTop.author=this.formTop.authorArr.join(" ");
       this.formTop.keyword=this.formTop.keywordArr.join(" ");
       if(!this.formTop.author){
@@ -627,6 +633,7 @@ abstractWordCount:function(event){
         this.isHideAuthor=false;
       }
         this.$refs[name].validate((valid) => {
+          //单独处理video标签
           if(!this.formTop.content){
             if(!hideTip){
               this.$Notice.error({title:'保存失败，请将内容填写完整',desc: false});

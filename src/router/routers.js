@@ -2,7 +2,7 @@ export default [{
     name: 'login',
     path: '/login',
     meta: {
-      title: '融合号-登录'
+      title: '自媒体编辑系统-登录'
     },
     component: require('@/view/login/index.vue')
   },
@@ -18,14 +18,14 @@ export default [{
     name: 'main',
     path: '/',
     meta: {
-      title: '融合号'
+      title: '自媒体编辑系统'
     },
     component: require('@/view/index.vue'),
     children: [{
         name: 'home',
         path: '',
         meta: {
-          title: '融合号'
+          title: '自媒体编辑系统'
         },
         component: require('@/view/home/index.vue')
       },

@@ -97,7 +97,8 @@ export default {
         accountindex: [{
           type: 'number',
           min: 0,
-          message: '请输入数字',
+          max:1000,
+          message: '请输入0-1000的数字',
           trigger: 'blur'
         }],
       }
