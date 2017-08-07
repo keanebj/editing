@@ -1,10 +1,10 @@
 import QRCode from 'qrcode'
 import ScrollBar from '@/view/scroll/index.vue'
 import cropperUpload from '@/components/cropperUpload/index.vue'
-import '../../../static/ueditor1_4_3_3-utf8-jsp/ueditor.config.js'
-import '../../../static/ueditor1_4_3_3-utf8-jsp/ueditor.all.js'
-import '../../../static/ueditor1_4_3_3-utf8-jsp/lang/zh-cn/zh-cn.js'
-import '../../../static/ueditor1_4_3_3-utf8-jsp/ueditor.parse.min.js'
+import '../../../static/ueditor/ueditor.config.js'
+import '../../../static/ueditor/ueditor.all.js'
+import '../../../static/ueditor/lang/zh-cn/zh-cn.js'
+import '../../../static/ueditor/ueditor.parse.min.js'
 import Vue from 'vue'
 import Cookies from 'js-cookie'
 import MainHeader from '@/components/mainHeader/index.vue'
@@ -131,15 +131,9 @@ export default {
     ...mapState(['menu', 'userinfo', 'isActive'])
 },
   mounted(){
-   //用于隐藏左侧
-    // var span5 =  document.querySelector(".ivu-col-span-5")
-    // var span19 =  document.querySelector(".ivu-col-span-19")
-    // span5.style.display = 'none';
-    // span19.className = "layout-content-warp ivu-col ivu-col-span-24";
-
     this.editor=UE.getEditor("editor",{
       //此处可以定制工具栏的功能，若不设置，则默认是全部的功能
-      UEDITOR_HOME_URL: `${this.$conf.root}/static/ueditor1_4_3_3-utf8-jsp/`,
+      UEDITOR_HOME_URL: `${this.$conf.root}/static/ueditor/`,
       emotionLocalization: true,
       scaleEnabled: true,
     })
@@ -809,7 +803,7 @@ abstractWordCount:function(event){
         this.formTop.title='';
       }
     },
-    logOut(e) {
+    logOut(e){
       this.$http.get('/api/studio/logout')
         .then(res => {
           if (res.data.status == 1) {
