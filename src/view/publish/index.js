@@ -140,7 +140,7 @@ export default {
     })
     let This=this;
     this.editor.addListener("contentChange", function () {
-        if(!This.editor.getContent()){
+        if(!This.editor.getContent() && This.editor.body.innerHTML.indexOf('<video') == -1){
             This.hideTip=false;
         }else{
           This.hideTip=true;
@@ -297,10 +297,11 @@ export default {
     fromContent:function(){
       //从正文选择图片
       //判断是否有图片？正则匹配到数组
-      let reg=/<img\b[^>]*src\s*=\s*"[^>"]*\.(?:png|jpg|jpeg|gif)"[^>]*>/gi;
+      let reg=/<img\b[^>]*src\s*=\s*"[^>"]*\.(?:png|jpg|jpeg)"[^>]*>/gi;     
       let content=this.editor.getContent();
       let imgArr=content.match(reg);
       let srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i;
+    
       //未匹配到图片
       if(!imgArr){
         this.$Notice.warning({
@@ -313,9 +314,12 @@ export default {
         for(let k=0;k<imgArr.length;k++){
             let src=imgArr[k].match(srcReg);
             src=src[0].substring(4).replace(/\"/g,"");
-            this.previewCon[1].push({src:src});
+            if(src.indexOf('/static/ueditor/dialogs/attachment/fileTypeImages') == -1){
+              this.previewCon[1].push({src:src});
+            }  
         }
         this.contentModal=true;
+        this.$refs.unSelect.selectDom();
       }
     },
     fromLocal:function(){
@@ -380,7 +384,7 @@ export default {
     },
     closeContentPop:function(){
       //关闭选择正文封面的弹框
-      this.iIndex[0] = this.tempi;
+      this.$refs.unSelect.closeCover();
       this.contentModal=false;
     },
     change (element) {
@@ -621,6 +625,10 @@ abstractWordCount:function(event){
     },
     save:function(name,hideTip){
       this.formTop.content=this.editor.getContent();
+      if(!this.formTop.content && this.editor.body.innerHTML.indexOf('<video') >-1){
+        this.formTop.content=this.editor.body.innerHTML;
+      }
+
       this.formTop.author=this.formTop.authorArr.join(" ");
       this.formTop.keyword=this.formTop.keywordArr.join(" ");
       if(!this.formTop.author){
@@ -629,6 +637,7 @@ abstractWordCount:function(event){
         this.isHideAuthor=false;
       }
         this.$refs[name].validate((valid) => {
+          //单独处理video标签
           if(!this.formTop.content){
             if(!hideTip){
               this.$Notice.error({title:'保存失败，请将内容填写完整',desc: false});
@@ -730,6 +739,7 @@ abstractWordCount:function(event){
 	      	var scale = ele[3].clientHeight / ele[0].clientHeight;
 	      	ele[1].style.height = ele[2].clientHeight*scale + 'px'
 	      }else{
+	      	console.log(ele[0])
 	      	ele[1].style.display = 'none';
 	      	ele[2].style.display = 'none';
 	      }

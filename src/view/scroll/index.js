@@ -3,14 +3,15 @@ export default {
   props: [
     'previewCon',
     'tempi',
-    'iIndex'
+    'iIndex',
   ],
   created () {
+  	
   },
   data () {
     return {
       i:-1,
-      contentCoverSrc: '',
+      contentCoverSrc: ''
     }
   },
   watch:{
@@ -31,9 +32,30 @@ export default {
     this.$emit('iIndex', [this.i, this.contentCoverSrc]);
   },
   methods: {
+  	selectDom: function () {
+  		var setCon = this.$refs.setCon;
+  		var onscroll = this.$refs.onscroll;
+  		var scroll = this.$refs.scroll;
+  		var scrollCon = this.$refs.scrollCon;
+  		clearTimeout(time)
+      var time=setTimeout(function () {
+      	if (setCon.clientHeight < onscroll.clientHeight) {
+	      	scrollCon.style.display = 'block';
+	      	scroll.style.display = 'block';
+	      	var scale = setCon.clientHeight / onscroll.clientHeight;
+	      	scrollCon.style.height = scroll.clientHeight*scale + 'px'
+	      }else{
+	      	scrollCon.style.display = 'none';
+	      	scroll.style.display = 'none';
+	      }
+      },10)
+  	},
     selectCover:function(index){
       this.i=index;
       this.contentCoverSrc=this.previewCon[index].src;
+    },
+    closeCover: function () {
+    	this.i = -1;
     },
     scrollBar: function (e) {
     	
