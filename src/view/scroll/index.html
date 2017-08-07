@@ -3,7 +3,7 @@
     <div class="set-posi" ref="onscroll" @mousedown.prevent="mouseScroll($event)">
       <div v-if="previewCon.title"  class="yulan">
       	<h1  class="yulan-tit">{{ previewCon.title }}</h1>
-      	<div class="yulan-xinxi" v-if="previewCon.channel">
+      	<div class="yulan-xinxi">
       		<span>{{ previewCon.channel }}</span>
       		<span>{{ previewCon.time.substring(0,10) }}</span>
       		<span>{{ previewCon.author }}</span>

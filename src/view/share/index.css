@@ -14,7 +14,8 @@
     margin-bottom: 20px;
 }
 .con_new img{
-    width: 70%;
+    max-width: 95%;
+    height: auto;
 }
 .con_new ol{
   list-style: decimal;
@@ -30,6 +31,7 @@
   font-size: 14px;
   line-height: 24px;
   margin: 14px 0;
+  padding: 0 15px;
 }
 .error{
     text-align: center;
@@ -46,6 +48,9 @@
 
 /*鎵嬫満绔牱寮�*/
 @media screen and (max-width: 768px) {
+	.con_new{
+		padding: 0 15px;
+	}
    .footer{
      display: none;
    }

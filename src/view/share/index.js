@@ -9,6 +9,11 @@ export default {
       shareId: -1,
       title: '',
       content: '',
+      conInfo: {
+      	channel: '',
+      	time: '',
+      	author: ''
+      },
       noData:true,
       notShared: false
     }
@@ -20,8 +25,11 @@ export default {
       .then((response) => {
         if(response.data.status == 1){
           this.noData=true;
-             this.title = response.data.content.title;
-             this.content = response.data.content.content;
+            this.title = response.data.content.title;
+            this.conInfo.channel = response.data.content.channel;
+            this.content = response.data.content.content;
+            this.conInfo.time = response.data.content.addtime;
+	          this.conInfo.author = response.data.content.author;
         }else{
           this.noData=false;
            this.$Notice.warning({
