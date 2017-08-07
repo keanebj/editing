@@ -156,7 +156,7 @@ export default {
     if(this.$route.query.type == 'import' && this.articleID == -1){
       this.formTop.title = Cookies.get('title');
       this.formTop.publishchannel = Cookies.get('channel');
-      if (Cookies.get('keyword')!= null) {
+      if (Cookies.get('keyword')!= null && Cookies.get('keyword')!= 'null') {
         this.formTop.keywordArr=Cookies.get('keyword').split(/\s+/g);
       }
       this.formTop.summary = Cookies.get('summary');
