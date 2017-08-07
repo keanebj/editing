@@ -98,7 +98,7 @@
         </td>
         <td v-if="roleType == 'Manage'" width="140">
           <span v-if="item.label == 'Notice' ">公告</span>
-          <span v-else>融媒体学院</span>
+          <span v-else>中央厨房融媒体学院</span>
         </td>
         <td width="10%">
           <router-link :to="{path:'../publish',query:{articleID:item.id}}" v-if="item.status != 'Publish'">

@@ -156,7 +156,7 @@ export default {
     if(this.$route.query.type == 'import' && this.articleID == -1){
       this.formTop.title = Cookies.get('title');
       this.formTop.publishchannel = Cookies.get('channel');
-      if (Cookies.get('keyword')!= null) {
+      if (Cookies.get('keyword')!= null && Cookies.get('keyword')!= 'null') {
         this.formTop.keywordArr=Cookies.get('keyword').split(/\s+/g);
       }
       this.formTop.summary = Cookies.get('summary');
@@ -258,10 +258,8 @@ export default {
 	          this.previewCon[0].time = data.addtime;
 	          this.previewCon[0].studioname = this.studioName;
 	          this.previewCon[0].author = data.author;
-	          console.log(data.author)
 	          this.previewCon[0].channel = data.channel;
           }else{
-//        	console.log(this.previewCon[0].content)
           	this.previewCon[0].title = data.title;
           	this.previewCon[0].content = data.content;
           	this.previewCon[0].time = data.addtime;
