@@ -9,6 +9,11 @@ export default {
       shareId: -1,
       title: '',
       content: '',
+      conInfo: {
+      	channel: '',
+      	time: '',
+      	author: ''
+      },
       noData:true,
       notShared: false
     }
@@ -18,6 +23,8 @@ export default {
     //ajax获得分享的内容
     this.$http.get("/api/content/share/" + this.shareId)
       .then((response) => {
+      	
+      	console.log(response)
         if(response.data.status == 1){
           this.noData=true;
              this.title = response.data.content.title;

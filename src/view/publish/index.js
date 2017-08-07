@@ -41,7 +41,7 @@ export default {
       publishChannels: ['人民日报中央厨房'],
       publishLabels: {
         Notice: '公告',
-        College: '融媒体学院'
+        College: '中央厨房融媒体学院'
       },
       titleMaxCount:22,
       summaryMaxCount:60,
@@ -258,11 +258,15 @@ export default {
 	          this.previewCon[0].time = data.addtime;
 	          this.previewCon[0].studioname = this.studioName;
 	          this.previewCon[0].author = data.author;
+	          console.log(data.author)
 	          this.previewCon[0].channel = data.channel;
           }else{
 //        	console.log(this.previewCon[0].content)
           	this.previewCon[0].title = data.title;
           	this.previewCon[0].content = data.content;
+          	this.previewCon[0].time = data.addtime;
+	          this.previewCon[0].studioname = this.studioName;
+	          this.previewCon[0].channel = data.channel;
           }
         }, (error) => {
           this.$Notice.error({

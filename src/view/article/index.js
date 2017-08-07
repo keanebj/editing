@@ -12,6 +12,11 @@ export default {
       noticeID: -1,
       title: '',
       content: '',
+      conInfo: {
+      	channel: '',
+      	time: '',
+      	author: ''
+      },
       switchTab: 1,
       articleBack: false
     }
@@ -33,6 +38,13 @@ this.noticeID=this.$route.query.id;
 	      if (data.status) {
 	      	this.title=data.content.title;
 	      	this.content=data.content.content;
+	      	this.conInfo.channel = data.content.channel;
+          this.conInfo.time = data.content.addtime;
+          if (data.operatortype == "Manage") {
+          	this.conInfo.author = "";
+          }else{
+          	this.conInfo.author = data.content.author;
+          }
 	      }else{
 	      	this.$Notice.error({
             title: '错误',

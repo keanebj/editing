@@ -120,9 +120,9 @@ export default {
             roleType: res.data.operatortype,
             username: res.data.operator,
             password: this.formItem.password,
-            studioLogo: res.data.operatortype == "Manage" ? '' : res.data.logo
+            studioLogo: res.data.operatortype == "Manage" ? '' : res.data.logo,
+            studioName: res.data.studioname
           }
-
           this.$store.commit('set', { userinfo })
           this.$store.commit('set', {
             token: res.data.token
