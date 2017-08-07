@@ -380,7 +380,7 @@ export default {
     },
     closeContentPop:function(){
       //关闭选择正文封面的弹框
-      this.iIndex[0] = this.tempi;
+      this.$refs.unSelect.closeCover();
       this.contentModal=false;
     },
     change (element) {

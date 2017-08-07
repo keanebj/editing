@@ -3,14 +3,14 @@ export default {
   props: [
     'previewCon',
     'tempi',
-    'iIndex'
+    'iIndex',
   ],
   created () {
   },
   data () {
     return {
       i:-1,
-      contentCoverSrc: '',
+      contentCoverSrc: ''
     }
   },
   watch:{
@@ -34,6 +34,9 @@ export default {
     selectCover:function(index){
       this.i=index;
       this.contentCoverSrc=this.previewCon[index].src;
+    },
+    closeCover: function () {
+    	this.i = -1;
     },
     scrollBar: function (e) {
     	
