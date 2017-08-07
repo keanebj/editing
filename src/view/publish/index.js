@@ -297,10 +297,11 @@ export default {
     fromContent:function(){
       //从正文选择图片
       //判断是否有图片？正则匹配到数组
-      let reg=/<img\b[^>]*src\s*=\s*"[^>"]*\.(?:png|jpg|jpeg|gif)"[^>]*>/gi;
+      let reg=/<img\b[^>]*src\s*=\s*"[^>"]*\.(?:png|jpg|jpeg)"[^>]*>/gi;     
       let content=this.editor.getContent();
       let imgArr=content.match(reg);
       let srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i;
+    
       //未匹配到图片
       if(!imgArr){
         this.$Notice.warning({
@@ -313,7 +314,9 @@ export default {
         for(let k=0;k<imgArr.length;k++){
             let src=imgArr[k].match(srcReg);
             src=src[0].substring(4).replace(/\"/g,"");
-            this.previewCon[1].push({src:src});
+            if(src.indexOf('/static/ueditor/dialogs/attachment/fileTypeImages') == -1){
+              this.previewCon[1].push({src:src});
+            }  
         }
         this.contentModal=true;
       }
