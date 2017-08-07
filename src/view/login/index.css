@@ -26,7 +26,14 @@
   margin: 0 auto;
   top: 22%;
 }
-
+.sys-logo-txt{
+    position: absolute;
+    font-family: "Microsoft Yahei";
+    top: 0;
+    font-size: 16PX;
+    right: 18%;
+    color: #F95759;
+}
 .sys-txt img {
   display: block;
   margin: 0 auto 28px auto;
