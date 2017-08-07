@@ -41,7 +41,7 @@ export default {
       publishChannels: ['人民日报中央厨房'],
       publishLabels: {
         Notice: '公告',
-        College: '融媒体学院'
+        College: '中央厨房融媒体学院'
       },
       titleMaxCount:22,
       summaryMaxCount:60,
