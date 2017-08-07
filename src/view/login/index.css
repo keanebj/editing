@@ -58,14 +58,14 @@
 }
 
 .login-box {
-    width: 355px;
-    height: 305px;
+    width: 330px;
+    height: 300px;
     background: #FFF;
     border-radius: 10px;
     position: absolute;
-    right: 150px;
+    right: 80px;
     top: 50%;
-    margin-top: -150px;
+    margin-top: -170px;
 }
 
 .login-box h2 {
