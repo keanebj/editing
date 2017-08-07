@@ -256,11 +256,10 @@ export default {
           	this.previewCon[0].title = data.title;
 	          this.previewCon[0].content = data.content;
 	          this.previewCon[0].time = data.addtime;
-	          this.previewCon[0].studioname = this.studioName;
-	          this.previewCon[0].author = data.author;
+	          this.previewCon[0].studioname = this.studioName;       
+	          this.previewCon[0].author = data.author;          
 	          this.previewCon[0].channel = data.channel;
           }else{
-//        	console.log(this.previewCon[0].content)
           	this.previewCon[0].title = data.title;
           	this.previewCon[0].content = data.content;
           }
