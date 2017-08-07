@@ -64,7 +64,7 @@ export default {
         title: '确认删除',
         content: '确认删除该工作室？',
         onOk: () => {
-          this.requestRemove(index)
+          this.requestRemove(index)          
         }
       })
     },
@@ -81,6 +81,7 @@ export default {
             this.total--
           }
           this.data.splice(index, 1)
+          this.fetchCollection()
         } else {
           this.$Notice.error({
             title: '错误',

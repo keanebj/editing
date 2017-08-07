@@ -18,11 +18,17 @@
     text-indent: 20px;
     font-size: 14px;
     line-height: 24px;
-    margin: 14px 0;
+    margin: 5px 0;
 }
 .con_new{    
     text-align: center;
 }
 .con_new img{
     width: 70%;
+}
+.orginTit{
+	margin-bottom: 15px;
+	font-size: 20px;
+	text-align: center;
+	font-weight: normal;
 }

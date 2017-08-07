@@ -1,19 +1,26 @@
 import QRCode from 'qrcode'
 import ScrollBar from '@/view/scroll/index.vue'
 import cropperUpload from '@/components/cropperUpload/index.vue'
-import '../../../static/ueditor1_4_3_3-utf8-jsp/ueditor.config.js'
-import '../../../static/ueditor1_4_3_3-utf8-jsp/ueditor.all.js'
-import '../../../static/ueditor1_4_3_3-utf8-jsp/lang/zh-cn/zh-cn.js'
-import '../../../static/ueditor1_4_3_3-utf8-jsp/ueditor.parse.min.js'
+import '../../../static/ueditor/ueditor.config.js'
+import '../../../static/ueditor/ueditor.all.js'
+import '../../../static/ueditor/lang/zh-cn/zh-cn.js'
+import '../../../static/ueditor/ueditor.parse.min.js'
 import Vue from 'vue'
 import Cookies from 'js-cookie'
+import MainHeader from '@/components/mainHeader/index.vue'
+import MainFooter from '@/components/mainFooter/index.vue'
+import {
+  mapState
+} from 'vuex'
 Vue.use(QRCode)
 export default {
   name: 'ViewPublish',
   components: {
     ScrollBar,
     QRCode,
-    cropperUpload
+    cropperUpload,
+    MainHeader,
+    MainFooter
   },
   data () {
     return {
@@ -61,7 +68,7 @@ export default {
           { required: true, message: ' '}
         ],
         cover: [
-          { required: true, message: '封面不能为空', trigger: 'blur' }
+          { required: true, message: '封面不能为空', trigger: 'change' }
         ],
         title:[
           { required: true, message: '标题不能为空', trigger: 'blur' }
@@ -120,18 +127,16 @@ export default {
       })
     })
   },
-  mounted(){
-   //用于隐藏左侧
-    var span5 =  document.querySelector(".ivu-col-span-5")
-    var span19 =  document.querySelector(".ivu-col-span-19")
-    span5.style.display = 'none';
-    span19.className = "layout-content-warp ivu-col ivu-col-span-24";
-
+  computed: {
+    ...mapState(['menu', 'userinfo', 'isActive'])
+},
+  mounted(){   
     this.editor=UE.getEditor("editor",{
       //此处可以定制工具栏的功能，若不设置，则默认是全部的功能
-      UEDITOR_HOME_URL: `${this.$conf.root}/static/ueditor1_4_3_3-utf8-jsp/`,
+      UEDITOR_HOME_URL: `${this.$conf.root}/static/ueditor/`,
       emotionLocalization: true,
       scaleEnabled: true,
+      serverUrl:this.$conf.host+this.$conf.serverRoot+"ueditor"
     })
     let This=this;
     this.editor.addListener("contentChange", function () {
@@ -162,7 +167,7 @@ export default {
         this.formTop.currentAbstractCount = Math.ceil(this.gblen(Cookies.get('summary'),120,'summary')) >60?60:Math.ceil(this.gblen(Cookies.get('summary'),120,'summary'));
       }
 
-      this.titleContentCount = Math.ceil(this.gblen(Cookies.get('title'),44,'title')) > 22.5 ? 22:Math.ceil(this.gblen(Cookies.get('title'),44,'title'));
+      this.titleContentCount = Math.ceil(this.gblen(Cookies.get('title'),44,'title')) > 22 ? 22:Math.ceil(this.gblen(Cookies.get('title'),44,'title'));
       this.editor.ready(function(){
         This.editor.execCommand('inserthtml',This.formTop.content,true);
       })
@@ -336,7 +341,7 @@ export default {
         try{
           dataURL = canvas.toDataURL("image/"+ext);
         }catch(error){
-            
+
         }
         return dataURL;
     },
@@ -344,7 +349,7 @@ export default {
       //选择的封面显示在文本域中
       if(this.iIndex[0]>=0){
         //转为base64
-          var image = new Image();   
+          var image = new Image();
           this.noSel=true;
           this.$http.post('/api/image/base64',{url:this.iIndex[1]}).then((response)=>{
              this.noSel=false;
@@ -358,9 +363,9 @@ export default {
             this.contentModal=false;
             let This=this.$refs.corup;
             setTimeout(function(){
-              This.handleClick(e,'','linkimg');  
+              This.handleClick(e,'','linkimg');
             },500)
-                  
+
           })
       }else{
         this.noSel=true;
@@ -593,15 +598,15 @@ abstractWordCount:function(event){
         ).then((response) => {
         		if (response.data.status == 1) {
         			this.$Notice.success({title:response.data.message,desc: false});
-	            if (this.formTop.label == "Notice") {
-	            	let cookieGet = Cookies.get('clickedNo');
-	            	Cookies.set('clickedNo', cookieGet+','+this.articleID);
-	            }else if (this.formTop.label == "College"){
-	            	let cookieGet = Cookies.get('clickedCo');
-	            	Cookies.set('clickedCo', cookieGet+','+this.articleID);
-	            }
+//	            if (this.formTop.label == "Notice") {
+//	            	let cookieGet = Cookies.get('clickedNo');
+//	            	Cookies.set('clickedNo', cookieGet+','+this.articleID);
+//	            }else if (this.formTop.label == "College"){
+//	            	let cookieGet = Cookies.get('clickedCo');
+//	            	Cookies.set('clickedCo', cookieGet+','+this.articleID);
+//	            }
 	            //发布成功：跳转到内容管理
-	            this.$router.replace("/manage/content");
+	            this.$router.push("/manage/content");
         		}else{
         			this.$Notice.error({title:error.data.message,desc: false});
         		}
@@ -798,6 +803,29 @@ abstractWordCount:function(event){
       if(!this.formTop.title.Trim()){
         this.formTop.title='';
       }
+    },
+    logOut(e){
+      this.$http.get('/api/studio/logout')
+        .then(res => {
+          if (res.data.status == 1) {
+            localStorage.removeItem("token")
+            this.$store.commit('set', {
+              token: ''
+            })
+            this.$Message.success('退出成功')
+          } else {
+            this.$Message.error(res.data.message)
+          }
+          this.$router.push('/login')
+        }, err => {
+          this.$Message.error(JSON.stringify(err))
+        })
+    },
+    goHome() {
+      this.$router.push('/')
+    },
+    goAccount() {
+      this.$router.push('/settings/account')
     },
     //转为字符：中文1个 英文0.5个
     gblen:function(str,max,name){

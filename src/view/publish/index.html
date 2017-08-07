@@ -1,5 +1,7 @@
 <section>
-  <Form ref="formTop" :model="formTop" label-position="top" :rules="ruleValidate">
+   <MainHeader :logOut="logOut" :userName="userinfo.username"
+  :goHome="goHome" :goAccount="goAccount" :studioLogo="userinfo.studioLogo"></MainHeader>
+  <Form ref="formTop" :model="formTop" label-position="top" :rules="ruleValidate" style="padding:30px 85px 0;">
     <Row :gutter="34">
       <Col span="6">
       <a class="go-back" href="javascript:void(0)" @click="goBack">
@@ -25,10 +27,10 @@
 
       <div class="pull-right">
         <div style="position: relative;display: inline-block;">
-         <button style="position: absolute;top:-20px;" :class="{hide:hidesave}">保存</button>
+         <button style="position: absolute;top:-20px;width:30px;" :class="{hide:hidesave}">保存</button>
           <div class="btn-icon save-btn-icon m-r-10" @click="save('formTop',false)" @mouseover="hidesave =false" @mouseout="hidesave = true"></div>
 
-          <button style="position: absolute;top:-20px;" :class="{hide:hideshare}">分享</button>
+          <button style="position: absolute;top:-20px;width:30px;" :class="{hide:hideshare}">分享</button>
           <div class="btn-icon share-btn-icon m-r-10" @click="share" @mouseover="hideshare =false" @mouseout="hideshare = true">
 
           <Modal v-model="qCode" class="share_hide" width="auto" :closable="false" ref="shareHide">
@@ -42,7 +44,7 @@
             <p>链接有效时间为<span>2小时</span><br />通过扫描二维码和复制文章链接<br />可以将文章转发给成员观看</p>
           </Modal>
         </div>
-          <button style="position: absolute;top:-20px;" :class="{hide:hidepreview}">预览</button>
+          <button style="position: absolute;top:-20px;width:30px;" :class="{hide:hidepreview}">预览</button>
         <div class="btn-icon preview-btn-icon " @click="showPreviewContent" @mouseover="hidepreview =false" @mouseout="hidepreview = true"></div>
         </div>
       </div>
@@ -114,7 +116,7 @@
           </div>
         </div>
         <p slot="footer">
-          <cropper-upload ref="corup" :width="478" :height="270" :image="baseimg" :noSel="noSel" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048">
+          <cropper-upload @fromContent="fromContent" ref="corup" :width="478" :height="270" :image="baseimg" :noSel="noSel" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048">
             <Button type="primary" shape="circle" @click="clickCoverOk($event)">确定</Button>
           </cropper-upload>
         </p>
@@ -129,4 +131,6 @@
       </Col>
     </Row>
   </Form>
+   <MainFooter></MainFooter>
 </section>
+

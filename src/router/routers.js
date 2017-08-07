@@ -5,9 +5,15 @@ export default [{
       title: '融合号-登录'
     },
     component: require('@/view/login/index.vue')
-
   },
-
+  {
+    name: 'publish',
+    path: '/publish',
+    meta: {
+      title: '发表'
+    },
+    component: require('@/view/publish/index.vue')
+   },
   {
     name: 'main',
     path: '/',
@@ -22,14 +28,6 @@ export default [{
           title: '融合号'
         },
         component: require('@/view/home/index.vue')
-      },
-      {
-        name: 'publish',
-        path: '/publish',
-        meta: {
-          title: '发表'
-        },
-        component: require('@/view/publish/index.vue')
       },
       {
         name: 'manageContent',
@@ -86,17 +84,18 @@ export default [{
           title: '文章',
         },
         component: require('@/view/article/index.vue'),
-      },
-      {
-        name:'share',
-        path: '/share',
-        meta: {
-          title: '分享',
-        },
-        component: require('@/view/share/index.vue'),
       }
     ]
-  }, {
+  },
+  {
+    name: 'share',
+    path: '/share',
+    meta: {
+      title: '分享',
+    },
+    component: require('@/view/share/index.vue'),
+  },
+  {
     name: '404',
     path: '*',
     meta: {

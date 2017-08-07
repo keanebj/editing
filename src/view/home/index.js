@@ -7,6 +7,14 @@ export default {
     swiperSlide
 	},
   created() {
+		if (!this.$store.state.token) {
+			this.$router.push('/login')
+			return;
+    }
+    if (this.$store.state.userinfo.username == undefined || this.$store.state.userinfo.username == null) {
+			this.$router.push('/login')
+			return;
+    }
   	this.$store.articleBack = false;
   	this.getNotice();
     this.getCollege();
@@ -140,19 +148,10 @@ export default {
 	      	}else{
 	      		this.nodataNotice=true;
 	      	}
-					this.noticeList = response.data.contents;
 					this.noticeTotal = response.data.total;
 					if (this.noticeTotal == undefined) {
 						this.noticeTotal = 1;
 					}
-
-					//判断身份
-					if (response.data.operatortype == "Edit") {
-						
-					}else{
-						
-					}
-
 					if (response.data.contents&&response.data.total) {
 						for (let i = 0; i < response.data.contents.length; i++) {
 							if (response.data.contents[i].addtime != null) {
@@ -161,19 +160,19 @@ export default {
 						}
 					}
 					//				改变颜色
-					
-					if (Cookies.get('clickedNo') != undefined) {
+					if (Cookies.get('clickedNo') != undefined) {						
 						var cookieGet = Cookies.get('clickedNo').split(",");
 						this.clickedNo = cookieGet;
-						for (let i = 0; i < cookieGet.length; i++) {
-							
-							for (let j = 0; j < this.noticeList.length; j++) {
-								if (cookieGet[i] == this.noticeList[j].id) {
-									this.noticeList[j].isReaded = true;
+						for (let i = 0; i < this.clickedNo.length; i++) {
+							for (let j = 0; j < response.data.contents.length; j++) {
+								console.log(response.data.contents[j].id)
+								if (this.clickedNo[i] == response.data.contents[j].id) {
+									response.data.contents[j].isReaded = true;
 								}
 							}
 				    }
 					}
+					this.noticeList = response.data.contents;
 					this.pageTotalX = Math.ceil(this.noticeTotal / this.pageSize);
 				}else{
 	      	this.$Notice.error({
@@ -206,12 +205,11 @@ export default {
 	      	}else{
 	      		this.nodataCollege=true;
 	      	}
-					this.collegeList = response.data.contents;
+//					this.collegeList = response.data.contents;
 					this.articleTotal = response.data.total;
 					if (this.articleTotal == undefined) {
 						this.articleTotal = 1;
 					}
-
 					if (response.data.contents&&response.data.total) {
 						for (let i = 0; i < response.data.contents.length; i++) {
 							if (response.data.contents[i].addtime != null) {
@@ -225,13 +223,14 @@ export default {
 						
 						this.clickedCo = cookieGet;
 						for (let i = 0; i < cookieGet.length; i++) {
-							for (let j = 0; j < this.collegeList.length; j++) {
-								if (cookieGet[i] == this.collegeList[j].id) {
-									this.collegeList[j].isReaded = true;
+							for (let j = 0; j < response.data.contents.length; j++) {
+								if (cookieGet[i] == response.data.contents[j].id) {
+									response.data.contents[j].isReaded = true;
 								}
 							}
 				    }
 					}
+					this.collegeList = response.data.contents;
 					this.pageTotalG = Math.ceil(this.articleTotal / this.pageSize);
 				}else{
 	      	this.$Notice.error({
@@ -274,12 +273,21 @@ export default {
         this.pageIndexG = page;
       	this.getCollege();
     },
+    changeTab (index) {
+    	if (index == 0) {
+    		this.getNotice();
+    	}else{
+    		this.getCollege();
+    	}
+    	this.switchTab = index;
+    	
+    },
     readed (ev, cooid, index) {
-    	var ele = ev.target.parentNode.parentNode.nodeName == "LI" ? ev.target.parentNode.parentNode : ev.target;
+    	var ele = ev.target.parentNode.nodeName == "LI" ? ev.target.parentNode : ev.target.parentNode.parentNode;
 		  ele.className = "readed";
     	if (this.switchTab == 0) {
 		  	if (this.clickedNo.length == 0) {
-		  		this.clickedNo.push(this.collegeList[index].id);
+		  		this.clickedNo.push(this.noticeList[index].id);
 		  	}else{
 		  		var hasIn = true;
 		  		for (var i=0;i<this.clickedNo.length;i++) {
@@ -292,8 +300,9 @@ export default {
 		  		}
 		  	}
 		  	Cookies.set('clickedNo',this.clickedNo.join(','))
-		  	
+//		  	console.log(Cookies.get('clickedNo'))
      }else{
+     		this.getCollege();
       	if (this.clickedCo.length == 0) {
 		  		this.clickedCo.push(this.collegeList[index].id);
 		  	}else{
@@ -308,11 +317,11 @@ export default {
 		  		}
 		  	}
 		  	Cookies.set('clickedCo',this.clickedCo.join(','))
-//		  	console.log(Cookies.get('clickedCo'))
       }
   	}
   },
   mounted () {
+		if(this.$store.state.token){
     //用于显示左侧
     var span5 =  document.querySelector(".ivu-col-span-5");
     var span19 =  document.querySelector(".ivu-col-span-19");
@@ -331,6 +340,7 @@ export default {
       }
       span5.style.display = 'block';
       span19.className = "layout-content-warp ivu-col ivu-col-span-19";
-    },1000)
+		},1000)
+		}
   }
 }
