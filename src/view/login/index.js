@@ -81,7 +81,7 @@ export default {
       formItem: {
         username: username,
         password: password,
-        remember: false
+        remember: remember
       },
       formRules: {
         username: [{
@@ -153,9 +153,6 @@ export default {
         this.isLoading = false
         this.$Message.error('您填写的账号或密码不正确，请再次尝试');
       })
-    },
-    onRemember() {
-      console.log('onRemember')
     }
   },
   mounted() {
