@@ -130,12 +130,13 @@ export default {
   computed: {
     ...mapState(['menu', 'userinfo', 'isActive'])
 },
-  mounted(){
+  mounted(){   
     this.editor=UE.getEditor("editor",{
       //此处可以定制工具栏的功能，若不设置，则默认是全部的功能
       UEDITOR_HOME_URL: `${this.$conf.root}/static/ueditor/`,
       emotionLocalization: true,
       scaleEnabled: true,
+      serverUrl:this.$conf.host+this.$conf.serverRoot+"ueditor"
     })
     let This=this;
     this.editor.addListener("contentChange", function () {
