@@ -4,7 +4,7 @@
   top: 0;
   width: 100vw;
   height: 100vh;
-  background: url(../../assets/login/bg1.png) no-repeat;
+  background: url(../../assets/login/bg1.jpg) no-repeat;
   background-size: cover;
   background-position: center；
 }
@@ -63,10 +63,11 @@
 
 .login-box h2 {
   font-family: STHeitiSC-Medium;
-  font-size: 30px;
+  font-size: 26px;
   color: #F95759;
   text-align: center;
   line-height: 2;
+  letter-spacing: 5px;
 }
 
 .login-form {
