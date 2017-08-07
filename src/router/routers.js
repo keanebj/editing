@@ -15,15 +15,6 @@ export default [{
     component: require('@/view/publish/index.vue')
    },
   {
-    name: 'loginnew',
-    path: '/loginnew',
-    meta: {
-      title: '融合号-登录'
-    },
-    component: require('@/view/loginnew/index.vue')
-  }, 
-
-  {
     name: 'main',
     path: '/',
     meta: {

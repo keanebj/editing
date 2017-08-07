@@ -7,88 +7,67 @@ var password = localStorage.getItem('remember:password') || ''
 var remember = localStorage.getItem('remember') ? true : false
 var friendLinks = [{
   name: '中国青年网',
-  url: 'http://www.baidu.com'
+  url: 'http://news.youth.cn/'
+}, {
+  name: '人民政协网',
+  url: 'http://www.rmzxb.com.cn/index.shtml'
+}, {
+  name: '中国搜索',
+  url: 'http://www.chinaso.com/'
+}, {
+  name: '搜狐网',
+  url: 'http://www.sohu.com/'
+}, {
+  name: '中华网',
+  url: 'http://www.china.com/'
 }, {
   name: '中国青年网',
   url: 'http://www.baidu.com'
 }, {
-  name: '中国青年网',
-  url: 'http://www.baidu.com'
+  name: '和讯网',
+  url: 'http://www.hexun.com/'
 }, {
-  name: '中国青年网',
-  url: 'http://www.baidu.com'
+  name: '山西日报网',
+  url: 'http://m.sxrbw.com/'
 }, {
-  name: '中国青年网',
-  url: 'http://www.baidu.com'
+  name: '东北网',
+  url: 'http://www.dbw.cn/'
 }, {
-  name: '中国青年网',
-  url: 'http://www.baidu.com'
+  name: '新民网',
+  url: 'http://www.xinmin.cn/'
 }, {
-  name: '中国青年网',
-  url: 'http://www.baidu.com'
+  name: '观察者网',
+  url: 'http://www.guancha.cn/'
 }, {
-  name: '中国青年网',
-  url: 'http://www.baidu.com'
+  name: '览潮网',
+  url: 'http://www.fjii.com/'
 }, {
-  name: '中国青年网',
-  url: 'http://www.baidu.com'
+  name: '红网',
+  url: 'http://www.rednet.cn/'
 }, {
-  name: '中国青年网',
-  url: 'http://www.baidu.com'
+  name: '川报观察',
+  url: 'http://cbgc.scol.com.cn/'
 }, {
-  name: '中国青年网',
-  url: 'http://www.baidu.com'
+  name: '成都全搜索',
+  url: 'http://chengdu.cn/'
 }, {
-  name: '中国青年网',
-  url: 'http://www.baidu.com'
+  name: '封面新闻',
+  url: 'http://www.thecover.cn/'
 }, {
-  name: '中国青年网',
-  url: 'http://www.baidu.com'
+  name: '新疆新闻在线',
+  url: 'http://www.xjbs.com.cn/'
 }, {
-  name: '中国青年网',
-  url: 'http://www.baidu.com'
+  name: '亚心网',
+  url: 'http://www.iyaxin.com/'
 }, {
-  name: '中国青年网',
-  url: 'http://www.baidu.com'
+  name: '长春新闻网',
+  url: 'http://www.ccnews.gov.cn/'
 }, {
-  name: '中国青年网',
-  url: 'http://www.baidu.com'
+  name: '吉林在线',
+  url: 'http://www.onlinejl.com/'
 }, {
-  name: '中国青年网',
-  url: 'http://www.baidu.com'
-}, {
-  name: '中国青年网',
-  url: 'http://www.baidu.com'
-}, {
-  name: '中国青年网',
-  url: 'http://www.baidu.com'
-}, {
-  name: '中国青年网',
-  url: 'http://www.baidu.com'
-}, {
-  name: '中国青年网',
-  url: 'http://www.baidu.com'
-}, {
-  name: '中国青年网',
-  url: 'http://www.baidu.com'
-}, {
-  name: '中国青年网',
-  url: 'http://www.baidu.com'
-}, {
-  name: '中国青年网',
-  url: 'http://www.baidu.com'
-}, {
-  name: '中国青年网',
-  url: 'http://www.baidu.com'
-}, {
-  name: '中国青年网',
-  url: 'http://www.baidu.com'
-}, {
-  name: '中国青年网',
-  url: 'http://www.baidu.com'
-}, {
-  name: '中国青年网',
-  url: 'http://www.baidu.com'
+  name: '河南网',
+  url: 'http://www.henanwang.com.cn/'
 }]
 export default {
   components: {
