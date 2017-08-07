@@ -140,7 +140,7 @@ export default {
     })
     let This=this;
     this.editor.addListener("contentChange", function () {
-        if(!This.editor.getContent()){
+        if(!This.editor.getContent() && This.editor.body.innerHTML.indexOf('<video') == -1){
             This.hideTip=false;
         }else{
           This.hideTip=true;
@@ -621,6 +621,10 @@ abstractWordCount:function(event){
     },
     save:function(name,hideTip){
       this.formTop.content=this.editor.getContent();
+      if(!this.formTop.content && this.editor.body.innerHTML.indexOf('<video') >-1){
+        this.formTop.content=this.editor.body.innerHTML;
+      }
+
       this.formTop.author=this.formTop.authorArr.join(" ");
       this.formTop.keyword=this.formTop.keywordArr.join(" ");
       if(!this.formTop.author){
@@ -629,6 +633,7 @@ abstractWordCount:function(event){
         this.isHideAuthor=false;
       }
         this.$refs[name].validate((valid) => {
+          //单独处理video标签
           if(!this.formTop.content){
             if(!hideTip){
               this.$Notice.error({title:'保存失败，请将内容填写完整',desc: false});
