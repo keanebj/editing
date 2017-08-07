@@ -319,6 +319,7 @@ export default {
             }  
         }
         this.contentModal=true;
+        this.$refs.unSelect.selectDom();
       }
     },
     fromLocal:function(){
@@ -738,6 +739,7 @@ abstractWordCount:function(event){
 	      	var scale = ele[3].clientHeight / ele[0].clientHeight;
 	      	ele[1].style.height = ele[2].clientHeight*scale + 'px'
 	      }else{
+	      	console.log(ele[0])
 	      	ele[1].style.display = 'none';
 	      	ele[2].style.display = 'none';
 	      }
