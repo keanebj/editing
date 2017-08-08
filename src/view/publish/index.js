@@ -257,7 +257,7 @@ export default {
 	          this.previewCon[0].content = data.content;
 	          this.previewCon[0].time = data.addtime;
 	          this.previewCon[0].studioname = this.studioName;
-	          this.previewCon[0].author = data.author;
+	          this.$refs.yulan.previewConauthor(data.author);
 	          this.previewCon[0].channel = data.channel;
           }else{
           	this.previewCon[0].title = data.title;

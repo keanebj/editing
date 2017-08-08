@@ -11,7 +11,8 @@ export default {
   data () {
     return {
       i:-1,
-      contentCoverSrc: ''
+      contentCoverSrc: '',
+      author: ''
     }
   },
   watch:{
@@ -32,6 +33,9 @@ export default {
     this.$emit('iIndex', [this.i, this.contentCoverSrc]);
   },
   methods: {
+  	previewConauthor: function (author) {
+  		this.author = author;
+  	},
   	selectDom: function () {
   		var setCon = this.$refs.setCon;
   		var onscroll = this.$refs.onscroll;
