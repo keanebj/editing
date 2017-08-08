@@ -27,7 +27,6 @@ export default {
 //  }
   },
   mounted () {
-    console.log(this.previewCon);
     this.$emit('element', [this.$refs.onscroll, this.$refs.scrollCon, this.$refs.scroll, this.$refs.setCon]);
   },
   updated () {  
