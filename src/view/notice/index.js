@@ -14,7 +14,6 @@ export default {
         //ajax获得后台公告的内容
         this.$http.get("api/content/notice/" + this.noticeID).then(({ data }) => {
           //给公告的内容赋值
-          console.log(data)
           if (data.status) {
 						this.title=data.content.title;
 	          this.content=data.content.content;
