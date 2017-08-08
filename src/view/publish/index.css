@@ -281,6 +281,12 @@
   max-width: 100%;
   height: auto;
 }
+.yulan pre{
+	margin: .5em 0;
+	padding: .4em .6em;
+	border-radius: 8px;
+	background: #f8f8f8;
+}
 
 .ivu-modal {
   width: 50%;
