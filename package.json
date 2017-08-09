@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "axios": "^0.15.3",
+    "blueimp-canvas-to-blob": "^3.11.0",
     "clipboard": "^1.5.12",
     "cropperjs": "^1.0.0-rc.3",
     "echarts": "^3.4.0",

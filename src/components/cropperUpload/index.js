@@ -207,10 +207,11 @@ export default {
       if (this.uploading) return
       // Upload cropped image to server if the browser supports `HTMLCanvasElement.toBlob`
       this.uploading = true
-      this.cropper.getCroppedCanvas({
+      var canvas = this.cropper.getCroppedCanvas({
         width: this.width,
         height: this.height
-      }).toBlob((blob) => {
+      })
+      canvas.toBlob((blob) => {
         var formData = new FormData()
         formData.append(this.field, blob, this.field + '.' + this.imgFormat)
         this.cropSuccess && this.visible && this.cropSuccess(blob, this.field, this.ki)

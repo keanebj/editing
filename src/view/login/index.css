@@ -150,7 +150,8 @@
 .remain {
   position: relative;
   margin-top: 100vh;
-  background: #FFF
+  background: #FFF;
+  z-index: 9
 }
 
 .remain .remain-img {
