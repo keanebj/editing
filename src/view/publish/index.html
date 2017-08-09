@@ -56,7 +56,7 @@
 
         <ul class="set-max-height">
           <div class="set-line"></div>
-          <ScrollBar @element="change" :elements="elements" :preview-con="previewCon[0]"></ScrollBar>
+          <ScrollBar @element="change" :elements="elements" :preview-con="previewCon[0]" ref="yulan"></ScrollBar>
         </ul>
         <p slot="footer">
         </p>
@@ -95,7 +95,7 @@
         <Input v-model="formTop.cover" type="text" class="hide"></Input>
         <div class="cover-container" style="margin-bottom: 10px;"><img :src="formTop.cover" style="display: block;" width="100%" v-if="formTop.cover != ''" /></div>
         <Button type="ghost" shape="circle" class="m-r-20 main-color pointer" @click="fromContent">正文选择</Button>
-        <cropper-upload :width="478" :height="270" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048">
+        <cropper-upload :width="408" :height="272" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048">
           <Button type="ghost" shape="circle" class="main-color pointer" @click="fromLocal">本地上传</Button>
         </cropper-upload>
         <span style="padding-left:10px;color:#F95759;">建议图片比例3：2</span>
@@ -116,7 +116,7 @@
           </div>
         </div>
         <p slot="footer">
-          <cropper-upload @fromContent="fromContent" ref="corup" :width="478" :height="270" :image="baseimg" :noSel="noSel" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048">
+          <cropper-upload @fromContent="fromContent" ref="corup" :width="408" :height="272" :image="baseimg" :noSel="noSel" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048">
             <Button type="primary" shape="circle" @click="clickCoverOk($event)">确定</Button>
           </cropper-upload>
         </p>

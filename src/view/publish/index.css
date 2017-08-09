@@ -281,6 +281,12 @@
   max-width: 100%;
   height: auto;
 }
+.yulan pre{
+	margin: .5em 0;
+	padding: .4em .6em;
+	border-radius: 8px;
+	background: #f8f8f8;
+}
 
 .ivu-modal {
   width: 50%;
@@ -300,17 +306,14 @@
 .ivu-modal-wrap.pc .ivu-modal-content .ivu-modal-body{
 	height: 500px;
 }
-
 .ivu-modal-wrap.mobile .set-line {
   display: none;
 }
-
 .ivu-modal-wrap.mobile .set-max-height {
   border: none;
 }
-
 .ivu-modal-wrap.mobile .set-con {
-  width: 270px;
+  width: 260px;
   margin: 0px auto 0px;
   padding: 0;
   height: 470px;

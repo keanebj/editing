@@ -282,10 +282,9 @@ export default {
           title: res.message,
           desc: false
         })
-        console.log(res);
+ 
         Cookies.set('title',res.content.title);
         localStorage.setItem('content',res.content.content);
-        //Cookies.set('content',res.content.content);
         Cookies.set('channel',res.content.channel);
         Cookies.set('summary',res.content.summary == null?'':res.content.summary);
         Cookies.set('keyword',res.content.keyword);
