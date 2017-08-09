@@ -306,15 +306,12 @@
 .ivu-modal-wrap.pc .ivu-modal-content .ivu-modal-body{
 	height: 500px;
 }
-
 .ivu-modal-wrap.mobile .set-line {
   display: none;
 }
-
 .ivu-modal-wrap.mobile .set-max-height {
   border: none;
 }
-
 .ivu-modal-wrap.mobile .set-con {
   width: 260px;
   margin: 0px auto 0px;
