@@ -122,6 +122,9 @@
 .login-form .ivu-form-item .ivu-input:focus {
   box-shadow: none
 }
+.login-form .ivu-form-item-error-tip{
+  padding-top: 10px;
+}
 
 .login-form .form-extra {
   font-size: 14px;

@@ -3,14 +3,14 @@
 import 'babel-polyfill'
 import 'blueimp-canvas-to-blob'
 import Vue from 'vue'
-import app from './app'
 import router from './router'
 import store from './store'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
-import './assets/style.css'
-import './assets/iviewTheme/index.less'
 import 'font-awesome/css/font-awesome.css'
+import './assets/iviewTheme/index.less'
+import './assets/style.css'
+
 Vue.use(iView)
 Vue.config.productionTip = false
 import http from './http'
@@ -20,6 +20,7 @@ import './filtres'
 import config from './config'
 Vue.prototype.$conf = config
 /* eslint-disable no-new */
+import app from './app'
 new Vue({
   el: '#app',
   router,
