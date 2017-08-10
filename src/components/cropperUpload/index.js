@@ -93,6 +93,7 @@ export default {
       return false;
     },
     handleClick(e,resel,linkimg) {
+      debugger;
       if(linkimg == 'linkimg'){
         this.linkimg=linkimg;
       }

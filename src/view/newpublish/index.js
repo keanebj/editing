@@ -109,7 +109,7 @@ export default {
       placekeyword:'每个关键词最多5个字',
       isSkip:true,
       baseimg:'',
-      noSel:true
+      noSel:false
   }
 },
   created(){

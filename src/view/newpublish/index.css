@@ -185,40 +185,6 @@
   height: 28vw;
   overflow: hidden;
 }
- .layout-ceiling {
-    padding: 1px 50px;
-    overflow: hidden;
-    border-bottom:1px solid #ddd;
-  }
-  .layout-ceiling .logo{
-    float: left;
-  }
-  .layout-ceiling .logo img{
-    height: 30px;
-    margin-top: 8px;
-  }
-  .layout-ceiling-main {
-    float: right;
-    line-height: 50px;
-    vertical-align: middle
-  }
-  .layout-ceiling-main a {
-    color: #757575;
-    float: left;
-  }
-  .layout-ceiling-main a img {
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-    box-shadow: 0 0 1px #999;
-    float: left;
-    margin-right: 20px;
-  }
-  .layout-ceiling-main a.nickname{
-    font-size: 18px;
-    margin-right: 10px;
-    color:#333;
-  }
 
 
 /*weizhenglin*/
