@@ -17785,9 +17785,9 @@ UE.plugins['video'] = function (){
                 //html.push(creatInsertStr( vi.url, vi.width || 420,  vi.height || 280, id + i, null, cl, 'image'));
                 //判断是swf还是mp4
                 if(reg.test(vi.url)){
-                     html.push(creatInsertStr( vi.url, vi.width || 420,  vi.height || 280, id + i, align, cl, 'video'));
+                     html.push(creatInsertStr( vi.url, vi.width || 640,  vi.height || 480, id + i, align, cl, 'video'));
                 }else{
-                     html.push(creatInsertStr( vi.url, vi.width || 420,  vi.height || 280, id + i, align, cl, 'embed'));
+                     html.push(creatInsertStr( vi.url, vi.width || 640,  vi.height || 480, id + i, align, cl, 'embed'));
                 }
             }
             me.execCommand("inserthtml",html.join(""),true);
