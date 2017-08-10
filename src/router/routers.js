@@ -4,7 +4,7 @@ export default [{
     meta: {
       title: '自媒体编辑系统-登录'
     },
-    component: require('@/view/login/index.vue')
+    component: () => import('@/view/login/index.vue')
   },
   {
     name: 'publish',
@@ -12,7 +12,7 @@ export default [{
     meta: {
       title: '发表'
     },
-    component: require('@/view/publish/index.vue')
+    component: () => import('@/view/publish/index.vue')
    },
   {
     name: 'main',
@@ -20,14 +20,14 @@ export default [{
     meta: {
       title: '自媒体编辑系统'
     },
-    component: require('@/view/index.vue'),
+    component: () => import('@/view/index.vue'),
     children: [{
         name: 'home',
         path: '',
         meta: {
           title: '自媒体编辑系统'
         },
-        component: require('@/view/home/index.vue')
+        component: () => import('@/view/home/index.vue')
       },
       {
         name: 'manageContent',
@@ -35,7 +35,7 @@ export default [{
         meta: {
           title: '内容管理'
         },
-        component: require('@/view/manage/content/index.vue')
+        component: () => import('@/view/manage/content/index.vue')
       },
       {
         name: 'manageStudio',
@@ -43,7 +43,7 @@ export default [{
         meta: {
           title: '工作室管理'
         },
-        component: require('@/view/manage/studio/index.vue')
+        component: () => import('@/view/manage/studio/index.vue')
       },
       {
         name: 'manageStudioSingle',
@@ -51,7 +51,7 @@ export default [{
         meta: {
           title: '工作室管理编辑'
         },
-        component: require('@/view/manage/studio/single/index.vue')
+        component: () => import('@/view/manage/studio/single/index.vue')
       },
       {
         name: 'manageAd',
@@ -59,7 +59,7 @@ export default [{
         meta: {
           title: '广告管理'
         },
-        component: require('@/view/manage/ad/index.vue')
+        component: () => import('@/view/manage/ad/index.vue')
       },
       {
         name: 'settingsAccount',
@@ -67,7 +67,7 @@ export default [{
         meta: {
           title: '账号信息'
         },
-        component: require('@/view/settings/account/index.vue')
+        component: () => import('@/view/settings/account/index.vue')
       },
       {
         name: 'notice',
@@ -75,7 +75,7 @@ export default [{
         meta: {
           title: '公告',
         },
-        component: require('@/view/notice/index.vue'),
+        component: () => import('@/view/notice/index.vue'),
       },
       {
         name: 'article',
@@ -83,7 +83,7 @@ export default [{
         meta: {
           title: '文章',
         },
-        component: require('@/view/article/index.vue'),
+        component: () => import('@/view/article/index.vue'),
       }
     ]
   },
@@ -93,7 +93,7 @@ export default [{
     meta: {
       title: '分享',
     },
-    component: require('@/view/share/index.vue'),
+    component: () => import('@/view/share/index.vue'),
   },
   {
     name: '404',
@@ -101,6 +101,6 @@ export default [{
     meta: {
       title: '404'
     },
-    component: require('@/view/404/index.vue')
+    component: () => import('@/view/404/index.vue')
   }
 ]

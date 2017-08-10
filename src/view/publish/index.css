@@ -56,19 +56,16 @@
   text-align: center;
 }
 
-#contentPop .ivu-btn-text,
-#localPop .ivu-btn-text {
+#contentPop .ivu-btn-text, #localPop .ivu-btn-text {
   display: none;
 }
 
-#contentPop .ivu-modal-footer,
-#localPop .ivu-modal-footer {
+#contentPop .ivu-modal-footer, #localPop .ivu-modal-footer {
   border-top: none;
   text-align: center;
 }
 
-#contentPop .ivu-btn-primary,
-#localPop .ivu-btn-primary {
+#contentPop .ivu-btn-primary, #localPop .ivu-btn-primary {
   background-color: #F95759;
   border-color: #F95759;
   margin: 10px 0;
@@ -96,9 +93,11 @@
 .active-border {
   border: 1px solid #F95759;
 }
-#contentPop .content-pic img{
-  height:118px;
+
+#contentPop .content-pic img {
+  height: 118px;
 }
+
 #contentPop .content-pic img.active-border {
   width: 97%;
 }
@@ -110,6 +109,7 @@
 #localUpload {
   display: inline-block;
 }
+
 
 /* .ivu-modal-header {
   background: #f3f3f3;
@@ -140,11 +140,13 @@
   display: inline-block;
   cursor: pointer;
 }
-#publish-btn{
+
+#publish-btn {
   color: #F95759 !important;
-  border-color:#F95759 !important;
+  border-color: #F95759 !important;
 }
-#publish-btn:hover{
+
+#publish-btn:hover {
   color: #fff !important;
   background: #F95759 !important;
 }
@@ -268,24 +270,28 @@
 }
 
 .set-con p {
-	margin: 5px 0;
+  margin: 5px 0;
   word-break: break-all;
 }
-.set-con ol.list-paddingleft-2{
-	list-style: decimal;
+
+.set-con ol.list-paddingleft-2 {
+  list-style: decimal;
 }
-.set-con ul.list-paddingleft-2{
-	list-style: disc;
+
+.set-con ul.list-paddingleft-2 {
+  list-style: disc;
 }
+
 .set-con .yulan img {
   max-width: 100%;
   height: auto;
 }
-.yulan pre{
-	margin: .5em 0;
-	padding: .4em .6em;
-	border-radius: 8px;
-	background: #f8f8f8;
+
+.yulan pre {
+  margin: .5em 0;
+  padding: .4em .6em;
+  border-radius: 8px;
+  background: #f8f8f8;
 }
 
 .ivu-modal {
@@ -303,25 +309,29 @@
   background-size: 240px 480px;
   height: 500px;
 }
-.ivu-modal-wrap.pc .ivu-modal-content .ivu-modal-body{
-	height: 500px;
+
+.ivu-modal-wrap.pc .ivu-modal-content .ivu-modal-body {
+  height: 500px;
 }
+
 .ivu-modal-wrap.mobile .set-line {
   display: none;
 }
+
 .ivu-modal-wrap.mobile .set-max-height {
   border: none;
 }
+
 .ivu-modal-wrap.mobile .set-con {
   width: 260px;
   margin: 0px auto 0px;
   padding: 0;
   height: 470px;
-  transform:scale(0.75);//设置缩放比例
-	-ms-transform:scale(0.75);
-	-webkit-transform:scale(0.75);
-	-o-transform:scale(0.75);
-	-moz-transform:scale(0.75);
+  transform: scale(0.75);
+  -ms-transform: scale(0.75);
+  -webkit-transform: scale(0.75);
+  -o-transform: scale(0.75);
+  -moz-transform: scale(0.75);
 }
 
 .ivu-modal-wrap.mobile .set-max-height h2 {
@@ -332,38 +342,44 @@
   max-width: 100%;
   height: auto;
 }
-.ivu-modal-wrap.mobile{
+
+.ivu-modal-wrap.mobile {
   font-size: 12px !important;
-  line-height:16px;
+  line-height: 16px;
 }
-.ivu-modal-wrap.mobile h1,.ivu-modal-wrap.mobile h2,.ivu-modal-wrap.mobile h3,
-.ivu-modal-wrap.mobile h4,.ivu-modal-wrap.mobile h5,.ivu-modal-wrap.mobile h6{
+
+.ivu-modal-wrap.mobile h1, .ivu-modal-wrap.mobile h2, .ivu-modal-wrap.mobile h3, .ivu-modal-wrap.mobile h4, .ivu-modal-wrap.mobile h5, .ivu-modal-wrap.mobile h6 {
   font-size: 16px !important;
 }
-.ivu-modal-wrap.mobile p{
+
+.ivu-modal-wrap.mobile p {
   /*font-size: 12px!important;
   line-height:20px !important;
   margin-top:4px !important;
   margin-bottom:4px !important;*/
 }
-.ivu-modal-wrap.mobile p span{
+
+.ivu-modal-wrap.mobile p span {
   /*font-size: 12px !important;
   line-height:16px !important;*/
 }
-.ivu-modal-wrap.pc embed{
-	margin: 10px auto;
+
+.ivu-modal-wrap.pc embed {
+  margin: 10px auto;
 }
-.ivu-modal-wrap.mobile embed,.ivu-modal-wrap.mobile video{
-  width:90% !important;
-  height:auto !important;
+
+.ivu-modal-wrap.mobile embed, .ivu-modal-wrap.mobile video {
+  width: 90% !important;
+  height: auto !important;
   display: block;
   margin: 10px auto;
 }
 
-.cover-tip{
-  margin-left:10px;
-  color:#F95759;
+.cover-tip {
+  margin-left: 10px;
+  color: #F95759;
 }
+
 
 /*滚动条*/
 
@@ -435,7 +451,7 @@
   border: none;
   padding: 0 60px 10px 40px;
   box-shadow: none;
-  font-size:16px;
+  font-size: 16px;
 }
 
 #titleContent .ivu-input:focus {
@@ -458,16 +474,9 @@
 .hide {
   display: none;
 }
-
-
-/*分享*/
-
+/* 分享 */
 .share_hide .ivu-modal-mask {
-  background: none;
-}
-
-.share_hide .ivu-modal-wrap {
-  /*position: relative;*/
+  background: none
 }
 
 .share_hide .ivu-modal {
@@ -532,13 +541,9 @@
   font-size: 14px;
   color: #333
 }
-/*.author-input:focus{
-  border-color:#F95759 !important;
-  outline: none;
-   -webkit-appearance: none;
-}*/
-.pointer.main-color{
-	color: #F95759!important;
-	border-color: #F95759!important;
-	padding: 5px 10px!important;
+
+.pointer.main-color {
+  color: #F95759 !important;
+  border-color: #F95759 !important;
+  padding: 5px 10px !important;
 }
