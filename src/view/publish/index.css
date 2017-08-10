@@ -321,6 +321,16 @@
   height: auto;
 }
 
+.pagebreak {
+    display: block;
+    clear: both !important;
+    cursor: default !important;
+    width: 100% !important;
+    margin: 0;
+    border: 1px solid rgb(128, 128, 128);
+    height: 3px;
+}
+
 .yulan pre {
   margin: .5em 0;
   padding: .4em .6em;
@@ -523,6 +533,7 @@
   box-shadow: 0 0 5px #666;
   z-index: 2;
   background: #fff;
+  width: 240px;
 }
 
 .share_hide .ivu-modal-content .ivu-modal-body {

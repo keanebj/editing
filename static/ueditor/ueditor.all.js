@@ -13908,16 +13908,17 @@ UE.plugins['pagebreak'] = function () {
             }
         })
     });
-    me.addOutputRule(function(node){
-        utils.each(node.getNodesByTagName('hr'),function(n){
-            if(n.getAttr('class') == 'pagebreak'){
-                var txt = UE.uNode.createText(me.options.pageBreakTag);
-                n.parentNode.insertBefore(txt,n);
-                n.parentNode.removeChild(n);
-            }
-        })
+    // me.addOutputRule(function(node){
+    //     utils.each(node.getNodesByTagName('hr'),function(n){
+    //         if(n.getAttr('class') == 'pagebreak'){
+    //            // var txt = UE.uNode.createText(me.options.pageBreakTag);
+    //            // n.parentNode.insertBefore(txt,n);
+    //             //console.log(n)
+    //            // n.parentNode.removeChild(n);
+    //         }
+    //     })
 
-    });
+    // });
 
     /**
      * 插入分页符
@@ -17681,7 +17682,7 @@ UE.plugins['video'] = function (){
                     ' controls preload="load" width="' + width + '" height="' + height + '" src="' + url + '" data-setup="{}">' +
                     '<source src="' + url + '" type="video/' + ext + '" /></video>';
                   }
-                
+
 
                 break;
         }
