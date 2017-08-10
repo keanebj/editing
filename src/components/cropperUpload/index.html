@@ -26,8 +26,8 @@
         <Button type="ghost" icon="ios-minus-outline" @click="zoom('out')"></Button>
       </Button-group>
       <Button-group style="float:left;margin-left: 10px;">
-        <Button type="ghost" @click="scale('h')"><i class="fa fa-arrows-h" aria-hidden="true"></i></Button>
-        <Button type="ghost" @click="scale('v')"><i class="fa fa-arrows-v" aria-hidden="true"></i></Button>
+        <Button type="ghost" @click="scale('h')"><Icon type="arrow-swap"></Icon></Button>
+        <Button type="ghost" @click="scale('v')"><Icon type="arrow-swap" style="transform: rotate(90deg);"></Icon></Button>
       </Button-group>
       <Button-group style="float:left;margin-left: 10px;">
         <Button type="ghost" icon="ios-reload" @click="rotate()"></Button>

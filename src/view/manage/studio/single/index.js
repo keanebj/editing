@@ -1,10 +1,8 @@
 import CropperUpload from '@/components/cropperUpload/index.vue'
-import imageCropUpload from '@/components/imageCropUpload/index.vue'
 export default {
   name: 'ViewManageStudioId',
   components: {
-    'cropper-upload': CropperUpload,
-    'image-crop-upload': imageCropUpload
+    'cropper-upload': CropperUpload
   },
   data() {
     const validatePassCheck = (rule, value, callback) => {

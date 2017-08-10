@@ -70,7 +70,6 @@
 
 .login-box {
     width: 330px;
-    height: 300px;
     background: #FFF;
     border-radius: 10px;
     position: absolute;
@@ -122,6 +121,9 @@
 .login-form .ivu-form-item .ivu-input:focus {
   box-shadow: none
 }
+.login-form .ivu-form-item-error-tip{
+  padding-top: 10px;
+}
 
 .login-form .form-extra {
   font-size: 14px;
@@ -150,7 +152,8 @@
 .remain {
   position: relative;
   margin-top: 100vh;
-  background: #FFF
+  background: #FFF;
+  z-index: 9
 }
 
 .remain .remain-img {

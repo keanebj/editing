@@ -160,7 +160,6 @@ export default {
         this.requestCount--
         if (this.requestCount <= 0) this.isSubmit = false
         if (data.status) {
-          console.log(data)
           item.id = data.id
           // item.showtime = new Date()
           item.pathOld = item.path
