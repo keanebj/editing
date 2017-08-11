@@ -110,14 +110,13 @@ export default {
               })
             })
           }
-          this.catalogs = catalogs
-          
+          this.catalogs = catalogs          
         }
       })
     }
   },
   created() {
-    this.fetchCatalogs()
+    //this.fetchCatalogs()
     this.fetchCollection()
   }
 }

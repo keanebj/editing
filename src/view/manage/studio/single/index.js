@@ -14,15 +14,22 @@ export default {
         callback()
       }
     };
+    const validateCID = (rule, value, callback) => {  
+      if (value == '' || value == undefined || typeof(value) == 'undefined') {
+        callback(new Error('请选择【栏目绑定】'));
+      } else {
+        callback();
+      }
+    };
     return {
       id: 0,
-      resetPWD:false,
-      resetWord:'重置',
+      resetPWD: false,
+      resetWord: '重置',
       isSubmit: false,
       isLoading: false,
       catalogs: {},
       disabledS: true,
-      firstLoad :true,
+      firstLoad: true,
       formValidate: {
         "id": 0,
         "username": "",
@@ -31,7 +38,7 @@ export default {
         "studioname": "",
         "url": "",
         "logofile": "",
-        "catalogname":'',
+        "catalogname": '',
         "accountindex": ''
       },
       ruleValidate: {
@@ -41,8 +48,7 @@ export default {
           message: '账号不能为空',
           trigger: 'blur'
         }],
-        password: [
-          {
+        password: [{
             required: true,
             message: '密码不能为空',
             trigger: 'blur'
@@ -54,8 +60,7 @@ export default {
             trigger: 'blur'
           }
         ],
-        passwordConfirm: [
-          {
+        passwordConfirm: [{
             required: true,
             message: '确认密码不能为空',
             trigger: 'blur'
@@ -86,16 +91,16 @@ export default {
             trigger: 'blur'
           }
         ],
-        catalogid: [{
-          required: true,
-          type: 'number',
-          message: '请选择【栏目绑定】',
-          trigger: 'blur'
-        }],
+        catalogid: [          
+          {            
+            validator: validateCID,
+            trigger: 'blur'
+          }
+        ],
         accountindex: [{
           type: 'number',
           min: 0,
-          max:1000,
+          max: 1000,
           message: '请输入0-1000的数字',
           trigger: 'blur'
         }],
@@ -103,23 +108,33 @@ export default {
     }
   },
   methods: {
-    allowSubmit(e) {  
+    allowSubmit(e) {
       if (this.disabledS && !this.firstLoad) {
         this.disabledS = false
         this.firstLoad = false
-      }
-      else{
+      } else {
         this.firstLoad = false
       }
     },
-    resetPassword(){
-      if(!this.resetPWD){
-        this.resetWord = '取消重置'
+    getCatalogName() {
+      let _k = this.formValidate.catalogid.split('_')[0]
+      let _m = this.formValidate.catalogid.split('_')[1]
+      let _n = this.catalogs[_m]['catalogs']
+      for (var i = 0; i < _n.length; i++) {
+        if (_n[i].id == _k) {
+          this.formValidate.catalogname = _n[i].name
+          break
+        }
       }
-      else{
+      console.log("name  = " + this.formValidate.catalogname)
+    },
+    resetPassword() {
+      if (!this.resetPWD) {
+        this.resetWord = '取消重置'
+      } else {
         this.resetWord = '重置'
       }
-      this.resetPWD = !this.resetPWD     
+      this.resetPWD = !this.resetPWD
       this.formValidate.password = ''
       this.formValidate.passwordConfirm = ''
     },
@@ -137,7 +152,7 @@ export default {
             desc: data.message || '获取错误'
           })
           this.isLoading = false
-        }        
+        }
       }, () => {
         this.$Notice.error({
           title: '错误',
@@ -158,7 +173,7 @@ export default {
       })
     },
     save() {
-      this.formValidate.catalogname = this.catalogs[this.formValidate.catalogid].name
+      this.getCatalogName()
       var data = Object.assign({}, this.formValidate)
       delete data.id
       if (!data.password) {
@@ -166,12 +181,15 @@ export default {
         delete data.passwordConfirm
       }
       this.isSubmit = true
+      data.catalogid = data.catalogid.split('_')[0]
       this.$http.post('/api/studio', data).then(({
         data
       }) => {
         this.isSubmit = false
         if (data.status === 1) {
-          this.$router.push({ path: '/manage/studio' })
+          this.$router.push({
+            path: '/manage/studio'
+          })
           this.$Notice.success({
             title: '成功',
             desc: data.message || '保存成功'
@@ -193,7 +211,6 @@ export default {
     },
     update() {
       this.isSubmit = true
-      this.formValidate.catalogname = this.catalogs[this.formValidate.catalogid].name
       this.$http.put('/api/studio/' + this.id, this.formValidate).then(({
         data
       }) => {
@@ -225,10 +242,11 @@ export default {
         this.$refs['formValidate'].validateField('logofile')
       }
     },
-    cropUploadFail(e, resData, field, ki) {
-    },
+    cropUploadFail(e, resData, field, ki) {},
     fetchCatalogs() {
-      this.$http.get('/api/catalog').then(({ data }) => {
+      this.$http.get('/api/catalog').then(({
+        data
+      }) => {
         if (data.status) {
           if (data.catalogs) {
             var catalogs = {}
@@ -252,8 +270,7 @@ export default {
     if (this.id !== '0') {
       this.resetPWD = false
       this.request()
-    }
-    else{
+    } else {
       this.firstLoad = false
       this.resetPWD = true
     }

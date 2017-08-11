@@ -34,7 +34,8 @@
         <td><a style="color:#495060" target="_blank" :href="item.url">{{item.studioname}}</a></td>
         <td>{{item.url}}</td>
         <td>{{item.addtime}}</td>
-         <td>{{catalogs[item.catalogid]?catalogs[item.catalogid]['name']:'未绑定'}}</td> 
+        <td>{{item.catalogname == '' ? '未绑定' : item.catalogname}}</td>
+         <!-- <td>{{catalogs[item.catalogid]?catalogs[item.catalogid]['name']:'未绑定'}}</td>  -->
         <td style="font-size:15px;">
           <router-link :to="'/manage/studio/'+item.id">
             <!-- <Icon type="edit"></Icon> -->
