@@ -1,0 +1,127 @@
+<section>
+  <Row>
+    <Col span="12"  class="manage_con_col">
+    <Button type="primary" size="large" shape="circle" class="btn-create" @click="createArticle">
+      <img src="../../../assets/operator/create.svg" class="icon-create"></img>
+      新建
+    </Button>
+    <Button type="ghost" size="large" shape="circle" class="btn-create" @click="uploadModal=true">
+      <img src="../../../assets/operator/import.svg" class="icon-create"></img>
+      导入
+    </Button>
+    <Modal v-model="uploadModal" title="导入" width="450" class="upload_doc_mask">
+      <div class="upload_doc">
+        选择文件：
+        <div class="upload_doc_con">
+          <input type="text" value="" disabled="" />
+          <Upload
+            ref="upload"
+            :action="$conf.host + $conf.serverRoot + 'api/content/import'"
+            :before-upload="beforeLoad"
+            :show-upload-list="true"
+            accept=".doc,.docx,.ppt,.pptx"
+            type="select"
+            :on-progress="onLoading"
+            :format="['doc','docx','ppt','pptx']"
+            :on-format-error="handleFormatError"
+            :on-success="handleSuccess"
+            :on-error="handleError"
+            :headers="headToken">
+            <Button type="info" icon="ios-cloud-upload-outline">上传文件</Button>
+          </Upload>
+        </div>
+        <div v-if="beforeUpload"  class="befor_upload">
+          <span>{{ fileName }}</span>
+          <Progress :percent="percentProgress" :hide-info="true" :stroke-width="18" status="normal"></Progress>
+          <span>{{ fileSize }}</span>
+        </div>
+        <div style="margin-top: 20px;">
+          支持doc、docx、ppt、pptx格式文件
+        </div>
+      </div>
+    </Modal>
+    支持word文档、ppt文件导入
+    </Col>
+    <Col span="12">
+    <Input icon="ios-search" placeholder="输入搜索关键字，按enter键查询" style="width:250px;float:right" @on-enter="getContentList('search')" @on-click="getContentList('search')" v-model="searchValue"></Input>
+    </Col>
+  </Row>
+  <Row style="margin:30px 0;">
+    <Col span="12" v-if="roleType != 'Manage'">
+    	<span>
+    		发布渠道： <span style="font-weight:700">人民日报中央厨房</span>
+    	</span>
+    </Col>
+    <Col :span="num" v-if="roleType != 'Manage' ? num='12' : num='24'">
+    <Radio-group style="float:right" v-model="status" @on-change="contentTypeList">
+      <Radio label="" style="margin-right:30px;">全部文章</Radio>
+      <Radio label="Publish" style="margin-right:30px;">已发表</Radio>
+      <Radio label="Draft" style="margin-right:30px;">草稿</Radio>
+      <Radio label="Offline">已撤回</Radio>
+    </Radio-group>
+    </Col>
+  </Row>
+
+  <table class="table table_con">
+    <thead>
+      <tr>
+        <th>标题</th>
+        <th></th>
+        <th>作者</th>
+        <th>时间</th>
+        <th>状态</th>
+        <th v-if="roleType == 'Manage'">标签</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr :class="{hide:hidenodata}"><td style="border-bottom:none;font-size: 18px;color: #333;" colspan="6"><img src="../../../assets/error/no-data.svg" style="margin-top:80px;width: 30%;"/><br/><br/>暂无内容</td></tr>
+      <tr :class="{hide:hidenofound}"><td style="border-bottom:none;font-size: 18px;color: #333;" colspan="6"><img src="../../../assets/error/not-found.svg" style="margin-top:80px;width: 30%;"/><br/><br/>没有搜索到相关内容</td></tr>
+      <tr v-for="(item,index) in contentList" :index="item.ID" class="tr-hover">
+        <th scope="row" width="15%" style="position: relative;padding: 0.75rem;">
+          <Icon v-if="item.topflag" type="flag" style="position:absolute;top:0px;left:0px;color:#F95759;font-size:20px;">top</Icon>
+          <router-link :to="{path:'../article',query:{id:item.id}}" v-if="roleType == 'Edit'"><img height="60" :src="item.cover" class="content-logo"></router-link>
+          <router-link :to="{path:'../notice',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'Notice'"><img height="60" :src="item.cover" class="content-logo"></router-link>
+          <router-link :to="{path:'../article',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'College'"><img height="60" :src="item.cover" class="content-logo"></router-link>
+        </th>
+        <th scope="row" id="title" width="35%" style="text-align:left;">
+          <router-link :to="{path:'../article',query:{id:item.id}}" v-if="roleType == 'Edit'">{{item.title}}</router-link>
+          <router-link :to="{path:'../notice',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'Notice'">{{item.title}}</router-link>
+          <router-link :to="{path:'../article',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'College'">{{item.title}}</router-link>
+        </th>
+        <td style="padding: 0.75rem;" width="10%">{{item.author}}</td>
+        <td width="90">{{item.addtime}}</td>
+        <td width="130">
+          <div v-if="item.status == 'Draft'"><span class="draft-back">草稿</span></div>
+          <div v-else-if="item.status == 'Publish'"><span class="publish-back">已发表</span></div>
+          <div v-else-if="item.status == 'Offline'"><span class="offline-back">已撤回</span></div>
+        </td>
+        <td v-if="roleType == 'Manage'" width="140">
+          <span v-if="item.label == 'Notice' ">公告</span>
+          <span v-else>中央厨房融媒体学院</span>
+        </td>
+        <td width="10%">
+          <router-link :to="{path:'../publish',query:{articleID:item.id}}" v-if="item.status != 'Publish'">
+            <img src="../../../assets/operator/edit.svg" class="icon-edit">
+          </router-link>
+          <img src="../../../assets/operator/edit-disabled.svg" class="icon-edit" v-else>
+          <Dropdown style="margin-left: 5px" trigger="click" @on-click="operateContent">
+            <a href="javascript:void(0)" @click="getOperateContentID(item.id)">
+              <img src="../../../assets/operator/set.svg" class="icon-set">
+            </a>
+            <Dropdown-menu slot="list">
+              <Dropdown-item v-if="item.topflag" name="canceltop" >取消置顶</Dropdown-item>
+              <Dropdown-item v-else="item.topflag" name="top" >置顶</Dropdown-item>
+              <div v-if="item.status == 'Publish'"><Dropdown-item name="drop" >撤回</Dropdown-item></div>
+              <Dropdown-item name="delete">删除</Dropdown-item>
+            </Dropdown-menu>
+          </Dropdown>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div :class="{hide:isActiveHide}">
+    <div style="float:right;line-height:24px;">共{{pageCount}}页</div>
+    <Page :total="total" style="float:right" :page-size="pageSize" :current="pageIndex" size="small"  @on-change="changePage"></Page>
+  </div>
+</section>
