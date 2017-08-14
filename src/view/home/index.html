@@ -33,15 +33,6 @@
   <Row v-if="adList.length>0">
     <Col span="24">
     <div class="home-ad">
-      <!--<Carousel autoplay v-model="value2">
-        <Carousel-item v-for="ad in adList" key="ad.id">
-          <div class="demo-carousel">
-          	<a :href="ad.url" target="_blank">
-          		<img :src="ad.path">
-          	</a>
-          </div>
-        </Carousel-item>
-      </Carousel>-->
       <swiper :options="swiperOption" ref="mySwiper"> 
         <!-- 这部分放你要渲染的那些内容 -->  
         <swiper-slide v-for="ad in adList"  key="ad.id"> 
