@@ -52,6 +52,9 @@
 	border-radius: 8px;
 	background: #f8f8f8;
 }
+.video_container embed{
+  width:90% !important;
+}
 
 /*手机端分享*/
 @media screen and (max-width: 768px) {

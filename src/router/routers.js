@@ -14,14 +14,6 @@ export default [{
     },
     component: () => import('@/view/publish/index.vue')
    },
-    {
-    name: 'newpublish',
-    path: '/newpublish',
-    meta: {
-      title: '发表'
-    },
-    component: () => import('@/view/newpublish/index.vue')
-   },
   {
     name: 'main',
     path: '/',

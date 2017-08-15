@@ -1,0 +1,90 @@
+.video-preview{
+    border:1px solid #ddd;
+    display: inline-block;
+    margin-top:20px;
+    width:400px;
+    height:225px;
+    background:url('../../assets/error/local-video.svg') center center no-repeat;
+    background-size:60% 60%;
+}
+
+#previewLinkVideo video{
+    width:100% !important;
+    height:100% !important;
+    position: absolute;
+    left:0;
+    top:0;
+    z-index: 2;
+}
+#video-upload-pop .ivu-modal-footer{
+    display: none;
+}
+.video-header-span{
+    padding:0 5px;
+}
+.video-footer{
+    text-align: center;
+    margin-top:20px;
+}
+.video-footer .ivu-btn{
+    padding:6px 20px;
+}
+.video-local-upload{
+    background: url('../../assets/error/local-video.svg') center center no-repeat;
+    width:100%;
+    text-align:center;
+}
+.local-step1-tip{
+    margin:20px auto;
+    width:50%;
+    word-break: break-all;
+    text-align: left;
+    line-height: 40px;
+    color:#999999;
+}
+.video-step-2,.video-step-3,.video-step-4{
+    padding:0 50px;
+}
+.video-step-3{
+    position:relative;
+}
+.video-step-3 .re-upload-btn{
+    position: absolute;
+    right:50px;
+    top:14px;
+}
+.video-step-2 .title,.video-step-3 .title,.video-step-4 .title{
+    background: url('../../assets/error/video-name.svg') left center no-repeat;
+    padding:20px 0 30px 60px;
+    height:50px;
+    text-align:left;
+    vertical-align: middle;
+    display: table-cell;
+    font-weight: 500;
+    font-size: 18px;
+}
+.video-step-2 .ivu-progress-bg{
+    background:linear-gradient(90deg,#F95759,deeppink);
+}
+#resource-manage .ivu-col-span-8{
+    padding:10px;
+}
+#resource-manage img{
+    width:100%;
+}
+#resource-manage .video-item{
+    border-bottom: 1px solid #ddd;
+    padding-bottom:4px;
+    overflow: hidden;
+}
+#video-progress .ivu-progress-text{
+    position: absolute;
+    left:50%;
+    top:2%;
+    color:#fff;
+    font-size: 20px;
+}
+
+#video-progress .ivu-progress-outer{
+    position: relative;
+}
