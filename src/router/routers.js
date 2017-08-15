@@ -70,6 +70,22 @@ export default [{
         component: () => import('@/view/manage/studio/single/index.vue')
       },
       {
+        name: 'SourceMaterial',
+        path: '/manage/material',
+        meta: {
+          title: '素材管理'
+        },
+        component: () => import('@/view/manage/material/index.vue')
+      },
+      {
+        name: 'SourceMaterialEnter',
+        path: '/manage/material/enter',
+        meta: {
+          title: '素材管理保存'
+        },
+        component: () => import('@/view/manage/material/enter/index.vue')
+      },
+      {
         name: 'manageAd',
         path: '/manage/ad',
         meta: {
