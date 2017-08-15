@@ -189,3 +189,12 @@ th {
     50%  { transform: rotate(180deg);}
     to   { transform: rotate(360deg);}
 }
+
+.btn-ghost-red {
+  color: #fa797a;
+  border-color: #fa797a;
+}
+.btn-ghost-red:hover{
+  color: #F98F90;
+  border-color: #F98F90;
+}

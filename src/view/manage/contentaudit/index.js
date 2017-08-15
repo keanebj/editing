@@ -1,34 +1,75 @@
-import CropperUpload from '@/components/cropperUpload/index.vue'
-var itemTemplate = {
-  id: null,
-  path: '',
-  url: '',
-  showtime: null
+var statusMaps = {
+  'PendingAudit': '待审核',
+  'Publish': '已发表',
+  'NotPass': '未通过',
+  'Offline': '已撤回'
 }
-var match = /^((ht|f)tps?):\/\/([\w\-]+(\.[\w\-]+)*\/)*[\w\-]+(\.[\w\-]+)*\/?(\?([\w\-\.,@?^=%&:\/~\+#]*)+)?/
+var confirmMaps = {
+  'Publish': {
+    single: {
+      title: '确认',
+      content: '是否通过该条内容？'
+    },
+    multi: {
+      title: '确认',
+      content: '是否通过所选内容？'
+    }
+  },
+  'NotPass': {
+    single: {
+      title: '不通过',
+      content: '是否不通过该条内容？'
+    },
+    multi: {
+      title: '不通过',
+      content: '是否不通过所选内容？'
+    }
+  },
+  'Offline': {
+    single: {
+      title: '撤回',
+      content: '是否撤回该条内容？'
+    },
+    multi: {
+      title: '撤回',
+      content: '是否撤回所选内容？'
+    }
+  },
+  'Remove': {
+    single: {
+      title: '删除',
+      content: '是否删除该条内容？'
+    },
+    multi: {
+      title: '删除',
+      content: '是否删除所选内容？'
+    }
+  }
+}
+import { isArray } from 'lodash'
 export default {
-  name: 'ViewManageAd',
+  name: 'ViewManageContentAudit',
   data() {
     return {
       data: [],
+      total: 10,
+      pageSize: 10,//每页显示显示条数
+      pageIndex: 1,//当前页码
       isLoading: true,
-      isSubmit: false,
-      requestCount: 0
+      studio: 0,
+      status: 'PendingAudit',
+      searchValue: '',
+      checkIds: [],
+      statusMaps: statusMaps,
+      studios: []
     }
   },
-  components: {
-    'cropper-upload': CropperUpload
-  },
   computed: {
-    isModify() {
-      var m = this.data
-      for (var k in m) {
-        if (m[k].path !== m[k].pathOld || m[k].url !== m[k].urlOld) {
-          if (m[k].id) return true
-          else if (m[k].url && m[k].path) return true
-        }
-      }
-      return false
+    checkAll() {
+      return this.data.length <= this.checkIds.length
+    },
+    checkAllIndeterminate() {
+      return (this.data.length > this.checkIds.length && this.checkIds.length > 0) ? true : false
     }
   },
   methods: {
@@ -37,14 +78,19 @@ export default {
      */
     fetchCollection() {
       this.isLoading = true
-      this.$http.get('/api/advertise', {
+      this.$http.get('/api/studio/audit', {
         params: {
-          pageindex: 0,
-          pagesize: 1000
+          pageindex: this.pageIndex - 1,
+          pagesize: this.pageSize,
+          usename: this.studio,
+          status: this.status,
+          value: this.searchValue
         }
       }).then(({ data }) => {
         if (data.status) {
-          this.setData(data.advertises)
+          this.data = data.contents
+          this.total = data.total
+          this.checkIds = []
         } else {
           this.$Notice.error({
             title: '错误',
@@ -60,28 +106,140 @@ export default {
         this.isLoading = false
       })
     },
-    onRemove(index) {
-      var item = this.data[index]
-      if (!item.id) {
-        this.data.splice(index, 1)
-        return
+    handleSearch() {
+      this.pageIndex = 1
+      this.fetchCollection()
+    },
+    handleChangePage(page) {
+      this.pageIndex = page
+      this.fetchCollection()
+    },
+    handleChangeStudio() {
+      this.pageIndex = 1
+      this.fetchCollection()
+    },
+    handleChangeStatus() {
+      this.pageIndex = 1
+      this.fetchCollection()
+    },
+    handleCheckAll() {
+      if (this.data.length <= this.checkIds.length) {
+        this.checkIds = []
+      } else {
+        this.data.forEach(item => {
+          if (this.checkIds.indexOf(item.id) < 0) {
+            this.checkIds.push(item.id)
+          }
+        })
       }
+    },
+    handleCheck(id) {
+      var i = this.checkIds.indexOf(id)
+      if (i >= 0) {
+        this.checkIds.splice(i, 1)
+      } else {
+        this.checkIds.push(id)
+      }
+    },
+    onHandle(status, ids) {
+      if (!ids) {
+        if (!this.checkIds.length) {
+          this.$Notice.error({
+            title: '错误',
+            desc: '请选择条目'
+          })
+          return
+        }
+        ids = this.checkIds
+      } else {
+        ids = [ids]
+      }
+      let ops = confirmMaps[status][ids.length > 0 ? 'multi' : 'single'] || {}
       this.$Modal.confirm({
-        title: '确认删除',
-        content: '是否删除该条广告？',
+        ...ops,
         onOk: () => {
-          this.requestRemove(item, index)
+          if (status === 'Publish') this.requestPublish(ids)
+          else if (status === 'NotPass') this.requestNotPass(ids)
+          else if (status === 'Offline') this.requestOffline(ids)
+          else if (status === 'Remove') this.requestRemove(ids)
         }
       })
     },
-    requestRemove(item, index) {
-      this.$http.delete('/api/advertise/' + item.id).then(({ data }) => {
+    requestPublish(ids) {
+      this.$http.put('/api/studio/audit/' + ids.join(), {
+        status: 'Publish'
+      }).then(({ data }) => {
+        if (data.status) {
+          this.$Notice.success({
+            title: '成功',
+            desc: data.message || '通过成功'
+          })
+          this.fetchCollection()
+        } else {
+          this.$Notice.error({
+            title: '错误',
+            desc: data.message || '通过错误'
+          })
+        }
+      }, () => {
+        this.$Notice.error({
+          title: '错误',
+          desc: '接口访问错误'
+        })
+      })
+    },
+    requestNotPass(ids) {
+      this.$http.put('/api/studio/audit/' + ids.join(), {
+        status: 'NotPass'
+      }).then(({ data }) => {
+        if (data.status) {
+          this.$Notice.success({
+            title: '成功',
+            desc: data.message || '不通过成功'
+          })
+          this.fetchCollection()
+        } else {
+          this.$Notice.error({
+            title: '错误',
+            desc: data.message || '不通过错误'
+          })
+        }
+      }, () => {
+        this.$Notice.error({
+          title: '错误',
+          desc: '接口访问错误'
+        })
+      })
+    },
+    requestOffline(ids) {
+      this.$http.put('/api/content/offline/' + ids.join()).then(({ data }) => {
+        if (data.status) {
+          this.$Notice.success({
+            title: '成功',
+            desc: data.message || '撤回成功'
+          })
+          this.fetchCollection()
+        } else {
+          this.$Notice.error({
+            title: '错误',
+            desc: data.message || '撤回错误'
+          })
+        }
+      }, () => {
+        this.$Notice.error({
+          title: '错误',
+          desc: '接口访问错误'
+        })
+      })
+    },
+    requestRemove(ids) {
+      this.$http.delete('/api/content/' + ids.join()).then(({ data }) => {
         if (data.status) {
           this.$Notice.success({
             title: '成功',
             desc: data.message || '删除成功'
           })
-          this.data.splice(index, 1)
+          this.fetchCollection()
         } else {
           this.$Notice.error({
             title: '错误',
@@ -95,150 +253,18 @@ export default {
         })
       })
     },
-    onAdd() {
-      this.data.push(Object.assign({
-        isEdit: true,
-        pathOld: '',
-        urlOld: ''
-      }, itemTemplate))
-    },
-    setData(data) {
-      if (!data) return
-      this.data = data.map((n) => {
-        n.isEdit = n.isEdit || false
-        n.pathOld = n.path
-        n.urlOld = n.url
-        return n
-      })
-    },
-    onBlur(index) {
-      var item = this.data[index]
-      if (item.id) {
-        item.isEdit = false
-      }
-    },
-    onSubmit() {
-      var m = this.data
-      this.requestCount = 0
-      for (var k in m) {
-        var item = m[k]
-        if (!item.url) {
-          this.$Notice.error({
-            title: '错误',
-            desc: '请输入url'
-          })
-          continue
-        } if (!match.test(item.url)) {
-          this.$Notice.error({
-            title: '错误',
-            desc: '请输入有效的url'
-          })
-          continue
-        } else if (!item.path) {
-          this.$Notice.error({
-            title: '错误',
-            desc: '请输入path'
-          })
-          continue
-        }
-
-        if (item.path !== item.pathOld || item.url !== item.urlOld) {
-          if (item.id) this.requestUpdate(k, item)
-          else this.requestSave(k, item)
-          this.requestCount++
-        }
-      }
-      if (this.requestCount) {
-        this.isSubmit = true
-      }
-    },
-    requestSave(index, item) {
-      this.$http.post('/api/advertise', {
-        path: item.path,
-        url: item.url
-      }).then(({ data }) => {
-        this.requestCount--
-        if (this.requestCount <= 0) this.isSubmit = false
+    requestStudio() {
+      this.$http.get('/api/studio', {params: {page: false}}).then(({ data }) => {
         if (data.status) {
-          item.id = data.id
-          // item.showtime = new Date()
-          item.pathOld = item.path
-          item.urlOld = item.url
-          item.isEdit = false
-          item.ordertime = data.edittime
+          this.studios = data.studios
         } else {
-          this.$Notice.error({
-            title: '错误',
-            desc: data.message || '添加错误'
-          })
         }
       }, () => {
-        this.requestCount--
-        if (this.requestCount <= 0) this.isSubmit = false
-        this.$Notice.error({
-          title: '错误',
-          desc: '添加错误'
-        })
-      })
-    },
-    requestUpdate(index, item) {
-      this.$http.put('/api/advertise/' + item.id, {
-        path: item.path,
-        url: item.url
-      }).then(({ data }) => {
-        this.requestCount--
-        if (this.requestCount <= 0) this.isSubmit = false
-        if (data.status) {
-          item.pathOld = item.path
-          item.urlOld = item.url
-          item.isEdit = false
-          item.ordertime = data.edittime
-        } else {
-          this.$Notice.error({
-            title: '错误',
-            desc: data.message || '更新错误'
-          })
-        }
-      }, () => {
-        this.requestCount--
-        if (this.requestCount <= 0) this.isSubmit = false
-        this.$Notice.error({
-          title: '错误',
-          desc: '更新错误'
-        })
-      })
-    },
-    onCancel() {
-      var m = this.data
-      for (var k in m) {
-        var item = m[k]
-        if (item.id) {
-          item.path = item.pathOld
-          item.url = item.urlOld
-          item.isEdit = false
-        } else {
-          this.data.splice(k, m.length - k)
-          return
-        }
-      }
-    },
-    onSuccess(response, field, ki) {
-      if (response.path) {
-        this.data.forEach((n) => {
-          if (n.id === ki) {
-            n.path = response.path
-          }
-        })
-      }
-    },
-    onError(error, field, ki) {
-      this.$Notice.error({
-        title: '错误',
-        desc: error.message || '图片上传错误！'
       })
     }
   },
   created() {
+    this.requestStudio()
     this.fetchCollection()
   }
 }
