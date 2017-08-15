@@ -12,6 +12,7 @@ export default {
     return {
       disabledM: true,
       roleType: 1,
+      tempOperator: {},
       account: '运营人员1',
       studioName: '一秒世界',
       URL: 'yimiaoshijie.hubpd.com',
@@ -118,6 +119,7 @@ export default {
         .then(res => {
           if (res.data.status === 1) {
             let operatorInfo = res.data.studio
+            this.tempOperator = operatorInfo
             this.formValidate.name = operatorInfo.fullname
             this.formValidate.tel = operatorInfo.tel
             this.account = this.userinfo.username
@@ -143,6 +145,7 @@ export default {
         .then(res => {
           if (res.data.status == 1) {
             let studioInfo = res.data.studio
+            this.tempOperator = studioInfo
             this.formValidateM.name = studioInfo.fullname
             this.formValidateM.tel = studioInfo.tel
             this.studioName = studioInfo.studioname
@@ -181,6 +184,7 @@ export default {
       this.$http.put('/api/studio/' + this.userinfo.id, reqParams)
         .then(res => {
           if (res.data.status == 1) {
+            this.tempOperator = reqParams
             this.userinfo.studioLogo = reqParams.logofile
             localStorage.setItem('userinfo', JSON.stringify(this.userinfo))
             this.disabledM = true
@@ -213,6 +217,7 @@ export default {
       this.$http.put('/api/studio/' + this.userinfo.id, reqParams)
         .then(res => {
           if (res.data.status == 1) {
+            this.tempOperator = reqParams
             this.disabledM = true
             this.$Notice.success({
               title: '成功',
@@ -249,7 +254,7 @@ export default {
         title: '成功',
         desc: res.message || '上传成功'
       })
-      file.url = this.$conf.host + res.path;      
+      file.url = this.$conf.host + res.path;
       this.uploadImg = file.url;
       this.hideImg = true;
       // file.name = res.name;
@@ -295,7 +300,16 @@ export default {
       })
     },
     handleReset(name) {
-      this.$refs[name].resetFields();
+      this.$refs[name].resetFields()
+      this.disabledM = true
+      if (this.roleType == 0) {
+        this.formValidate.name = this.tempOperator.fullname
+        this.formValidate.tel = this.tempOperator.tel
+        this.formValidate.mail = this.tempOperator.email
+      } else {
+        this.formValidateM.name = this.tempOperator.fullname
+        this.formValidateM.tel = this.tempOperator.tel
+      }
       this.formValidateM.logofile = this.userinfo.studioLogo
     },
     cropUploadSuccess(response, field, ki) {
@@ -319,11 +333,11 @@ export default {
     }
   },
   mounted() {
-  	//用于显示左侧
-    var span5 =  document.querySelector(".ivu-col-span-5");
-    var span19 =  document.querySelector(".ivu-col-span-19");
-    if(!span19){
-      span19 =  document.querySelector(".ivu-col-span-24");
+    //用于显示左侧
+    var span5 = document.querySelector(".ivu-col-span-5");
+    var span19 = document.querySelector(".ivu-col-span-19");
+    if (!span19) {
+      span19 = document.querySelector(".ivu-col-span-24");
     }
     span5.style.display = 'block';
     span19.className = "layout-content-warp ivu-col ivu-col-span-19";
