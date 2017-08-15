@@ -53,14 +53,14 @@ export default [{
         },
         component: () => import('@/view/manage/announcement/index.vue')
       },
-      // {
-      //   name: 'manageContentaudit',
-      //   path: '/manage/contentaudit',
-      //   meta: {
-      //     title: '内容审核管理'
-      //   },
-      //   component: () => import('@/view/manage/contentaudit/index.vue')
-      // },
+      {
+        name: 'manageContentaudit',
+        path: '/manage/contentaudit',
+        meta: {
+          title: '内容审核管理'
+        },
+        component: () => import('@/view/manage/contentaudit/index.vue')
+      },
       {
         name: 'manageStudio',
         path: '/manage/studio',

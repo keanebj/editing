@@ -1,89 +1,110 @@
 <section>
-  <div v-if="isLoading || data.length>0">
-  <table class="table" style="margin-top:20px;">
-    <thead>
-      <tr>
-        <th style="width:70px">序号</th>
-        <th style="width:200px">BANNER</th>
-        <th style="width:20px"></th>
-        <th style="width:320px">URL</th>
-        <th>时间</th> 
-        <th style="width:68px">操作</th>
-      </tr>
-    </thead>    
-    <tbody>
-      <tr v-for="(item,index) in data" class="tr-hover">
-        <td>{{index+1}}</td>
-        <th scope="row">
-          <div v-if="item.path" class="imagePlaceholder" :style="{backgroundImage:'url('+item.path+')'}"></div>
-          <cropper-upload v-else :width="1412" :height="170" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :ki="item.id">
-            <div class="imagePlaceholder">
-              <div class="title">点击上传广告图片</div>
-              <div class="sub-title">尺寸要求: 1414*170</div>
-            </div>
-          </cropper-upload>
-        </th>
-        <th scope="row" style="padding:0">
-          <cropper-upload :width="1412" :height="170" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :ki="item.id">
-            <a v-if="item.path" href="javascript:void(0)">
-              <Icon type="edit"></Icon>
-            </a>
-          </cropper-upload>
-        </th>
-        <td>
-          <Input v-if="item.isEdit" v-model="item.url" @on-blur="onBlur(index)" placeholder="请输入链接" style="width: 250px"></Input>
-          <span v-else @dblclick="item.isEdit=true">
-            <span v-if="item.url">{{item.url}}</span>
-            <span v-else>双击输入链接</span>
-          </span>
-        </td>
-         <td>{{item.ordertime}}</td> 
-        <td style="font-size:20px;">
-          <Tooltip content="删除" placement="top">
-            <a href="javascript:void(0)" @click="onRemove(index)">
-              <img src="../../../assets/operator/del.svg" class="icon-size">
-            </a>
-          </Tooltip>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-   <a href="javascript:;" @click="onAdd" v-if="data.length<5" class="add-ad-position">
-    <Icon type="plus-round"></Icon> 添加广告位</a>
-  <div style="padding: 30px;">
-    <Button :disabled="!isModify" type="primary" size="large" shape="circle" @click="onSubmit" :loading="isSubmit">提交</Button>
-    <Button :disabled="!isModify" 
-    v-bind:style="{
-      'margin-left':'20px',
-      'color':!isModify?'#bbbec4!important':'',
-      'background-color':!isModify?'#f7f7f7!important':'',
-      'border-color':!isModify?'#dddee1!important':''
-    }" 
-      type="ghost" size="large" shape="circle" @click="onCancel">取消</Button>
-  </div>
-  </div>
-  <div v-else>    
+  <Row>
+    <Col span="12">
+      <span style="padding-right: 15px;font-size:14px;">工作室选择</span>
+      <Select v-model="studio" style="width:220px" @on-change="handleChangeStudio">
+          <Option :value="0">全部</Option>
+          <Option v-for="item in studios" :value="item.username" :key="item.username">{{ item.studioname }}</Option>
+      </Select>
+    </Col>
+    <Col span="12">
+      <Input icon="ios-search" placeholder="输入搜索关键字，按enter键查询" style="width:250px;float:right" @on-enter="handleSearch" @on-click="handleSearch"v-model="searchValue"></Input>
+    </Col>
+  </Row>
+  <Row style="padding-top: 30px;">
+    <Col span="12">
+      <div v-if="status=='PendingAudit'">
+        <Button type="primary" size="large" shape="circle" icon="paper-airplane" @click="onHandle('Publish', 0)">通过</Button>
+        <Button type="ghost" size="large" shape="circle" icon="close" class="btn-ghost-red" @click="onHandle('NotPass', 0)">不通过</Button>
+      </div>
+      <div v-else-if="status=='Publish'">
+        <Button type="ghost" size="large" shape="circle" icon="ios-undo-outline" class="btn-ghost-red" @click="onHandle('Offline', 0)">撤回</Button>
+      </div>
+      <div v-else-if="status=='NotPass'||status=='Offline'">
+        <Button type="primary" size="large" shape="circle" icon="ios-trash-outline" @click="onHandle('Remove', 0)">删除</Button>
+      </div>
+    </Col>
+    <Col span="12">
+    <Radio-group v-model="status" style="float:right;padding-top:8px" @on-change="handleChangeStatus">
+      <Radio v-for="(statusItem,statusValue) in statusMaps" key="statusValue" :label="statusValue">{{statusItem}}</Radio>
+    </Radio-group>
+    </Col>
+  </Row>
+  <div v-if="!isLoading && data.length>0">
     <table class="table" style="margin-top:20px;">
-    <thead>
-      <tr>
-        <th style="width:70px">序号</th>
-        <th style="width:200px">BANNER</th>
-        <th style="width:20px"></th>
-        <th style="width:320px">URL</th>
-         <th>时间</th> 
-        <th style="width:68px">操作</th>
-      </tr>
-    </thead>  
+      <thead>
+        <tr>
+          <th style="width: 75px;text-align:left">
+              <Checkbox
+              :indeterminate="checkAllIndeterminate"
+              :value="checkAll"
+              @click.prevent.native="handleCheckAll">全选</Checkbox>
+          </th>
+          <th style="width:100px">标题</th>
+          <th></th>
+          <th>作者</th>
+          <th>时间</th>
+          <th>状态</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(item,index) in data">
+          <td style="text-align:left">
+              <Checkbox :value="checkIds.indexOf(item.id)>=0" @on-change="handleCheck(item.id)"></Checkbox>
+          </td>
+          <td>
+            <img :src="item.cover" alt="" width="100">
+          </td>
+          <td style="text-align:left">
+            {{item.title}} <br/>
+            <span style="color: #aaa">工作室：{{item.channel}}</span>
+          </td>
+          <td>{{item.author}}</td>
+          <td>{{item.addtime}}</td>
+          <td>
+            <span v-if="item.status=='PendingAudit'" style="color:#289FDB"><Icon type="ios-information"></Icon> 待审核</span>
+            <span v-else-if="item.status=='Publish'" style="color:#5EB550"><Icon type="checkmark-circled"></Icon> 已发表</span>
+            <span v-else-if="item.status=='NotPass'" style="color:#F34A52"><Icon type="ios-information"></Icon> 未通过</span>
+            <span v-else-if="item.status=='Offline'" style="color:#FFA620"><Icon type="ios-refresh"></Icon> 已撤回</span>
+          </td>
+          <td style="font-size:18px;">
+            <div v-if="item.status=='PendingAudit'">
+                <Tooltip content="通过" placement="top">
+                  <a href="javascript:void(0)" @click="onHandle('Publish', item.id)" style="margin-right:10px;">
+                    <Icon type="ios-paperplane-outline"></Icon>
+                  </a>
+                </Tooltip>
+                <Tooltip content="不通过" placement="top">
+                  <a href="javascript:void(0)" @click="onHandle('NotPass', item.id)">
+                    <Icon type="ios-close-outline"></Icon>
+                  </a>
+                </Tooltip>
+            </div>
+            <div v-else-if="item.status=='Publish'">
+                <Tooltip content="撤回" placement="top">
+                  <a href="javascript:void(0)" @click="onHandle('Offline', item.id)">
+                    <Icon type="ios-undo-outline"></Icon>
+                  </a>
+                </Tooltip>
+            </div>
+            <div v-else-if="item.status=='NotPass'||item.status=='Offline'">
+                <Tooltip content="删除" placement="top">
+                  <a href="javascript:void(0)" @click="onHandle('Remove', item.id)">
+                      <Icon type="ios-trash-outline"></Icon>
+                  </a>
+                </Tooltip>
+            </div>
+          </td>
+        </tr>
+      </tbody>
     </table>
-    <a href="javascript:;" @click="onAdd" class="add-ad-position" style="margin-left: 20px;">
-    <Icon type="plus-round"></Icon> 添加广告位</a>
-    <div class="error-studio">
-      <img src="../../../assets/error/no-data.svg">
-      <p>暂无广告</p>
-    </div>
-  </div> 
-  
-  <Spin  size="large" fix v-if="isLoading">
+    <Page size="small" :page-size="pageSize" :current="pageIndex" :total="total" show-total @on-change="handleChangePage" style="float:right"></Page>
+  </div>
+  <div v-if="!isLoading && data.length<=0" style="text-align:center;margin-top:20px;color:#aaa">
+    <h3>无数据</h3>
+  </div>
+  <Spin size="large" fix v-if="isLoading">
     <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
     <div>Loading</div>
   </Spin>

@@ -43,6 +43,8 @@ export default {
       type: String,
       'default': 'png'
     },
+    // 图片地址
+    // 直接提供图片地址预览裁剪
     image: {
       'default': null
     },
