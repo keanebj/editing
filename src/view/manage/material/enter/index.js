@@ -166,6 +166,15 @@ export default {
     this.placelabel=keypadleft>10?'':'每个关键字最多5个字';
   },
   methods: {
+    onSave () {
+      this.$Modal.confirm({
+        title: '确认保存',
+        content: '保存此视频到素材管理？',
+        onOk: () => {
+          this.saveMaterial()
+        }
+      })
+    },
     saveMaterial: function () {
       this.formValidate.summary = this.zhaiyao;//摘要
       this.formValidate.keyword = this.labelArr.join(" ");//标签
