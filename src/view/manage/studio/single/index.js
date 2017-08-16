@@ -14,8 +14,8 @@ export default {
         callback()
       }
     };
-    const validateCID = (rule, value, callback) => {  
-      if (value == '' || value == undefined || typeof(value) == 'undefined') {
+    const validateCID = (rule, value, callback) => {
+      if (value == '' || value == undefined || typeof (value) == 'undefined') {
         callback(new Error('请选择【栏目绑定】'));
       } else {
         callback();
@@ -55,8 +55,9 @@ export default {
           },
           {
             type: 'string',
-            min: 6,
-            message: '密码至少6位',
+            min: 5,
+            max: 20,
+            message: '密码为5-20位字符',
             trigger: 'blur'
           }
         ],
@@ -91,12 +92,10 @@ export default {
             trigger: 'blur'
           }
         ],
-        catalogid: [          
-          {            
-            validator: validateCID,
-            trigger: 'blur'
-          }
-        ],
+        catalogid: [{
+          validator: validateCID,
+          trigger: 'blur'
+        }],
         accountindex: [{
           type: 'number',
           min: 0,
