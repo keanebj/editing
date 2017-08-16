@@ -102,9 +102,9 @@
         </td>
         <td width="10%">
           <router-link :to="{path:'../publish',query:{articleID:item.id}}" v-if="item.status != 'Publish'">
-            <img src="../../../assets/operator/edit.svg" class="icon-edit">
+            <img src="../../../assets/operator/edit.svg" class="icon-edit" width="22" >
           </router-link>
-          <img src="../../../assets/operator/edit-disabled.svg" class="icon-edit" v-else>
+          <img src="../../../assets/operator/edit-disabled.svg" class="icon-edit" width="22" v-else>
           <Dropdown style="margin-left: 5px" trigger="click" @on-click="operateContent">
             <a href="javascript:void(0)" @click="getOperateContentID(item.id)">
               <img src="../../../assets/operator/set.svg" class="icon-set">

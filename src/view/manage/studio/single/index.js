@@ -28,6 +28,7 @@ export default {
       isSubmit: false,
       isLoading: false,
       catalogs: {},
+      retCatalogs: [],
       disabledS: true,
       firstLoad: true,
       formValidate: {
@@ -127,6 +128,20 @@ export default {
       }
       console.log("name  = " + this.formValidate.catalogname)
     },
+    getUpdateCatalogName() {
+      for (var k = 0; k < this.retCatalogs.length; k++) {
+        if (this.retCatalogs[k].childcount != 0) {
+          let _n = this.retCatalogs[k].catalogs
+          for (var i = 0; i < _n.length; i++) {
+            if (_n[i].id == this.formValidate.catalogid) {
+              this.formValidate.catalogname = _n[i].name
+              break
+            }
+          }
+
+        }
+      }
+    },
     resetPassword() {
       if (!this.resetPWD) {
         this.resetWord = '取消重置'
@@ -210,6 +225,7 @@ export default {
     },
     update() {
       this.isSubmit = true
+      this.getUpdateCatalogName()
       this.$http.put('/api/studio/' + this.id, this.formValidate).then(({
         data
       }) => {
@@ -248,6 +264,7 @@ export default {
       }) => {
         if (data.status) {
           if (data.catalogs) {
+            this.retCatalogs = data.catalogs
             var catalogs = {}
             data.catalogs.forEach(n => {
               catalogs[n.id] = n

@@ -35,8 +35,8 @@
       </Form-item>
       <Form-item label="栏目绑定" prop="catalogid">
         <Select v-if="id!='0'" v-model="formValidate.catalogid" number placeholder="请选择" @on-change="allowSubmit">
-          <Option-group v-for="option in catalogs" key="option.id" :label="option.name">
-              <Option v-for="item in option.catalogs" key="item.id" :value="item.id">{{item.name}}</Option>
+          <Option-group v-for="option in catalogs" :key="option.id" :label="option.name">
+              <Option v-for="item in option.catalogs" :key="item.id" :value="item.id">{{item.name}}</Option>
           </Option-group>
         </Select>              
         <Select v-else v-model="formValidate.catalogid" number placeholder="请选择" @on-change="allowSubmit">
