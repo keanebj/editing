@@ -31,7 +31,7 @@ export default {
     var span19 = document.querySelector(".ivu-col-span-19")
     span5.style.display = 'none';
     span19.className = "layout-content-warp ivu-col ivu-col-span-24";
-this.noticeID=this.$route.query.id;
+    this.noticeID=this.$route.query.id;
 	    //ajax获得后台公告的内容
 	    this.$http.get("api/content/notice/" + this.noticeID).then(({ data }) => {
 	      //给公告的内容赋值
