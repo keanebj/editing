@@ -33,7 +33,7 @@ export default {
     span19.className = "layout-content-warp ivu-col ivu-col-span-24";
 this.noticeID=this.$route.query.id;
 	    //ajax获得后台公告的内容
-	    this.$http.get("api/content/" + this.noticeID).then(({ data }) => {
+	    this.$http.get("api/content/notice/" + this.noticeID).then(({ data }) => {
 	      //给公告的内容赋值
 	      if (data.status) {
 	      	this.title=data.content.title;
@@ -51,7 +51,7 @@ this.noticeID=this.$route.query.id;
             desc: data.message || '数据请求错误'
           })
 	      }
-					
+
 	    }, () => {
 	    	this.$Notice.error({
 	        title: '错误',

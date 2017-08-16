@@ -1,6 +1,11 @@
 <section>
    <MainHeader :logOut="logOut" :userName="userinfo.username"
   :goHome="goHome" :goAccount="goAccount" :studioLogo="userinfo.studioLogo"></MainHeader>
+
+<div>
+  <uploadVideo ref="uploadVideoEle" @insertVideoEditor="insertVideoEditor"></uploadVideo>
+</div>
+  
   <Form ref="formTop" :model="formTop" label-position="top" :rules="ruleValidate" style="padding:30px 85px 0;">
     <Row :gutter="34">
       <Col span="6">
@@ -13,9 +18,17 @@
     <Row :gutter="34">
       <Col span="17" class="m-t-20">
       <Form-item label="" prop="title">
-        <Input id="titleContent" v-model="formTop.title" :maxlength="titleMaxCount" class="title-input" placeholder="请输入标题" @on-change="getTitleContent" @on-blur="removetrim"></Input>
+        <Input id="titleContent" style="width:84%;" v-model="formTop.title" :maxlength="titleMaxCount" class="title-input" placeholder="请输入标题" @on-change="getTitleContent" @on-blur="removetrim"></Input>
         <span class="limit-words">
           <span>{{titleContentCount}}</span>/22
+        </span>
+        <Button type="ghost" shape="circle" class="add-sub-title" :disabled="!isHideSubtitle" @click="isHideSubtitle=!isHideSubtitle">添加副标题</Button>
+      </Form-item>
+      <Form-item label="" prop="subtitle" :class="{hide:isHideSubtitle}">
+        <Input id="subTitle" v-model="formTop.subtitle" :maxlength="subtitleMaxCount" class="title-input" placeholder="请输入副标题" @on-change="getSubTitleContent" @on-blur="removetrim"></Input>
+        <span class="sub-limit-words">
+          <span>{{subtitleContentCount}}</span>/60
+          <div class="delete-icon" @click="deleteSubTitle"></div>
         </span>
       </Form-item>
 
@@ -33,7 +46,7 @@
           <button style="position: absolute;top:-20px;width:30px;" :class="{hide:hideshare}">分享</button>
           <div class="btn-icon share-btn-icon m-r-10" @click="share" @mouseover="hideshare =false" @mouseout="hideshare = true">
 
-          <Modal v-model="qCode" class="share_hide" width="auto" :closable="false" ref="shareHide">
+          <Modal v-model="qCode" class="share_hide" id="sharePop" :closable="false" ref="shareHide">
             <div style="text-align:center;">
               <div id='code'></div>
               <canvas id="canvas"></canvas>

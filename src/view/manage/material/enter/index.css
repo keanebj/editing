@@ -1,0 +1,145 @@
+.material{
+
+}
+.material_shangchuan{
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+}
+.material_shangchuan>.ivu-col-span-12{
+   line-height: 1.5;
+}
+.material_shangchuan .upload_btn{
+  background: #F95759;
+  color:#fff;
+  width: 100px;
+  float: left;
+  padding: 8px 15px;
+}
+.material_shangchuan .upload_btn>span{
+  /* margin-left: 4px; */
+  position: relative;
+}
+.material_shangchuan .upload_btn>span>span{
+  display: inline-block;
+  padding-left: 20px;
+}
+.material_shangchuan .upload_btn img{
+  position: absolute;
+}
+.material_shangchuan>.ivu-col-span-12>span{
+  color: #F95759;
+  margin-left: 15px;
+  font-size: 12px;
+  display: block;
+  float: left;
+  width: 70%;
+   margin-top: 7px;
+}
+.material_shangchuan>.ivu-col-span-12>p{
+  color: #ccc;
+  font-size: 12px;
+}
+.material_info{
+  margin-top: 30px;
+}
+.material_info .ivu-form-item-content>span{
+  position: absolute;
+  bottom: 0px;
+  right: 10px;
+}
+.material_info .ivu-form-item-content>span>span{
+  color: #F43E47;
+}
+.material_cover{
+  width: 300px;
+  height: 200px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+}
+.material_cover img{
+  /* width:300px;
+  height: 200px; */
+}
+.material_cover img.nomar{
+  margin: 0;
+}
+.hasImg{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -87px;
+  margin-top: -65px;
+}
+.material_info .ivu-input{
+  padding-left: 10px;
+}
+.material_info .ivu-select-single .ivu-select-selection .ivu-select-selected-value{
+  padding-left: 10px;
+}
+.material_xx{
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 20px;
+}
+.material_xx_con{
+  overflow: hidden;
+
+}
+.main-color{
+  color: #F95759;
+}
+.material_xx_con .ivu-progress-bg{
+  background: -webkit-linear-gradient(left, #FB8687 , #F95759); /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(right, #FB8687, #F95759); /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(right, #FB8687, #F95759); /* Firefox 3.6 - 15 */
+  background: linear-gradient(to right, #FB8687 , #F95759); /* 标准的语法（必须放在最后） */
+}
+.material_xx_con h2{
+  width: 17%;
+  margin-right: 2%;
+  float: left;
+  font-size: 14px;
+  font-weight: normal;
+}
+.material_xx_con>div{
+  width: 65%;
+  float: left;
+  position: relative;
+}
+.material_xx_con>div>span{
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  margin-left: -12px;
+}
+.material_xx_con>button{
+  float: right;
+  padding: 2px 15px;
+}
+.material_xx_info{
+  margin-left: 19%;
+  width: 65%;
+  overflow: hidden;
+  text-align: center;
+  color: #F95759;
+}
+.material_xx_info span{
+  width: 33.33%;
+  float: left;
+  color: #999;
+}
+.material_info .ivu-form-item-required .ivu-form-item-label:after{
+  content: '*';
+  display: inline-block;
+  margin-left: 4px;
+  line-height: 1;
+  font-family: SimSun;
+  font-size: 12px;
+  color: #ed3f14;
+}
+.material_info .ivu-form-item-required .ivu-form-item-label:before{
+  display: none;
+}

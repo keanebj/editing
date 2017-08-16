@@ -14,14 +14,6 @@ export default [{
     },
     component: () => import('@/view/publish/index.vue')
    },
-    {
-    name: 'newpublish',
-    path: '/newpublish',
-    meta: {
-      title: '发表'
-    },
-    component: () => import('@/view/newpublish/index.vue')
-   },
   {
     name: 'main',
     path: '/',
@@ -76,6 +68,22 @@ export default [{
           title: '工作室管理编辑'
         },
         component: () => import('@/view/manage/studio/single/index.vue')
+      },
+      {
+        name: 'SourceMaterial',
+        path: '/manage/material',
+        meta: {
+          title: '素材管理'
+        },
+        component: () => import('@/view/manage/material/index.vue')
+      },
+      {
+        name: 'SourceMaterialEnter',
+        path: '/manage/material/enter',
+        meta: {
+          title: '素材管理保存'
+        },
+        component: () => import('@/view/manage/material/enter/index.vue')
       },
       {
         name: 'manageAd',

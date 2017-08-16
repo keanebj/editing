@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="174px" height="130px" viewBox="0 0 174 130" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46 (44423) - http://www.bohemiancoding.com/sketch -->
+    <title>封面上传icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="174" height="130"></rect>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="174" height="130" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="上传视频-上传中" transform="translate(-658.000000, -665.000000)">
+            <g id="设置-copy" transform="translate(402.000000, 310.000000)">
+                <g id="封面上传icon" transform="translate(256.000000, 355.000000)">
+                    <use id="Rectangle-3" stroke="#FFF0F0" mask="url(#mask-2)" stroke-width="4" stroke-linejoin="round" stroke-dasharray="2,2,4" xlink:href="#path-1"></use>
+                    <g id="icon—添加封面" transform="translate(57.000000, 35.000000)" fill-rule="nonzero" fill="#F2564E">
+                        <path d="M58.125,31.875 L31.875,31.875 L31.875,58.125 C31.875,59.1605339 31.0355339,60 30,60 C28.9644661,60 28.125,59.1605339 28.125,58.125 L28.125,31.875 L1.875,31.875 C0.839466094,31.875 1.26816328e-16,31.0355339 0,30 C-1.26816328e-16,28.9644661 0.839466094,28.125 1.875,28.125 L28.125,28.125 L28.125,1.875 C28.125,0.839466094 28.9644661,1.90224492e-16 30,0 C31.0355339,-1.90224492e-16 31.875,0.839466094 31.875,1.875 L31.875,28.125 L58.125,28.125 C59.1605339,28.125 60,28.9644661 60,30 C60,31.0355339 59.1605339,31.875 58.125,31.875 Z" id="Shape"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,86 @@
+<section>
+  <div class="material_no" :class="{hide: videoList.length != 0}">
+    <div class="material_no_tit">
+      视频管理
+    </div>
+    <Row :gutter="34" class="material_no_con">
+      <Col span="12" class="material_no_con_img">
+        <img src="../../../assets/material/upload.svg" alt="">
+        <Button type="primary" id="pickfiles11" shape="circle" style="padding:6px 25px;margin-top:20px;">上传视频</Button>
+      </Col>
+      <Col span="12" class="material_no_con_info">
+        <div>
+          <h2>视频上传格式说明</h2>
+          <p>建议上传720p（1280x720）或更高分辨率的视频，大小不超过2G 视频格式：建议上传MP4 和 HLS 文件。<br /> 支持格式： MOV，MP4，MP4V，M4V，MKV，AVI，FLV，F4V， 3GP RM, RMVB，RA，RAM ,MPG，MPEG，MPE，VOB，DAT， WMV，WM，ASF，ASX</p>
+        </div>
+      </Col>
+    </Row>
+  </div>
+  <div class="material_has" :class="{hide: videoList.length == 0}">
+    <Row class="material_has_tit">
+      <Col span="12">
+        <Button type="primary" shape="circle" class="addvideo_btn" id="pickfiles111">
+          <img src="../../../assets/operator/create.svg" class="icon-create" width="15" height="18"></img>
+          <span class="arti-create">添加视频</span>
+        </Button>
+      </Col>
+      <Col span="12">
+        <Input icon="ios-search-strong" placeholder="请搜索标题、简介" style="width:250px;float:right;" @on-enter="getVideoList()" @on-click="getVideoList()" v-model="searchValue"></Input>
+      </Col>
+    </Row>
+    <Row :gutter="50">
+      <Col span="6" class="video_list" v-for="(videoItem, index) in videoList" :index="videoItem.id">
+        <div class="video_list_in">
+          <div class="video_list_item">
+            <img :src="videoItem.cover" alt="">
+            <span><Icon type="ios-play"></Icon></span>
+            <div class="mask" @click="playVideo(videoItem.title, videoItem.videoid, videoItem.videourl)">
+              <span @click.stop="deleteVideo(videoItem.id)">
+                <Icon type="android-close"></Icon>
+              </span>
+            </div>
+            <div class="bottom">
+              <span class="left">{{videoItem.addtime}}</span>
+              <span class="right">{{videoItem.duration}}</span>
+            </div>
+          </div>
+          <div class="video_info">
+            <span class="video_info_tit">{{videoItem.title}}</span>
+            <span class="video_info_icon">
+              <img src="../../../assets/material/edit_video.svg" alt="" @click="editVideo(videoItem.id)">
+              <img src="../../../assets/material/video_share.svg" alt="" @click="share(videoItem.videourl)">
+            </span>
+          </div>
+        </div>
+      </Col>
+      <Modal v-model="qCode" class="share_hide_video" width="auto" ref="shareHide" title="分享">
+        <div style="text-align:center;margin-top:50px;overflow:hidden;">
+          <img src="../../../assets/material/link.svg" alt="" width="30" height="30" style="margin-right:20px;float:left;margin-left:30px;margin-top:3px;">
+          <div class="copy" style="display:inline-block;height:37px;">
+            <input type="text" v-model="videourl" ref="thisInput" readonly /><span @click="CopyUrl($event)">复制</span>
+          </div>
+        </div>
+        <div style="text-align:center;margin-top:30px;">
+          <div id='code'></div>
+          <canvas id="videoItem"></canvas>
+          <p style="font-size:16px;margin-top:10px;">复制链接或扫描二维码分享视频</p>
+        </div>
+      </Modal>
+      <Modal :title="playVideoTitle" v-model="playVideoModel" class="playVideo" width="950" :styles="{top: '50px'}">
+        <div id="videoPlayer">
+
+        </div>
+        <div class="playVideoUrl">
+          <span style="width:120px;">视频地址：</span>
+          <span style="">{{ playVideoUrl }}</span>
+        </div>
+        <div slot="footer" v-show="hideFoot">
+        </div>
+      </Modal>
+    </Row>
+    <div class="video_pager" v-show="this.pageSize < this.videoTotal">
+      <Page :total="videoTotal" size="small" :page-size="pageSize" @on-change="changePage"></Page>
+      <span>共{{ pageAll }}页</span>
+    </div>
+  </div>
+</section>

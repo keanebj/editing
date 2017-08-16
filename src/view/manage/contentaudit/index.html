@@ -104,7 +104,8 @@
     <Page size="small" :page-size="pageSize" :current="pageIndex" :total="total" show-total @on-change="handleChangePage" style="float:right"></Page>
   </div>
   <div v-if="!isLoading && data.length<=0" style="text-align:center;margin-top:20px;color:#aaa">
-    <h3>无数据</h3>
+    <img src="../../../assets/error/no-data.svg" style="margin-top:80px;width: 30%;"/><br/><br/>
+    <p style="font-size: 16px;text-align: center;margin-top: 20px;">暂无数据</p>
   </div>
   <Spin size="large" fix v-if="isLoading">
     <Icon type="load-c" size=18 class="spin-icon-load"></Icon>

@@ -185,6 +185,40 @@
   height: 28vw;
   overflow: hidden;
 }
+ .layout-ceiling {
+    padding: 1px 50px;
+    overflow: hidden;
+    border-bottom:1px solid #ddd;
+  }
+  .layout-ceiling .logo{
+    float: left;
+  }
+  .layout-ceiling .logo img{
+    height: 30px;
+    margin-top: 8px;
+  }
+  .layout-ceiling-main {
+    float: right;
+    line-height: 50px;
+    vertical-align: middle
+  }
+  .layout-ceiling-main a {
+    color: #757575;
+    float: left;
+  }
+  .layout-ceiling-main a img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    box-shadow: 0 0 1px #999;
+    float: left;
+    margin-right: 20px;
+  }
+  .layout-ceiling-main a.nickname{
+    font-size: 18px;
+    margin-right: 10px;
+    color:#333;
+  }
 
 
 /*weizhenglin*/
@@ -285,6 +319,16 @@
 .set-con .yulan img {
   max-width: 100%;
   height: auto;
+}
+
+.pagebreak {
+    display: block;
+    clear: both !important;
+    cursor: default !important;
+    width: 100% !important;
+    margin: 0;
+    border: 1px solid rgb(128, 128, 128);
+    height: 3px;
 }
 
 .yulan pre {
@@ -489,6 +533,7 @@
   box-shadow: 0 0 5px #666;
   z-index: 2;
   background: #fff;
+  width: 240px;
 }
 
 .share_hide .ivu-modal-content .ivu-modal-body {

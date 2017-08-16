@@ -9,6 +9,7 @@ import Vue from 'vue'
 import Cookies from 'js-cookie'
 import MainHeader from '@/components/mainHeader/index.vue'
 import MainFooter from '@/components/mainFooter/index.vue'
+import uploadVideo from '@/components/uploadVideo/index.vue'
 import {
   mapState
 } from 'vuex'
@@ -20,7 +21,8 @@ export default {
     QRCode,
     cropperUpload,
     MainHeader,
-    MainFooter
+    MainFooter,
+    uploadVideo
   },
   data () {
     return {
@@ -32,6 +34,7 @@ export default {
       hideTip: true,
       qCode: false,
       titleContentCount: 0,
+      subtitleContentCount:0,
       editor: null,
       tabView: 'pc',
       previewContent: false,
@@ -44,6 +47,7 @@ export default {
         College: '中央厨房融媒体学院'
       },
       titleMaxCount:22,
+      subtitleMaxCount:60,
       summaryMaxCount:60,
       authorMaxCount:5,
       keyMaxCount:5,
@@ -60,6 +64,7 @@ export default {
         summary:'',
         currentAbstractCount:0,
         title:'',
+        subtitle:'',
         content:'',
         label:''
       },
@@ -109,7 +114,9 @@ export default {
       placekeyword:'每个关键词最多5个字',
       isSkip:true,
       baseimg:'',
-      noSel:true
+      noSel:true,
+      uploadVideo:false,
+      isHideSubtitle:true
   }
 },
   created(){
@@ -128,9 +135,9 @@ export default {
     })
   },
   computed: {
-    ...mapState(['menu', 'userinfo', 'isActive'])
+    ...mapState(['menu', 'userinfo'])
 },
-  mounted(){   
+  mounted(){  
     this.editor=UE.getEditor("editor",{
       //此处可以定制工具栏的功能，若不设置，则默认是全部的功能
       UEDITOR_HOME_URL: `${this.$conf.root}/static/ueditor/`,
@@ -146,6 +153,14 @@ export default {
           This.hideTip=true;
         }
     })
+    this.editor.commands['myvideo'] = {
+        execCommand : function() {
+            This.$refs.uploadVideoEle.showModal();
+        },
+        queryCommandState : function(){
+
+        }
+    };
 
     //判断一下是编辑还是草稿通过文章的id
     if(this.$route.query.articleID){
@@ -168,8 +183,10 @@ export default {
       }
 
       this.titleContentCount = Math.ceil(this.gblen(Cookies.get('title'),44,'title')) > 22 ? 22:Math.ceil(this.gblen(Cookies.get('title'),44,'title'));
+  
       this.editor.ready(function(){
-        This.editor.execCommand('inserthtml',This.formTop.content,true);
+        This.editor.setContent('');
+        This.editor.execCommand('inserthtml',This.formTop.content);
       })
     }
 
@@ -177,9 +194,9 @@ export default {
     else if(this.articleID > 0) {
       this.$http.get("/api/content/"+this.articleID).then((response) => {
         let data = response.data.content;
-
         //给数据值
         this.formTop.title = data.title;
+        
         this.formTop.publishchannel = data.channel;
         this.formTop.authorArr=data.author.split(/\s+/g);
         if (data.keyword != null) {
@@ -195,8 +212,14 @@ export default {
         }
 
         this.titleContentCount = Math.ceil(this.gblen(data.title,44,'title')) > 22 ? 22:Math.ceil(this.gblen(data.title,44,'title'));
+        if(data.subtitle){
+          this.formTop.subtitle = data.subtitle;
+          this.subtitleContentCount = Math.ceil(this.gblen(data.subtitle,120,'subtitle')) > 60 ? 60:Math.ceil(this.gblen(data.subtitle,120,'subtitle'));
+          this.isHideSubtitle=false;
+      }
         this.editor.ready(function(){
-          This.editor.execCommand('inserthtml',This.formTop.content,true);
+           This.editor.setContent('');
+          This.editor.execCommand('inserthtml',This.formTop.content);
         })
       }, (error) => {
         this.$Notice.error({
@@ -206,7 +229,8 @@ export default {
       });
     }else{
       this.editor.ready(function(){
-        This.editor.execCommand('inserthtml',This.formTop.content,true);
+         This.editor.setContent('');
+        This.editor.execCommand('inserthtml',This.formTop.content);
       })
     }
 
@@ -241,6 +265,14 @@ export default {
         if (error) console.error(error)
         console.log('success!');
       })
+    },
+    deleteSubTitle(){
+      this.formTop.subtitle='';
+      this.subtitleContentCount=0;
+      this.isHideSubtitle=true;
+    },
+    insertVideoEditor(videoHtml){
+      this.editor.execCommand('inserthtml',videoHtml,true);
     },
     goBack(){
       this.$router.go(-1);
@@ -581,9 +613,16 @@ abstractWordCount:function(event){
         //interface://获得正文的摘要:需要发送请求给后台，参数：正文内容  返回：摘要内容
           this.$http.post("/api/content/summary",{content: content,title:title}
         ).then((response) => {
-          this.formTop.summary=response.data.summary.toString();
-          this.formTop.currentAbstractCount=Math.ceil(this.gblen(response.data.summary,120,'summary'))>60?60:Math.ceil(this.gblen(response.data.summary,120,'summary'));
-        },(error) => {
+          if(response.data.status == 1){
+            this.formTop.summary=response.data.summary.toString();
+            this.formTop.currentAbstractCount=Math.ceil(this.gblen(response.data.summary,120,'summary'))>60?60:Math.ceil(this.gblen(response.data.summary,120,'summary'));        
+          }else{
+             this.$Notice.error({
+              title:response.data.message,
+              desc: false
+            });
+          }
+         },(error) => {
             this.$Notice.error({
               title:error.data.message,
               desc: false
@@ -620,6 +659,7 @@ abstractWordCount:function(event){
     },
     save:function(name,hideTip){
       this.formTop.content=this.editor.getContent();
+      console.log(this.formTop.content);
       if(!this.formTop.content && this.editor.body.innerHTML.indexOf('<video') >-1){
         this.formTop.content=this.editor.body.innerHTML;
       }
@@ -652,7 +692,7 @@ abstractWordCount:function(event){
                 //更新
                 this.$http.put("/api/content/"+this.articleID,this.formTop
                ).then((response) => {
-               		console.log(this.formTop)
+               
                		if (response.data.status == 1) {
                			this.$Notice.success({title:response.data.message,desc: false});
                		}else{
@@ -701,7 +741,7 @@ abstractWordCount:function(event){
               {
                 scrollTop=document.body.scrollTop;
               }
-              this.$refs.shareHide.$el.children[1].children[0].style.top = (175 - scrollTop) + 'px';
+              this.$refs.shareHide.$el.children[1].children[0].style.top = (195 - scrollTop) + 'px';
 
               this.useqrcode(this.$conf.host+this.$conf.root+"share?id="+response.data.token);
               this.codes=this.$conf.host+this.$conf.root+"share?id="+response.data.token;
@@ -807,6 +847,11 @@ abstractWordCount:function(event){
       let count=this.gblen(this.formTop.title,44,'title');
       this.titleContentCount=Math.ceil(count)>22 ? 22:Math.ceil(count);
     },
+     getSubTitleContent:function(){
+      //需要转换为字符
+      let count=this.gblen(this.formTop.subtitle,120,'subtitle');
+      this.subtitleContentCount=Math.ceil(count) > 60 ? 60:Math.ceil(count);
+    },
     removetrim:function(){
       if(!this.formTop.title.Trim()){
         this.formTop.title='';
@@ -840,6 +885,8 @@ abstractWordCount:function(event){
       var len = 0;
       if(name == 'title'){
         this.titleMaxCount=22;
+      }else if(name == 'subtitle'){
+        this.subtitleMaxCount=60;
       }else if(name == 'summary'){
         this.summaryMaxCount=60;
       }else if(name == 'author'){
@@ -856,6 +903,12 @@ abstractWordCount:function(event){
               this.titleMaxCount+=0.5;
               if(this.titleMaxCount > max){
                 this.titleMaxCount=max;
+              }
+              break;
+            case 'subtitle':
+              this.subtitleMaxCount+=0.5;
+              if(this.subtitleMaxCount > max){
+                this.subtitleMaxCount=max;
               }
               break;
             case 'summary':
