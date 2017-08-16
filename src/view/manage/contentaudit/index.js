@@ -82,7 +82,7 @@ export default {
         params: {
           pageindex: this.pageIndex - 1,
           pagesize: this.pageSize,
-          usename: this.studio,
+          userame: this.studio,
           status: this.status,
           value: this.searchValue
         }

@@ -55,7 +55,7 @@ export default {
        let $=qbVideo.get("$");
        setTimeout(function(){
           let count=$(".video_container").size();
-          if(count > 0){e
+          if(count > 0){
             for(var i=0;i<count;i++){
                 let serverfileid=$(".video_container").eq(i).html('').attr('serverfileid');
                 var option = {
