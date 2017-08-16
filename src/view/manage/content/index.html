@@ -92,9 +92,9 @@
         <td style="padding: 0.75rem;" width="10%">{{item.author}}</td>
         <td width="90">{{item.addtime}}</td>
         <td width="90">
-          <div v-if="item.status == 'Draft'"><span class="draft-back">草稿</span></div>
+          <div v-if="item.status == 'PendingAudit'"><span class="draft-back">待审核</span></div>
           <div v-else-if="item.status == 'Publish'"><span class="publish-back">已发表</span></div>
-          <div v-else-if="item.status == 'Offline'"><span class="offline-back">已撤回</span></div>
+          <div v-else-if="item.status == 'NotPass'"><span class="offline-back">未通过</span></div>
         </td>
         <td v-if="roleType == 'Manage'" width="140">
           <span v-if="item.label == 'Notice' ">公告</span>

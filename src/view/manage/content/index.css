@@ -1,17 +1,20 @@
 .draft-back{
-  background:  url(../../../assets/svg/草稿.svg) left center no-repeat ;
+  background:  url(../../../assets/svg/待审核.svg) left center no-repeat ;
   background-size: 14px 14px;
   padding-left:20px;
+  color: #2EA9DF;
 }
 .publish-back{
   background:  url(../../../assets/svg/已发表.svg) left center no-repeat ;
   background-size: 14px 14px;
   padding-left:20px;
+  color:#69BE5A;
 }
 .offline-back{
-  background:  url(../../../assets/svg/已撤回.svg) left center no-repeat ;
+  background:  url(../../../assets/svg/未通过.svg) left center no-repeat ;
   background-size: 14px 14px;
   padding-left:20px;
+   color:#E26161;
 }
 #title a{
   color: #495060;
