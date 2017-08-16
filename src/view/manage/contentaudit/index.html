@@ -54,11 +54,13 @@
               <Checkbox :value="checkIds.indexOf(item.id)>=0" @on-change="handleCheck(item.id)"></Checkbox>
           </td>
           <td>
-            <img :src="item.cover" alt="" width="100">
+            <a :href="'/article?id='+item.id" target="_blank"><img :src="item.cover" alt="" width="100"></a>
           </td>
           <td style="text-align:left">
-            {{item.title}} <br/>
-            <span style="color: #aaa">工作室：{{item.channel}}</span>
+            <a :href="'/article?id='+item.id" target="_blank">{{item.title}}
+              <br/>
+              <span style="color: #aaa">工作室：{{item.channel}}</span>
+            </a>
           </td>
           <td>{{item.author}}</td>
           <td>{{item.addtime}}</td>
