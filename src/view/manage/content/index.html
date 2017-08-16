@@ -95,6 +95,7 @@
           <div v-if="item.status == 'PendingAudit'"><span class="draft-back">待审核</span></div>
           <div v-else-if="item.status == 'Publish'"><span class="publish-back">已发表</span></div>
           <div v-else-if="item.status == 'NotPass'"><span class="offline-back">未通过</span></div>
+          <div v-else-if="item.status == 'Draft'"><span class="cao-gao">草稿</span></div>
         </td>
         <td v-if="roleType == 'Manage'" width="140">
           <span v-if="item.label == 'Notice' ">公告</span>
