@@ -9,7 +9,7 @@
          <Input v-model="videoLink" placeholder="视频外链添加，建议格式为mp4" style="width:80%;"></Input>
          <div class="video-preview" style="position: relative;">
              <h2 style="position: absolute;left:15%;top:40%;z-index: 1;" v-if="videoLink">输入的视频地址有误，请检查后再试</h2>
-             <div ref="linkVideoHtml" id="previewLinkVideo"><p style="text-align:center;"><video class="linkvideo" style="background:#000;" width="640" height="480" wmode="transparent" play="true" loop="false" menu="false" allowscriptaccess="never" allowfullscreen="true"  :src="videoLink"  preload="load" controls="controls"></video></p></div>
+             <div ref="linkVideoHtml" id="previewLinkVideo"><p style="text-align:center;"><video class="linkvideo" width="640" height="auto" wmode="transparent" play="true" loop="false" menu="false" allowscriptaccess="never" allowfullscreen="true"  :src="videoLink"  preload="load" controls="controls"></video></p></div>
          </div>
          <div class="video-footer">
             <Button type="primary" shape="circle" style="margin:0 20px;" @click="addLinkVideo">添加</Button>
