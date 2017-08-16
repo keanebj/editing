@@ -1,0 +1,29 @@
+
+  #sharePop .ivu-modal{
+      width:auto !important;
+  }
+  .video-upload-label{
+    font-size:14px;
+    color:#495060;
+    margin-bottom:10px;
+  }
+  .video-upload-label:before{
+    content: '*';
+    display: inline-block;
+    margin-right: 4px;
+    line-height: 1;
+    font-family: SimSun;
+    font-size: 12px;
+    color: #ed3f14;
+  }
+  #videoTabPreview{
+    width:400px;
+    height:225px;
+    border:1px solid #cccccc;
+    margin-left:100px;
+  }
+  #videoTabPreview video.linkvideo{
+    width:400px !important;
+    height:225px !important;
+  }
+

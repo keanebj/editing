@@ -61,7 +61,7 @@ export default {
         $("#videoPreview").find('embed').prop('width','640px');
         $("#videoPreview").find('embed').prop('height','480px');
         let videoHtml='<p style="text-align:center" class="video_container" serverfileid="'+this.video.videoId+'" id="id_video_container_'+this.video.videoId+'">'+this.$refs.videoPreview.innerHTML+'</p>';
-        this.$emit("insertVideoEditor",videoHtml);
+        this.$emit("insertVideoEditor",videoHtml,this.video.videoId);
         this.uploadVideo=false;
         $("#videoPreview").find('embed').prop('width','400px');
         $("#videoPreview").find('embed').prop('height','225px');
@@ -81,7 +81,7 @@ export default {
             $("#videoPreview1").find('embed').prop('width','640px');
             $("#videoPreview1").find('embed').prop('height','480px');
             let videoHtml='<p style="text-align:center;width:100%;margin-bottom:10px;" class="video_container" serverfileid="'+this.selVideoid+'" id="id_video_container_'+this.selVideoid+'">'+this.$refs.videoPreview1.innerHTML+'</p>';
-            this.$emit("insertVideoEditor",videoHtml);
+            this.$emit("insertVideoEditor",videoHtml,this.selVideoid);
             this.uploadVideo=false;
          }else{
              //没有选择素材

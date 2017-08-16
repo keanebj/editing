@@ -208,6 +208,7 @@ export default {
           token:this.token
         }
       }).then((response) => {
+        console.log(response);
         //如果没数据
         if(type =='search' && response.data.total == 0){
           this.hidenofound=false;
