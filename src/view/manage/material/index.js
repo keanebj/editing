@@ -20,7 +20,8 @@ export default {
       playVideoModel: false,
       playVideoTitle: '',
       hideFoot: false,
-      playVideoUrl: ''
+      playVideoUrl: '',
+      tabView: false
     }
   },
   watch: {
@@ -125,8 +126,13 @@ export default {
           }
           if (this.videoList.length == 0) {
             this.initUpload('pickfiles11', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1,null, null);
+            if (this.searchValue == '') {
+            	this.tabView = true;
+            }
           }else{
             this.initUpload('pickfiles111', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1,null, null);
+            alert(11)
+            this.tabView = false;
           }
         }else{
           this.errorProcess(data)

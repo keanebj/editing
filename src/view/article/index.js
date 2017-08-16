@@ -4,7 +4,7 @@ import {
 export default {
   name: 'Article',
   created() {
-  	this.articleBack = this.$store.articleBack;
+  	
   },
   data() {
     return {
@@ -34,11 +34,16 @@ export default {
     span19.className = "layout-content-warp ivu-col ivu-col-span-24";
     this.noticeID=this.$route.query.id;
 	    //ajax获得后台公告的内容
-	    if (this.articleBack) {
-  			this.getUrl = "api/content/"
-  		}else{
-  			this.getUrl = "api/content/notice/"
-  		}
+	    if (sessionStorage.getItem('articleDetail') == 'home') {
+	    	this.getUrl = 'api/content/notice/'
+	    	this.articleBack = false;
+	    }else if (sessionStorage.getItem('articleDetail') == 'article'){
+	    	this.getUrl = 'api/content/'
+	    	this.articleBack = true;
+	    }else{
+	    	this.getUrl = 'api/content/'
+	    	this.articleBack = false;
+	    }
 	    this.$http.get(this.getUrl + this.noticeID).then(({ data }) => {
 	      //给公告的内容赋值
 	      if (data.status) {

@@ -10,6 +10,7 @@ export default {
     swiperSlide
   },
   created() {
+  	sessionStorage.setItem('articleDetail', 'home');
     if (!this.$store.state.token) {
       this.$router.push('/login')
       return;
@@ -18,7 +19,6 @@ export default {
       this.$router.push('/login')
       return;
     }
-    this.$store.articleBack = false;
     this.getNotice();
     this.getCollege();
     this.getAdlist();

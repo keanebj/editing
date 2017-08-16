@@ -266,5 +266,6 @@ export default {
   created() {
     this.requestStudio()
     this.fetchCollection()
+    sessionStorage.setItem('articleDetail', 'audit');
   }
 }

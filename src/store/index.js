@@ -14,7 +14,6 @@ const store = new Vuex.Store({
     userinfo: userinfo,
     token: token,
     isActive: false,
-    articleBack: false,
     material: {}
   },
   getters: {
