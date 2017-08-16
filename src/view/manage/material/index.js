@@ -131,7 +131,7 @@ export default {
             }
           }else{
             this.initUpload('pickfiles111', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1,null, null);
-            alert(11)
+            //alert(11)
             this.tabView = false;
           }
         }else{
