@@ -12,7 +12,12 @@ export default {
     
         this.noticeID=this.$route.query.id;
         //ajax获得后台公告的内容
-        this.$http.get("api/content/notice/" + this.noticeID).then(({ data }) => {
+        if (this.articleBack) {
+	  			this.getUrl = "api/content/"
+	  		}else{
+	  			this.getUrl = "api/content/notice/"
+	  		}
+        this.$http.get(this.getUrl + this.noticeID).then(({ data }) => {
           //给公告的内容赋值
           if (data.status) {
 						this.title=data.content.title;
@@ -49,7 +54,8 @@ export default {
       	time: '',
       	author: ''
       },
-      articleBack: false
+      articleBack: false,
+      getUrl: ''
     }
   },
   computed: {
