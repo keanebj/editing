@@ -219,6 +219,9 @@
     margin-right: 10px;
     color:#333;
   }
+  #sharePop .ivu-modal{
+      width:auto !important;
+  }
 
 
 /*weizhenglin*/
@@ -319,16 +322,6 @@
 .set-con .yulan img {
   max-width: 100%;
   height: auto;
-}
-
-.pagebreak {
-    display: block;
-    clear: both !important;
-    cursor: default !important;
-    width: 100% !important;
-    margin: 0;
-    border: 1px solid rgb(128, 128, 128);
-    height: 3px;
 }
 
 .yulan pre {
@@ -498,21 +491,46 @@
   font-size: 16px;
 }
 
-#titleContent .ivu-input:focus {
+#titleContent .ivu-input:focus,#subTitle .ivu-input:focus {
   border: none;
   box-shadow: none;
 }
 
-.limit-words {
+
+#subTitle .ivu-input{
+  background: url("../../assets/svg/副标题.svg") left top no-repeat;
+  border: none;
+  padding: 0 60px 10px 40px;
+  box-shadow: none;
+  font-size: 16px;
+}
+.limit-words,.sub-limit-words {
   position: absolute;
-  right: 17px;
+  right: 16%;
   top: 0;
   z-index: 10;
   font-size: 14px;
 }
+.add-sub-title{
+  position: absolute;
+  right:0;
+  top: 0;
+  color:#fa575a;
+  border-color:#fa575a;
+}
 
-.limit-words>span {
+.limit-words>span,.sub-limit-words>span {
   color: #fa575a;
+}
+.sub-limit-words{
+  right: 0;
+}
+.delete-icon{
+  display: inline-block;
+  width:24px;
+  height:24px;
+  background: url("../../assets/svg/红色删除.svg") center bottom no-repeat;
+  background-size: 90% 90%;
 }
 
 .hide {
@@ -533,7 +551,6 @@
   box-shadow: 0 0 5px #666;
   z-index: 2;
   background: #fff;
-  width: 240px;
 }
 
 .share_hide .ivu-modal-content .ivu-modal-body {
@@ -592,3 +609,4 @@
   border-color: #F95759 !important;
   padding: 5px 10px !important;
 }
+

@@ -109,7 +109,7 @@ export default {
       placekeyword:'每个关键词最多5个字',
       isSkip:true,
       baseimg:'',
-      noSel:false
+      noSel:true
   }
 },
   created(){
@@ -652,6 +652,7 @@ abstractWordCount:function(event){
                 //更新
                 this.$http.put("/api/content/"+this.articleID,this.formTop
                ).then((response) => {
+               		console.log(this.formTop)
                		if (response.data.status == 1) {
                			this.$Notice.success({title:response.data.message,desc: false});
                		}else{
@@ -700,7 +701,7 @@ abstractWordCount:function(event){
               {
                 scrollTop=document.body.scrollTop;
               }
-              this.$refs.shareHide.$el.children[1].children[0].style.top = (195 - scrollTop) + 'px';
+              this.$refs.shareHide.$el.children[1].children[0].style.top = (175 - scrollTop) + 'px';
 
               this.useqrcode(this.$conf.host+this.$conf.root+"share?id="+response.data.token);
               this.codes=this.$conf.host+this.$conf.root+"share?id="+response.data.token;

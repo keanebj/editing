@@ -4,6 +4,9 @@ export default {
     'previewCon',
     'tempi',
     'iIndex',
+    'selVideoid',
+    'scrollHeight',
+    'setConHeight'
   ],
   created () {
   	
@@ -12,13 +15,21 @@ export default {
     return {
       i:-1,
       contentCoverSrc: '',
-      author: ''
+      author: '',
+      currentvideoid:''
     }
   },
   watch:{
     iIndex:function(){
       this.i=this.iIndex[0];
+    },
+    selVideoid:function(val){
+      this.currentvideoid=val;
+    },
+    currentvideoid:function(val){
+      this.$emit('changeSelVideo',val);
     }
+
   },
 
   computed: {

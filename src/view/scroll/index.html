@@ -1,5 +1,5 @@
 <section>
-  <div class="set-con" @wheel.prevent="scrollBar($event)" ref="setCon">
+  <div class="set-con" @wheel.prevent="scrollBar($event)" ref="setCon" :style="{height: setConHeight}">
     <div class="set-posi" ref="onscroll" @mousedown.prevent="mouseScroll($event)">
       <div v-if="previewCon.title"  class="yulan">
       	<h1  class="yulan-tit">{{ previewCon.title }}</h1>
@@ -9,6 +9,18 @@
       		<span>{{ author }}</span>
       	</div>
       	<div v-html="previewCon.content"></div>
+      </div>
+      <div v-else-if="selVideoid">
+         <Radio-group v-model="currentvideoid">
+            <Row id="resource-manage">  
+                <Col span="8" v-for="(value,key) in previewCon">
+                    <div class="video-item" >
+                        <img :src="value.cover"/>
+                        <span style="float:left;">{{value.title}}</span><Radio :label="value.videoid" style="float:right;margin-right:0;"><span></span></Radio>
+                    </div>
+                </Col>                          
+            </Row>
+         </Radio-group>
       </div>
       <div v-else>
         <Row :gutter="34">
@@ -23,7 +35,7 @@
         </Row>
       </div>
     </div>
-    <div class="scrollBar" ref="scroll">
+    <div class="scrollBar" ref="scroll" :style="{height: scrollHeight}">
       <div class="scrollBar_con" ref="scrollCon" @mousedown.prevent="barScroll($event)"></div>
     </div>
     <!--<ScrollBar scrollarr="tabView"></ScrollBar>-->

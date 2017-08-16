@@ -13,9 +13,12 @@ const store = new Vuex.Store({
     breadcrumb: [],
     userinfo: userinfo,
     token: token,
-    isActive: false
+    isActive: false,
+    material: {}
   },
-  getters: {},
+  getters: {
+  	getMaterial:(state) => state.material
+  },
   mutations: {
     breadcrumb(state, path) {
       var result = []
@@ -42,9 +45,16 @@ const store = new Vuex.Store({
     },
     set(state, data) {
       Object.assign(state, data)
+    },
+    setMaterial(state, material) {
+      state.material = material;
     }
   },
-  actions: {},
+  actions: {
+  	setMaterial({commit}, argu) {
+      commit('setMaterial', argu)
+    }
+  },
   articleBack: true
 })
 function recursiveBreadcrumb(key, val, data, index, result) {
