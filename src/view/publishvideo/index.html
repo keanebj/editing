@@ -7,7 +7,7 @@
         <span class="limit-words">
           <span>{{titleContentCount}}</span>/22
         </span>
-        <Button type="ghost" shape="circle" class="add-sub-title" :disabled="!isHideSubtitle" @click="isHideSubtitle=!isHideSubtitle">添加副标题</Button>
+        <Button type="ghost" shape="circle"  class="add-sub-title" :disabled="!isHideSubtitle" @click="isHideSubtitle=!isHideSubtitle">添加副标题</Button>
       </Form-item>
       <Form-item label="" prop="subtitle" :class="{hide:isHideSubtitle}">
         <Input id="subTitle" v-model="formTop.subtitle" :maxlength="subtitleMaxCount" class="title-input" placeholder="请输入副标题" @on-change="getSubTitleContent" @on-blur="removetrim"></Input>
@@ -30,7 +30,7 @@
         支持格式： MOV，MP4，MP4V，M4V，MKV，AVI，FLV，F4V，3GP RM, RMVB，RA，RAM ,MPG， MPEG，MPE，VOB，DAT，WMV，WM，ASF，ASX</p>
     </div>
      <div :class="{hide:!ishideone}">
-      <div class="video-upload-label">上传视频 <span style="margin-left:30px;">建国大业avi</span><Button type="primary" shape="circle" style="margin-left:30px;float:right;" @click="reuploadvideo">重新上传</Button></div>
+      <div class="video-upload-label">上传视频 <span style="margin-left:30px;">{{videoname}}</span><Button type="primary" shape="circle" style="margin-left:30px;float:right;" @click="reuploadvideo">重新上传</Button></div>
       <div id="videoTabPreview" ref="videoTabPreview" class="video_container" v-html="formTop.content"></div>
     </div>
 

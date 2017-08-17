@@ -19,8 +19,8 @@ module.exports = {
       : config.dev.assetsPublicPath
   },
   externals:{
-    'qcVideo':'qcVideo',
-    'Qn':'Qn'
+    'qbVideo':'qbVideo',
+    
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],

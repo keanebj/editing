@@ -40,13 +40,13 @@ export default {
            this.disabledVideo=true;
       }
     },
-    insertVideoEditor(val,id){
+    insertVideoEditor(val,id,name){
       //如果是图文
       if(this.tabname == 'text'){
           this.$refs.publishtextele.insertVideoEditor(val);
       }else{
           //如果是视频
-          this.$refs.publishvideoele.insertVideoEditor(val,id);
+          this.$refs.publishvideoele.insertVideoEditor(val,id,name);
       } 
     },
     goBack(){

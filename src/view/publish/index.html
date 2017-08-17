@@ -5,7 +5,7 @@
   <div>
     <uploadVideo ref="uploadVideoEle" @insertVideoEditor="insertVideoEditor"></uploadVideo>
   </div>
-<div style="position: relative;">
+<div style="position: relative;" id="tab">
    <div style="position: absolute;top:20px;width:24px;height:24px;left:85px;z-index:9999;"><a href="javascript:void(0)" @click="goBack"><img width='100%' height='100%' src="../../assets/svg/返回红色.svg" /></a></div>   
     <Tabs type="card" v-model="tabname" >
         <Tab-pane label="图文" name="text" :disabled="disabledText">

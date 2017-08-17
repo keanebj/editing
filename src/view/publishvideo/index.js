@@ -111,7 +111,8 @@ export default {
       uploadVideo:false,
       isHideSubtitle:true,
       ishideone:false,
-      videoid:''
+      videoid:'',
+      videoname:''
   }
 },
   created(){
@@ -171,8 +172,7 @@ export default {
           this.articleID=-1;
           //禁用video
           this.$emit('disabledTab','video');
-        }
-       
+        }      
       }, (error) => {
         this.$Notice.error({
           title: error.data.message,
@@ -220,7 +220,7 @@ export default {
     goBack(){
       this.$router.go(-1);
     },
-    insertVideoEditor(html,id){
+    insertVideoEditor(html,id,name){
       if(id){
         //腾讯云里面的视频
           var option = {
@@ -232,6 +232,7 @@ export default {
           };     
           new qcVideo.Player("videoTabPreview", option);
           this.videoid=id;
+          this.videoname=name;
       }else{
         //外链的视频
         this.$refs.videoTabPreview.innerHTML=html;

@@ -1,5 +1,3 @@
-//import qbVideo from 'qbVideo'
-//import Qn from 'Qn'
 import ScrollBar from '@/view/scroll/index.vue'
 export default {
   name: 'ComponentsUploadVideo',
@@ -57,11 +55,11 @@ export default {
         this.uploadVideo=false;
       },
       addLocalVideo(){
-        let $ = qbVideo.get('$'); 
+        let $ = qdVideo.get('$'); 
         $("#videoPreview").find('embed').prop('width','640px');
         $("#videoPreview").find('embed').prop('height','480px');
         let videoHtml='<p style="text-align:center" class="video_container" serverfileid="'+this.video.videoId+'" id="id_video_container_'+this.video.videoId+'">'+this.$refs.videoPreview.innerHTML+'</p>';
-        this.$emit("insertVideoEditor",videoHtml,this.video.videoId);
+        this.$emit("insertVideoEditor",videoHtml,this.video.videoId,this.video.name);
         this.uploadVideo=false;
         $("#videoPreview").find('embed').prop('width','400px');
         $("#videoPreview").find('embed').prop('height','225px');
@@ -77,7 +75,7 @@ export default {
                 "height": 225,
             }; 
             new qcVideo.Player("videoPreview1", option);
-            let $ = qbVideo.get('$'); 
+            let $ = qdVideo.get('$'); 
             $("#videoPreview1").find('embed').prop('width','640px');
             $("#videoPreview1").find('embed').prop('height','480px');
             let videoHtml='<p style="text-align:center;width:100%;margin-bottom:10px;" class="video_container" serverfileid="'+this.selVideoid+'" id="id_video_container_'+this.selVideoid+'">'+this.$refs.videoPreview1.innerHTML+'</p>';
@@ -112,8 +110,7 @@ export default {
         this.idHideStepOne=false;
         this.idHideStepTwo=true;
         this.idHideStepThree=true;
-        this.idHideStepFour=true;
-        
+        this.idHideStepFour=true;  
       },
       previewVideo(){
         var option = {
@@ -122,16 +119,15 @@ export default {
                 "app_id": "1252018592",
                 "width": 400,
                 "height": 225,
-            };
-             
+            };   
             new qcVideo.Player("videoPreview", option);
       },
      //初始化直播上传
       initUpload(){
           //检测浏览器是否支持
-          var $ = qbVideo.get('$');
-          var Version = qbVideo.get('Version');
-          if( !qbVideo.uploader.supportBrowser() )
+          var $ = qdVideo.get('$');
+          var Version = qdVideo.get('Version');
+          if( !qdVideo.uploader.supportBrowser() )
           {
               if(Version.IS_MOBILE)
               {
@@ -148,17 +144,17 @@ export default {
       },
       accountDone(upBtnId, secretId, isTranscode, isWatermark, transcodeNotifyUrl, classId) { 
             var This=this;
-              var $ = qbVideo.get('$'),
-                  ErrorCode = qbVideo.get('ErrorCode'),
-                  Log = qbVideo.get('Log'),
-                  JSON = qbVideo.get('JSON'),
-                  util = qbVideo.get('util'),
-                  Code = qbVideo.get('Code'),
-                  Version = qbVideo.get('Version');
+              var $ = qdVideo.get('$'),
+                  ErrorCode = qdVideo.get('ErrorCode'),
+                  Log = qdVideo.get('Log'),
+                  JSON = qdVideo.get('JSON'),
+                  util = qdVideo.get('util'),
+                  Code = qdVideo.get('Code'),
+                  Version = qdVideo.get('Version');
 
               //您的secretKey
               var secret_key = 'UmsnV4Sgw65rRE0e6OUTGtK3viKky4yh';
-              qbVideo.uploader.init(
+              qdVideo.uploader.init(
                   //1: 上传基础条件
                   {
                       web_upload_url: location.protocol + '//vod2.qcloud.com/v3/index.php',
@@ -209,7 +205,6 @@ export default {
                        * @param args { id: 文件ID, size: 文件大小, name: 文件名称, status: 状态, percent: 进度 speed: 速度, errorCode: 错误码,serverFileId: 后端文件ID }
                        */
                       onFileUpdate: function (args) {
-                          console.log(args);
                           if (args.code == Code.SHA_FAILED){
                               This.$Notice.error({
                                 title: '该浏览器无法计算SHA',
@@ -249,7 +244,7 @@ export default {
                             else if(args.code == 2) //计算完SHA
                             {
                                 This.video.loadingMsg='';
-                                //计算完SHA值，准备开始上传，这步执行完之后才能执行qbVideo.uploader.startUpload()即上传操作                                
+                                //计算完SHA值，准备开始上传，这步执行完之后才能执行qdVideo.uploader.startUpload()即上传操作                                
                                 //跳转到另外一个界面，然后显示
                               
                             } else if(args.code == 4){
@@ -335,12 +330,12 @@ export default {
               //事件绑定
               $('#start_upload').on('click', function () {
                   //@api 上传
-                  qbVideo.uploader.startUpload();
+                  qdVideo.uploader.startUpload();
               });
 
               $('#stop_upload').on('click', function () {
                   //@api 暂停上传
-                  qbVideo.uploader.stopUpload();
+                  qdVideo.uploader.stopUpload();
                   //取消上传，跳转到上传界面
                   This.idHideStepOne=false;
                   This.idHideStepTwo=true;
@@ -349,14 +344,14 @@ export default {
 
                   //移除这个文件
                   //$('#result').html('');
-                  qbVideo.uploader.deleteFile(This.video.videoId);
+                  qdVideo.uploader.deleteFile(This.video.videoId);
                  // This.backOrigin();
 
               });
 
               $('#re_upload').on('click', function () {
                   //@api 恢复上传（错误文件重新）
-                  qbVideo.uploader.reUpload();
+                  qdVideo.uploader.reUpload();
               });
 
               $('#result').on('click', '[data-act="del"]', function (e) {
@@ -367,47 +362,15 @@ export default {
 
                   $line.remove();
                   //@api 删除文件
-                  qbVideo.uploader.deleteFile(fileId);
+                  qdVideo.uploader.deleteFile(fileId);
               });
             }
           },
 
   created() {
          //获得素材列表
-       this.$http.get('api/material',{params:{pageindex:1,pagesize:10}}).then((response) => {
-// response.data.materials=[{
-//             "id": 14,
-//             "videoid": "9031868223112420458",
-//             "videoname": "视频四",
-//             "title": "标题四",
-//             "duration": "00:00:00",
-//             "cover": "http://mp.dev.hubpd.com/media/upload/image/2017/08/15/1502780634767.png",
-//             "videourl": "http://localhost:8080/UI/video/4.mp4",
-//             "addtime": "2017-08-10 11:05:30"
-//         },
-//         {
-//             "id": 11,
-//             "videoid": "9031868223112574686",
-//             "videoname": "视频三",
-//             "title": "标题三",
-//             "duration": "00:00:00",
-//             "cover": "http://mp.dev.hubpd.com/media/upload/image/2017/08/15/1502780634767.png",
-//             "videourl": "http://localhost:8080/UI/video/3.mp4",
-//             "addtime": "2017-08-10 10:46:08"
-//         },
-//         {
-//             "id": 1,
-//             "videoid": "9031868223112574689",
-//             "videoname": "视频一",
-//             "title": "标题一",
-//             "duration": "00:10:54",
-//             "cover": "http://mp.dev.hubpd.com/media/upload/image/2017/08/15/1502780634767.png",
-//             "videourl": "http://localhost:8080/UI/video/1.mp4",
-//             "addtime": "2017-08-10 10:17:42"
-//         }]
-    
+       this.$http.get('api/material',{params:{pageindex:1,pagesize:10}}).then((response) => {    
           let data = response.data.materials;
-          console.log(data);
           //给数据值
          this.materialVideos=data;
         }, (error) => {
