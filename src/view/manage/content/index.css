@@ -26,6 +26,7 @@
   background:  url(../../../assets/svg/草稿.svg) left center no-repeat ;
   background-size: 14px 14px;
   padding-left:20px;
+  color:#7566d6;
 }
 .to-top {
   position: absolute;
