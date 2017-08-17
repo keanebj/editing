@@ -26,7 +26,8 @@ export default {
         //给一个默认id
         selVideoid:'111',
         materialVideos:[],
-        isHideSourceBtn:false
+        isHideSourceBtn:false,
+        playInfo:''
     }
   },
   components:{

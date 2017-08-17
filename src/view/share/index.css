@@ -60,8 +60,8 @@
 	border-radius: 8px;
 	background: #f8f8f8;
 }
-.video_container embed{
-  width:90% !important;
+.video_container embed,.video_container video{
+  width:100% !important;
 }
 
 /*手机端分享*/
