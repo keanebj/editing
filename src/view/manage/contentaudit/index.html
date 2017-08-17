@@ -1,28 +1,41 @@
 <section>
   <Row>
     <Col span="12">
-      <span style="padding-right: 15px;font-size:14px;">工作室选择</span>
-      <Select v-model="studio" style="width:220px" @on-change="handleChangeStudio">
+    <span style="padding-right: 15px;font-size:14px;">工作室选择</span>
+    <Select v-model="studio" style="width:220px" @on-change="handleChangeStudio">
           <Option :value="0">全部</Option>
           <Option v-for="item in studios" :value="item.username" :key="item.username">{{ item.studioname }}</Option>
       </Select>
     </Col>
     <Col span="12">
-      <Input icon="ios-search" placeholder="输入搜索关键字，按enter键查询" style="width:250px;float:right" @on-enter="handleSearch" @on-click="handleSearch" v-model="searchValue"></Input>
+    <Input icon="ios-search" placeholder="输入搜索关键字，按enter键查询" style="width:250px;float:right" @on-enter="handleSearch" @on-click="handleSearch"
+      v-model="searchValue"></Input>
     </Col>
   </Row>
   <Row style="padding-top: 30px;">
     <Col span="12">
-      <div v-if="status=='PendingAudit'">
-        <Button type="primary"  shape="circle" icon="paper-airplane" @click="onHandle('Publish', 0)">通过</Button>
-        <Button type="ghost"  shape="circle" icon="close" class="btn-ghost-red" @click="onHandle('NotPass', 0)" style="margin-left: 15px;">不通过</Button>
-      </div>
-      <div v-else-if="status=='Publish'">
-        <Button type="ghost" shape="circle" icon="ios-undo-outline" class="btn-ghost-red" @click="onHandle('Offline', 0)">撤回</Button>
-      </div>
-      <div v-else-if="status=='NotPass'||status=='Offline'">
-        <Button type="primary" shape="circle" icon="ios-trash-outline" @click="onHandle('Remove', 0)">删除</Button>
-      </div>
+    <div v-if="status=='PendingAudit'">
+      <Button type="primary" shape="circle" class="btn-create" @click="onHandle('Publish', 0)">
+        <img src="../../../assets/svg/白发布.svg" class="icon-create"></img>
+        通过
+      </Button>
+      <Button type="ghost" shape="circle" class="btn-ghost-red btn-create" @click="onHandle('NotPass', 0)" style="margin-left: 15px;">
+        <img src="../../../assets/svg/审核不通过.svg" class="icon-create" style="top: -3px;"></img>
+        不通过
+      </Button>
+    </div>
+    <div v-else-if="status=='Publish'">
+      <Button type="ghost" shape="circle" class="btn-ghost-red btn-create" @click="onHandle('Offline', 0)">
+        <img src="../../../assets/svg/撤回.svg" class="icon-create"></img>
+        撤回
+      </Button>
+    </div>
+    <div v-else-if="status=='NotPass'||status=='Offline'">
+      <Button type="primary" shape="circle" @click="onHandle('Remove', 0)" class="btn-create">
+          <img src="../../../assets/svg/白删除.svg" class="icon-create"></img>
+          删除
+      </Button>
+    </div>
     </Col>
     <Col span="12">
     <Radio-group v-model="status" style="float:right;padding-top:8px" @on-change="handleChangeStatus">
@@ -35,10 +48,7 @@
       <thead>
         <tr>
           <th style="width: 85px;text-align:left">
-              <Checkbox
-              :indeterminate="checkAllIndeterminate"
-              :value="checkAll"
-              @click.prevent.native="handleCheckAll">全选</Checkbox>
+            <Checkbox :indeterminate="checkAllIndeterminate" :value="checkAll" @click.prevent.native="handleCheckAll">全选</Checkbox>
           </th>
           <th style="width:100px">标题</th>
           <th style="width:300px"></th>
@@ -51,7 +61,7 @@
       <tbody>
         <tr v-for="(item,index) in data">
           <td style="text-align:left">
-              <Checkbox :value="checkIds.indexOf(item.id)>=0" @on-change="handleCheck(item.id)"></Checkbox>
+            <Checkbox :value="checkIds.indexOf(item.id)>=0" @on-change="handleCheck(item.id)"></Checkbox>
           </td>
           <td>
             <a :href="'/article?id='+item.id" target="_blank"><img :src="item.cover" alt="" width="100"></a>
@@ -65,37 +75,37 @@
           <td>{{item.author}}</td>
           <td>{{item.addtime}}</td>
           <td>
-            <span v-if="item.status=='PendingAudit'" ><label class="wait-check" style="color:#289FDB"> 待审核</label></span>
-            <span v-else-if="item.status=='Publish'" ><label class="published" style="color:#5EB550"> 已发表</label></span>
-            <span v-else-if="item.status=='NotPass'" ><label class="no-pass" style="color:#F34A52">未通过</label></span>
-            <span v-else-if="item.status=='Offline'" ><label class="publish-back" style="color:#FFA620"> 已撤回</label></span>
+            <span v-if="item.status=='PendingAudit'"><label class="wait-check" style="color:#289FDB"> 待审核</label></span>
+            <span v-else-if="item.status=='Publish'"><label class="published" style="color:#5EB550"> 已发表</label></span>
+            <span v-else-if="item.status=='NotPass'"><label class="no-pass" style="color:#F34A52">未通过</label></span>
+            <span v-else-if="item.status=='Offline'"><label class="publish-back" style="color:#FFA620"> 已撤回</label></span>
           </td>
           <td style="font-size:18px;">
             <div v-if="item.status=='PendingAudit'">
-                <Tooltip content="通过" placement="top">
-                  <a href="javascript:void(0)" @click="onHandle('Publish', item.id)">  
+              <Tooltip content="通过" placement="top">
+                <a href="javascript:void(0)" @click="onHandle('Publish', item.id)">  
                     <span class="icon-publish"></span>
                   </a>
-                </Tooltip>
-                <Tooltip content="不通过" placement="top">
-                  <a href="javascript:void(0)" @click="onHandle('NotPass', item.id)">                   
+              </Tooltip>
+              <Tooltip content="不通过" placement="top">
+                <a href="javascript:void(0)" @click="onHandle('NotPass', item.id)">                   
                     <span class="icon-no-pass"></span>
                   </a>
-                </Tooltip>
+              </Tooltip>
             </div>
             <div v-else-if="item.status=='Publish'">
-                <Tooltip content="撤回" placement="top">
-                  <a href="javascript:void(0)" @click="onHandle('Offline', item.id)">
-                    <Icon type="ios-undo-outline"></Icon>
-                  </a>
-                </Tooltip>
+              <Tooltip content="撤回" placement="top">
+                <a href="javascript:void(0)" @click="onHandle('Offline', item.id)">
+                  <Icon type="ios-undo-outline"></Icon>
+                </a>
+              </Tooltip>
             </div>
             <div v-else-if="item.status=='NotPass'||item.status=='Offline'">
-                <Tooltip content="删除" placement="top">
-                  <a href="javascript:void(0)" @click="onHandle('Remove', item.id)">
-                      <Icon type="ios-trash-outline"></Icon>
-                  </a>
-                </Tooltip>
+              <Tooltip content="删除" placement="top">
+                <a href="javascript:void(0)" @click="onHandle('Remove', item.id)">
+                  <Icon type="ios-trash-outline"></Icon>
+                </a>
+              </Tooltip>
             </div>
           </td>
         </tr>
@@ -103,20 +113,20 @@
     </table>
     <div>
       <div style="float:right;line-height:24px;">共{{pageCount}}页</div>
-      <Page size="small" :page-size="pageSize" :current="pageIndex" :total="total"  @on-change="handleChangePage" style="float:right"></Page>
+      <Page size="small" :page-size="pageSize" :current="pageIndex" :total="total" @on-change="handleChangePage" style="float:right"></Page>
     </div>
-    
+
   </div>
   <div v-if="!isLoading && data.length<=0" style="text-align:center;margin-top:20px;color:#aaa">
     <div v-if="searchValue == ''">
-        <img src="../../../assets/error/no-data.svg" style="margin-top:80px;width: 30%;"/><br/><br/>
-        <p style="font-size: 16px;text-align: center;margin-top: 20px;">暂无数据</p>
+      <img src="../../../assets/error/no-data.svg" style="margin-top:80px;width: 30%;" /><br/><br/>
+      <p style="font-size: 16px;text-align: center;margin-top: 20px;">暂无数据</p>
     </div>
     <div v-else>
-        <img src="../../../assets/error/not-found.svg" style="margin-top:80px;width: 30%;"/><br/><br/>
-        <p style="font-size: 16px;text-align: center;margin-top: 20px;">暂无查询结果</p>
+      <img src="../../../assets/error/not-found.svg" style="margin-top:80px;width: 30%;" /><br/><br/>
+      <p style="font-size: 16px;text-align: center;margin-top: 20px;">暂无查询结果</p>
     </div>
-    
+
   </div>
   <Spin size="large" fix v-if="isLoading">
     <Icon type="load-c" size=18 class="spin-icon-load"></Icon>

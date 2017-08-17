@@ -47,18 +47,18 @@
     </Col>
   </Row>
   <Row style="margin:30px 0;">
-    <Col span="12" v-if="roleType != 'Manage'">
+    <Col span="8" v-if="roleType != 'Manage'">
     	<span>
     		发布渠道： <span style="font-weight:700">人民日报中央厨房</span>
     	</span>
     </Col>
-    <Col :span="num" v-if="roleType != 'Manage' ? num='12' : num='24'">
+    <Col :span="num" v-if="roleType != 'Manage' ? num='16' : num='24'">
     <Radio-group style="float:right" v-model="status" @on-change="contentTypeList">
       <Radio label="" style="margin-right:30px;">全部文章</Radio>
       <Radio label="PendingAudit" style="margin-right:30px;">审核中</Radio>
       <Radio label="Publish" style="margin-right:30px;">已发表</Radio>
       <Radio label="Draft" style="margin-right:30px;">草稿</Radio>
-      <Radio label="Offline">已撤回</Radio>
+      <Radio label="Offline" style="margin-right:30px;">已撤回</Radio>
       <Radio label="NotPass">未通过</Radio>
     </Radio-group>
     </Col>

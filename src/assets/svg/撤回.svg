@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="25px" viewBox="0 0 22 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46 (44423) - http://www.bohemiancoding.com/sketch -->
+    <title>撤回</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="运营内容管理--已发表" transform="translate(-415.000000, -287.000000)" stroke="#F95759" stroke-width="1.5" fill-rule="nonzero">
+            <g id="直播头内容" transform="translate(397.000000, 174.000000)">
+                <g id="搜索" transform="translate(2.000000, 0.000000)">
+                    <g id="按钮" transform="translate(0.000000, 105.000000)">
+                        <g id="撤回" transform="translate(17.000000, 9.000000)">
+                            <path d="M8.20983193,4.64116941 L8.20983193,0.991112305 L0.219751421,8.12439462 L8.2097811,15.202097 L8.2097811,10.9130544 C10.628372,10.9130544 16.7882733,10.962101 16.7882733,16.796846 C16.7882733,19.8519031 14.4369134,22.4014035 11.3083562,22.9911123 C16.3326468,22.3637674 20.2197514,18.4369147 20.2197514,13.635736 C20.2198022,4.71754581 9.87551613,4.64116941 8.20983193,4.64116941 Z" id="Shape"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
