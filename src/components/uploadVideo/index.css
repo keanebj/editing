@@ -116,6 +116,16 @@
     padding-bottom:4px;
     overflow: hidden;
 }
+#resource-manage .video-item>span{
+	width: calc(100% - 30px);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+#resource-manage .video-item label{
+	width: 15px;
+	margin-left: 15px;
+}
 #video-progress .ivu-progress-text{
     position: absolute;
     left:50%;
