@@ -76,6 +76,7 @@ export default {
         let linkvideoHtml=this.$refs.linkVideoHtml.innerHTML;
         this.$emit("insertVideoEditor",linkvideoHtml);
         this.uploadVideo=false;
+        this.videoLink='';
       },
       addLocalVideo(){
         let $ = qdVideo.get('$'); 

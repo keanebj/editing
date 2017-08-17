@@ -146,18 +146,18 @@ export default {
         this.videoId = data.material.id;
         this.hasImg = false;
         this.uploading = true;
-        this.initUpload('picks', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1,null, null)
+        
       }, (err) => {
         this.$Notice.error({title:error.data.message,desc: false});
       })
     }
-//  console.log(this.vievShow)
+    this.initUpload('picks', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1,null, null)
+    this.initUpload('pick', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1,null, null)
     if (this.vievShow) {
     	this.uploading = true;
-      this.initUpload('pick', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1,null, null)
+      
     }
-    
-  },
+  }, 
   created() {
     if (this.material.code == 2) {
       qbVideo.uploader.startUpload();
@@ -371,11 +371,8 @@ export default {
 						}else{
 							qbVideo.uploader.deleteFile(this.material.id)
 						}
-//          qbVideo.uploader.deleteFile(this.material.id);
             this.material.code = 0;
             this.vievShow = true;
-//          console.log(this.material.id)
-//          console.log(response)
           }, () => {
           	this.vievShow = true;
             this.$Notice.error({
