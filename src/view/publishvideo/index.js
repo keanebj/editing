@@ -241,7 +241,7 @@ export default {
         this.videoid='';
         this.ishideone=true;
       }
-      //this.ishideone=true;
+        this.ishideone=true;
     },
     reuploadvideo(){
       this.ishideone=false;
@@ -264,6 +264,30 @@ export default {
           if (response.data.operatortype == "Edit") {      
 	          this.previewCon[0].author = data.author;
           }
+          
+//        setTimeout(function (){
+//        	let $=qbVideo.get("$");
+//        	let count=$(".video_container").size();
+//        	if(count > 0){
+//		        for(var i=0;i<count;i++){
+//		            let serverfileid=$(".video_container").eq(i).html('').attr('serverfileid');
+//		            console.log(serverfileid)
+//		            if (serverfileid != undefined){
+//		            	var option = {
+//		                "auto_play": "0",
+//		                "file_id": serverfileid,
+//		                "app_id": "1252018592",
+//		                "width": 640,
+//		                "height": 480
+//		            };
+//		           		new qcVideo.Player("id_video_container_"+option.file_id,option); 
+//		            }
+//		            
+//		        }
+//		           
+//		      }   
+//        },500)
+          
         }, (error) => {
           this.$Notice.error({
             title: error.data.message,
