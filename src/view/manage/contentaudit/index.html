@@ -15,7 +15,7 @@
     <Col span="12">
       <div v-if="status=='PendingAudit'">
         <Button type="primary"  shape="circle" icon="paper-airplane" @click="onHandle('Publish', 0)">通过</Button>
-        <Button type="ghost"  shape="circle" icon="close" class="btn-ghost-red" @click="onHandle('NotPass', 0)">不通过</Button>
+        <Button type="ghost"  shape="circle" icon="close" class="btn-ghost-red" @click="onHandle('NotPass', 0)" style="margin-left: 15px;">不通过</Button>
       </div>
       <div v-else-if="status=='Publish'">
         <Button type="ghost" size="large" shape="circle" icon="ios-undo-outline" class="btn-ghost-red" @click="onHandle('Offline', 0)">撤回</Button>
@@ -65,10 +65,10 @@
           <td>{{item.author}}</td>
           <td>{{item.addtime}}</td>
           <td>
-            <span v-if="item.status=='PendingAudit'" style="color:#289FDB"><label class="wait-check"> 待审核</label></span>
-            <span v-else-if="item.status=='Publish'" style="color:#5EB550"><label class="published"> 已发表</label></span>
-            <span v-else-if="item.status=='NotPass'" style="color:#F34A52"><label class="no-pass">未通过</label></span>
-            <span v-else-if="item.status=='Offline'" style="color:#FFA620"><label class="publish-back"> 已撤回</label></span>
+            <span v-if="item.status=='PendingAudit'" ><label class="wait-check" style="color:#289FDB"> 待审核</label></span>
+            <span v-else-if="item.status=='Publish'" ><label class="published" style="color:#5EB550"> 已发表</label></span>
+            <span v-else-if="item.status=='NotPass'" ><label class="no-pass" style="color:#F34A52">未通过</label></span>
+            <span v-else-if="item.status=='Offline'" ><label class="publish-back" style="color:#FFA620"> 已撤回</label></span>
           </td>
           <td style="font-size:18px;">
             <div v-if="item.status=='PendingAudit'">

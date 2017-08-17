@@ -84,7 +84,7 @@ export default {
   },
   methods: {
     /**
-     * 请求广告列表
+     * 请求内容审核列表
      */
     fetchCollection() {
       this.isLoading = true
@@ -100,6 +100,11 @@ export default {
         data
       }) => {
         if (data.status) {
+          for (let i = 0; i < data.contents.length; i++) {
+            if (data.contents[i].addtime) {
+              data.contents[i].addtime = data.contents[i].addtime.substring(0, 10);
+            }
+          }
           this.data = data.contents
           this.total = data.total
           this.checkIds = []
