@@ -1,0 +1,36 @@
+.wait-check {
+  background: url(../../../assets/svg/待审核.svg) left center no-repeat;
+  background-size: 14px 14px;
+  padding-left: 20px;
+  color: #2EA9DF;
+}
+
+.publish-back {
+  background: url(../../../assets/svg/审批_已撤回.svg) left center no-repeat;
+  background-size: 14px 14px;
+  padding-left: 20px;
+}
+
+.no-pass {
+  background: url(../../../assets/svg/未通过.svg) left center no-repeat;
+  background-size: 14px 14px;
+  padding-left: 20px;
+}
+
+.published {
+  background: url(../../../assets/svg/已发布.svg) left center no-repeat;
+  background-size: 14px 14px;
+  padding-left: 20px;
+}
+
+.icon-no-pass {
+  background: url(../../../assets/svg/不通过.svg) left center no-repeat;
+  background-size: 16px 16px;
+  padding-left: 20px;
+}
+
+.icon-publish {
+  background: url(../../../assets/svg/发布操作.svg) left center no-repeat;
+  background-size: 16px 16px;
+  padding-left: 20px;
+}

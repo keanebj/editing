@@ -1,11 +1,11 @@
 <section>
   <Row>
     <Col span="12"  class="manage_con_col">
-    <Button type="primary" size="large" shape="circle" class="btn-create" @click="createArticle">
+    <Button type="primary"  shape="circle" class="btn-create" @click="createArticle">
       <img src="../../../assets/operator/create.svg" class="icon-create"></img>
       新建
     </Button>
-    <Button type="ghost" size="large" shape="circle" class="btn-create" @click="uploadModal=true">
+    <Button type="ghost"  shape="circle" class="btn-create" @click="uploadModal=true">
       <img src="../../../assets/operator/import.svg" class="icon-create"></img>
       导入
     </Button>
@@ -55,9 +55,11 @@
     <Col :span="num" v-if="roleType != 'Manage' ? num='12' : num='24'">
     <Radio-group style="float:right" v-model="status" @on-change="contentTypeList">
       <Radio label="" style="margin-right:30px;">全部文章</Radio>
+      <Radio label="PendingAudit" style="margin-right:30px;">审核中</Radio>
       <Radio label="Publish" style="margin-right:30px;">已发表</Radio>
       <Radio label="Draft" style="margin-right:30px;">草稿</Radio>
       <Radio label="Offline">已撤回</Radio>
+      <Radio label="NotPass">未通过</Radio>
     </Radio-group>
     </Col>
   </Row>
@@ -79,7 +81,7 @@
       <tr :class="{hide:hidenofound}"><td style="border-bottom:none;font-size: 18px;color: #333;" colspan="6"><img src="../../../assets/error/not-found.svg" style="margin-top:80px;width: 30%;"/><br/><br/>没有搜索到相关内容</td></tr>
       <tr v-for="(item,index) in contentList" :index="item.ID" class="tr-hover">
         <th scope="row" width="15%" style="position: relative;padding: 0.75rem;">
-          <Icon v-if="item.topflag" type="flag" style="position:absolute;top:0px;left:0px;color:#F95759;font-size:20px;">top</Icon>
+          <Icon v-if="item.topflag" class="to-top"></Icon>
           <router-link :to="{path:'../article',query:{id:item.id}}" v-if="roleType == 'Edit'"><img height="60" :src="item.cover" class="content-logo"></router-link>
           <router-link :to="{path:'../notice',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'Notice'"><img height="60" :src="item.cover" class="content-logo"></router-link>
           <router-link :to="{path:'../article',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'College'"><img height="60" :src="item.cover" class="content-logo"></router-link>
@@ -96,13 +98,14 @@
           <div v-else-if="item.status == 'Publish'"><span class="publish-back">已发表</span></div>
           <div v-else-if="item.status == 'NotPass'"><span class="offline-back">未通过</span></div>
           <div v-else-if="item.status == 'Draft'"><span class="cao-gao">草稿</span></div>
+          <div v-else-if="item.status == 'Offline'"><span class="offline">已撤回</span></div>
         </td>
         <td v-if="roleType == 'Manage'" width="140">
           <span v-if="item.label == 'Notice' ">公告</span>
           <span v-else>中央厨房融媒体学院</span>
         </td>
         <td width="10%">
-          <router-link :to="{path:'../publish',query:{articleID:item.id}}" v-if="item.status != 'Publish'">
+          <router-link :to="{path:'../publish',query:{articleID:item.id}}" v-if="item.status != 'Publish' && item.status != 'PendingAudit'">
             <img src="../../../assets/operator/edit.svg" class="icon-edit">
           </router-link>
           <img src="../../../assets/operator/edit-disabled.svg" class="icon-edit" v-else>

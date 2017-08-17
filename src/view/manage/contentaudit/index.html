@@ -14,8 +14,8 @@
   <Row style="padding-top: 30px;">
     <Col span="12">
       <div v-if="status=='PendingAudit'">
-        <Button type="primary" size="large" shape="circle" icon="paper-airplane" @click="onHandle('Publish', 0)">通过</Button>
-        <Button type="ghost" size="large" shape="circle" icon="close" class="btn-ghost-red" @click="onHandle('NotPass', 0)">不通过</Button>
+        <Button type="primary"  shape="circle" icon="paper-airplane" @click="onHandle('Publish', 0)">通过</Button>
+        <Button type="ghost"  shape="circle" icon="close" class="btn-ghost-red" @click="onHandle('NotPass', 0)">不通过</Button>
       </div>
       <div v-else-if="status=='Publish'">
         <Button type="ghost" size="large" shape="circle" icon="ios-undo-outline" class="btn-ghost-red" @click="onHandle('Offline', 0)">撤回</Button>
@@ -26,7 +26,7 @@
     </Col>
     <Col span="12">
     <Radio-group v-model="status" style="float:right;padding-top:8px" @on-change="handleChangeStatus">
-      <Radio v-for="(statusItem,statusValue) in statusMaps" key="statusValue" :label="statusValue">{{statusItem}}</Radio>
+      <Radio v-for="(statusItem,statusValue) in statusMaps" key="statusValue" :label="statusValue" style="margin-right: 30px;">{{statusItem}}</Radio>
     </Radio-group>
     </Col>
   </Row>
@@ -41,9 +41,9 @@
               @click.prevent.native="handleCheckAll">全选</Checkbox>
           </th>
           <th style="width:100px">标题</th>
-          <th></th>
-          <th>作者</th>
-          <th>时间</th>
+          <th style="width:300px"></th>
+          <th style="width:120px">作者</th>
+          <th style="width:170px">时间</th>
           <th>状态</th>
           <th>操作</th>
         </tr>
@@ -57,29 +57,29 @@
             <a :href="'/article?id='+item.id" target="_blank"><img :src="item.cover" alt="" width="100"></a>
           </td>
           <td style="text-align:left">
-            <a :href="'/article?id='+item.id" target="_blank">{{item.title}}
-              <br/>
-              <span style="color: #aaa">工作室：{{item.studioname}}</span>
+            <a :href="'/article?id='+item.id" target="_blank" style="color:#333333">{{item.title}}
+              <br/><br/>
+              <span style="color: #999999">工作室：{{item.studioname}}</span>
             </a>
           </td>
           <td>{{item.author}}</td>
           <td>{{item.addtime}}</td>
           <td>
-            <span v-if="item.status=='PendingAudit'" style="color:#289FDB"><Icon type="ios-information"></Icon> 待审核</span>
-            <span v-else-if="item.status=='Publish'" style="color:#5EB550"><Icon type="checkmark-circled"></Icon> 已发表</span>
-            <span v-else-if="item.status=='NotPass'" style="color:#F34A52"><Icon type="ios-information"></Icon> 未通过</span>
-            <span v-else-if="item.status=='Offline'" style="color:#FFA620"><Icon type="ios-refresh"></Icon> 已撤回</span>
+            <span v-if="item.status=='PendingAudit'" style="color:#289FDB"><label class="wait-check"> 待审核</label></span>
+            <span v-else-if="item.status=='Publish'" style="color:#5EB550"><label class="published"> 已发表</label></span>
+            <span v-else-if="item.status=='NotPass'" style="color:#F34A52"><label class="no-pass">未通过</label></span>
+            <span v-else-if="item.status=='Offline'" style="color:#FFA620"><label class="publish-back"> 已撤回</label></span>
           </td>
           <td style="font-size:18px;">
             <div v-if="item.status=='PendingAudit'">
                 <Tooltip content="通过" placement="top">
-                  <a href="javascript:void(0)" @click="onHandle('Publish', item.id)" style="margin-right:10px;">
-                    <Icon type="ios-paperplane-outline"></Icon>
+                  <a href="javascript:void(0)" @click="onHandle('Publish', item.id)">  
+                    <span class="icon-publish"></span>
                   </a>
                 </Tooltip>
                 <Tooltip content="不通过" placement="top">
-                  <a href="javascript:void(0)" @click="onHandle('NotPass', item.id)">
-                    <Icon type="ios-close-outline"></Icon>
+                  <a href="javascript:void(0)" @click="onHandle('NotPass', item.id)">                   
+                    <span class="icon-no-pass"></span>
                   </a>
                 </Tooltip>
             </div>
@@ -101,7 +101,11 @@
         </tr>
       </tbody>
     </table>
-    <Page size="small" :page-size="pageSize" :current="pageIndex" :total="total" show-total @on-change="handleChangePage" style="float:right"></Page>
+    <div>
+      <div style="float:right;line-height:24px;">共{{pageCount}}页</div>
+      <Page size="small" :page-size="pageSize" :current="pageIndex" :total="total"  @on-change="handleChangePage" style="float:right"></Page>
+    </div>
+    
   </div>
   <div v-if="!isLoading && data.length<=0" style="text-align:center;margin-top:20px;color:#aaa">
     <div v-if="searchValue == ''">

@@ -16,10 +16,27 @@
   padding-left:20px;
    color:#E26161;
 }
+.offline{
+  background:url(../../../assets/svg/已撤回.svg) left center no-repeat ;
+  background-size: 14px 14px;
+  padding-left:20px;
+   color:#E26161;
+}
 .cao-gao{
   background:  url(../../../assets/svg/草稿.svg) left center no-repeat ;
   background-size: 14px 14px;
   padding-left:20px;
+}
+.to-top {
+  position: absolute;
+  top: 40px;
+  left: 0px;
+  color: #F95759;
+  font-size: 20px;
+  width: 4px;
+  background: rgb(249, 87, 89);
+  height: 20px;
+  
 }
 #title a{
   color: #495060;

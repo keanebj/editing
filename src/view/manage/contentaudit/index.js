@@ -46,15 +46,17 @@ var confirmMaps = {
     }
   }
 }
-import { isArray } from 'lodash'
+import {
+  isArray
+} from 'lodash'
 export default {
   name: 'ViewManageContentAudit',
   data() {
     return {
       data: [],
       total: 10,
-      pageSize: 10,//每页显示显示条数
-      pageIndex: 1,//当前页码
+      pageSize: 10, //每页显示显示条数
+      pageIndex: 1, //当前页码
       isLoading: true,
       studio: 0,
       status: 'PendingAudit',
@@ -70,6 +72,14 @@ export default {
     },
     checkAllIndeterminate() {
       return (this.data.length > this.checkIds.length && this.checkIds.length > 0) ? true : false
+    },
+    pageCount: function () {
+      let remainder = this.total % this.pageSize;
+      if (remainder) {
+        return Math.ceil(this.total / this.pageSize);
+      } else {
+        return Math.floor(this.total / this.pageSize);
+      }
     }
   },
   methods: {
@@ -82,11 +92,13 @@ export default {
         params: {
           pageindex: this.pageIndex - 1,
           pagesize: this.pageSize,
-          username: this.studio ? this.studio: '',
+          username: this.studio ? this.studio : '',
           status: this.status,
           value: this.searchValue
         }
-      }).then(({ data }) => {
+      }).then(({
+        data
+      }) => {
         if (data.status) {
           this.data = data.contents
           this.total = data.total
@@ -168,7 +180,9 @@ export default {
     requestPublish(ids) {
       this.$http.put('/api/studio/audit/' + ids.join(), {
         status: 'Publish'
-      }).then(({ data }) => {
+      }).then(({
+        data
+      }) => {
         if (data.status) {
           this.$Notice.success({
             title: '成功',
@@ -191,7 +205,9 @@ export default {
     requestNotPass(ids) {
       this.$http.put('/api/studio/audit/' + ids.join(), {
         status: 'NotPass'
-      }).then(({ data }) => {
+      }).then(({
+        data
+      }) => {
         if (data.status) {
           this.$Notice.success({
             title: '成功',
@@ -212,7 +228,9 @@ export default {
       })
     },
     requestOffline(ids) {
-      this.$http.put('/api/content/offline/' + ids.join()).then(({ data }) => {
+      this.$http.put('/api/content/offline/' + ids.join()).then(({
+        data
+      }) => {
         if (data.status) {
           this.$Notice.success({
             title: '成功',
@@ -233,7 +251,9 @@ export default {
       })
     },
     requestRemove(ids) {
-      this.$http.delete('/api/content/' + ids.join()).then(({ data }) => {
+      this.$http.delete('/api/content/' + ids.join()).then(({
+        data
+      }) => {
         if (data.status) {
           this.$Notice.success({
             title: '成功',
@@ -254,13 +274,17 @@ export default {
       })
     },
     requestStudio() {
-      this.$http.get('/api/studio', {params: {page: false}}).then(({ data }) => {
+      this.$http.get('/api/studio', {
+        params: {
+          page: false
+        }
+      }).then(({
+        data
+      }) => {
         if (data.status) {
           this.studios = data.studios
-        } else {
-        }
-      }, () => {
-      })
+        } else {}
+      }, () => {})
     }
   },
   created() {

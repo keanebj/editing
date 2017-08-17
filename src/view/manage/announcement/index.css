@@ -1,4 +1,4 @@
-.imagePlaceholder{
+.imagePlaceholder {
   width: 200px;
   height: 66px;
   background: #E7E7E7;
@@ -11,38 +11,82 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
-.imagePlaceholder .title{
+
+.imagePlaceholder .title {
   font-size: 16px;
   padding-top: 12px;
 }
-.imagePlaceholder .sub-title{
+
+.imagePlaceholder .sub-title {
   font-size: 12px;
 }
- .table thead th{
+
+.table thead th {
   font-size: 14px!important;
 }
-.add-ad-position{
+
+.add-ad-position {
   font-size: 14px;
 }
-.icon-size{
-    width: 18px;
+
+.icon-size {
+  width: 18px;
 }
-.tr-hover:hover{
-  background:#f5f5f5;
+
+.tr-hover:hover {
+  background: #f5f5f5;
 }
-.error-studio{
-    width: 65%;
-    /* margin: 0 auto; */
-    text-align: center;
-    margin-top: 60px;
-    /* text-align: left; */
-    margin-left: 120px;
+
+.error-studio {
+  width: 65%;
+  /* margin: 0 auto; */
+  text-align: center;
+  margin-top: 60px;
+  /* text-align: left; */
+  margin-left: 120px;
 }
-.error-studio img{
-    width: 30%;
+
+.error-studio img {
+  width: 30%;
 }
-.error-studio p{
-    margin-top: 30px;
-    font-size: 18px;
-    color:#333;
+
+.error-studio p {
+  margin-top: 30px;
+  font-size: 18px;
+  color: #333;
+}
+
+.to-top {
+  position: absolute;
+  top: 40px;
+  left: 0px;
+  color: #F95759;
+  font-size: 20px;
+  width: 4px;
+  background: rgb(249, 87, 89);
+  height: 20px;
+  
+}
+.draft-back{
+  background:  url(../../../assets/svg/草稿.svg) left center no-repeat ;
+  background-size: 14px 14px;
+  padding-left:20px;
+  color: #7566d6;
+}
+
+.offline-back {
+  background: url(../../../assets/svg/审批_已撤回.svg) left center no-repeat;
+  background-size: 14px 14px;
+  padding-left: 20px;
+  color:#FFA620;
+}
+
+.publish-back {
+  background: url(../../../assets/svg/已发布.svg) left center no-repeat;
+  background-size: 14px 14px;
+  padding-left: 20px;
+  color: #69BE5A;
+}
+.icon-create{
+  width: 16px;
 }
