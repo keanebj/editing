@@ -8,6 +8,7 @@ export default {
         tabName:'link',
         isHideLocal:true,
         id:'',
+        ishidelinkvideo:true,
         idHideStepOne:false,
         idHideStepTwo:true,
         idHideStepThree:true,
@@ -17,7 +18,7 @@ export default {
             uploadedSize:'',
             allSize:'',
             percent:0,
-            speed:'',
+            speed:'...',
             leftTime:'...',
             loadingMsg:'',
             videoId:''
@@ -34,6 +35,15 @@ export default {
   props:{
    
   },
+  watch:{
+    videoLink(val){
+        if(this.trim(val)){
+            this.ishidelinkvideo=false;
+        }else{
+            this.ishidelinkvideo=true;
+        }
+    }
+  },
   methods: {
       changeSelVideo(val){
         this.selVideoid=val;
@@ -49,7 +59,18 @@ export default {
         }
        this.tabName=name;
       },
+      trim(str){
+            return str.replace(/(^\s*)|(\s*$)/g, "");
+      },
       addLinkVideo(){
+        if(!this.trim(this.videoLink)){
+             this.$Notice.warning({
+                title:'请填写正确的外链地址',
+                desc:false
+             });
+            return;
+        }
+
          //调用父组件中的
         let linkvideoHtml=this.$refs.linkVideoHtml.innerHTML;
         this.$emit("insertVideoEditor",linkvideoHtml);
@@ -58,7 +79,7 @@ export default {
       addLocalVideo(){
         let $ = qdVideo.get('$'); 
         $("#videoPreview").find('embed').prop('width','640px');
-        $("#videoPreview").find('embed').prop('height','480px');
+        $("#videoPreview").find('embed').prop('height','360px');
         let videoHtml='<p style="text-align:center" class="video_container" serverfileid="'+this.video.videoId+'" id="id_video_container_'+this.video.videoId+'">'+this.$refs.videoPreview.innerHTML+'</p>';
         this.$emit("insertVideoEditor",videoHtml,this.video.videoId,this.video.name);
         this.uploadVideo=false;
@@ -78,7 +99,7 @@ export default {
             new qcVideo.Player("videoPreview1", option);
             let $ = qdVideo.get('$'); 
             $("#videoPreview1").find('embed').prop('width','640px');
-            $("#videoPreview1").find('embed').prop('height','480px');
+            $("#videoPreview1").find('embed').prop('height','360px');
             let videoHtml='<p style="text-align:center;width:100%;margin-bottom:10px;" class="video_container" serverfileid="'+this.selVideoid+'" id="id_video_container_'+this.selVideoid+'">'+this.$refs.videoPreview1.innerHTML+'</p>';
             this.$emit("insertVideoEditor",videoHtml,this.selVideoid);
             this.uploadVideo=false;
