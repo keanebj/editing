@@ -18,10 +18,10 @@
         <Button type="ghost"  shape="circle" icon="close" class="btn-ghost-red" @click="onHandle('NotPass', 0)" style="margin-left: 15px;">不通过</Button>
       </div>
       <div v-else-if="status=='Publish'">
-        <Button type="ghost" size="large" shape="circle" icon="ios-undo-outline" class="btn-ghost-red" @click="onHandle('Offline', 0)">撤回</Button>
+        <Button type="ghost" shape="circle" icon="ios-undo-outline" class="btn-ghost-red" @click="onHandle('Offline', 0)">撤回</Button>
       </div>
       <div v-else-if="status=='NotPass'||status=='Offline'">
-        <Button type="primary" size="large" shape="circle" icon="ios-trash-outline" @click="onHandle('Remove', 0)">删除</Button>
+        <Button type="primary" shape="circle" icon="ios-trash-outline" @click="onHandle('Remove', 0)">删除</Button>
       </div>
     </Col>
     <Col span="12">
