@@ -24,7 +24,8 @@ export default {
         },
         //给一个默认id
         selVideoid:'111',
-        materialVideos:[]
+        materialVideos:[],
+        isHideSourceBtn:false
     }
   },
   components:{
@@ -371,6 +372,10 @@ export default {
          //获得素材列表
        this.$http.get('api/material',{params:{pageindex:1,pagesize:10}}).then((response) => {    
           let data = response.data.materials;
+          //判断是否有素材
+          if(data && data.length == 0){
+            this.isHideSourceBtn=true;
+          }
           //给数据值
          this.materialVideos=data;
         }, (error) => {

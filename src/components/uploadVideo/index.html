@@ -18,11 +18,12 @@
     </div>
      <!-- 素材管理-->
     <div v-else-if="tabName == 'resource'" style="height:370px;overflow:hidden;">
-        <ScrollBar :previewCon="materialVideos" @changeSelVideo="changeSelVideo" :selVideoid="selVideoid" scrollHeight="290px" setConHeight="300px"></ScrollBar>
+       <ScrollBar v-if="!isHideSourceBtn" :previewCon="materialVideos" @changeSelVideo="changeSelVideo" :selVideoid="selVideoid" scrollHeight="290px" setConHeight="300px"></ScrollBar>
+       <div v-else class="none-resource"><span>无素材内容</span></div>
        <div class="video-preview" id="videoPreview1" ref="videoPreview1" style="display: none;"></div>
          <div class="video-footer">
-            <Button type="primary" shape="circle" style="margin:0 20px;" @click="addSourceVideo">添加</Button>
-            <Button type="ghost" shape="circle" style="margin:0 20px;" @click="uploadVideo=false">取消</Button>
+            <Button type="primary" shape="circle" style="margin:0 20px;" @click="addSourceVideo" :class="{hide:isHideSourceBtn}">添加</Button>
+            <Button type="ghost" shape="circle" style="margin:0 20px;" @click="uploadVideo=false" :class="{hide:isHideSourceBtn}">取消</Button>
         </div>
     </div>
      <!-- 本地上传-->
