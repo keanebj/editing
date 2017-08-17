@@ -26,6 +26,10 @@
 .con_new img{
     width: 70%;
 }
+.con_new embed{
+	width: 28.5vw;
+	height: 16.5vw;
+}
 .orginTit{
 	margin-bottom: 15px;
 	font-size: 20px;

@@ -112,7 +112,8 @@ export default {
       isHideSubtitle:true,
       ishideone:false,
       videoid:'',
-      videoname:''
+      videoname:'',
+      isSuccess:false
   }
 },
   created(){
@@ -233,12 +234,14 @@ export default {
           new qcVideo.Player("videoTabPreview", option);
           this.videoid=id;
           this.videoname=name;
+          this.isSuccess=true;
       }else{
         //外链的视频
         this.$refs.videoTabPreview.innerHTML=html;
         this.videoid='';
+        this.ishideone=true;
       }
-      this.ishideone=true;
+      //this.ishideone=true;
     },
     reuploadvideo(){
       this.ishideone=false;

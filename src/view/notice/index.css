@@ -14,6 +14,14 @@
 .article{
     margin: 50px 0;
 }
+#notice_video .con_new embed{
+	width: 32vw;
+	height: 18vw;
+}
+#notice_video .con_new video{
+	width: 32vw;
+	height: 18vw;
+}
 .article_xinxi{
 	text-align: center;
 	margin: 10px 0 20px;
