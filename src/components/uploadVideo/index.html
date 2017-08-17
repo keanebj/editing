@@ -44,7 +44,8 @@
         </div>
          <div class="video-local-upload video-step-3" :class="{hide:idHideStepThree}">
            <div class="title">{{video.name}}</div><Button type="primary" shape="circle" class="re-upload-btn" @click="reUpload">重新上传</Button>
-           <div class="video-preview" id="videoPreview" ref="videoPreview" style="margin-top:0;margin-bottom:4px;"></div><br/>
+           <div class="video-preview" id="videoPreview" ref="videoPreview" style="margin-top:0;margin-bottom:4px;display: none;"></div><br/>
+           <div style="width:400px;height:200px;display: table-cell;vertical-align: middle"></div>
            <span class="main-color">视频比例16:9 成功上传的视频不能播放，是因为系统需要对上传的视频进行转码，可先完善其他信息</span>
             <div class="video-footer" style="margin-top:10px;">
             <Button type="primary" shape="circle" style="margin:0 20px;" @click="addLocalVideo">添加</Button>
