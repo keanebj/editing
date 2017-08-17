@@ -48,7 +48,7 @@ export default {
           "height": 480,
           "https": 1
       }; /*调用播放器进行播放*/
-      new qcVideo.Player("videoPlayer", option);
+      var x = new qcVideo.Player("videoPlayer", option);
     },
     cancel () {
 

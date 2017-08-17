@@ -231,9 +231,14 @@
 .video_info .video_info_tit{
   color: #333;
   float: left;
+  width: calc(100% - 50px);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .video_info .video_info_icon{
   float: right;
+  width: 45px;
 }
 .video_info .video_info_icon img{
   width: 14px;

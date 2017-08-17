@@ -40,6 +40,14 @@
 .error img{
     width: 80%;
 }
+.con_new embed{
+	width: 28.5vw;
+	height: 16.5vw;
+}
+.con_new video{
+	width: 28.5vw;
+	height: 16.5vw;
+}
 .error p{
     margin-top: 30px;
     color: #333;
