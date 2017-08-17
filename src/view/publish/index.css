@@ -39,7 +39,7 @@
 }
 
 .main-color {
-  color: #F95759;
+  color: #F95759 !important;
 }
 
 .ivu-form-item-label {
