@@ -28,7 +28,7 @@
         <Input icon="ios-search-strong" placeholder="请搜索标题、简介" style="width:250px;float:right;" @on-enter="getVideoList()" @on-click="getVideoList()" v-model="searchValue"></Input>
       </Col>
     </Row>
-    <Row :gutter="50" :class="{hide: this.videoList.length == 0}">
+    <Row :gutter="50" :class="{hide: tabViews}">
       <Col span="6" class="video_list" v-for="(videoItem, index) in videoList" :key="videoItem.id" :index="videoItem.id">
         <div class="video_list_in">
           <div class="video_list_item">
@@ -78,7 +78,7 @@
         </div>
       </Modal>
     </Row>
-    <Row :class="{hide: this.videoList.length > 0}" style="text-align:center;font-size:18px;padding-top:30px;">
+    <Row :class="{hide: !tabViews}" style="text-align:center;font-size:18px;padding-top:30px;">
       <img src="../../../assets/error/not-found.svg" alt="">
       <br /><br />
       没有搜索到相关内容

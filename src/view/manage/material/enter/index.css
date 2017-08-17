@@ -92,10 +92,10 @@
   color: #F95759;
 }
 .material_xx_con .ivu-progress-bg{
-  background: -webkit-linear-gradient(left, #FB8687 , #F95759); /* Safari 5.1 - 6.0 */
-  background: -o-linear-gradient(right, #FB8687, #F95759); /* Opera 11.1 - 12.0 */
-  background: -moz-linear-gradient(right, #FB8687, #F95759); /* Firefox 3.6 - 15 */
-  background: linear-gradient(to right, #FB8687 , #F95759); /* 标准的语法（必须放在最后） */
+  background: -webkit-linear-gradient(90deg,#F95759,deeppink); /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(90deg,#F95759,deeppink); /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(90deg,#F95759,deeppink); /* Firefox 3.6 - 15 */
+  background:linear-gradient(90deg,#F95759,deeppink); /* 标准的语法（必须放在最后） */
 }
 .material_xx_con h2{
   width: 17%;
