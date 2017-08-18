@@ -18,6 +18,9 @@
     max-width: 95%;
     height: auto;
 }
+.con_new img[src^="/static/ueditor/dialogs/attachment/fileTypeImages"]{
+	width:auto;
+}
 .con_new ol{
   list-style: decimal;
 }
