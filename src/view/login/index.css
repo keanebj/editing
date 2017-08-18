@@ -16,35 +16,52 @@
   left: 50px;
   top: 30px;
 }
+
 .sys-txt {
-   position: absolute;
+  position: absolute;
   width: 460px;
-  height: 128px;
   left: 0;
   right: 0;
   font-size: 40px;
   color: #fff;
   margin: 0 auto;
-  top: 30%;
+  top: 28%;
   text-align: center;
 }
-/* .sys-txt {
+.sys-txt-t3{
   position: absolute;
-  width: 460px;
-  height: 128px;
   left: 0;
   right: 0;
   margin: 0 auto;
-  top: 22%;
-} */
-.sys-logo-txt{
-    position: absolute;
-    font-family: "Microsoft Yahei";
-    top: 0;
-    font-size: 16PX;
-    right: 18%;
-    color: #F95759;
+  text-align: center;
 }
+.sys-txt-t3::before {
+  content: "";
+  position: absolute;
+  width: 50px;
+  border-top: 1px solid #fff;
+  left: -20px;
+  top: 30px;
+}
+
+.sys-txt-t3::after {
+  content: "";
+  position: absolute;
+  width: 50px;
+  border-top: 1px solid #fff;
+  top: 30px;
+  right: -20px;
+}
+
+.sys-logo-txt {
+  position: absolute;
+  font-family: "Microsoft Yahei";
+  top: 0;
+  font-size: 16PX;
+  right: 18%;
+  color: #F95759;
+}
+
 .sys-txt img {
   display: block;
   margin: 0 auto 28px auto;
@@ -69,22 +86,24 @@
 }
 
 .login-box {
-    width: 330px;
-    background: #FFF;
-    border-radius: 10px;
-    position: absolute;
-    right: 40px;
-    top: 50%;
-    margin-top: -170px;
+  width: 330px;
+  background: #FFF;
+  border-radius: 10px;
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  margin-top: -170px;
 }
 
 .login-box h2 {
   font-family: STHeitiSC-Medium;
   font-size: 26px;
-  color: #F95759;
+  color: #f95759;
   text-align: center;
   line-height: 2;
   letter-spacing: 5px;
+  font-weight: normal;
+  margin-top: 13px;
 }
 
 .login-form {
@@ -121,7 +140,8 @@
 .login-form .ivu-form-item .ivu-input:focus {
   box-shadow: none
 }
-.login-form .ivu-form-item-error-tip{
+
+.login-form .ivu-form-item-error-tip {
   padding-top: 10px;
 }
 

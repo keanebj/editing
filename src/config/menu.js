@@ -22,7 +22,7 @@ export default [{
       path: '/manage/content',
       authority: 'Edit'
     }, {
-      name: '工作室管理',
+      name: '融合号管理',
       path: '/manage/studio',
       match: ['manageStudioSingle'], // 如匹配路由name也可激活<Menu:activeName>
       authority: 'Manage'

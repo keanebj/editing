@@ -62,7 +62,7 @@ export default {
     onRemove(index) {
       this.$Modal.confirm({
         title: '确认删除',
-        content: '确认删除该工作室？',
+        content: '确认删除该融合号？',
         onOk: () => {
           this.requestRemove(index)          
         }

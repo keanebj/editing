@@ -48,7 +48,7 @@ export default {
       }, () => {
         this.$Notice.error({
           title: '错误',
-          desc: '工作室数请求错误'
+          desc: '融合号数请求错误'
         })
         this.isLoading = false
       })
@@ -67,14 +67,14 @@ export default {
         } else {
           this.$Notice.error({
             title: '错误',
-            desc: data.message || '工作室数请求错误'
+            desc: data.message || '融合号总数请求错误'
           })
         }
         this.isLoading = false
       }, () => {
         this.$Notice.error({
           title: '错误',
-          desc: '工作室数请求错误'
+          desc: '融合号总数请求错误'
         })
         this.isLoading = false
       })

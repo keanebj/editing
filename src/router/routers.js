@@ -57,7 +57,7 @@ export default [{
         name: 'manageStudio',
         path: '/manage/studio',
         meta: {
-          title: '工作室管理'
+          title: '融合号管理'
         },
         component: () => import('@/view/manage/studio/index.vue')
       },
@@ -65,7 +65,7 @@ export default [{
         name: 'manageStudioSingle',
         path: '/manage/studio/:id',
         meta: {
-          title: '工作室管理编辑'
+          title: '融合号管理编辑'
         },
         component: () => import('@/view/manage/studio/single/index.vue')
       },

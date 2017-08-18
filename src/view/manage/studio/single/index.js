@@ -79,7 +79,7 @@ export default {
         }],
         studioname: [{
           required: true,
-          message: '工作室不能为空',
+          message: '融合号不能为空',
           trigger: 'blur'
         }],
         url: [{
