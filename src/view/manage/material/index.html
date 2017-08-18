@@ -1,5 +1,5 @@
 <section>
-  <div class="material_no" :class="{hide: videoList.length != 0}">
+  <div class="material_no" :class="{hide: !tabView}">
     <div class="material_no_tit">
       视频管理
     </div>
@@ -16,7 +16,7 @@
       </Col>
     </Row>
   </div>
-  <div class="material_has" :class="{hide: videoList.length == 0}">
+  <div class="material_has" :class="{hide:  tabView}">
     <Row class="material_has_tit">
       <Col span="12">
         <Button type="primary" shape="circle" class="addvideo_btn" id="pickfiles111">
@@ -28,8 +28,8 @@
         <Input icon="ios-search-strong" placeholder="请搜索标题、简介" style="width:250px;float:right;" @on-enter="getVideoList()" @on-click="getVideoList()" v-model="searchValue"></Input>
       </Col>
     </Row>
-    <Row :gutter="50">
-      <Col span="6" class="video_list" v-for="(videoItem, index) in videoList" key="videoItem.videoid" :index="videoItem.id">
+    <Row :gutter="50" :class="{hide: tabViews}">
+      <Col span="6" class="video_list" v-for="(videoItem, index) in videoList" :key="videoItem.id" :index="videoItem.id">
         <div class="video_list_in">
           <div class="video_list_item">
             <img :src="videoItem.cover" alt="">
@@ -41,7 +41,7 @@
             </div>
             <div class="bottom">
               <span class="left">{{videoItem.addtime}}</span>
-              <span class="right">{{videoItem.duration}}</span>
+              <span class="right hide">{{videoItem.duration}}</span>
             </div>
           </div>
           <div class="video_info">
@@ -77,6 +77,11 @@
         <div slot="footer" v-show="hideFoot">
         </div>
       </Modal>
+    </Row>
+    <Row :class="{hide: !tabViews}" style="text-align:center;font-size:18px;padding-top:30px;">
+      <img src="../../../assets/error/not-found.svg" alt="">
+      <br /><br />
+      没有搜索到相关内容
     </Row>
     <div class="video_pager" v-show="this.pageSize < this.videoTotal">
       <Page :total="videoTotal" size="small" :page-size="pageSize" @on-change="changePage"></Page>

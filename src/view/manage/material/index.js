@@ -20,7 +20,9 @@ export default {
       playVideoModel: false,
       playVideoTitle: '',
       hideFoot: false,
-      playVideoUrl: ''
+      playVideoUrl: '',
+      tabView: false,
+      tabViews: false
     }
   },
   watch: {
@@ -30,7 +32,8 @@ export default {
 
   },
   mounted () {
-    this.getVideoList();
+	    this.initUpload('pickfiles11', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1,null, null);
+	    this.initUpload('pickfiles111', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1,null, null);
   },
   methods: {
     playVideo (title, videoid, videourl) {
@@ -45,13 +48,12 @@ export default {
           "height": 480,
           "https": 1
       }; /*调用播放器进行播放*/
-      new qcVideo.Player("videoPlayer", option);
+      var x = new qcVideo.Player("videoPlayer", option);
     },
     cancel () {
 
     },
     CopyUrl (ev){
-      console.log(this.$refs.thisInput)
       this.$refs.thisInput.select();
       document.execCommand("Copy");
     },
@@ -117,21 +119,23 @@ export default {
       }).then(({ data }) => {
         if (data.status == 1) {
           this.videoTotal = data.total;
-          console.log(this.pageSize)
           this.pageAll = Math.ceil(this.videoTotal/this.pageSize)
           this.videoList = data.materials;
           for (let i = 0; i<this.videoList.length; i++) {
             this.videoList[i].addtime = this.videoList[i].addtime.substring(0,10)
           }
           if (this.videoList.length == 0) {
-            this.initUpload('pickfiles11', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1,null, null);
+          	this.tabViews = true;
+          	if (this.searchValue == '') {
+				    	this.tabView = true;
+				    }
           }else{
-            this.initUpload('pickfiles111', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1,null, null);
+          	this.tabViews = false;
+          	this.tabView = false;
           }
         }else{
           this.errorProcess(data)
         }
-        console.log(data)
       }, (err) => {
         this.$Notice.error({
           title: '错误',
@@ -140,7 +144,6 @@ export default {
       })
     },
     editVideo (id) {
-      console.log(id)
       this.$store.videoId = id;
       this.$router.push({path: '/manage/material/enter', query: {id: id}});
     },
@@ -189,7 +192,6 @@ export default {
           util = qbVideo.get('util'),
           Code = qbVideo.get('Code'),
           Version = qbVideo.get('Version');
-          console.log($("#pickfiles111"))
       //您的secretKey
       var secret_key =  'UmsnV4Sgw65rRE0e6OUTGtK3viKky4yh';
       var secret_id = secretId;
@@ -247,7 +249,6 @@ export default {
                   if (args.code == Code.SHA_FAILED)
                       return alert('该浏览器无法计算SHA')
                   self.$store.dispatch('setMaterial',args);
-                  console.log(args)
                   if (args.code == 2) {
                     self.$router.push({path: '/manage/material/enter'})
                   }
@@ -258,7 +259,6 @@ export default {
                * @param info  { done: 完成数量 , fail: 失败数量 , sha: 计算SHA或者等待计算SHA中的数量 , wait: 等待上传数量 , uploading: 上传中的数量 }
                */
               onFileStatus: function (info) {
-                console.log(info)
                   // $('#count').text('各状态总数-->' + JSON.stringify(info));
 
               },
@@ -271,7 +271,10 @@ export default {
                   // var msg = 'message:' + args.message + (args.solution ? (';solution==' + args.solution) :
                   //     '');
                   // $('#error').html(msg);
-                  console.log(args)
+                This.$Notice.error({
+                  title: args.message+(args.solution ? (';solution==' + args.solution) :''),
+                  desc: false
+               	})  
               }
 
           }
@@ -279,6 +282,6 @@ export default {
     }
   },
   created() {
-
+		this.getVideoList();
   }
 }

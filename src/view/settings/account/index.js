@@ -325,7 +325,7 @@ export default {
   created() {
     if (this.userinfo.roleType == 'Edit') {
       this.roleType = 1;
-      console.log('工作室编辑')
+      console.log('融合号编辑')
       this.getStudioInfo();
     } else {
       this.roleType = 0;

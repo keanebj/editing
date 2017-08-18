@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="342px" height="256px" viewBox="0 0 342 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46 (44423) - http://www.bohemiancoding.com/sketch -->
+    <title>外链预览框icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0.48" y="0.6" width="341.04" height="254.8"></rect>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="341.04" height="254.8" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="内容发布审阅-视频外链" transform="translate(-790.000000, -558.000000)">
+            <g id="账号-copy-3" transform="translate(667.000000, 490.000000)">
+                <g id="外链预览框icon" transform="translate(123.000000, 68.000000)">
+                    <use id="Rectangle-3" stroke="#FACFCF" mask="url(#mask-2)" stroke-width="4" stroke-linejoin="round" stroke-dasharray="2,2,4" xlink:href="#path-1"></use>
+                    <polygon id="Triangle" fill="#F95759" points="213 108 148 153 148 63"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

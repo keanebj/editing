@@ -1,149 +1,23 @@
 <section>
    <MainHeader :logOut="logOut" :userName="userinfo.username"
   :goHome="goHome" :goAccount="goAccount" :studioLogo="userinfo.studioLogo"></MainHeader>
-
-<div>
-  <uploadVideo ref="uploadVideoEle" @insertVideoEditor="insertVideoEditor"></uploadVideo>
-</div>
   
-  <Form ref="formTop" :model="formTop" label-position="top" :rules="ruleValidate" style="padding:30px 85px 0;">
-    <Row :gutter="34">
-      <Col span="6">
-      <a class="go-back" href="javascript:void(0)" @click="goBack">
-      <Icon type="arrow-left-a"></Icon>
-      返回</a>
-      </Col>
-      </Col>
-    </Row>
-    <Row :gutter="34">
-      <Col span="17" class="m-t-20">
-      <Form-item label="" prop="title">
-        <Input id="titleContent" style="width:84%;" v-model="formTop.title" :maxlength="titleMaxCount" class="title-input" placeholder="请输入标题" @on-change="getTitleContent" @on-blur="removetrim"></Input>
-        <span class="limit-words">
-          <span>{{titleContentCount}}</span>/22
-        </span>
-        <Button type="ghost" shape="circle" class="add-sub-title" :disabled="!isHideSubtitle" @click="isHideSubtitle=!isHideSubtitle">添加副标题</Button>
-      </Form-item>
-      <Form-item label="" prop="subtitle" :class="{hide:isHideSubtitle}">
-        <Input id="subTitle" v-model="formTop.subtitle" :maxlength="subtitleMaxCount" class="title-input" placeholder="请输入副标题" @on-change="getSubTitleContent" @on-blur="removetrim"></Input>
-        <span class="sub-limit-words">
-          <span>{{subtitleContentCount}}</span>/60
-          <div class="delete-icon" @click="deleteSubTitle"></div>
-        </span>
-      </Form-item>
-
-      <textarea id="editor" style="width:100%;height:600px;margin-bottom: 6px;">{{formTop.content}}</textarea>
-      <span style="color:#F95759;" :class="{hide:hideTip}">正文不能为空</span>
-      </Col>
-      <Col span="7" class="m-t-20">
-      <Button type="ghost" id="publish-btn" class="publish-btn" shape="circle" icon="paper-airplane" @click="publish('formTop')" style="font-size: 14px;">发布</Button>
-
-      <div class="pull-right">
-        <div style="position: relative;display: inline-block;">
-         <button style="position: absolute;top:-20px;width:30px;" :class="{hide:hidesave}">保存</button>
-          <div class="btn-icon save-btn-icon m-r-10" @click="save('formTop',false)" @mouseover="hidesave =false" @mouseout="hidesave = true"></div>
-
-          <button style="position: absolute;top:-20px;width:30px;" :class="{hide:hideshare}">分享</button>
-          <div class="btn-icon share-btn-icon m-r-10" @click="share" @mouseover="hideshare =false" @mouseout="hideshare = true">
-
-          <Modal v-model="qCode" class="share_hide" id="sharePop" :closable="false" ref="shareHide">
-            <div style="text-align:center;">
-              <div id='code'></div>
-              <canvas id="canvas"></canvas>
-            </div>
-            <div>
-              <input type="text" v-model="codes" ref="copyInput" readonly /><span @click="CopyUrl($event)">复制</span>
-            </div>
-            <p>链接有效时间为<span>2小时</span><br />通过扫描二维码和复制文章链接<br />可以将文章转发给成员观看</p>
-          </Modal>
-        </div>
-          <button style="position: absolute;top:-20px;width:30px;" :class="{hide:hidepreview}">预览</button>
-        <div class="btn-icon preview-btn-icon " @click="showPreviewContent" @mouseover="hidepreview =false" @mouseout="hidepreview = true"></div>
-        </div>
-      </div>
-      <Modal v-model="previewContent" width="768" :class-name="tabView" class="previewContent">
-        <p slot="header" ref="scrollWarp">
-          <span :class="{ select: tabView == 'pc' }" @click="changeView('pc')">pc样式预览</span>
-          <span :class="{ select: tabView == 'mobile' }" @click="changeView('mobile')">移动端样式预览</span>
-        </p>
-
-        <ul class="set-max-height">
-          <div class="set-line"></div>
-          <ScrollBar @element="change" :elements="elements" :preview-con="previewCon[0]" ref="yulan"></ScrollBar>
-        </ul>
-        <p slot="footer">
-        </p>
-      </Modal>
-      <div style="margin:20px 0;font-size:14px;">发布设置</div>
-
-      <Form-item label="渠道" v-if="roleType == 'Edit'">
-        <Select v-model="formTop.channel" placeholder="请选择">
-          <Option v-for="(item,index) in publishChannels" :value="item" :key="index" >{{item}}</Option>
-        </Select>
-      </Form-item>
-      <Form-item label="作者（作者最多3个，空格键添加）" prop="authorArr">
-        <div style="position:relative">
-          <label for="authors" class="author-container" style="position:absolute;z-index:9;padding-left:7px;max-width:100%;overflow:hidden;height:32px;font-size:12px;" ref="authorContainer">
-            <span v-for="(item,index) in formTop.authorArr" style="margin-right:10px;">{{item}}<span @click.stop="closeAuthor(index)" :class="{hide:isHideClose}"><Icon type="close" class="main-color"></Icon></span></span>
-          </label>
-          <input id="authors" :maxlength="authorMaxCount" :placeholder="placeauthor" class="ivu-input" v-model="author" @keyup="checkAuthorCount" @blur="authorBlur" ref="authorInput" @keydown.delete="deleteAuthor"></input>
-        </div>
-        <span style="color:#F95759;" ref="authorTip" class="ivu-form-item-error-tip" :class="{hide:isHideAuthor}">作者不能重复</span>
-      </Form-item>
-      <Form-item label="关键词（关键词最多5个，空格键添加）" v-if="roleType == 'Edit'">
-        <div style="position:relative">
-          <label for="keywords" class="keyword-container" style="position:absolute;z-index:9;padding-left:7px;max-width:100%;overflow:hidden;height:32px;font-size:12px;" ref="keywordContainer">
-            <span v-for="(item,index) in formTop.keywordArr" style="margin-right:5px;">{{item}}<span @click.stop="closeKeyword(index)" :class="{hide:isHideKeyClose}"><Icon type="close" class="main-color"></Icon></span></span>
-          </label>
-          <input id="keywords" :maxlength="keyMaxCount" :placeholder="placekeyword" class="ivu-input" v-model="keyword" @keyup="checkKeywordCount" @blur="keywordBlur" ref="keywordInput" @keydown.delete="deleteKeyword"></input>
-        </div>
-        <span style="color:#F95759" class="ivu-form-item-error-tip" :class="{hide:isHideKeyword}">关键字不能重复</span>
-      </Form-item>
-      <Form-item label="标签" v-if="roleType == 'Manage'" prop="label">
-        <Select v-model="formTop.label" placeholder="请选择">
-        <Option v-for="(item,index) in publishLabels" :value="index" :key="index" >{{item}}</Option>
-      </Select>
-      </Form-item>
-      <Form-item label="封面" prop="cover">
-        <Input v-model="formTop.cover" type="text" class="hide"></Input>
-        <div class="cover-container" style="margin-bottom: 10px;"><img :src="formTop.cover" style="display: block;" width="100%" v-if="formTop.cover != ''" /></div>
-        <Button type="ghost" shape="circle" class="m-r-20 main-color pointer" @click="fromContent">正文选择</Button>
-        <cropper-upload :width="408" :height="272" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048">
-          <Button type="ghost" shape="circle" class="main-color pointer" @click="fromLocal">本地上传</Button>
-        </cropper-upload>
-        <span style="padding-left:10px;color:#F95759;">建议图片比例3：2</span>
-      </Form-item>
-      <Modal v-model="contentModal" width="600" id="contentPop" :closable="false">
-        <p slot="header">
-          <span>正文选择</span>
-          <a class="ivu-modal-close"><i @click="closeContentPop" class="ivu-icon ivu-icon-ios-close-empty"></i></a>
-        </p>
-        <div>
-          <Row :gutter="34">
-            <Col span="24">
-            <div style="margin:0 0 10px 0;color:#757575;font-size: 1.1em">请从正文使用过的照片选择封面</div>
-            </Col>
-          </Row>
-          <div class="content-cover-container">
-            <ScrollBar @iIndex="index" :iIndex="iIndex" :preview-con="previewCon[1]" :contentCoverSrc="contentCoverSrc" :tempi="tempi" ref="unSelect"></ScrollBar>
-          </div>
-        </div>
-        <p slot="footer">
-          <cropper-upload @fromContent="fromContent" ref="corup" :width="408" :height="272" :image="baseimg" :noSel="noSel" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048">
-            <Button type="primary" shape="circle" @click="clickCoverOk($event)">确定</Button>
-          </cropper-upload>
-        </p>
-      </Modal>
-
-      <Form-item label="摘要" prop="summary">
-        <Input v-model="formTop.summary" type="textarea" :autosize="{minRows: 5,maxRows: 5}" :maxlength="summaryMaxCount" @on-change="abstractWordCount"></Input>
-        <Button type="ghost" shape="circle" class="main-color pointer" style="margin-top: 10px;" @click="renderAbstract">生成摘要</Button>
-        <label style="position:absolute;right:20px;bottom:20%;color:#ccc"><span class="active-color">{{formTop.currentAbstractCount}}</span>/60</label>
-      </Form-item>
-
-      </Col>
-    </Row>
-  </Form>
+  <div>
+    <uploadVideo ref="uploadVideoEle" @insertVideoEditor="insertVideoEditor"></uploadVideo>
+  </div>
+<div style="position: relative;" id="tab">
+   <div style="position: absolute;top:20px;width:24px;height:24px;left:85px;z-index:9999;"><a href="javascript:void(0)" @click="goBack"><img width='100%' height='100%' src="../../assets/svg/返回红色.svg" /></a></div>   
+     <!--<span style="position: absolute;top:10px;left:250px;color:#F95759;font-size:12px;">Beta</span>-->
+    <Tabs type="card" v-model="tabname" >
+        <Tab-pane label="图文" name="text" :disabled="disabledText">
+            <Publishtext @showUploadPop="showUploadPop" @disabledTab="disabledTab" ref="publishtextele"></Publishtext>
+        </Tab-pane>
+        <!--<Tab-pane label="视频" name="video" :disabled="disabledVideo">
+           
+            <Publishvideo @showUploadPop="showUploadPop" @disabledTab="disabledTab" ref="publishvideoele"></Publishvideo>
+        </Tab-pane>-->
+    </Tabs>
+</div>
    <MainFooter></MainFooter>
 </section>
 

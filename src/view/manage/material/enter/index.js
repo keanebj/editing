@@ -43,7 +43,8 @@ export default {
         materialtype: '',
         duration: '',
         size: '',
-        videoid: ''
+        videoid: '',
+        uploading: true
       },
       ruleValidate: {
         title: [
@@ -54,7 +55,9 @@ export default {
         ]
       },
       materialSize: 0,
-      materialTime: ''
+      materialTime: '',
+      stopUploading: true,
+      uploadError: false
     }
   },
   computed: {
@@ -64,16 +67,24 @@ export default {
   },
   watch: {
     material:function () {
-      // this.formValidate.duration =
+    	if (this.material.code < 0 || this.material.code >6) {
+    		this.material.percent = 0;
+				this.uploadError = true;
+				this.vievShow = false;
+			}
       if (this.material.code >=2) {
         this.vievShow = false;
-        qbVideo.uploader.startUpload();
+        if (this.uploading && this.stopUploading) {
+        	qaVideo.uploader.startUpload();
+        }
       }else{
         this.vievShow = true;
       }
-      if (this.material.code == 1) {
+      if (this.material.speed == undefined) {
+      	this.material.speed = '1Kb/s'
+      }
+      if (this.material.code < 5) {
         this.material.percent = 0;
-
       }
       var size = parseInt(this.material.percent)*parseInt(this.material.size_text)/100
       this.materialSize = size.toFixed(2)+"MB";
@@ -92,20 +103,21 @@ export default {
         let allsec=parseInt((this.material.size-this.material.size*this.material.percent/100)/speed);
       var minu = parseInt(allsec/60) >= 10 ? parseInt(allsec/60) : '0'+parseInt(allsec/60);
       var sec = allsec%60 >= 10 ? allsec%60 : '0'+allsec%60;
-      this.materialTime = minu + ':' + sec;
+      if (this.material.speed == '1Kb/s') {
+      	this.materialTime = '...'
+      }else{
+      	this.materialTime = minu + ':' + sec
+      }
       if (this.material.code == 6) {
-        console.log(this.material)
         this.formValidate.videoname = this.material.name;//视频名字
         // this.formValidate.videourl = '#'//视频地址
         this.formValidate.materialtype = this.formValidate.select;//视频类型
-        console.log(this.formValidate.select)
         this.formValidate.duration = "0";// 视频时长
         this.formValidate.size = this.material.size_text;//视频大小
         this.formValidate.videoid = this.material.serverFileId;//视频id
         this.$http.get('api/video/upload/' + this.formValidate.videoid).then(({data}) => {
           if (data.status == 1) {
             this.formValidate.videourl = data.info.basicinfo.sourceVideoUrl;
-            console.log(this.formValidate)
           }else{
             this.errorProcess(data)
           }
@@ -113,39 +125,43 @@ export default {
           this.$Notice.error({title:error.data.message,desc: false});
         })
         this.material.percent = '100';
-        this.initUpload('picks', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1,null, null)
       }
     }
   },
   mounted() {
     if (this.$route.query.id) {
       this.$http.get('/api/material/' + this.$route.query.id).then(({data}) => {
-        console.log(data)
         this.vievShow = false;
         this.material.code = 6;
         this.material.percent = 100;
         this.material.name = data.material.videoname;
         this.formValidate = data.material
-        // this.formValidate.title = data.material.title;
         this.zhaiyao = data.material.summary;
-        // this.formValidate.cover = data.material.cover;
         this.select = data.material.materialtype;
-        this.labelArr = data.material.keyword.split(" ");
+        if (data.material.keyword == '') {
+        	this.labelArr = []; 
+        }else{
+        	this.labelArr = data.material.keyword.split(" ");
+        }
         this.videoId = data.material.id;
         this.hasImg = false;
-        this.initUpload('picks', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1,null, null)
+        this.uploading = true;
+        
       }, (err) => {
         this.$Notice.error({title:error.data.message,desc: false});
       })
     }
-    console.log(this.vievShow)
+    this.initUpload('picks', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1,null, null)
+    this.initUpload('pick', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1,null, null)
     if (this.vievShow) {
-      this.initUpload('pick', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1,null, null)
+    	this.uploading = true;
+      
     }
-  },
+  }, 
   created() {
     if (this.material.code == 2) {
       qbVideo.uploader.startUpload();
+      this.uploading = false;
       this.vievShow = false;
     }
     this.$http.get('/api/material/type').then(({data}) => {
@@ -156,9 +172,9 @@ export default {
     })
     if (this.material.code == 2) {
       qbVideo.uploader.startUpload();
+      this.uploading = false;
       this.vievShow = false;
     }
-    // qbVideo.uploader.startUpload();
   },
   updated () {
     let keypadleft=this.$refs.keywordContainer.clientWidth;
@@ -333,27 +349,68 @@ export default {
       }
     },
     cancaleUpload () {
-      qbVideo.uploader.stopUpload();
+    	this.stopUploading = false;
+			if (this.uploading) {
+				qaVideo.uploader.stopUpload();
+			}else{
+				qbVideo.uploader.stopUpload();
+			}
+      this.cancaleUploadInfo();
+    },
+    cancaleUploadInfo () {
       this.$Modal.confirm({
         title: '确认取消上传',
         content: '<p>现在上传的视频将被删除，确定取消上传</p>',
         onOk: () => {
           // Log.debug('delete', this.material.id);
-          qbVideo.uploader.deleteFile(this.material.id);
-          console.log(this.material)
+          // qbVideo.uploader.deleteFile(this.material.id);
+          // console.log(this.material)
+          this.$http.delete('/api/video/upload/'+ this.material.id).then((response) => {
+          	if (this.uploading) {
+							qaVideo.uploader.deleteFile(this.material.id)
+						}else{
+							qbVideo.uploader.deleteFile(this.material.id)
+						}
+            this.material.code = 0;
+            this.vievShow = true;
+          }, () => {
+          	this.vievShow = true;
+            this.$Notice.error({
+              title: '错误',
+              desc: '重新上传错误'
+            })
+          })
         },
         onCancel: () => {
-          qbVideo.uploader.reUpload();
+        	if (this.uploading) {
+        		qaVideo.uploader.reUpload();
+        	}else{
+        		qbVideo.uploader.reUpload();
+        	}
         }
       });
     },
     reUpload () {
-
+//			this.$http.delete('/api/video/upload/'+ this.material.id).then((response) => {
+//    	if (this.uploading) {
+//						qaVideo.uploader.deleteFile(this.material.id)
+//					}else{
+//						qbVideo.uploader.deleteFile(this.material.id)
+//					}
+//      this.material.code = 0;
+//      this.vievShow = true;
+//    }, () => {
+//    	this.vievShow = true;
+//      this.$Notice.error({
+//        title: '错误',
+//        desc: '重新上传错误'
+//      })
+//    })
     },
     initUpload (upBtnId, secretId, isTranscode, isWatermark, transcodeNotifyUrl, classId) {
-      var $ = qbVideo.get('$');
-      var Version = qbVideo.get('Version');
-      if (!qbVideo.uploader.supportBrowser()) {
+      var $ = qaVideo.get('$');
+      var Version = qaVideo.get('Version');
+      if (!qaVideo.uploader.supportBrowser()) {
           if (Version.IS_MOBILE) {
               alert('当前浏览器不支持上传，请升级系统版本或者下载最新的chrome浏览器');
           } else {
@@ -367,19 +424,19 @@ export default {
     accountDone(upBtnId, secretId, isTranscode, isWatermark, transcodeNotifyUrl, classId) {
 //				alert(upBtnId)
           var self = this;
-      var $ = qbVideo.get('$'),
-          ErrorCode = qbVideo.get('ErrorCode'),
-          Log = qbVideo.get('Log'),
-          JSON = qbVideo.get('JSON'),
-          util = qbVideo.get('util'),
-          Code = qbVideo.get('Code'),
-          Version = qbVideo.get('Version');
+      var $ = qaVideo.get('$'),
+          ErrorCode = qaVideo.get('ErrorCode'),
+          Log = qaVideo.get('Log'),
+          JSON = qaVideo.get('JSON'),
+          util = qaVideo.get('util'),
+          Code = qaVideo.get('Code'),
+          Version = qaVideo.get('Version');
 
-          console.log($('#picks'))
+//        console.log($('#picks'))
       //您的secretKey
       var secret_key =  'UmsnV4Sgw65rRE0e6OUTGtK3viKky4yh';
       var secret_id = secretId;
-      qbVideo.uploader.init(
+      qaVideo.uploader.init(
           //1: 上传基础条件
           {
               web_upload_url: location.protocol + '//vod2.qcloud.com/v3/index.php',
@@ -433,7 +490,7 @@ export default {
                   if (args.code == Code.SHA_FAILED)
                       return alert('该浏览器无法计算SHA')
                   self.$store.dispatch('setMaterial',args);
-                  console.log(self.material)
+//                console.log(self.material)
               },
 
               /**
@@ -453,7 +510,11 @@ export default {
                   // var msg = 'message:' + args.message + (args.solution ? (';solution==' + args.solution) :
                   //     '');
                   // $('#error').html(msg);
-                  console.log(args)
+//                console.log(args)
+								This.$Notice.error({
+                  title: args.message+(args.solution ? (';solution==' + args.solution) :''),
+                  desc: false
+               	})   
               }
           }
       );

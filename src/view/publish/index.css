@@ -39,7 +39,7 @@
 }
 
 .main-color {
-  color: #F95759;
+  color: #F95759 !important;
 }
 
 .ivu-form-item-label {
@@ -417,6 +417,46 @@
   color: #F95759;
 }
 
+.layout-footer{
+  text-align: center;
+  padding: 10px 0 0px;
+}
+.layout-footer-top{
+  font-size: 16px;
+  color: #999;
+  padding: 10px 0 30px;
+}
+.layout-footer-top .item{
+  display: inline-block;
+  margin: 0 10px;
+}
+.layout-footer-top img {
+  height: 20px;
+  position: relative;
+  bottom: -3px
+}
+.layout-footer-bottom {
+  background: #F3F3F3;
+  color: #9ea7b4;
+  line-height: 50px;
+  height: 50px;
+}
+#tab  .ivu-tabs-bar{
+  margin:16px 85px 0 140px;
+}
+
+#tab .ivu-tabs.ivu-tabs-card > .ivu-tabs-bar .ivu-tabs-tab{
+  margin-right:0;
+  border:none;
+  background:none;
+  transition: none;
+}
+#tab .ivu-tabs.ivu-tabs-card > .ivu-tabs-bar .ivu-tabs-tab-active{
+  border-left:1px solid #F95759;
+  border-top:1px solid #F95759;
+  border-right:1px solid #F95759;
+  border-bottom:1px solid #fff;
+}
 
 /*滚动条*/
 
@@ -527,10 +567,11 @@
 }
 .delete-icon{
   display: inline-block;
-  width:24px;
-  height:24px;
+  width:23px;
+  height:21px;
   background: url("../../assets/svg/红色删除.svg") center bottom no-repeat;
-  background-size: 90% 90%;
+  background-size: 70% 70%;
+  cursor: pointer;
 }
 
 .hide {

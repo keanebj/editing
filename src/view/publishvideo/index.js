@@ -1,14 +1,11 @@
 import QRCode from 'qrcode'
 import ScrollBar from '@/view/scroll/index.vue'
 import cropperUpload from '@/components/cropperUpload/index.vue'
-import '../../../static/ueditor/ueditor.config.js'
-import '../../../static/ueditor/ueditor.all.js'
-import '../../../static/ueditor/lang/zh-cn/zh-cn.js'
-import '../../../static/ueditor/ueditor.parse.min.js'
 import Vue from 'vue'
 import Cookies from 'js-cookie'
 import MainHeader from '@/components/mainHeader/index.vue'
 import MainFooter from '@/components/mainFooter/index.vue'
+import uploadVideo from '@/components/uploadVideo/index.vue'
 import {
   mapState
 } from 'vuex'
@@ -19,8 +16,7 @@ export default {
     ScrollBar,
     QRCode,
     cropperUpload,
-    MainHeader,
-    MainFooter
+    uploadVideo
   },
   data () {
     return {
@@ -32,7 +28,7 @@ export default {
       hideTip: true,
       qCode: false,
       titleContentCount: 0,
-      editor: null,
+      subtitleContentCount:0,
       tabView: 'pc',
       previewContent: false,
       localModal: false,
@@ -44,13 +40,14 @@ export default {
         College: '中央厨房融媒体学院'
       },
       titleMaxCount:22,
+      subtitleMaxCount:60,
       summaryMaxCount:60,
       authorMaxCount:5,
       keyMaxCount:5,
       author: '',
       keyword: '',
       formTop: {
-        contenttype:"Article",
+        contenttype:"Video",
         channel: '人民日报中央厨房',
         author: '',
         authorArr:[],
@@ -60,6 +57,7 @@ export default {
         summary:'',
         currentAbstractCount:0,
         title:'',
+        subtitle:'',
         content:'',
         label:''
       },
@@ -109,7 +107,12 @@ export default {
       placekeyword:'每个关键词最多5个字',
       isSkip:true,
       baseimg:'',
-      noSel:true
+      noSel:true,
+      uploadVideo:false,
+      isHideSubtitle:true,
+      ishideone:false,
+      videoid:'',
+      videoname:''
   }
 },
   created(){
@@ -128,88 +131,55 @@ export default {
     })
   },
   computed: {
-    ...mapState(['menu', 'userinfo', 'isActive'])
+    ...mapState(['menu', 'userinfo'])
 },
-  mounted(){   
-    this.editor=UE.getEditor("editor",{
-      //此处可以定制工具栏的功能，若不设置，则默认是全部的功能
-      UEDITOR_HOME_URL: `${this.$conf.root}/static/ueditor/`,
-      emotionLocalization: true,
-      scaleEnabled: true,
-      serverUrl:this.$conf.host+this.$conf.serverRoot+"ueditor"
-    })
+  mounted(){  
     let This=this;
-    this.editor.addListener("contentChange", function () {
-        if(!This.editor.getContent() && This.editor.body.innerHTML.indexOf('<video') == -1){
-            This.hideTip=false;
-        }else{
-          This.hideTip=true;
-        }
-    })
-
     //判断一下是编辑还是草稿通过文章的id
     if(this.$route.query.articleID){
       this.articleID=this.$route.query.articleID;
     }
-
-    //import
-    if(this.$route.query.type == 'import' && this.articleID == -1){
-      this.formTop.title = Cookies.get('title');
-      this.formTop.publishchannel = Cookies.get('channel');
-      if (Cookies.get('keyword')!= null && Cookies.get('keyword')!= 'null') {
-        this.formTop.keywordArr=Cookies.get('keyword').split(/\s+/g);
-      }
-      this.formTop.summary = Cookies.get('summary');
-
-      this.formTop.content = localStorage.getItem('content');
-      this.formTop.label = 'Notice';
-      if(Cookies.get('summary')){
-        this.formTop.currentAbstractCount = Math.ceil(this.gblen(Cookies.get('summary'),120,'summary')) >60?60:Math.ceil(this.gblen(Cookies.get('summary'),120,'summary'));
-      }
-
-      this.titleContentCount = Math.ceil(this.gblen(Cookies.get('title'),44,'title')) > 22 ? 22:Math.ceil(this.gblen(Cookies.get('title'),44,'title'));
-      this.editor.ready(function(){
-        This.editor.execCommand('inserthtml',This.formTop.content,true);
-      })
-    }
-
     //编辑：发出ajax请求
-    else if(this.articleID > 0) {
+     if(this.articleID > 0) {
       this.$http.get("/api/content/"+this.articleID).then((response) => {
-        let data = response.data.content;
+        if(response.data.content.contenttype == 'Video'){
+          let data = response.data.content;
+          //给数据值
+          this.formTop.title = data.title;
+          
+          this.formTop.publishchannel = data.channel;
+          this.formTop.authorArr=data.author.split(/\s+/g);
+          if (data.keyword != null) {
+            this.formTop.keywordArr=data.keyword.split(/\s+/g);
+          }
 
-        //给数据值
-        this.formTop.title = data.title;
-        this.formTop.publishchannel = data.channel;
-        this.formTop.authorArr=data.author.split(/\s+/g);
-        if (data.keyword != null) {
-        	this.formTop.keywordArr=data.keyword.split(/\s+/g);
-        }
+          this.formTop.cover = data.cover;
+          this.formTop.summary = data.summary;
+          this.formTop.content = data.content;
+          this.ishideone=true;
+          this.formTop.label = data.label;
+          if(data.summary){
+            this.formTop.currentAbstractCount = Math.ceil(this.gblen(data.summary,120,'summary')) >60?60:Math.ceil(this.gblen(data.summary,120,'summary'));
+          }
 
-        this.formTop.cover = data.cover;
-        this.formTop.summary = data.summary;
-        this.formTop.content = data.content;
-        this.formTop.label = data.label;
-        if(data.summary){
-          this.formTop.currentAbstractCount = Math.ceil(this.gblen(data.summary,120,'summary')) >60?60:Math.ceil(this.gblen(data.summary,120,'summary'));
-        }
-
-        this.titleContentCount = Math.ceil(this.gblen(data.title,44,'title')) > 22 ? 22:Math.ceil(this.gblen(data.title,44,'title'));
-        this.editor.ready(function(){
-          This.editor.execCommand('inserthtml',This.formTop.content,true);
-        })
+          this.titleContentCount = Math.ceil(this.gblen(data.title,44,'title')) > 22 ? 22:Math.ceil(this.gblen(data.title,44,'title'));
+          if(data.subtitle){
+            this.formTop.subtitle = data.subtitle;
+            this.subtitleContentCount = Math.ceil(this.gblen(data.subtitle,120,'subtitle')) > 60 ? 60:Math.ceil(this.gblen(data.subtitle,120,'subtitle'));
+            this.isHideSubtitle=false;
+          }
+        }else{
+          this.articleID=-1;
+          //禁用video
+          this.$emit('disabledTab','video');
+        }      
       }, (error) => {
         this.$Notice.error({
           title: error.data.message,
           desc: false
         })
       });
-    }else{
-      this.editor.ready(function(){
-        This.editor.execCommand('inserthtml',This.formTop.content,true);
-      })
     }
-
     //自动保存:一分钟自动保存一次
     this.timer=setInterval(function(){
       //存到数据库
@@ -230,20 +200,50 @@ export default {
     //清除定时器
     clearInterval(this.timer);
     clearInterval(this.temptimer);
-    let This=this;
-    setTimeout(function(){This.editor.destroy();},1000)
-
   },
   methods: {
     useqrcode(url){
-      var canvas = document.getElementById('canvas');
+      var canvas = document.getElementById('canvasvideo');
       QRCode.toCanvas(canvas, url, function (error) {
         if (error) console.error(error)
         console.log('success!');
       })
     },
+    deleteSubTitle(){
+      this.formTop.subtitle='';
+      this.subtitleContentCount=0;
+      this.isHideSubtitle=true;
+    },
+    showUploadPop(){
+      this.$emit('showUploadPop');
+    },
     goBack(){
       this.$router.go(-1);
+    },
+    insertVideoEditor(html,id,name){
+      if(id){
+        //腾讯云里面的视频
+          var option = {
+              "auto_play": "0",
+              "file_id": id,
+              "app_id": "1252018592",
+              "width": 400,
+              "height": 225,
+          };     
+          new qcVideo.Player("videoTabPreview", option);
+          this.videoid=id;
+          this.videoname=name;
+      }else{
+        //外链的视频
+        this.$refs.videoTabPreview.innerHTML=html;
+        this.videoid='';
+      }
+      this.ishideone=true;
+    },
+    reuploadvideo(){
+      this.ishideone=false;
+      this.$refs.videoTabPreview.innerHTML='';
+      this.videoid='';
     },
     showPreviewContent:function(){
       //获得编辑器中的内容:这里的预览需要写一个界面（待完善。。。）
@@ -253,7 +253,7 @@ export default {
           let data = response.data.content;
           //给数据值
           this.previewCon[0].title = data.title;
-	          this.previewCon[0].content = data.content;
+	          this.previewCon[0].content = data.content;          
 	          this.previewCon[0].time = data.addtime;
 	          this.previewCon[0].studioname = this.studioName;
 	          this.$refs.yulan.previewConauthor(data.author);
@@ -289,34 +289,7 @@ export default {
         })
       }
     },
-    fromContent:function(){
-      //从正文选择图片
-      //判断是否有图片？正则匹配到数组
-      let reg=/<img\b[^>]*src\s*=\s*"[^>"]*\.(?:png|jpg|jpeg)"[^>]*>/gi;     
-      let content=this.editor.getContent();
-      let imgArr=content.match(reg);
-      let srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i;
-    
-      //未匹配到图片
-      if(!imgArr){
-        this.$Notice.warning({
-          title: '正文还没有图片',
-          desc: false
-        })
-      }else{
-        this.previewCon[1]=[];
-        //匹配到了图片,把图片路径放到数组中
-        for(let k=0;k<imgArr.length;k++){
-            let src=imgArr[k].match(srcReg);
-            src=src[0].substring(4).replace(/\"/g,"");
-            if(src.indexOf('/static/ueditor/dialogs/attachment/fileTypeImages') == -1){
-              this.previewCon[1].push({src:src});
-            }  
-        }
-        this.contentModal=true;
-        this.$refs.unSelect.selectDom();
-      }
-    },
+   
     fromLocal:function(){
       this.localModal=true;
     },
@@ -330,64 +303,6 @@ export default {
       if (response.path) {
         this.formTop.cover = response.path;
       }
-    },
-    getBase64Image(img) {
-        var canvas = document.createElement("canvas");
-        canvas.width = img.width;
-        canvas.height = img.height;
-        var ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0, img.width, img.height);
-        var ext = img.src.substring(img.src.lastIndexOf(".")+1).toLowerCase();
-        var dataURL='';
-        try{
-          dataURL = canvas.toDataURL("image/"+ext);
-        }catch(error){
-
-        }
-        return dataURL;
-    },
-    clickCoverOk:function(e){
-      //选择的封面显示在文本域中
-      if(this.iIndex[0]>=0){
-        //转为base64
-          var image = new Image();
-          this.noSel=true;
-          this.$http.post('/api/image/base64',{url:this.iIndex[1]}).then((response)=>{
-             this.noSel=false;
-            this.baseimg = response.data.text;
-            if(!response.data.text){
-               image.src = this.iIndex[1];
-               this.baseimg=this.getBase64Image(image);
-            }
-            this.tempi=this.iIndex[0];
-            this.i=this.iIndex[0];
-            this.contentModal=false;
-            let This=this.$refs.corup;
-            setTimeout(function(){
-              This.handleClick(e,'','linkimg');
-            },500)
-
-          })
-      }else{
-        this.noSel=true;
-        //未选择封面，提示选择
-        this.$Notice.warning({
-          title: '请选择封面',
-          desc: false
-        })
-      }
-    },
-    closeContentPop:function(){
-      //关闭选择正文封面的弹框
-      this.$refs.unSelect.closeCover();
-      this.contentModal=false;
-    },
-    change (element) {
-      this.elements = element;
-
-    },
-    index (iIndex) {
-      this.iIndex = iIndex;
     },
     deleteAuthor:function(){
       if(!this.author){
@@ -565,31 +480,12 @@ abstractWordCount:function(event){
         desc: '文件 ' + file.name + ' 太大，不能超过 2M。'
       });
     },
+     change (element) {
+      this.elements = element;
+    },
     clickLocalCoverOk:function(){
       this.formTop.cover=this.localDefaultSrc;
       this.localModal=false;
-    },
-    renderAbstract:function(){
-      let content=this.editor.getContent();
-      let title=this.formTop.title;
-      if(!content && !title){
-        this.$Notice.warning({
-          title:"标题和正文为空,无法生成摘要",
-          desc: false
-        });
-      }else{
-        //interface://获得正文的摘要:需要发送请求给后台，参数：正文内容  返回：摘要内容
-          this.$http.post("/api/content/summary",{content: content,title:title}
-        ).then((response) => {
-          this.formTop.summary=response.data.summary.toString();
-          this.formTop.currentAbstractCount=Math.ceil(this.gblen(response.data.summary,120,'summary'))>60?60:Math.ceil(this.gblen(response.data.summary,120,'summary'));
-        },(error) => {
-            this.$Notice.error({
-              title:error.data.message,
-              desc: false
-            });
-        });
-      }
     },
     publish:function(){
       // 发布
@@ -619,11 +515,11 @@ abstractWordCount:function(event){
       }
     },
     save:function(name,hideTip){
-      this.formTop.content=this.editor.getContent();
-      if(!this.formTop.content && this.editor.body.innerHTML.indexOf('<video') >-1){
-        this.formTop.content=this.editor.body.innerHTML;
+      let videohtml=this.$refs.videoTabPreview.innerHTML;
+      if(this.videoid){
+        videohtml='<p style="text-align:center" class="video_container" serverfileid="'+this.videoid+'" id="id_video_container_'+this.videoid+'">'+this.$refs.videoTabPreview.innerHTML+'</p>';
       }
-
+      this.formTop.content=videohtml;
       this.formTop.author=this.formTop.authorArr.join(" ");
       this.formTop.keyword=this.formTop.keywordArr.join(" ");
       if(!this.formTop.author){
@@ -652,7 +548,7 @@ abstractWordCount:function(event){
                 //更新
                 this.$http.put("/api/content/"+this.articleID,this.formTop
                ).then((response) => {
-               		console.log(this.formTop)
+               
                		if (response.data.status == 1) {
                			this.$Notice.success({title:response.data.message,desc: false});
                		}else{
@@ -664,6 +560,7 @@ abstractWordCount:function(event){
                 });
               }else{
                 //新建
+                console.log(this.formTop);
                 this.$http.post('/api/content',this.formTop)
                 .then((response) => {
                     if (response.data.status == 1) {
@@ -701,7 +598,7 @@ abstractWordCount:function(event){
               {
                 scrollTop=document.body.scrollTop;
               }
-              this.$refs.shareHide.$el.children[1].children[0].style.top = (175 - scrollTop) + 'px';
+              this.$refs.shareHide.$el.children[1].children[0].style.top = (195 - scrollTop) + 'px';
 
               this.useqrcode(this.$conf.host+this.$conf.root+"share?id="+response.data.token);
               this.codes=this.$conf.host+this.$conf.root+"share?id="+response.data.token;
@@ -751,95 +648,28 @@ abstractWordCount:function(event){
       str = str.replace(/&#32;/g, " ");
       return str;
     },
-//  mouseScroll: function (ev) {
-//  	let cY = ev.clientY;
-//  	let onscroll = this.$refs.onscroll;
-//  	let setCon = this.$refs.setCon;
-//  	let scroll = this.$refs.scroll;
-//  	let scrollCon = this.$refs.scrollCon;
-//  	document.onmousemove = function (e) {
-//				let ch = cY - e.clientY;
-//				let Top = ch + onscroll.offsetTop;
-//				if (Top>=0) {
-//					Top = 0;
-//				}
-//				if(Top<= (setCon.clientHeight - onscroll.clientHeight)) {
-//					Top = setCon.clientHeight - onscroll.clientHeight
-//				}
-//				let scale = Top/(onscroll.clientHeight - setCon.clientHeight);
-//  		let scTop = scale*(scroll.clientHeight - scrollCon.clientHeight)
-//				onscroll.style.top = Top + 'px';
-//				scrollCon.style.top = -scTop + 'px';
-//  	}
-//  	document.onmouseup = function () {
-//  		document.onmousemove = null;
-//  	}
-//  },
-//  barScroll: function (ev) {
-//  	let cY = ev.clientY - this.$refs.scrollCon.offsetTop;
-//  	let onscroll = this.$refs.onscroll;
-//  	let setCon = this.$refs.setCon;
-//  	let scroll = this.$refs.scroll;
-//  	let scrollCon = this.$refs.scrollCon;
-//  	console.log(scrollCon.offsetTop)//10
-//  	document.onmousemove = function (e) {
-//				let Top = e.clientY - cY;
-////				let Top = ch + scrollCon.offsetTop;
-//				if (Top<=0) {
-//					Top = 0;
-//				}
-//				if(Top>= (scroll.clientHeight - scrollCon.clientHeight)) {
-//					Top = scroll.clientHeight - scrollCon.clientHeight
-//				}
-//				let scale = Top/(scroll.clientHeight - scrollCon.clientHeight);
-//  		let scTop = scale*(onscroll.clientHeight - setCon.clientHeight)
-//				scrollCon.style.top = Top + 'px';
-//				onscroll.style.top = -scTop + 'px';
-//  	}
-//  	document.onmouseup = function () {
-//  		document.onmousemove = null;
-//  	}
-//  }
-
-    //editor
     getTitleContent:function(){
       //需要转换为字符
       let count=this.gblen(this.formTop.title,44,'title');
       this.titleContentCount=Math.ceil(count)>22 ? 22:Math.ceil(count);
+    },
+     getSubTitleContent:function(){
+      //需要转换为字符
+      let count=this.gblen(this.formTop.subtitle,120,'subtitle');
+      this.subtitleContentCount=Math.ceil(count) > 60 ? 60:Math.ceil(count);
     },
     removetrim:function(){
       if(!this.formTop.title.Trim()){
         this.formTop.title='';
       }
     },
-    logOut(e){
-      this.$http.get('/api/studio/logout')
-        .then(res => {
-          if (res.data.status == 1) {
-            localStorage.removeItem("token")
-            this.$store.commit('set', {
-              token: ''
-            })
-            this.$Message.success('退出成功')
-          } else {
-            this.$Message.error(res.data.message)
-          }
-          this.$router.push('/login')
-        }, err => {
-          this.$Message.error(JSON.stringify(err))
-        })
-    },
-    goHome() {
-      this.$router.push('/')
-    },
-    goAccount() {
-      this.$router.push('/settings/account')
-    },
     //转为字符：中文1个 英文0.5个
     gblen:function(str,max,name){
       var len = 0;
       if(name == 'title'){
         this.titleMaxCount=22;
+      }else if(name == 'subtitle'){
+        this.subtitleMaxCount=60;
       }else if(name == 'summary'){
         this.summaryMaxCount=60;
       }else if(name == 'author'){
@@ -856,6 +686,12 @@ abstractWordCount:function(event){
               this.titleMaxCount+=0.5;
               if(this.titleMaxCount > max){
                 this.titleMaxCount=max;
+              }
+              break;
+            case 'subtitle':
+              this.subtitleMaxCount+=0.5;
+              if(this.subtitleMaxCount > max){
+                this.subtitleMaxCount=max;
               }
               break;
             case 'summary':

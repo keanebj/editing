@@ -16,8 +16,8 @@
           <Progress :percent=parseInt(material.percent) :stroke-width="20" status="wrong" hide-info></Progress>
           <span>{{ material.percent }}%</span>
         </div>
-         <Button :class="{hide:this.material.code != 5 }" type="ghost" shape="circle" style="color: #fa797a;background-color: transparent;border-color: #fa797a;" @click="cancaleUpload">取消上传</Button>
-        <Button :class="{hide:this.material.code != 6 }" type="ghost" shape="circle" style="color: #fa797a;background-color: transparent;border-color: #fa797a;" @click="reUpload" id="picks">重新上传</Button>
+         <Button :class="{hide:this.material.code != 5 }" type="ghost" shape="circle" style="color: #fa797a;background-color: transparent;border-color: #fa797a;position: relative;z-index: 1;" @click="cancaleUpload">取消上传</Button>
+        <Button @click="reUpload" id="picks" :class="{hide: this.material.code != 6 && this.uploadError == false }" type="ghost" shape="circle" style="color: #fa797a;background-color: transparent;border-color: #fa797a;">重新上传</Button>
       </div>
       <div class="material_xx_info" v-if="this.material.code == 5">
         <span>已上传：{{ materialSize }}/{{ material.size_text }}</span>
@@ -27,8 +27,11 @@
       <div v-else-if="this.material.code == 6"  class="material_xx_info">
         上传成功
       </div>
+      <div v-else-if="this.material.code > 6 || this.material.code < 0"  class="material_xx_info">
+      	上传失败/视频无效
+      </div>
     </Row>
-    <Row class="material_info">
+    <Row class="material_info" :gutter="20">
       <Col span="16">
         <Form label-position="left" :label-width="150" :model="formValidate"  :rules="ruleValidate">
           <Form-item label="标题" prop="title">
@@ -80,6 +83,10 @@
             </router-link>
           </Form-item>
         </Form>
+      </Col>
+      <Col span="8" style="color: #F95759;line-height: 30px;" v-if="this.material.code < 0 || this.material.code >6">
+      	<h4 style="font-size: 16px;font-weight: normal;margin-bottom: 20px;">视频上传格式说明 *</h4>
+      	<p>建议上传720p（1280x720）或更高分辨率的 视频，大小不超过2G <br /> 视频格式：建议上传MP4 和 HLS 文件。<br /> 支持格式： MOV，MP4 ，MP4V，M4V， MKV，AVI，FLV，F4V，3GP RM, RMVB， RA，RAM ,MPG，MPEG，MPE，VOB，DAT， WMV，WM，ASF，ASX</p>
       </Col>
     </Row>
   </div>

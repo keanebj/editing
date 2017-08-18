@@ -16,7 +16,7 @@
       </Form-item> 
 
         <div class="account">
-          <label>工作室名称</label>
+          <label>融合号名称</label>
           <label>{{studioName}}</label>
         </div>
         <div class="account">
@@ -34,6 +34,7 @@
           <Input v-model="formValidateM.tel" @on-change="allowSubmit" placeholder="请输入电话"></Input>
         </Form-item>
         <div class="account-btn">
+          <p class="changepwd-tips">如需修改密码，请发送邮件至 mp@hubpd.com ，邮件内容包括用户账号、旧密码、新密码，我们会尽快为您处理。</p>
           <Form-item>
             <Button type="primary" :disabled="disabledM" @click="handleSubmit('formValidateM')" :class="{'save':true,'disabled':disabledM,'margin-left-40':true}">保存</Button>
             <Button type="ghost" :disabled="disabledM" @click="handleReset('formValidateM')" :class="{'cancel':true,'disabled':disabledM,'margin-left-40':true}"

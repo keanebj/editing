@@ -8,11 +8,20 @@
 .con_new{    
     text-align: center;
 }
+.con_new img[src^="/static/ueditor/dialogs/attachment/fileTypeImages"]{
+	width:auto;
+}
 .con_new img{
     width: 70%;
 }
 .article{
     margin: 50px 0;
+}
+#notice_video .con_new embed{
+	max-width: 100%;
+}
+#notice_video .con_new video{
+	max-width: 100%;
 }
 .article_xinxi{
 	text-align: center;

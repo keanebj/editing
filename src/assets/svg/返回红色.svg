@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="42px" height="42px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46 (44423) - http://www.bohemiancoding.com/sketch -->
+    <title>返回(2)</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="返回栏" transform="translate(1.000000, -4.000000)" stroke-width="2" stroke="#F95759">
+            <g id="Group-2">
+                <g id="返回(2)" transform="translate(0.000000, 5.000000)">
+                    <path d="M20,0 C8.95466667,0 0,8.95466667 0,20 C0,31.0453333 8.95466667,40 20,40 C31.0453333,40 40,31.0453333 40,20 C40,8.95466667 31.0453333,0 20,0 Z" id="Shape" fill-rule="nonzero"></path>
+                    <path d="M23.5466667,27.0426667 C24.0666667,27.5626667 24.0666667,28.408 23.5466667,28.928 C23.2853333,29.1893333 22.944,29.3173333 22.6026667,29.3173333 C22.2613333,29.3173333 21.92,29.1866667 21.6586667,28.928 L13.68,20.944 C13.16,20.424 13.16,19.5786667 13.68,19.0586667 L21.712,11.024 C22.232,10.504 23.0773333,10.504 23.5973333,11.024 C24.1173333,11.544 24.1173333,12.3893333 23.5973333,12.9093333 L16.5093333,20.0026667 L23.5466667,27.0426667 Z" id="Path" fill="#F95759"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

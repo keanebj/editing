@@ -2,7 +2,7 @@ export default [{
     name: 'login',
     path: '/login',
     meta: {
-      title: '自媒体编辑系统-登录'
+      title: '登录-全国党媒融合号'
     },
     component: () => import('@/view/login/index.vue')
   },
@@ -10,7 +10,7 @@ export default [{
     name: 'publish',
     path: '/publish',
     meta: {
-      title: '发表'
+      title: '发表-全国党媒融合号'
     },
     component: () => import('@/view/publish/index.vue')
    },
@@ -18,14 +18,14 @@ export default [{
     name: 'main',
     path: '/',
     meta: {
-      title: '自媒体编辑系统'
+      title: '全国党媒融合号'
     },
     component: () => import('@/view/index.vue'),
     children: [{
         name: 'home',
         path: '',
         meta: {
-          title: '自媒体编辑系统'
+          title: '全国党媒融合号'
         },
         component: () => import('@/view/home/index.vue')
       },
@@ -33,7 +33,7 @@ export default [{
         name: 'manageContent',
         path: '/manage/content',
         meta: {
-          title: '内容管理'
+          title: '内容管理-全国党媒融合号'
         },
         component: () => import('@/view/manage/content/index.vue')
       },
@@ -41,7 +41,7 @@ export default [{
         name: 'manageAnnouncement',
         path: '/manage/announcement',
         meta: {
-          title: '公告管理'
+          title: '公告管理-全国党媒融合号'
         },
         component: () => import('@/view/manage/announcement/index.vue')
       },
@@ -49,7 +49,7 @@ export default [{
         name: 'manageContentaudit',
         path: '/manage/contentaudit',
         meta: {
-          title: '内容审核管理'
+          title: '内容审核管理-全国党媒融合号'
         },
         component: () => import('@/view/manage/contentaudit/index.vue')
       },
@@ -57,7 +57,7 @@ export default [{
         name: 'manageStudio',
         path: '/manage/studio',
         meta: {
-          title: '工作室管理'
+          title: '融合号管理-全国党媒融合号'
         },
         component: () => import('@/view/manage/studio/index.vue')
       },
@@ -65,7 +65,7 @@ export default [{
         name: 'manageStudioSingle',
         path: '/manage/studio/:id',
         meta: {
-          title: '工作室管理编辑'
+          title: '融合号管理编辑-全国党媒融合号'
         },
         component: () => import('@/view/manage/studio/single/index.vue')
       },
@@ -73,7 +73,7 @@ export default [{
         name: 'SourceMaterial',
         path: '/manage/material',
         meta: {
-          title: '素材管理'
+          title: '素材管理-全国党媒融合号'
         },
         component: () => import('@/view/manage/material/index.vue')
       },
@@ -81,7 +81,7 @@ export default [{
         name: 'SourceMaterialEnter',
         path: '/manage/material/enter',
         meta: {
-          title: '素材管理保存'
+          title: '素材管理保存-全国党媒融合号'
         },
         component: () => import('@/view/manage/material/enter/index.vue')
       },
@@ -89,7 +89,7 @@ export default [{
         name: 'manageAd',
         path: '/manage/ad',
         meta: {
-          title: '广告管理'
+          title: '广告管理-全国党媒融合号'
         },
         component: () => import('@/view/manage/ad/index.vue')
       },
@@ -97,7 +97,7 @@ export default [{
         name: 'settingsAccount',
         path: 'settings/account',
         meta: {
-          title: '账号信息'
+          title: '账号信息-全国党媒融合号'
         },
         component: () => import('@/view/settings/account/index.vue')
       },
@@ -105,7 +105,7 @@ export default [{
         name: 'notice',
         path: '/notice',
         meta: {
-          title: '公告',
+          title: '公告-全国党媒融合号',
         },
         component: () => import('@/view/notice/index.vue'),
       },
@@ -113,7 +113,7 @@ export default [{
         name: 'article',
         path: '/article',
         meta: {
-          title: '文章',
+          title: '文章-全国党媒融合号',
         },
         component: () => import('@/view/article/index.vue'),
       }
@@ -123,7 +123,7 @@ export default [{
     name: 'share',
     path: '/share',
     meta: {
-      title: '分享',
+      title: '分享-全国党媒融合号',
     },
     component: () => import('@/view/share/index.vue'),
   },

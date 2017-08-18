@@ -25,7 +25,7 @@ export default {
     }
   },
   created () {
-  	this.$store.articleBack = true;
+  	sessionStorage.setItem('articleDetail', 'article');
     this.roleType=this.$store.state.userinfo.roleType;
     this.token=this.$store.state.token;
     this.headToken.token=this.$store.state.token;
@@ -203,11 +203,8 @@ export default {
       this.hidenofound=true;
       this.hidenodata=true;
       this.$http.get("/api/content",{
-        params:{status:this.status,value:this.searchValue,pagesize:this.pageSize,pageindex:this.pageIndex-1},
-        headers:{
-          token:this.token
-        }
-      }).then((response) => {
+        params:{status:this.status,value:this.searchValue,pagesize:this.pageSize,pageindex:this.pageIndex-1}})
+        .then((response) => {
         //如果没数据
         if(type =='search' && response.data.total == 0){
           this.hidenofound=false;

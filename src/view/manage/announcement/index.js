@@ -25,7 +25,7 @@ export default {
     }
   },
   created () {
-  	this.$store.articleBack = true;
+  	sessionStorage.setItem('articleDetail', 'article');
     this.roleType=this.$store.state.userinfo.roleType;
     this.token=this.$store.state.token;
     this.headToken.token=this.$store.state.token;
@@ -208,6 +208,7 @@ export default {
           token:this.token
         }
       }).then((response) => {
+        console.log(response);
         //如果没数据
         if(type =='search' && response.data.total == 0){
           this.hidenofound=false;

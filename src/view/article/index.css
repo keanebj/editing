@@ -26,6 +26,15 @@
 .con_new img{
     width: 70%;
 }
+.con_new img[src^="/static/ueditor/dialogs/attachment/fileTypeImages"]{
+	width:auto;
+}
+.con_new embed{
+	max-width: 100%;
+}
+.con_new video{
+	max-width: 100%;
+}
 .orginTit{
 	margin-bottom: 15px;
 	font-size: 20px;

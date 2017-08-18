@@ -21,9 +21,6 @@ var friendLinks = [{
   name: '中华网',
   url: 'http://www.china.com/'
 }, {
-  name: '中国青年网',
-  url: 'http://www.baidu.com'
-}, {
   name: '和讯网',
   url: 'http://www.hexun.com/'
 }, {

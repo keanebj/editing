@@ -2,17 +2,22 @@ import { mapState } from 'vuex'
 export default {
   name: 'Notice',
   created () {
-  	this.articleBack = this.$store.articleBack;
   },
   mounted(){
     var span5 =  document.querySelector(".ivu-col-span-5")
     var span19 =  document.querySelector(".ivu-col-span-19")
     span5.style.display = 'none';
     span19.className = "layout-content-warp ivu-col ivu-col-span-24";
-    
-        this.noticeID=this.$route.query.id;
+    this.noticeID=this.$route.query.id;
         //ajax获得后台公告的内容
-        this.$http.get("api/content/notice/" + this.noticeID).then(({ data }) => {
+        if (sessionStorage.getItem('articleDetail') == 'home') {
+		    	this.getUrl = 'api/content/notice/'
+		    	this.articleBack = false;
+		    }else {
+		    	this.getUrl = 'api/content/'
+		    	this.articleBack = true;
+		    }
+        this.$http.get(this.getUrl + this.noticeID).then(({ data }) => {
           //给公告的内容赋值
           if (data.status) {
 						this.title=data.content.title;
@@ -49,7 +54,8 @@ export default {
       	time: '',
       	author: ''
       },
-      articleBack: false
+      articleBack: false,
+      getUrl: ''
     }
   },
   computed: {

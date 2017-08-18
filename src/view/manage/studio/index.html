@@ -1,20 +1,20 @@
 <section>
   <router-link to="/manage/studio/0">
-    <Button type="primary" size="large" shape="circle" class="btn-create">
+    <Button type="primary" shape="circle" class="btn-create">
       <img src="../../../assets/operator/create.svg" class="icon-create"></img>
       新建
     </Button>
   </router-link>
 	<div class="studio-nodata center" :class="{hide:nodata}" style="margin-top: 50px;">
     <img src="../../../assets/error/no-data.svg" alt="" />
-    <p>暂无工作室</p>
+    <p>暂无融合号</p>
 	</div>
 <div v-if="total > 0">
   <table class="table" style="margin-top:20px;">
     <thead>
       <tr>
         <th>LOGO</th>
-        <th>工作室名称</th>
+        <th>融合号名称</th>
         <th>URL</th>
         <th>时间</th>
         <th>绑定栏目</th>
