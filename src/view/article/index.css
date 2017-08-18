@@ -30,8 +30,10 @@
 	width:auto;
 }
 .con_new embed{
-	width: 28.5vw;
-	height: 16.5vw;
+	max-width: 100%;
+}
+.con_new video{
+	max-width: 100%;
 }
 .orginTit{
 	margin-bottom: 15px;

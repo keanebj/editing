@@ -44,12 +44,10 @@
     width: 80%;
 }
 .con_new embed{
-	width: 28.5vw;
-	height: 16.5vw;
+	max-width: 100%;
 }
 .con_new video{
-	width: 28.5vw;
-	height: 16.5vw;
+	max-width: 100%;
 }
 .error p{
     margin-top: 30px;
