@@ -30,16 +30,18 @@ export default [{
       name: '广告管理',
       path: '/manage/ad',
       authority: 'Manage'
-    }, {
-      name: '内容审核',
-      path: '/manage/contentaudit',
-      authority: 'Manage'
-    }, {
-	    name: '素材管理',
-	    path: '/manage/material',
-	    match: ['SourceMaterialEnter'],
-	    authority:'Edit'
-	  }
+    }
+    // , {
+    //   name: '内容审核',
+    //   path: '/manage/contentaudit',
+    //   authority: 'Manage'
+    // }
+    // , {
+	  //   name: '素材管理',
+	  //   path: '/manage/material',
+	  //   match: ['SourceMaterialEnter'],
+	  //   authority:'Edit'
+	  // }
   ]
 }, {
   name: '设置',
