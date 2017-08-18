@@ -112,8 +112,7 @@ export default {
       isHideSubtitle:true,
       ishideone:false,
       videoid:'',
-      videoname:'',
-      isSuccess:false
+      videoname:''
   }
 },
   created(){
@@ -234,14 +233,12 @@ export default {
           new qcVideo.Player("videoTabPreview", option);
           this.videoid=id;
           this.videoname=name;
-          this.isSuccess=true;
       }else{
         //外链的视频
         this.$refs.videoTabPreview.innerHTML=html;
         this.videoid='';
-        this.ishideone=true;
       }
-        this.ishideone=true;
+      this.ishideone=true;
     },
     reuploadvideo(){
       this.ishideone=false;
@@ -256,7 +253,7 @@ export default {
           let data = response.data.content;
           //给数据值
           this.previewCon[0].title = data.title;
-	          this.previewCon[0].content = data.content;
+	          this.previewCon[0].content = data.content;          
 	          this.previewCon[0].time = data.addtime;
 	          this.previewCon[0].studioname = this.studioName;
 	          this.$refs.yulan.previewConauthor(data.author);
@@ -264,30 +261,6 @@ export default {
           if (response.data.operatortype == "Edit") {      
 	          this.previewCon[0].author = data.author;
           }
-          
-//        setTimeout(function (){
-//        	let $=qbVideo.get("$");
-//        	let count=$(".video_container").size();
-//        	if(count > 0){
-//		        for(var i=0;i<count;i++){
-//		            let serverfileid=$(".video_container").eq(i).html('').attr('serverfileid');
-//		            console.log(serverfileid)
-//		            if (serverfileid != undefined){
-//		            	var option = {
-//		                "auto_play": "0",
-//		                "file_id": serverfileid,
-//		                "app_id": "1252018592",
-//		                "width": 640,
-//		                "height": 480
-//		            };
-//		           		new qcVideo.Player("id_video_container_"+option.file_id,option); 
-//		            }
-//		            
-//		        }
-//		           
-//		      }   
-//        },500)
-          
         }, (error) => {
           this.$Notice.error({
             title: error.data.message,

@@ -7,15 +7,15 @@
   </div>
 <div style="position: relative;" id="tab">
    <div style="position: absolute;top:20px;width:24px;height:24px;left:85px;z-index:9999;"><a href="javascript:void(0)" @click="goBack"><img width='100%' height='100%' src="../../assets/svg/返回红色.svg" /></a></div>   
-     <span style="position: absolute;top:10px;left:250px;color:#F95759;font-size:12px;">Beta</span>
+     <!--<span style="position: absolute;top:10px;left:250px;color:#F95759;font-size:12px;">Beta</span>-->
     <Tabs type="card" v-model="tabname" >
         <Tab-pane label="图文" name="text" :disabled="disabledText">
             <Publishtext @showUploadPop="showUploadPop" @disabledTab="disabledTab" ref="publishtextele"></Publishtext>
         </Tab-pane>
-        <Tab-pane label="视频" name="video" :disabled="disabledVideo">
+        <!--<Tab-pane label="视频" name="video" :disabled="disabledVideo">
            
             <Publishvideo @showUploadPop="showUploadPop" @disabledTab="disabledTab" ref="publishvideoele"></Publishvideo>
-        </Tab-pane>
+        </Tab-pane>-->
     </Tabs>
 </div>
    <MainFooter></MainFooter>

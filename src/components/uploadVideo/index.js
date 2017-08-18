@@ -92,7 +92,7 @@ export default {
           if(this.selVideoid!= '111'){
               //已经选择了某个素材
             var option = {
-                "auto_play": "0",
+                "auto_play": "1",
                 "file_id": this.selVideoid,
                 "app_id": "1252018592",
                 "width": 400,
@@ -142,8 +142,8 @@ export default {
                 "file_id": this.video.videoId,
                 "app_id": "1252018592",
                 "width": 400,
-                "height": 225,
-            };   
+                "height": 225, 
+            };  
             new qcVideo.Player("videoPreview", option);
       },
      //初始化直播上传

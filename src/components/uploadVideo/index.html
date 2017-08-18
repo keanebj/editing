@@ -1,8 +1,8 @@
 <Modal v-model="uploadVideo" width="768" id="video-upload-pop">
     <p slot="header">
         <span class="video-header-span" :class="tabName == 'link'?'main-color':''" @click="changeTab('link')">视频外链</span>
-        <span class="video-header-span" :class="tabName == 'local'?'main-color':''" @click="changeTab('local')">本地上传</span>
-        <span class="video-header-span" :class="tabName == 'resource'?'main-color':''" @click="changeTab('resource')">素材管理</span>
+        <!--<span class="video-header-span" :class="tabName == 'local'?'main-color':''" @click="changeTab('local')">本地上传</span>
+        <span class="video-header-span" :class="tabName == 'resource'?'main-color':''" @click="changeTab('resource')">素材管理</span>-->
     </p>
     <!-- 外链地址-->
     <div v-if="tabName == 'link'" style="text-align: center;margin:10px 0;height:350px;">

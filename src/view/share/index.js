@@ -59,7 +59,7 @@ export default {
             for(var i=0;i<count;i++){
                 let serverfileid=$(".video_container").eq(i).html('').attr('serverfileid');
                 var option = {
-                    "auto_play": "0",
+                    "auto_play": "1",
                     "file_id": serverfileid,
                     "app_id": "1252018592",
                     "width": 640,
