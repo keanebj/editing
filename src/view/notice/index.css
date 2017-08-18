@@ -8,6 +8,9 @@
 .con_new{    
     text-align: center;
 }
+.con_new img[src^="/static/ueditor/dialogs/attachment/fileTypeImages"]{
+	width:auto;
+}
 .con_new img{
     width: 70%;
 }

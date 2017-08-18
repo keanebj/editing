@@ -26,6 +26,9 @@
 .con_new img{
     width: 70%;
 }
+.con_new img[src^="/static/ueditor/dialogs/attachment/fileTypeImages"]{
+	width:auto;
+}
 .con_new embed{
 	width: 28.5vw;
 	height: 16.5vw;
