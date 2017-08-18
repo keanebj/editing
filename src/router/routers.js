@@ -2,7 +2,7 @@ export default [{
     name: 'login',
     path: '/login',
     meta: {
-      title: '自媒体编辑系统-登录'
+      title: '全国党媒融合号-登录'
     },
     component: () => import('@/view/login/index.vue')
   },
@@ -18,14 +18,14 @@ export default [{
     name: 'main',
     path: '/',
     meta: {
-      title: '自媒体编辑系统'
+      title: '全国党媒融合号'
     },
     component: () => import('@/view/index.vue'),
     children: [{
         name: 'home',
         path: '',
         meta: {
-          title: '自媒体编辑系统'
+          title: '全国党媒融合号'
         },
         component: () => import('@/view/home/index.vue')
       },
