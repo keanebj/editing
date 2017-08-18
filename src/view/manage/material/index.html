@@ -29,7 +29,7 @@
       </Col>
     </Row>
     <Row :gutter="50">
-      <Col span="6" class="video_list" v-for="(videoItem, index) in videoList" :index="videoItem.id">
+      <Col span="6" class="video_list" v-for="(videoItem, index) in videoList" key="videoItem.videoid" :index="videoItem.id">
         <div class="video_list_in">
           <div class="video_list_item">
             <img :src="videoItem.cover" alt="">

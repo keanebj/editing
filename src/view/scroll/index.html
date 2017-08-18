@@ -13,7 +13,7 @@
       <div v-else-if="selVideoid">
          <Radio-group v-model="currentvideoid">
             <Row id="resource-manage">  
-                <Col span="8" v-for="(value,key) in previewCon">
+                <Col span="8" v-for="(value,key) in previewCon" key="value.videoid">
                     <div class="video-item" >
                         <img :src="value.cover"/>
                         <span style="float:left;">{{value.title}}</span><Radio :label="value.videoid" style="float:right;margin-right:0;"><span></span></Radio>
