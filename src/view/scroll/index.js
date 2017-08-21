@@ -16,7 +16,8 @@ export default {
       i:-1,
       contentCoverSrc: '',
       author: '',
-      currentvideoid:''
+      currentvideoid:'',
+
     }
   },
   watch:{
@@ -36,6 +37,7 @@ export default {
 //  previewCon: function () {
 ////  	return this.previewCon
 //  }
+   
   },
   mounted () {
     this.$emit('element', [this.$refs.onscroll, this.$refs.scrollCon, this.$refs.scroll, this.$refs.setCon]);

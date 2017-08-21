@@ -3,10 +3,13 @@ export default {
   name: 'ComponentsUploadVideo',
   data(){
      return {
+        videotimer:null,
         videoLink:'',
         uploadVideo:false,
         tabName:'link',
         isHideLocal:true,
+        isHideLink:false,
+        isHideResource:true,
         id:'',
         ishidelinkvideo:true,
         idHideStepOne:false,
@@ -27,7 +30,8 @@ export default {
         selVideoid:'111',
         materialVideos:[],
         isHideSourceBtn:false,
-        playInfo:''   
+        playInfo:'',
+        enableAddLocalVideo:true   
     }
   },
   components:{
@@ -47,6 +51,8 @@ export default {
     uploadVideo(bool){
         if(!bool){
             this.reset();
+            //清掉显示的object （暂时的处理办法）
+
         }
     }
   },
@@ -58,10 +64,18 @@ export default {
         this.uploadVideo=true;   
       },
       changeTab(name){
-        if(name == 'local'){
+        if(name == 'link'){
+            this.isHideLink=false;
+            this.isHideLocal=true;
+            this.isHideResource=true;
+        }else if(name == 'local'){
             this.isHideLocal=false;
+            this.isHideLink=true;
+            this.isHideResource=true;
         }else{
             this.isHideLocal=true;
+            this.isHideLink=true;
+            this.isHideResource=false;
         }
        this.tabName=name;
       },
@@ -102,18 +116,21 @@ export default {
           if(this.selVideoid!= '111'){
               //已经选择了某个素材
             var option = {
-                "auto_play": "1",
+                "auto_play": "0",
                 "file_id": this.selVideoid,
                 "app_id": "1252018592",
                 "width": 400,
                 "height": 225,
             }; 
-            new qcVideo.Player("videoPreview1", option);
-            let $ = qdVideo.get('$'); 
+            new qcVideo.Player("videoPreview1", option); 
+            let $ = qdVideo.get('$');
+            
             $("#videoPreview1").find('embed').prop('width','640px');
             $("#videoPreview1").find('embed').prop('height','360px');
             let videoHtml='<p style="text-align:center;width:100%;margin-bottom:10px;" class="video_container" serverfileid="'+this.selVideoid+'" id="id_video_container_'+this.selVideoid+'">'+this.$refs.videoPreview1.innerHTML+'</p>';
+            debugger;
             this.$emit("insertVideoEditor",videoHtml,this.selVideoid);
+            
             this.uploadVideo=false;
          }else{
              //没有选择素材
@@ -140,7 +157,8 @@ export default {
         this.idHideStepOne=false;
         this.idHideStepTwo=true;
         this.idHideStepThree=true;
-        this.idHideStepFour=true;  
+        this.idHideStepFour=true; 
+        clearInterval(this.videotimer); 
       },
       previewVideo(){
         var option = {
@@ -221,7 +239,7 @@ export default {
                       classId: classId,
                       // mime_types, 默认是常用的视频和音频文件扩展名，如MP4, MKV, MP3等, video_only 默认为false，可允许音频文件上传
                       filters: {
-                          max_file_size: '8gb',
+                          max_file_size: '2gb',
                           mime_types: [],
                           video_only: true
                       },
@@ -235,6 +253,7 @@ export default {
                        * @param args { id: 文件ID, size: 文件大小, name: 文件名称, status: 状态, percent: 进度 speed: 速度, errorCode: 错误码,serverFileId: 后端文件ID }
                        */
                       onFileUpdate: function (args) {
+
                           if (args.code == Code.SHA_FAILED){
                               This.$Notice.error({
                                 title: '该浏览器无法计算SHA',
@@ -308,7 +327,8 @@ export default {
                                     let text=sec >= 60 ? parseInt(sec/60)+"分"+ sec%60 + "秒":sec + "秒";
                                     This.video.leftTime=text;
                                 }else{
-                                    This.video.leftTime='...';
+                                    This.video.speed="计算中...";
+                                    This.video.leftTime='计算中...';
                                 }    
                             } 
                             else if(args.code == 6 )//上传完成 
@@ -321,19 +341,28 @@ export default {
                                 This.idHideStepThree=false;
                                 This.idHideStepFour=true;
                                 
-
+                                console.log(This.video.videoId);
                                 //设置定时器，调用后台接口看转码是否完
-                                setInterval(function(){
-                                    This.$http.post('',{},((res)=>{
-                                        if(res.status== 1){
-
-                                        }else{
+                                clearInterval(This.videotimer);
+                                This.videotimer=setInterval(function(){
+                                    This.$http.get('/api/video/upload?videoid='+This.video.videoId).then((res)=>{
+                                        console.log(res);
+                                        if(res.data.fileset.status== 2){
+                                            //转码完成
                                             This.previewVideo();
+                                            This.enableAddLocalVideo=false;
+                                            //清除定时器
+                                            clearInterval(This.videotimer);
+                                        }else if(res.data.fileset.status== 4){
+                                            //转码中 ，不进行任何操作
+                                        }else{
+                                            //转码失败
+                                            This.$refs.videoPreview.innerHTML="很抱歉，转码失败！"; 
+                                            //清除定时器
+                                            clearInterval(This.videotimer);
                                         }
-                                    }))
-                                },200)
-
-                                
+                                    })
+                                },200)    
                             }
                             else{
                                 This.video.videoId=''; 
@@ -412,7 +441,8 @@ export default {
 
   created() {
          //获得素材列表
-       this.$http.get('api/material',{params:{pageindex:1,pagesize:10}}).then((response) => { 
+       this.$http.get('api/material',{params:{pageindex:1,pagesize:10}}).then((response) => {
+           console.log(response.data); 
            if(response.data.status != 1){
                alert(response.data.message);
                 return;
@@ -434,6 +464,10 @@ export default {
   mounted() {
       this.initUpload();
     
+  },
+  destroy(){
+      //清除定时器
+      clearInterval(this.videotimer);
   }
 
 }

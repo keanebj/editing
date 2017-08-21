@@ -40,3 +40,22 @@
 	margin-left: 5px;
 	margin-right: 5px;
 }
+.video_list_item{
+  position: relative;
+  height: 100%;
+}
+.video_list_item>span{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, .5);
+  border-radius: 50%;
+  margin-left: -20px;
+  margin-top: -20px;
+  z-index: 0;
+  text-align: center;
+  line-height: 40px;
+  font-size: 25px;
+}

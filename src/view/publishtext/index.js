@@ -46,7 +46,7 @@ export default {
         Notice: '公告',
         College: '中央厨房融媒体学院'
       },
-      titleMaxCount:22,
+      titleMaxCount:44,
       subtitleMaxCount:60,
       summaryMaxCount:60,
       authorMaxCount:5,
@@ -137,6 +137,7 @@ export default {
   computed: {
     ...mapState(['menu', 'userinfo'])
 },
+
   mounted(){  
     this.editor=UE.getEditor("editor",{
       //此处可以定制工具栏的功能，若不设置，则默认是全部的功能
@@ -853,8 +854,13 @@ abstractWordCount:function(event){
     //editor
     getTitleContent:function(){
       //需要转换为字符
-      let count=this.gblen(this.formTop.title,44,'title');
-      this.titleContentCount=Math.ceil(count)>22 ? 22:Math.ceil(count);
+      //输入的一共是多少个字符
+      var zifu=this.testgblen(this.formTop.title);
+      this.titleContentCount=Math.floor(zifu/2); 
+         
+
+      //let count=this.gblen(this.formTop.title,44,'title');
+      //this.titleContentCount=Math.ceil(count)>22 ? 22:Math.ceil(count);
     },
      getSubTitleContent:function(){
       //需要转换为字符
@@ -888,6 +894,28 @@ abstractWordCount:function(event){
     },
     goAccount() {
       this.$router.push('/settings/account')
+    },
+    testgblen:function(val){
+      this.titleMaxCount=44;
+       var len = 0;
+        for (var i = 0; i < val.length; i++) {
+            var a = val.charAt(i);
+            if (a.match(/[^\x00-\xff]/ig) != null) {
+                len += 2;
+                //中文
+                this.titleMaxCount -= 1;
+            }
+            else {
+                len += 1;
+            }
+        }
+
+
+        if(len > this.titleMaxCount){
+        //移除最后一个
+        this.formTop.title=this.formTop.title.substring(0,this.formTop.title.length-1);
+      }  
+        return len;
     },
     //转为字符：中文1个 英文0.5个
     gblen:function(str,max,name){
@@ -950,4 +978,7 @@ abstractWordCount:function(event){
 String.prototype.Trim = function()
 {
   return this.replace(/(^\s*)|(\s*$)/g, "");
+}
+String.prototype.len=function()          {                 
+ return this.replace(/[^\x00-\xff]/g,"rr").length;          
 }

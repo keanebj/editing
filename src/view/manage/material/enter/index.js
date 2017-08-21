@@ -57,7 +57,8 @@ export default {
       materialSize: 0,
       materialTime: '',
       stopUploading: true,
-      uploadError: false
+      uploadError: false,
+      transcodeNotifyUrl: ''
     }
   },
   computed: {
@@ -125,6 +126,20 @@ export default {
           this.$Notice.error({title:error.data.message,desc: false});
         })
         this.material.percent = '100';
+        
+        this.$http.get('api/material/init/' + this.videoId,{
+        		params: {
+	          	fileId: this.material.serverFileId
+        		}
+        }).then((response) => {
+        	if (response.data.status == 1) {
+        		
+        	}else{
+        		this.$Notice.error({title:response.data.message,desc: false});
+        	}
+        }, ({err}) => {
+        	this.$Notice.error({title:error.data.message,desc: false});
+        })
       }
     }
   },
@@ -151,11 +166,21 @@ export default {
         this.$Notice.error({title:error.data.message,desc: false});
       })
     }
-    this.initUpload('picks', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1,null, null)
-    this.initUpload('pick', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1,null, null)
+    
+    this.$http.post('api/material').then((response) => {
+  		if (response.data.status == 1) {
+  			this.videoId = response.data.id;
+  			this.transcodeNotifyUrl = this.$conf.host+this.$conf.root + 'media/api/material/init';
+  			this.initUpload('picks', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
+    		this.initUpload('pick', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
+  		}else{
+  			this.$Notice.error({title:response.data.message,desc: false});
+  		}
+  	}, ({error}) => {
+  		this.$Notice.error({title:error.data.message,desc: false});
+  	})
     if (this.vievShow) {
     	this.uploading = true;
-      
     }
   }, 
   created() {
@@ -198,7 +223,7 @@ export default {
       if (this.formValidate.title == '') {
         this.ruleValidate.title[0].required = true
       }
-      if (this.videoId > -1) {
+//    if (this.videoId > -1) {
         this.$http.put('api/material/'+ this.videoId, this.formValidate).then((response) => {
           if (response.data.status == 1) {
             this.$Notice.success({title:'保存成功',desc: false});
@@ -207,19 +232,19 @@ export default {
             this.$Notice.error({title:response.data.message,desc: false});
           }
         })
-      }else{
-        this.$http.post('api/material', this.formValidate).then((response) => {
-          if (response.data.status == 1) {
-            this.$Notice.success({title:'保存成功',desc: false});
-            this.$router.push('/manage/material')
-          }else{
-            this.$Notice.error({title:response.data.message,desc: false});
-          }
-          this.videoId = response.data.id;
-        }, (response) => {
-          this.$Notice.error({title:error.data.message,desc: false});
-        })
-      }
+//    }else{
+//      this.$http.post('api/material', this.formValidate).then((response) => {
+//        if (response.data.status == 1) {
+//          this.$Notice.success({title:'保存成功',desc: false});
+//          this.$router.push('/manage/material')
+//        }else{
+//          this.$Notice.error({title:response.data.message,desc: false});
+//        }
+//        this.videoId = response.data.id;
+//      }, (response) => {
+//        this.$Notice.error({title:error.data.message,desc: false});
+//      })
+//    }
     },
     closeLabel: function (index) {
       this.labelArr.splice(index,1);
@@ -365,21 +390,34 @@ export default {
           // Log.debug('delete', this.material.id);
           // qbVideo.uploader.deleteFile(this.material.id);
           // console.log(this.material)
-          this.$http.delete('/api/video/upload/'+ this.material.id).then((response) => {
-          	if (this.uploading) {
-							qaVideo.uploader.deleteFile(this.material.id)
+          
+          
+//        this.$http.delete('/api/video/upload/'+ this.material.id).then((response) => {
+//        	if (this.uploading) {
+//							qaVideo.uploader.deleteFile(this.material.id)
+//						}else{
+//							qbVideo.uploader.deleteFile(this.material.id)
+//						}
+//          this.material.code = 0;
+//          this.vievShow = true;
+//        }, () => {
+//        	this.vievShow = true;
+//          this.$Notice.error({
+//            title: '错误',
+//            desc: '重新上传错误'
+//          })
+//        })
+					this.$http.put('api/video/upload/' + this.videoId).then((response) => {
+						if (response.data.status == 1) {
+							this.material.code = 0;
+            	this.vievShow = true;	
+            	this.videoId = response.data.id;
 						}else{
-							qbVideo.uploader.deleteFile(this.material.id)
+							this.$Notice.error({title:response.data.message,desc: false});
 						}
-            this.material.code = 0;
-            this.vievShow = true;
-          }, () => {
-          	this.vievShow = true;
-            this.$Notice.error({
-              title: '错误',
-              desc: '重新上传错误'
-            })
-          })
+					}, (response) => {
+						this.$Notice.error({title:response.data.message,desc: false});
+					})
         },
         onCancel: () => {
         	if (this.uploading) {

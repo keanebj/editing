@@ -3,14 +3,14 @@
     <Row :gutter="34">
       <Col span="17" class="m-t-20">
       <Form-item label="" prop="title">
-        <Input id="titleContent" style="width:84%;" v-model="formTop.title" :maxlength="titleMaxCount" class="title-input" placeholder="请输入标题" @on-change="getTitleContent" @on-blur="removetrim"></Input>
+        <Input id="titleContent" style="width:84%;" v-model="formTop.title" :maxlength="titleMaxCount"  class="title-input" placeholder="请输入标题" @on-change="getTitleContent" @on-blur="removetrim"></Input>
         <span class="limit-words">
           <span>{{titleContentCount}}</span>/22
         </span>
         <Button type="ghost" shape="circle" class="add-sub-title" :disabled="!isHideSubtitle" @click="isHideSubtitle=!isHideSubtitle">添加副标题</Button>
       </Form-item>
       <Form-item label="" prop="subtitle" :class="{hide:isHideSubtitle}">
-        <Input id="subTitle" v-model="formTop.subtitle" :maxlength="subtitleMaxCount" class="title-input" placeholder="请输入副标题" @on-change="getSubTitleContent" @on-blur="removetrim"></Input>
+        <Input id="subTitle" v-model="formTop.subtitle" :maxlength="subtitleMaxCount"  class="title-input" placeholder="请输入副标题" @on-change="getSubTitleContent" @on-blur="removetrim"></Input>
         <span class="sub-limit-words">
           <span>{{subtitleContentCount}}</span>/60
           <div class="delete-icon" @click="deleteSubTitle"></div>
