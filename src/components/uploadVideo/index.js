@@ -27,7 +27,7 @@ export default {
         selVideoid:'111',
         materialVideos:[],
         isHideSourceBtn:false,
-        playInfo:''
+        playInfo:''   
     }
   },
   components:{
@@ -42,6 +42,11 @@ export default {
             this.ishidelinkvideo=false;
         }else{
             this.ishidelinkvideo=true;
+        }
+    },
+    uploadVideo(bool){
+        if(!bool){
+            this.reset();
         }
     }
   },
@@ -76,7 +81,6 @@ export default {
         let linkvideoHtml=this.$refs.linkVideoHtml.innerHTML;
         this.$emit("insertVideoEditor",linkvideoHtml);
         this.uploadVideo=false;
-        this.videoLink='';
       },
       addLocalVideo(){
         let $ = qdVideo.get('$'); 
@@ -84,9 +88,15 @@ export default {
         $("#videoPreview").find('embed').prop('height','360px');
         let videoHtml='<p style="text-align:center" class="video_container" serverfileid="'+this.video.videoId+'" id="id_video_container_'+this.video.videoId+'">'+this.$refs.videoPreview.innerHTML+'</p>';
         this.$emit("insertVideoEditor",videoHtml,this.video.videoId,this.video.name);
+        this.uploadVideo=false;     
+      },
+      reset(){
+        this.videoLink='';
+        $("#videoPreview").html("");
+        this.reUpload();
+        this.changeTab('link');
+        this.selVideoid= '111';
         this.uploadVideo=false;
-        $("#videoPreview").find('embed').prop('width','400px');
-        $("#videoPreview").find('embed').prop('height','225px');
       },
       addSourceVideo(){
           if(this.selVideoid!= '111'){
@@ -112,10 +122,6 @@ export default {
                      desc:false
              });
          }
-      },
-      cancelLinkVideo(){
-        this.uploadVideo=false;
-        this.videoLink='';
       },
       backOrigin(){
         //回复原始状态      
@@ -314,7 +320,20 @@ export default {
                                 This.idHideStepOne=true;
                                 This.idHideStepThree=false;
                                 This.idHideStepFour=true;
-                                This.previewVideo();
+                                
+
+                                //设置定时器，调用后台接口看转码是否完
+                                setInterval(function(){
+                                    This.$http.post('',{},((res)=>{
+                                        if(res.status== 1){
+
+                                        }else{
+                                            This.previewVideo();
+                                        }
+                                    }))
+                                },200)
+
+                                
                             }
                             else{
                                 This.video.videoId=''; 
@@ -393,7 +412,11 @@ export default {
 
   created() {
          //获得素材列表
-       this.$http.get('api/material',{params:{pageindex:1,pagesize:10}}).then((response) => {    
+       this.$http.get('api/material',{params:{pageindex:1,pagesize:10}}).then((response) => { 
+           if(response.data.status != 1){
+               alert(response.data.message);
+                return;
+           }  
           let data = response.data.materials;
           //判断是否有素材
           if(data && data.length == 0){
