@@ -58,7 +58,7 @@ export default {
             type: 'string',
             min: 7,
             max: 11,
-            pattern: /^[0-9]+$/,
+            pattern: /^1[34578]\d{9}$/,
             message: '电话格式不正确',
             trigger: 'blur'
           }
@@ -95,7 +95,7 @@ export default {
             type: 'string',
             min: 7,
             max: 11,
-            pattern: /^[0-9]+$/,
+            pattern:/^1[34578]\d{9}$/,
             message: '电话格式不正确',
             trigger: 'blur'
           }
