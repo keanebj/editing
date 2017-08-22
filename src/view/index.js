@@ -17,16 +17,19 @@ export default {
   },
   data() {
     return {
-      minHeight: window.screen.height - 310
+      minHeight: window.screen.height - 310,
+      isToken : true
     }
   },
-  beforeCreate() {
+  beforeCreate() {   
+    
     //监听浏览器的返回按钮
     window.addEventListener("popstate", function (e) {
       location.reload();
     }, false);
   },
   mounted() {
+   
     /*if (window.location.href.indexOf('publish') > -1) {
       this.$store.commit('set', {
         isActive: true
@@ -38,13 +41,13 @@ export default {
     }*/
   },
   created() {
+    if(localStorage.getItem('token') == null){
+      this.$router.push('/login')
+    }
+    else{
+      this.isToken= false
+    }
     this.getLocalUserInfo()
-    // if (!this.token) {
-    //   this.$router.push('/login')
-    // }
-    // if (this.userinfo.username == undefined || this.userinfo.username == null) {
-    //   this.$router.push('/login')
-    // }
   },
   methods: {
     getLocalUserInfo() {
