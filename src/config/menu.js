@@ -36,12 +36,12 @@ export default [{
     //   path: '/manage/contentaudit',
     //   authority: 'Manage'
     // }
-    // , {
-	  //   name: '素材管理',
-	  //   path: '/manage/material',
-	  //   match: ['SourceMaterialEnter'],
-	  //   authority:'Edit'
-	  // }
+    , {
+	    name: '素材管理',
+	    path: '/manage/material',
+	    match: ['SourceMaterialEnter'],
+	    authority:'Edit'
+	  }
   ]
 }, {
   name: '设置',
