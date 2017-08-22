@@ -274,4 +274,9 @@
 .video_pager .ivu-page-item-active a{
   color: #F95759;
 }
-
+#videoPlayer{
+	width: 100%;
+}
+#videoPlayer embed{
+	width: 100%;
+}
