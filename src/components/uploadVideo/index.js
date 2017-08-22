@@ -31,7 +31,8 @@ export default {
         materialVideos:[],
         isHideSourceBtn:false,
         playInfo:'',
-        enableAddLocalVideo:true   
+        enableAddLocalVideo:true,
+        onceTimer:null   
     }
   },
   components:{
@@ -51,7 +52,6 @@ export default {
     uploadVideo(bool){
         if(!bool){
             this.reset();
-            //清掉显示的object （暂时的处理办法）
 
         }
     }
@@ -128,7 +128,6 @@ export default {
             $("#videoPreview1").find('embed').prop('width','640px');
             $("#videoPreview1").find('embed').prop('height','360px');
             let videoHtml='<p style="text-align:center;width:100%;margin-bottom:10px;" class="video_container" serverfileid="'+this.selVideoid+'" id="id_video_container_'+this.selVideoid+'">'+this.$refs.videoPreview1.innerHTML+'</p>';
-            debugger;
             this.$emit("insertVideoEditor",videoHtml,this.selVideoid);
             
             this.uploadVideo=false;
@@ -158,7 +157,10 @@ export default {
         this.idHideStepTwo=true;
         this.idHideStepThree=true;
         this.idHideStepFour=true; 
-        clearInterval(this.videotimer); 
+        this.enableAddLocalVideo=true;
+        clearInterval(this.videotimer);
+        clearTimeout(this.onceTimer);
+        this.$refs.videoPreview.innerHTML="视频正在转码中，请稍候...";  
       },
       previewVideo(){
         var option = {
@@ -253,7 +255,6 @@ export default {
                        * @param args { id: 文件ID, size: 文件大小, name: 文件名称, status: 状态, percent: 进度 speed: 速度, errorCode: 错误码,serverFileId: 后端文件ID }
                        */
                       onFileUpdate: function (args) {
-
                           if (args.code == Code.SHA_FAILED){
                               This.$Notice.error({
                                 title: '该浏览器无法计算SHA',
@@ -341,28 +342,45 @@ export default {
                                 This.idHideStepThree=false;
                                 This.idHideStepFour=true;
                                 
-                                console.log(This.video.videoId);
+                                
+                                //需要估算一个时间 (目前先这样定时处理)
+                                let startduration=Math.round(args.size/1000000)*5 >0 ? Math.round(args.size/1000000)*5000 :10000;
+                            
                                 //设置定时器，调用后台接口看转码是否完
                                 clearInterval(This.videotimer);
-                                This.videotimer=setInterval(function(){
-                                    This.$http.get('/api/video/upload?videoid='+This.video.videoId).then((res)=>{
-                                        console.log(res);
-                                        if(res.data.fileset.status== 2){
-                                            //转码完成
-                                            This.previewVideo();
-                                            This.enableAddLocalVideo=false;
-                                            //清除定时器
-                                            clearInterval(This.videotimer);
-                                        }else if(res.data.fileset.status== 4){
-                                            //转码中 ，不进行任何操作
-                                        }else{
-                                            //转码失败
-                                            This.$refs.videoPreview.innerHTML="很抱歉，转码失败！"; 
-                                            //清除定时器
-                                            clearInterval(This.videotimer);
-                                        }
-                                    })
-                                },200)    
+                                clearTimeout(This.onceTimer);
+                                This.onceTimer=setTimeout(function(){
+                                    This.videotimer=setInterval(function(){
+                                        This.$http.get('/api/video/upload?videoid='+This.video.videoId).then((res)=>{
+                                            console.log(res);
+                                            if(res.data.status == 1){
+                                                if(res.data.fileset.status== 2){
+                                                    //转码完成
+                                                    This.previewVideo();
+                                                    This.enableAddLocalVideo=false;
+                                                    //清除定时器
+                                                    clearInterval(This.videotimer);
+                                                    clearTimeout(This.onceTimer);
+                                                }else if(res.data.fileset.status== 4){
+                                                    //转码中 ，不进行任何操作
+                                                    This.$refs.videoPreview.innerHTML="视频正在转码中，请稍候..."; 
+                                                }else{
+                                                    //转码失败
+                                                    This.$refs.videoPreview.innerHTML="很抱歉，转码失败！"; 
+                                                    //清除定时器
+                                                    clearInterval(This.videotimer);
+                                                    clearTimeout(This.onceTimer);
+                                                }
+                                            }else{
+                                                This.$refs.videoPreview.innerHTML=res.data.message;
+                                                clearInterval(This.videotimer);
+                                                clearTimeout(This.onceTimer);
+                                            }
+                                        
+                                        })
+                                },2000) 
+                                },startduration)
+                                  
                             }
                             else{
                                 This.video.videoId=''; 
@@ -468,6 +486,7 @@ export default {
   destroy(){
       //清除定时器
       clearInterval(this.videotimer);
+      clearTimeout(this.onceTimer);
   }
 
 }

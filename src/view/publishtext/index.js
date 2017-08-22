@@ -895,6 +895,13 @@ abstractWordCount:function(event){
     goAccount() {
       this.$router.push('/settings/account')
     },
+    aaaa(e){
+      if(e.target.value.length>10)
+      {
+        alert(11);
+          return false;
+      }
+    },
     testgblen:function(val){
       this.titleMaxCount=44;
        var len = 0;
@@ -908,13 +915,7 @@ abstractWordCount:function(event){
             else {
                 len += 1;
             }
-        }
-
-
-        if(len > this.titleMaxCount){
-        //移除最后一个
-        this.formTop.title=this.formTop.title.substring(0,this.formTop.title.length-1);
-      }  
+        }  
         return len;
     },
     //转为字符：中文1个 英文0.5个

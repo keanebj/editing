@@ -4,6 +4,7 @@
       <Col span="17" class="m-t-20">
       <Form-item label="" prop="title">
         <Input id="titleContent" style="width:84%;" v-model="formTop.title" :maxlength="titleMaxCount"  class="title-input" placeholder="请输入标题" @on-change="getTitleContent" @on-blur="removetrim"></Input>
+        <!--<input width="500px" @keydown="aaaa"/>-->
         <span class="limit-words">
           <span>{{titleContentCount}}</span>/22
         </span>
