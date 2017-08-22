@@ -58,7 +58,8 @@ export default {
       materialTime: '',
       stopUploading: true,
       uploadError: false,
-      transcodeNotifyUrl: ''
+      transcodeNotifyUrl: '',
+      fileError: 0
     }
   },
   computed: {
@@ -170,7 +171,7 @@ export default {
     	this.$http.post('api/material').then((response) => {
 	  		if (response.data.status == 1) {
 	  			this.videoId = response.data.id;
-	  			this.transcodeNotifyUrl = this.$conf.host+this.$conf.root + 'media/api/material/init';
+//	  			this.transcodeNotifyUrl = this.$conf.host+this.$conf.root + 'media/api/material/init';
 	  			this.initUpload('picks', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
 	    		this.initUpload('pick', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
 	  		}else{
@@ -548,14 +549,18 @@ export default {
                * @param args {code:{-1: 文件类型异常,-2: 文件名异常} , message: 错误原因 ， solution: 解决方法}
                */
               onFilterError: function (args) {
+              	
                   // var msg = 'message:' + args.message + (args.solution ? (';solution==' + args.solution) :
                   //     '');
                   // $('#error').html(msg);
 //                console.log(args)
-								This.$Notice.error({
-                  title: args.message+(args.solution ? (';solution==' + args.solution) :''),
-                  desc: false
-               	})   
+								self.fileError += 1;
+								if (self.fileError%2 == 0) {
+									self.$Notice.error({
+						        title: args.message,
+						        desc: false
+						      }) 
+								}
               }
           }
       );
