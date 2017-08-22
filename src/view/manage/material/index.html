@@ -43,13 +43,13 @@
             </div>
             <div class="bottom">
               <span class="left">{{videoItem.addtime}}</span>
-              <span class="right hide">{{videoItem.duration}}</span>
+              <span class="right">{{videoItem.duration}}</span>
             </div>
           </div>
           <div class="video_info">
             <span class="video_info_tit">{{videoItem.title}}</span>
             <span class="video_info_icon">
-              <img src="../../../assets/material/edit_video.svg" alt="" @click="editVideo(videoItem.id)">
+              <img src="../../../assets/material/edit_video.svg" alt="" @click="editVideo(videoItem.id,videoItem.transcodingstate)">
               <img src="../../../assets/material/video_share.svg" alt="" @click="share(videoItem.videourl,videoItem.transcodingstate)">
             </span>
           </div>

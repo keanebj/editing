@@ -149,9 +149,11 @@ export default {
           this.videoTotal = data.total;
           this.pageAll = Math.ceil(this.videoTotal/this.pageSize)
           this.videoList = data.materials;
-          console.log(data.materials)
           for (let i = 0; i<this.videoList.length; i++) {
             this.videoList[i].addtime = this.videoList[i].addtime.substring(0,10)
+            let sec = (this.videoList[i].duration % 60) > 10 ? (this.videoList[i].duration % 60) : "0" + (this.videoList[i].duration % 60)
+            let minu = parseInt(this.videoList[i].duration / 60) > 10 ? parseInt(this.videoList[i].duration / 60) : "0" + parseInt(this.videoList[i].duration / 60);
+            this.videoList[i].duration = minu + ':' + sec;
           }
           if (this.videoList.length == 0) {
           	this.tabViews = true;
@@ -172,9 +174,16 @@ export default {
         })
       })
     },
-    editVideo (id) {
-      this.$store.videoId = id;
-      this.$router.push({path: '/manage/material/enter', query: {id: id}});
+    editVideo (id, state) {
+    	if (state == 1) {
+    		this.$Notice.info({
+          title: '视频正在转码，请稍后再试！',
+          desc: false
+        })
+    	}else{
+    		this.$store.videoId = id;
+      	this.$router.push({path: '/manage/material/enter', query: {id: id}});
+    	}
     },
     deleteVideo (id, state) {
     	if (state == 1) {

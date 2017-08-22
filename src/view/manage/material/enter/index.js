@@ -82,7 +82,7 @@ export default {
         this.vievShow = true;
       }
       if (this.material.speed == undefined) {
-      	this.material.speed = '1Kb/s'
+      	this.material.speed = '计算中...'
       }
       if (this.material.code < 5) {
         this.material.percent = 0;
@@ -104,8 +104,8 @@ export default {
         let allsec=parseInt((this.material.size-this.material.size*this.material.percent/100)/speed);
       var minu = parseInt(allsec/60) >= 10 ? parseInt(allsec/60) : '0'+parseInt(allsec/60);
       var sec = allsec%60 >= 10 ? allsec%60 : '0'+allsec%60;
-      if (this.material.speed == '1Kb/s') {
-      	this.materialTime = '...'
+      if (this.material.speed == '计算中...') {
+      	this.materialTime = '计算中...'
       }else{
       	this.materialTime = minu + ':' + sec
       }
@@ -113,7 +113,7 @@ export default {
         this.formValidate.videoname = this.material.name;//视频名字
         // this.formValidate.videourl = '#'//视频地址
         this.formValidate.materialtype = this.formValidate.select;//视频类型
-        this.formValidate.duration = "0";// 视频时长
+//      this.formValidate.duration = "0";// 视频时长
         this.formValidate.size = this.material.size_text;//视频大小
         this.formValidate.videoid = this.material.serverFileId;//视频id
         this.$http.get('api/video/upload/' + this.formValidate.videoid).then(({data}) => {
@@ -146,6 +146,7 @@ export default {
   mounted() {
     if (this.$route.query.id) {
       this.$http.get('/api/material/' + this.$route.query.id).then(({data}) => {
+      	console.log(data)
         this.vievShow = false;
         this.material.code = 6;
         this.material.percent = 100;
@@ -165,20 +166,22 @@ export default {
       }, (err) => {
         this.$Notice.error({title:error.data.message,desc: false});
       })
+    }else {
+    	this.$http.post('api/material').then((response) => {
+	  		if (response.data.status == 1) {
+	  			this.videoId = response.data.id;
+	  			this.transcodeNotifyUrl = this.$conf.host+this.$conf.root + 'media/api/material/init';
+	  			this.initUpload('picks', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
+	    		this.initUpload('pick', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
+	  		}else{
+	  			this.$Notice.error({title:response.data.message,desc: false});
+	  		}
+	  	}, ({error}) => {
+	  		this.$Notice.error({title:error.data.message,desc: false});
+	  	})
     }
     
-    this.$http.post('api/material').then((response) => {
-  		if (response.data.status == 1) {
-  			this.videoId = response.data.id;
-  			this.transcodeNotifyUrl = this.$conf.host+this.$conf.root + 'media/api/material/init';
-  			this.initUpload('picks', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
-    		this.initUpload('pick', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
-  		}else{
-  			this.$Notice.error({title:response.data.message,desc: false});
-  		}
-  	}, ({error}) => {
-  		this.$Notice.error({title:error.data.message,desc: false});
-  	})
+    
     if (this.vievShow) {
     	this.uploading = true;
     }

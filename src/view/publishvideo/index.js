@@ -261,6 +261,31 @@ export default {
           if (response.data.operatortype == "Edit") {      
 	          this.previewCon[0].author = data.author;
           }
+          
+//        let $=qbVideo.get("$");
+//        let _this = this;
+//        setTimeout(function () {
+//        	console.log($(".previewContent .video_container").size())
+//        	let count = $(".previewContent .video_container").size();
+//        	for (let i = 0; i < count; i++){
+//        		if ($(".previewContent .video_container").eq(i).html() != '') {
+//        			let serverfileid = 
+//              $(".previewContent .video_container").eq(i).html('').attr('serverfileid');
+//              $(".previewContent .video_container").eq(i).attr('id', 'video_container'+ serverfileid);
+//              let id_con = $(".previewContent .video_container").eq(i).attr('id');
+//              console.log(serverfileid)
+//        			let options = {
+//                  "auto_play": "0",
+//                  "file_id": serverfileid,
+//                  "app_id": "1252018592",
+//                  "width": 640,
+//                  "height": 480
+//             };
+//              new qcVideo.Player(id_con,options);
+//        		}
+//        	}
+//        	 
+//        },500)
         }, (error) => {
           this.$Notice.error({
             title: error.data.message,
