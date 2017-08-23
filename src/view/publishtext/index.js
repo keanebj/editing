@@ -1,15 +1,13 @@
 import QRCode from 'qrcode'
 import ScrollBar from '@/view/scroll/index.vue'
 import cropperUpload from '@/components/cropperUpload/index.vue'
+import uploadAudio from '@/components/uploadAudio/index.vue'
 import '../../../static/ueditor/ueditor.config.js'
 import '../../../static/ueditor/ueditor.all.js'
 import '../../../static/ueditor/lang/zh-cn/zh-cn.js'
 import '../../../static/ueditor/ueditor.parse.min.js'
 import Vue from 'vue'
 import Cookies from 'js-cookie'
-import MainHeader from '@/components/mainHeader/index.vue'
-import MainFooter from '@/components/mainFooter/index.vue'
-import uploadVideo from '@/components/uploadVideo/index.vue'
 import {
   mapState
 } from 'vuex'
@@ -20,9 +18,7 @@ export default {
     ScrollBar,
     QRCode,
     cropperUpload,
-    MainHeader,
-    MainFooter,
-    uploadVideo
+    uploadAudio
   },
   data () {
     return {
@@ -160,9 +156,11 @@ export default {
     this.editor.commands['myvideo'] = {
         execCommand : function() {
            This.$emit('showUploadPop');
-        },
-        queryCommandState : function(){
-
+        }
+    };
+    this.editor.commands['audio'] = {
+        execCommand : function() {
+         This.$refs.uploadAudioEle.showModal();
         }
     };
 
@@ -284,6 +282,9 @@ export default {
     },
     insertVideoEditor(videoHtml){
       this.editor.execCommand('inserthtml',videoHtml,true);
+    },
+    insertAudioEditor(){
+
     },
     showPreviewContent:function(){
       //获得编辑器中的内容:这里的预览需要写一个界面（待完善。。。）

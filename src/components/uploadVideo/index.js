@@ -633,16 +633,6 @@ export default {
                             }
                           
                       },
-
-                      /**
-                       * 文件状态发生变化
-                       * @param info  { done: 完成数量 , fail: 失败数量 , sha: 计算SHA或者等待计算SHA中的数量 , wait: 等待上传数量 , uploading: 上传中的数量 }
-                       */
-                      onFileStatus: function (info) {                    
-                          $('#count').text('各状态总数-->' + JSON.stringify(info));
-
-                      },
-
                       /**
                        *  上传时错误文件过滤提示
                        * @param args {code:{-1: 文件类型异常,-2: 文件名异常} , message: 错误原因 ， solution: 解决方法}

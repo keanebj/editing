@@ -1,0 +1,25 @@
+<Modal v-model="uploadAudio" width="768" id="audio-upload-pop">
+    <p slot="header">音频资源上传</p>
+    <div class="audio-content-container">
+        <div class="ivu-form-item">
+            <label  style="width:80px;padding-left:32px;">来源：</label>
+            <Radio-group v-model="source" style="margin-left:10px;" >
+                 <Radio label="local">本地上传</Radio>
+                 <Radio label="link">网络</Radio>            
+             </Radio-group>
+        </div>
+        <Form :model="linkForm" ref="linkForm" :rules="linkFormRule" :label-width="80">
+            <Form-item label="url地址：" prop="url">
+                <Input v-model="linkForm.url" placeholder="http://"></Input>
+            </Form-item>
+            <Form-item label="名称：" prop="name">
+                <Input v-model="linkForm.name" ></Input>
+            </Form-item>
+            <Form-item class="link-btn">
+                <Button type="primary" shape="circle" @click="submitLinkAudio('linkForm')">确定</Button>
+                <Button type="ghost" shape="circle" @click="resetLinkAudio('linkForm')" style="margin-left: 20px">取消</Button>
+            </Form-item>
+        </Form>
+
+    </div>
+</Modal>

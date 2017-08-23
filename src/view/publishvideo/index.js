@@ -3,9 +3,6 @@ import ScrollBar from '@/view/scroll/index.vue'
 import cropperUpload from '@/components/cropperUpload/index.vue'
 import Vue from 'vue'
 import Cookies from 'js-cookie'
-import MainHeader from '@/components/mainHeader/index.vue'
-import MainFooter from '@/components/mainFooter/index.vue'
-import uploadVideo from '@/components/uploadVideo/index.vue'
 import {
   mapState
 } from 'vuex'
@@ -15,8 +12,7 @@ export default {
   components: {
     ScrollBar,
     QRCode,
-    cropperUpload,
-    uploadVideo
+    cropperUpload
   },
   data () {
     return {
