@@ -116,7 +116,9 @@ export default {
       baseimg:'',
       noSel:true,
       uploadVideo:false,
-      isHideSubtitle:true
+      isHideSubtitle:true,
+      oldval:'',
+      newval:''
   }
 },
   created(){
@@ -731,13 +733,6 @@ abstractWordCount:function(event){
       document.execCommand("Copy");
     },
     share: function () {
-        // if(!this.articleID){
-        //     this.$Notice.warning({
-        //         title: '保存后才能分享！',
-        //         desc: false
-        //   })
-        //   return;
-        // }
         //需要访问后台
         this.$http.put("/api/content/share/"+this.articleID).then((response) => {
           if(response.data.status == 1){
@@ -853,14 +848,8 @@ abstractWordCount:function(event){
 
     //editor
     getTitleContent:function(){
-      //需要转换为字符
-      //输入的一共是多少个字符
-      var zifu=this.testgblen(this.formTop.title);
-      this.titleContentCount=Math.floor(zifu/2); 
-         
-
-      //let count=this.gblen(this.formTop.title,44,'title');
-      //this.titleContentCount=Math.ceil(count)>22 ? 22:Math.ceil(count);
+      let count=this.gblen(this.formTop.title,44,'title');
+      this.titleContentCount=Math.ceil(count)>22 ? 22:Math.ceil(count);
     },
      getSubTitleContent:function(){
       //需要转换为字符
@@ -894,29 +883,6 @@ abstractWordCount:function(event){
     },
     goAccount() {
       this.$router.push('/settings/account')
-    },
-    aaaa(e){
-      if(e.target.value.length>10)
-      {
-        alert(11);
-          return false;
-      }
-    },
-    testgblen:function(val){
-      this.titleMaxCount=44;
-       var len = 0;
-        for (var i = 0; i < val.length; i++) {
-            var a = val.charAt(i);
-            if (a.match(/[^\x00-\xff]/ig) != null) {
-                len += 2;
-                //中文
-                this.titleMaxCount -= 1;
-            }
-            else {
-                len += 1;
-            }
-        }  
-        return len;
     },
     //转为字符：中文1个 英文0.5个
     gblen:function(str,max,name){

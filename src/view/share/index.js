@@ -56,7 +56,6 @@ export default {
        setTimeout(function(){
           let count=$(".video_container").size();
           if(count > 0){
-          	if ($(".video_container").eq(i).find('embed').length > 0) {
           		for(var i=0;i<count;i++){
 	                let serverfileid=$(".video_container").eq(i).html('').attr('serverfileid');
 	                var option = {
@@ -68,7 +67,6 @@ export default {
 	                };
 	               new qcVideo.Player("id_video_container_"+option.file_id,option); 
 	            }
-          	}   
           }                 
         },500)
   }

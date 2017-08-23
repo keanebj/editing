@@ -748,6 +748,11 @@
             });
 
             $upload.on('click', function () {
+                var imgsize=uploader.getFiles();
+                if(imgsize.length && imgsize.length <= 1){
+                    alert("请先选择要上传的图片");
+                    return;
+                }
                 if ($(this).hasClass('disabled')) {
                     return false;
                 }
@@ -759,10 +764,10 @@
                 } else if (state === 'uploading') {
                     uploader.stop();
                 }
-            });
+                });
 
-            $upload.addClass('state-' + state);
-            updateTotalProgress();
+                $upload.addClass('state-' + state);
+                updateTotalProgress();
         },
         getQueueCount: function () {
             var file, i, status, readyFile = 0, files = this.uploader.getFiles();

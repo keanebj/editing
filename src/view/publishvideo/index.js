@@ -222,6 +222,7 @@ export default {
     },
     insertVideoEditor(html,id,name){
       if(id){
+         this.$refs.videoTabPreview.innerHTML='';
         //腾讯云里面的视频
           var option = {
               "auto_play": "0",
@@ -241,9 +242,8 @@ export default {
       this.ishideone=true;
     },
     reuploadvideo(){
-      this.ishideone=false;
-      this.$refs.videoTabPreview.innerHTML='';
-      this.videoid='';
+      //展示弹框
+       this.$emit('showUploadPop');  
     },
     showPreviewContent:function(){
       //获得编辑器中的内容:这里的预览需要写一个界面（待完善。。。）
