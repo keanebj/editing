@@ -111,6 +111,14 @@ export default {
       	this.materialTime = minu + ':' + sec
       }
       if (this.material.code == 6) {
+      	var $ = qaVideo.get('$')
+				if ($('.material_xx_con').find('.moxie-shim').length > 0) {
+					$('.material_xx_con')[0].removeChild($('.material_xx_con').find('.moxie-shim')[0]);
+					this.initUpload('picks', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
+				}else{
+					this.initUpload('picks', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
+				}
+      	
         this.formValidate.videoname = this.material.name;//视频名字
         // this.formValidate.videourl = '#'//视频地址
         this.formValidate.materialtype = this.formValidate.select;//视频类型
@@ -146,8 +154,8 @@ export default {
   },
   mounted() {
     if (this.$route.query.id) {
+    	this.initUpload('picks', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
       this.$http.get('/api/material/' + this.$route.query.id).then(({data}) => {
-      	console.log(data)
         this.vievShow = false;
         this.material.code = 6;
         this.material.percent = 100;
@@ -164,16 +172,18 @@ export default {
         this.hasImg = false;
         this.uploading = true;
         
+        
+//      var $ = qaVideo.get('$')
+//				console.log($('.material_xx_con').find('.moxie-shim').length)
+//				$('.material_xx_con')[0].removeChild($('.material_xx_con').find('.moxie-shim')[0]);
       }, (err) => {
         this.$Notice.error({title:error.data.message,desc: false});
       })
     }else {
+    	this.initUpload('pick', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
     	this.$http.post('api/material').then((response) => {
 	  		if (response.data.status == 1) {
 	  			this.videoId = response.data.id;
-//	  			this.transcodeNotifyUrl = this.$conf.host+this.$conf.root + 'media/api/material/init';
-	  			this.initUpload('picks', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
-	    		this.initUpload('pick', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
 	  		}else{
 	  			this.$Notice.error({title:response.data.message,desc: false});
 	  		}
@@ -216,7 +226,14 @@ export default {
         title: '确认保存',
         content: '保存此视频到素材管理？',
         onOk: () => {
-          this.saveMaterial()
+        	if (this.material.code > 5) {
+        		this.saveMaterial()
+        	}else{
+        		this.$Notice.error({
+        			title:'视频上传完成才能保存！',
+        			desc: false
+        		});
+        	}
         }
       })
     },
@@ -379,11 +396,10 @@ export default {
     },
     cancaleUpload () {
     	this.stopUploading = false;
-			if (this.uploading) {
-				qaVideo.uploader.stopUpload();
-			}else{
-				qbVideo.uploader.stopUpload();
-			}
+			qaVideo.uploader.stopUpload();
+			
+			
+			
       this.cancaleUploadInfo();
     },
     cancaleUploadInfo () {
@@ -391,63 +407,32 @@ export default {
         title: '确认取消上传',
         content: '<p>现在上传的视频将被删除，确定取消上传</p>',
         onOk: () => {
-          // Log.debug('delete', this.material.id);
-          // qbVideo.uploader.deleteFile(this.material.id);
-          // console.log(this.material)
-          
-          
-//        this.$http.delete('/api/video/upload/'+ this.material.id).then((response) => {
-//        	if (this.uploading) {
-//							qaVideo.uploader.deleteFile(this.material.id)
-//						}else{
-//							qbVideo.uploader.deleteFile(this.material.id)
-//						}
-//          this.material.code = 0;
-//          this.vievShow = true;
-//        }, () => {
-//        	this.vievShow = true;
-//          this.$Notice.error({
-//            title: '错误',
-//            desc: '重新上传错误'
-//          })
-//        })
-					this.$http.put('api/video/upload/' + this.videoId).then((response) => {
-						if (response.data.status == 1) {
-							this.material.code = 0;
-            	this.vievShow = true;	
-            	this.videoId = response.data.id;
-						}else{
-							this.$Notice.error({title:response.data.message,desc: false});
-						}
-					}, (response) => {
-						this.$Notice.error({title:response.data.message,desc: false});
-					})
+        	this.stopUploading = true;
+        	this.material.code = 0;
+          this.vievShow = true;	
+          var $ = qaVideo.get('$')
+					if ($('.material_xx_cons').find('.moxie-shim').length > 0) {
+						$('.material_xx_cons')[0].removeChild($('.material_xx_cons').find('.moxie-shim')[0]);
+						this.initUpload('pick', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
+					}else{
+						this.initUpload('pick', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
+					}
         },
         onCancel: () => {
-        	if (this.uploading) {
-        		qaVideo.uploader.reUpload();
-        	}else{
-        		qbVideo.uploader.reUpload();
-        	}
+        	qaVideo.uploader.reUpload();
         }
       });
     },
     reUpload () {
-//			this.$http.delete('/api/video/upload/'+ this.material.id).then((response) => {
-//    	if (this.uploading) {
-//						qaVideo.uploader.deleteFile(this.material.id)
-//					}else{
-//						qbVideo.uploader.deleteFile(this.material.id)
-//					}
-//      this.material.code = 0;
-//      this.vievShow = true;
-//    }, () => {
-//    	this.vievShow = true;
-//      this.$Notice.error({
-//        title: '错误',
-//        desc: '重新上传错误'
-//      })
-//    })
+			this.$http.put('api/video/upload/' + this.videoId).then((response) => {
+				if (response.data.status == 1) {
+					this.videoId = response.data.id;
+				}else{
+					this.$Notice.error({title:response.data.message,desc: false});
+				}
+			}, (response) => {
+				this.$Notice.error({title:response.data.message,desc: false});
+			})
     },
     initUpload (upBtnId, secretId, isTranscode, isWatermark, transcodeNotifyUrl, classId) {
       var $ = qaVideo.get('$');
