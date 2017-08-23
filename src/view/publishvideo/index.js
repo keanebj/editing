@@ -253,6 +253,7 @@ export default {
           let data = response.data.content;
           //给数据值
           this.previewCon[0].title = data.title;
+          this.previewCon[0].subtitle = data.subtitle;
 	          this.previewCon[0].content = data.content;          
 	          this.previewCon[0].time = data.addtime;
 	          this.previewCon[0].studioname = this.studioName;

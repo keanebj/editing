@@ -407,6 +407,7 @@ export default {
         title: '确认取消上传',
         content: '<p>现在上传的视频将被删除，确定取消上传</p>',
         onOk: () => {
+        	qaVideo.uploader.deleteFile(this.material.id);
         	this.stopUploading = true;
         	this.material.code = 0;
           this.vievShow = true;	
