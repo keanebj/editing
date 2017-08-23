@@ -58,9 +58,14 @@ export default {
           title: '视频转码错误，请重新上传!',
           desc: false
         })
-    	}else{
+    	}else if(state == 1){
     		this.$Notice.info({
           title: '视频正在转码中，请稍等!',
+          desc: false
+        })
+    	}else{
+    		this.$Notice.info({
+          title: '视频上传失败，请重新上传！',
           desc: false
         })
     	}
@@ -146,6 +151,7 @@ export default {
         }
       }).then(({ data }) => {
         if (data.status == 1) {
+        	console.log(data)
           this.videoTotal = data.total;
           this.pageAll = Math.ceil(this.videoTotal/this.pageSize)
           this.videoList = data.materials;
