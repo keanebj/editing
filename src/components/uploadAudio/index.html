@@ -28,6 +28,7 @@
                 <Input v-model="linkForm.url" placeholder="*.mp3" style="width:60%" readonly></Input>
                 <Upload :action="action" 
                         :format="['mp3']"
+                        accept=".mp3"
                         :max-size="30720"
                         :show-upload-list=false 
                         style="display: inline-block;"
@@ -50,6 +51,7 @@
                 <div style="text-align:center;" :class="{hide:!isfail}">
                      <Upload :action="action" 
                         :format="['mp3']"
+                        accept=".mp3"
                         :max-size="30720"
                         :show-upload-list=false 
                         style="display: inline-block;"

@@ -252,14 +252,12 @@ export default {
                       after_sha_start_upload: true,//sha计算完成后，开始上传 (默认关闭立即上传)
                       //,sha1js_path: 'http://您的域名/您的设置目录/calculator_worker_sha1.js' //计算sha1的位置
                       sha1js_path: "static/upload/calculator_worker_sha1.js",
-                      disable_multi_selection: false, //禁用多选 ，默认为false
-
+                      disable_multi_selection: true, //禁用多选 ，默认为false
                       transcodeNotifyUrl: transcodeNotifyUrl, //(转码成功后的回调地址)isTranscode==true,时开启； 回调url的返回数据格式参考  https://www.qcloud.com/document/product/266/1407
-                      classId: classId,
-                      // mime_types, 默认是常用的视频和音频文件扩展名，如MP4, MKV, MP3等, video_only 默认为false，可允许音频文件上传
+                      classId: classId,                    
                       filters: {
                           max_file_size: '2gb',
-                          mime_types: [],
+                          mime_types: ['MOV','MP4','MP4V','M4V','MKV','AVI','FLV','3GP','RM','RAM','MPG','MPEG','MPE','VOB','DAT','WMV','WM','ASF','ASX'],
                           video_only: true
                       },
                       forceH5Worker: true // 使用HTML5 webworker计算
@@ -414,7 +412,7 @@ export default {
                        */
                       onFilterError: function (args) {
                           This.$Notice.error({
-                                title: args.message+(args.solution ? (';solution==' + args.solution) :''),
+                                title: '只能上传视频文件',
                                 desc: false
                            })                       
                       }
