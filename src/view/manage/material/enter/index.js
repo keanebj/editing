@@ -425,15 +425,15 @@ export default {
       });
     },
     reUpload () {
-			this.$http.put('api/video/upload/' + this.videoId).then((response) => {
-				if (response.data.status == 1) {
-					this.videoId = response.data.id;
-				}else{
-					this.$Notice.error({title:response.data.message,desc: false});
-				}
-			}, (response) => {
-				this.$Notice.error({title:response.data.message,desc: false});
-			})
+//			this.$http.put('api/video/upload/' + this.videoId).then((response) => {
+//				if (response.data.status == 1) {
+//					this.videoId = response.data.id;
+//				}else{
+//					this.$Notice.error({title:response.data.message,desc: false});
+//				}
+//			}, (response) => {
+//				this.$Notice.error({title:response.data.message,desc: false});
+//			})
     },
     initUpload (upBtnId, secretId, isTranscode, isWatermark, transcodeNotifyUrl, classId) {
       var $ = qaVideo.get('$');
