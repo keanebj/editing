@@ -112,6 +112,11 @@ export default {
         this.changeTab('link');
         this.selVideoid= '111';
         this.uploadVideo=false;
+        //同时需要取消上传
+        qdVideo.uploader.stopUpload();
+        qdVideo.uploader.deleteFile(this.video.localId);
+        clearInterval(this.videotimer);
+        clearTimeout(this.onceTimer);
       },
       addSourceVideo(){
           if(this.selVideoid!= '111'){
