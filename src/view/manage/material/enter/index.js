@@ -125,20 +125,20 @@ export default {
 //      this.formValidate.duration = "0";// 视频时长
         this.formValidate.size = this.material.size_text;//视频大小
         this.formValidate.videoid = this.material.serverFileId;//视频id
-        this.$http.get('api/video/upload/' + this.formValidate.videoid).then(({data}) => {
-          if (data.status == 1) {
-            this.formValidate.videourl = data.info.basicinfo.sourceVideoUrl;
-          }else{
-            this.errorProcess(data)
-          }
-        }, (err) => {
-          this.$Notice.error({title:error.data.message,desc: false});
-        })
+//      this.$http.get('api/video/upload/' + this.formValidate.videoid).then(({data}) => {
+//        if (data.status == 1) {
+//          this.formValidate.videourl = data.info.basicinfo.sourceVideoUrl;
+//        }else{
+//          this.errorProcess(data)
+//        }
+//      }, (err) => {
+//        this.$Notice.error({title:error.data.message,desc: false});
+//      })
         this.material.percent = '100';
         
         this.$http.get('api/material/init/' + this.videoId,{
         		params: {
-	          	fileId: this.material.serverFileId
+	          	fileid: this.material.serverFileId
         		}
         }).then((response) => {
         	if (response.data.status == 1) {
@@ -518,7 +518,6 @@ export default {
                   if (args.code == Code.SHA_FAILED)
                       return alert('该浏览器无法计算SHA')
                   self.$store.dispatch('setMaterial',args);
-//                console.log(self.material)
               },
 
               /**
