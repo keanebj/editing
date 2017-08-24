@@ -1,15 +1,13 @@
 import QRCode from 'qrcode'
 import ScrollBar from '@/view/scroll/index.vue'
 import cropperUpload from '@/components/cropperUpload/index.vue'
+import uploadAudio from '@/components/uploadAudio/index.vue'
 import '../../../static/ueditor/ueditor.config.js'
 import '../../../static/ueditor/ueditor.all.js'
 import '../../../static/ueditor/lang/zh-cn/zh-cn.js'
 import '../../../static/ueditor/ueditor.parse.min.js'
 import Vue from 'vue'
 import Cookies from 'js-cookie'
-import MainHeader from '@/components/mainHeader/index.vue'
-import MainFooter from '@/components/mainFooter/index.vue'
-import uploadVideo from '@/components/uploadVideo/index.vue'
 import {
   mapState
 } from 'vuex'
@@ -20,9 +18,7 @@ export default {
     ScrollBar,
     QRCode,
     cropperUpload,
-    MainHeader,
-    MainFooter,
-    uploadVideo
+    uploadAudio
   },
   data () {
     return {
@@ -87,6 +83,7 @@ export default {
       previewCon: [
         {
           title: '',
+          subtitle: '',
           content: '',
           studioname: '',
           time: ''
@@ -116,7 +113,9 @@ export default {
       baseimg:'',
       noSel:true,
       uploadVideo:false,
-      isHideSubtitle:true
+      isHideSubtitle:true,
+      oldval:'',
+      newval:''
   }
 },
   created(){
@@ -157,9 +156,11 @@ export default {
     this.editor.commands['myvideo'] = {
         execCommand : function() {
            This.$emit('showUploadPop');
-        },
-        queryCommandState : function(){
-
+        }
+    };
+    this.editor.commands['audio'] = {
+        execCommand : function() {
+         This.$refs.uploadAudioEle.showModal();
         }
     };
 
@@ -282,6 +283,9 @@ export default {
     insertVideoEditor(videoHtml){
       this.editor.execCommand('inserthtml',videoHtml,true);
     },
+    insertAudioEditor(){
+
+    },
     showPreviewContent:function(){
       //获得编辑器中的内容:这里的预览需要写一个界面（待完善。。。）
       if (this.articleID > -1) {
@@ -290,6 +294,7 @@ export default {
           let data = response.data.content;
           //给数据值
           this.previewCon[0].title = data.title;
+          this.previewCon[0].subtitle = data.subtitle;
 	          this.previewCon[0].content = data.content;
 	          this.previewCon[0].time = data.addtime;
 	          this.previewCon[0].studioname = this.studioName;
@@ -731,13 +736,6 @@ abstractWordCount:function(event){
       document.execCommand("Copy");
     },
     share: function () {
-        // if(!this.articleID){
-        //     this.$Notice.warning({
-        //         title: '保存后才能分享！',
-        //         desc: false
-        //   })
-        //   return;
-        // }
         //需要访问后台
         this.$http.put("/api/content/share/"+this.articleID).then((response) => {
           if(response.data.status == 1){
@@ -853,14 +851,8 @@ abstractWordCount:function(event){
 
     //editor
     getTitleContent:function(){
-      //需要转换为字符
-      //输入的一共是多少个字符
-      var zifu=this.testgblen(this.formTop.title);
-      this.titleContentCount=Math.floor(zifu/2); 
-         
-
-      //let count=this.gblen(this.formTop.title,44,'title');
-      //this.titleContentCount=Math.ceil(count)>22 ? 22:Math.ceil(count);
+      let count=this.gblen(this.formTop.title,44,'title');
+      this.titleContentCount=Math.ceil(count)>22 ? 22:Math.ceil(count);
     },
      getSubTitleContent:function(){
       //需要转换为字符
@@ -894,29 +886,6 @@ abstractWordCount:function(event){
     },
     goAccount() {
       this.$router.push('/settings/account')
-    },
-    aaaa(e){
-      if(e.target.value.length>10)
-      {
-        alert(11);
-          return false;
-      }
-    },
-    testgblen:function(val){
-      this.titleMaxCount=44;
-       var len = 0;
-        for (var i = 0; i < val.length; i++) {
-            var a = val.charAt(i);
-            if (a.match(/[^\x00-\xff]/ig) != null) {
-                len += 2;
-                //中文
-                this.titleMaxCount -= 1;
-            }
-            else {
-                len += 1;
-            }
-        }  
-        return len;
     },
     //转为字符：中文1个 英文0.5个
     gblen:function(str,max,name){

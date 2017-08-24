@@ -12,9 +12,8 @@
     <div class="article" id="notice_video">
       <div>
         <div class="con_new hidden-xs">
-          <h2 class="orginTit">
-            {{title}}
-          </h2>
+          <h2 class="orginTit" v-if="subtitle == null">{{ title }}</h2>
+          <h2 class="orginTit" v-else>{{ subtitle }}</h2>
           <div class="article_xinxi">
 	    		<span>{{ conInfo.channel }}</span>
 	  			<span>{{ conInfo.time.substring(0,10) }}</span>

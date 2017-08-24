@@ -2,7 +2,8 @@
   <div class="set-con" @wheel.prevent="scrollBar($event)" ref="setCon" :style="{height: setConHeight}">
     <div class="set-posi" ref="onscroll" @mousedown.prevent="mouseScroll($event)">
       <div v-if="previewCon.title"  class="yulan">
-      	<h1  class="yulan-tit">{{ previewCon.title }}</h1>
+      	<h1  class="yulan-tit" v-if="previewCon.subtitle == null">{{ previewCon.title }}</h1>
+      	<h1  class="yulan-tit" v-else>{{ previewCon.subtitle }}</h1>
       	<div class="yulan-xinxi">
       		<span>{{ previewCon.channel }}</span>
       		<span>{{ previewCon.time.substring(0,10) }}</span>

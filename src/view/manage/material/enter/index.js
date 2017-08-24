@@ -58,7 +58,8 @@ export default {
       materialTime: '',
       stopUploading: true,
       uploadError: false,
-      transcodeNotifyUrl: ''
+      transcodeNotifyUrl: '',
+      fileError: 0
     }
   },
   computed: {
@@ -82,7 +83,7 @@ export default {
         this.vievShow = true;
       }
       if (this.material.speed == undefined) {
-      	this.material.speed = '1Kb/s'
+      	this.material.speed = '计算中...'
       }
       if (this.material.code < 5) {
         this.material.percent = 0;
@@ -104,16 +105,24 @@ export default {
         let allsec=parseInt((this.material.size-this.material.size*this.material.percent/100)/speed);
       var minu = parseInt(allsec/60) >= 10 ? parseInt(allsec/60) : '0'+parseInt(allsec/60);
       var sec = allsec%60 >= 10 ? allsec%60 : '0'+allsec%60;
-      if (this.material.speed == '1Kb/s') {
-      	this.materialTime = '...'
+      if (this.material.speed == '计算中...') {
+      	this.materialTime = '计算中...'
       }else{
       	this.materialTime = minu + ':' + sec
       }
       if (this.material.code == 6) {
+      	var $ = qaVideo.get('$')
+				if ($('.material_xx_con').find('.moxie-shim').length > 0) {
+					$('.material_xx_con')[0].removeChild($('.material_xx_con').find('.moxie-shim')[0]);
+					this.initUpload('picks', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
+				}else{
+					this.initUpload('picks', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
+				}
+      	
         this.formValidate.videoname = this.material.name;//视频名字
         // this.formValidate.videourl = '#'//视频地址
         this.formValidate.materialtype = this.formValidate.select;//视频类型
-        this.formValidate.duration = "0";// 视频时长
+//      this.formValidate.duration = "0";// 视频时长
         this.formValidate.size = this.material.size_text;//视频大小
         this.formValidate.videoid = this.material.serverFileId;//视频id
         this.$http.get('api/video/upload/' + this.formValidate.videoid).then(({data}) => {
@@ -145,6 +154,7 @@ export default {
   },
   mounted() {
     if (this.$route.query.id) {
+    	this.initUpload('picks', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
       this.$http.get('/api/material/' + this.$route.query.id).then(({data}) => {
         this.vievShow = false;
         this.material.code = 6;
@@ -162,23 +172,27 @@ export default {
         this.hasImg = false;
         this.uploading = true;
         
+        
+//      var $ = qaVideo.get('$')
+//				console.log($('.material_xx_con').find('.moxie-shim').length)
+//				$('.material_xx_con')[0].removeChild($('.material_xx_con').find('.moxie-shim')[0]);
       }, (err) => {
         this.$Notice.error({title:error.data.message,desc: false});
       })
+    }else {
+    	this.initUpload('pick', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
+    	this.$http.post('api/material').then((response) => {
+	  		if (response.data.status == 1) {
+	  			this.videoId = response.data.id;
+	  		}else{
+	  			this.$Notice.error({title:response.data.message,desc: false});
+	  		}
+	  	}, ({error}) => {
+	  		this.$Notice.error({title:error.data.message,desc: false});
+	  	})
     }
     
-    this.$http.post('api/material').then((response) => {
-  		if (response.data.status == 1) {
-  			this.videoId = response.data.id;
-  			this.transcodeNotifyUrl = this.$conf.host+this.$conf.root + 'media/api/material/init';
-  			this.initUpload('picks', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
-    		this.initUpload('pick', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
-  		}else{
-  			this.$Notice.error({title:response.data.message,desc: false});
-  		}
-  	}, ({error}) => {
-  		this.$Notice.error({title:error.data.message,desc: false});
-  	})
+    
     if (this.vievShow) {
     	this.uploading = true;
     }
@@ -212,7 +226,14 @@ export default {
         title: '确认保存',
         content: '保存此视频到素材管理？',
         onOk: () => {
-          this.saveMaterial()
+        	if (this.material.code > 5) {
+        		this.saveMaterial()
+        	}else{
+        		this.$Notice.error({
+        			title:'视频上传完成才能保存！',
+        			desc: false
+        		});
+        	}
         }
       })
     },
@@ -375,11 +396,10 @@ export default {
     },
     cancaleUpload () {
     	this.stopUploading = false;
-			if (this.uploading) {
-				qaVideo.uploader.stopUpload();
-			}else{
-				qbVideo.uploader.stopUpload();
-			}
+			qaVideo.uploader.stopUpload();
+			
+			
+			
       this.cancaleUploadInfo();
     },
     cancaleUploadInfo () {
@@ -387,63 +407,33 @@ export default {
         title: '确认取消上传',
         content: '<p>现在上传的视频将被删除，确定取消上传</p>',
         onOk: () => {
-          // Log.debug('delete', this.material.id);
-          // qbVideo.uploader.deleteFile(this.material.id);
-          // console.log(this.material)
-          
-          
-//        this.$http.delete('/api/video/upload/'+ this.material.id).then((response) => {
-//        	if (this.uploading) {
-//							qaVideo.uploader.deleteFile(this.material.id)
-//						}else{
-//							qbVideo.uploader.deleteFile(this.material.id)
-//						}
-//          this.material.code = 0;
-//          this.vievShow = true;
-//        }, () => {
-//        	this.vievShow = true;
-//          this.$Notice.error({
-//            title: '错误',
-//            desc: '重新上传错误'
-//          })
-//        })
-					this.$http.put('api/video/upload/' + this.videoId).then((response) => {
-						if (response.data.status == 1) {
-							this.material.code = 0;
-            	this.vievShow = true;	
-            	this.videoId = response.data.id;
-						}else{
-							this.$Notice.error({title:response.data.message,desc: false});
-						}
-					}, (response) => {
-						this.$Notice.error({title:response.data.message,desc: false});
-					})
+        	qaVideo.uploader.deleteFile(this.material.id);
+        	this.stopUploading = true;
+        	this.material.code = 0;
+          this.vievShow = true;	
+          var $ = qaVideo.get('$')
+					if ($('.material_xx_cons').find('.moxie-shim').length > 0) {
+						$('.material_xx_cons')[0].removeChild($('.material_xx_cons').find('.moxie-shim')[0]);
+						this.initUpload('pick', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
+					}else{
+						this.initUpload('pick', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
+					}
         },
         onCancel: () => {
-        	if (this.uploading) {
-        		qaVideo.uploader.reUpload();
-        	}else{
-        		qbVideo.uploader.reUpload();
-        	}
+        	qaVideo.uploader.reUpload();
         }
       });
     },
     reUpload () {
-//			this.$http.delete('/api/video/upload/'+ this.material.id).then((response) => {
-//    	if (this.uploading) {
-//						qaVideo.uploader.deleteFile(this.material.id)
-//					}else{
-//						qbVideo.uploader.deleteFile(this.material.id)
-//					}
-//      this.material.code = 0;
-//      this.vievShow = true;
-//    }, () => {
-//    	this.vievShow = true;
-//      this.$Notice.error({
-//        title: '错误',
-//        desc: '重新上传错误'
-//      })
-//    })
+			this.$http.put('api/video/upload/' + this.videoId).then((response) => {
+				if (response.data.status == 1) {
+					this.videoId = response.data.id;
+				}else{
+					this.$Notice.error({title:response.data.message,desc: false});
+				}
+			}, (response) => {
+				this.$Notice.error({title:response.data.message,desc: false});
+			})
     },
     initUpload (upBtnId, secretId, isTranscode, isWatermark, transcodeNotifyUrl, classId) {
       var $ = qaVideo.get('$');
@@ -545,14 +535,18 @@ export default {
                * @param args {code:{-1: 文件类型异常,-2: 文件名异常} , message: 错误原因 ， solution: 解决方法}
                */
               onFilterError: function (args) {
+              	
                   // var msg = 'message:' + args.message + (args.solution ? (';solution==' + args.solution) :
                   //     '');
                   // $('#error').html(msg);
 //                console.log(args)
-								This.$Notice.error({
-                  title: args.message+(args.solution ? (';solution==' + args.solution) :''),
-                  desc: false
-               	})   
+								self.fileError += 1;
+								if (self.fileError%2 == 0) {
+									self.$Notice.error({
+						        title: args.message,
+						        desc: false
+						      }) 
+								}
               }
           }
       );

@@ -3,6 +3,7 @@ import Publishvideo from '@/view/publishvideo/index.vue'
 import MainHeader from '@/components/mainHeader/index.vue'
 import MainFooter from '@/components/mainFooter/index.vue'
 import uploadVideo from '@/components/uploadVideo/index.vue'
+
 import {
   mapState
 } from 'vuex'

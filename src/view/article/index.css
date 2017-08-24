@@ -24,7 +24,9 @@
     text-align: center;
 }
 .con_new img{
-    width: 70%;
+    width: auto;
+    max-width: 95%;
+    height: auto;
 }
 .con_new img[src^="/static/ueditor/dialogs/attachment/fileTypeImages"]{
 	width:auto;
@@ -36,8 +38,13 @@
 	max-width: 100%;
 }
 .orginTit{
-	margin-bottom: 15px;
+	margin-bottom: 10px;
 	font-size: 20px;
 	text-align: center;
+	font-weight: normal;
+}
+.orginsubTit{
+	margin-bottom: 10px;
+	font-size: 16px;
 	font-weight: normal;
 }

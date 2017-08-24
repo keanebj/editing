@@ -39,7 +39,7 @@ export default [{
 	    name: '素材管理',
 	    path: '/manage/material',
 	    match: ['SourceMaterialEnter'],
-	    authority:'Edit'
+	    authority:'Manage Edit'
 	  }
   ]
 }, {

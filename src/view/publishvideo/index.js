@@ -3,9 +3,6 @@ import ScrollBar from '@/view/scroll/index.vue'
 import cropperUpload from '@/components/cropperUpload/index.vue'
 import Vue from 'vue'
 import Cookies from 'js-cookie'
-import MainHeader from '@/components/mainHeader/index.vue'
-import MainFooter from '@/components/mainFooter/index.vue'
-import uploadVideo from '@/components/uploadVideo/index.vue'
 import {
   mapState
 } from 'vuex'
@@ -15,8 +12,7 @@ export default {
   components: {
     ScrollBar,
     QRCode,
-    cropperUpload,
-    uploadVideo
+    cropperUpload
   },
   data () {
     return {
@@ -222,6 +218,7 @@ export default {
     },
     insertVideoEditor(html,id,name){
       if(id){
+         this.$refs.videoTabPreview.innerHTML='';
         //腾讯云里面的视频
           var option = {
               "auto_play": "0",
@@ -241,9 +238,8 @@ export default {
       this.ishideone=true;
     },
     reuploadvideo(){
-      this.ishideone=false;
-      this.$refs.videoTabPreview.innerHTML='';
-      this.videoid='';
+      //展示弹框
+       this.$emit('showUploadPop');  
     },
     showPreviewContent:function(){
       //获得编辑器中的内容:这里的预览需要写一个界面（待完善。。。）
@@ -253,6 +249,7 @@ export default {
           let data = response.data.content;
           //给数据值
           this.previewCon[0].title = data.title;
+          this.previewCon[0].subtitle = data.subtitle;
 	          this.previewCon[0].content = data.content;          
 	          this.previewCon[0].time = data.addtime;
 	          this.previewCon[0].studioname = this.studioName;
@@ -261,6 +258,31 @@ export default {
           if (response.data.operatortype == "Edit") {      
 	          this.previewCon[0].author = data.author;
           }
+          
+//        let $=qbVideo.get("$");
+//        let _this = this;
+//        setTimeout(function () {
+//        	console.log($(".previewContent .video_container").size())
+//        	let count = $(".previewContent .video_container").size();
+//        	for (let i = 0; i < count; i++){
+//        		if ($(".previewContent .video_container").eq(i).html() != '') {
+//        			let serverfileid = 
+//              $(".previewContent .video_container").eq(i).html('').attr('serverfileid');
+//              $(".previewContent .video_container").eq(i).attr('id', 'video_container'+ serverfileid);
+//              let id_con = $(".previewContent .video_container").eq(i).attr('id');
+//              console.log(serverfileid)
+//        			let options = {
+//                  "auto_play": "0",
+//                  "file_id": serverfileid,
+//                  "app_id": "1252018592",
+//                  "width": 640,
+//                  "height": 480
+//             };
+//              new qcVideo.Player(id_con,options);
+//        		}
+//        	}
+//        	 
+//        },500)
         }, (error) => {
           this.$Notice.error({
             title: error.data.message,

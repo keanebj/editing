@@ -1,7 +1,7 @@
 <section>
   <div class="material" >
     <Row class="material_shangchuan" :gutter="16" :class="{hide:!vievShow}">
-      <Col span="12">
+      <Col span="12" ref="material_xx_con" class="material_xx_cons">
         <Button id="pick" shape="circle" class="upload_btn"><img src="../../../../assets/material/upload_icon.svg" alt="" width="15" height="15" ><span>上传视频</span></Button>
         <span>建议上传720p（1280x720）或更高分辨率的视频，大小不超过2G</span>
       </Col>
@@ -10,7 +10,7 @@
       </Col>
     </Row>
     <Row  class="material_xx" :class="{hide:vievShow}">
-      <div class="material_xx_con">
+      <div class="material_xx_con" ref="material_xx_cons">
         <h2>{{ material.name }}</h2>
         <div>
           <Progress :percent=parseInt(material.percent) :stroke-width="20" status="wrong" hide-info></Progress>

@@ -53,14 +53,15 @@
         'directionalityltr', 'directionalityrtl', 'indent', '|',
         'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
         'link',  'anchor', '|',
-         'insertimage', 'myvideo', 'attachment', 'map', 'insertcode',  'pagebreak', 'template', 'background', '|',
+         'insertimage', 'audio','myvideo', 'attachment', 'map', 'insertcode',  'pagebreak', 'template', 'background', '|',
         'horizontal', 'date', 'time', 'spechars',  '|',
         'inserttable', '|',
          'searchreplace', 'help'
       ]]
         //当鼠标放在工具栏上时显示的tooltip提示,留空支持自动多语言配置，否则以配置值为准
         ,labelMap:{
-            'myvideo':'自定义',
+            'audio':'音频',
+            'myvideo':'视频',
             'anchor':'', 'undo':''
         }
 
