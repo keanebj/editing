@@ -25,7 +25,8 @@ export default {
             leftTime:'...',
             loadingMsg:'',
             videoId:'',
-            localId:''
+            localId:'',
+            status:''
         },
         //给一个默认id
         selVideoid:'111',
@@ -33,7 +34,8 @@ export default {
         isHideSourceBtn:false,
         playInfo:'',
         enableAddLocalVideo:true,
-        onceTimer:null   
+        onceTimer:null,
+        uploadObj:'qdVideo'   
     }
   },
   components:{
@@ -111,10 +113,17 @@ export default {
         this.reUpload();
         this.changeTab('link');
         this.selVideoid= '111';
-        this.uploadVideo=false;
+        this.uploadVideo=false; 
         //同时需要取消上传
-        qdVideo.uploader.stopUpload();
-        qdVideo.uploader.deleteFile(this.video.localId);
+        // if(this.video.status == 'uploading'){
+        //     this.video.status='';
+        //     qdVideo.uploader.stopUpload();
+        //     qdVideo.uploader.deleteFile(this.video.localId);    
+        // } 
+        this.idHideStepOne=false;
+        this.idHideStepTwo=true;
+        this.idHideStepThree=true;
+        this.idHideStepFour=true;
         clearInterval(this.videotimer);
         clearTimeout(this.onceTimer);
       },
@@ -262,6 +271,7 @@ export default {
                        * @param args { id: 文件ID, size: 文件大小, name: 文件名称, status: 状态, percent: 进度 speed: 速度, errorCode: 错误码,serverFileId: 后端文件ID }
                        */
                       onFileUpdate: function (args) {
+                          This.uploadObj='qdVideo';
                           if (args.code == Code.SHA_FAILED){
                               This.$Notice.error({
                                 title: '该浏览器无法计算SHA',
@@ -313,10 +323,11 @@ export default {
                             }
                             else if(args.code == 5 )//上传中 
                             {
+                                This.video.status='uploading';
                                 This.video.localId=args.id;
                                 //获取实时进度    
                                 This.video.uploadedSize=util.getHStorage(args.size*Number(args.percent)/100);
-                                This.video.percent=Number(args.percent); 
+                                This.video.percent=parseInt(args.percent); 
                                 This.video.speed= (args.speed ? args.speed : '');
                                 This.video.videoId=args.id;
 
@@ -341,9 +352,10 @@ export default {
                                     This.video.leftTime='计算中...';
                                 }    
                             } 
-                            else if(args.code == 6 )//上传完成 
+                            else if(args.code == 6  && This.video.status == 'uploading')//上传完成 
                             { 
-                                //取得回调的视频serverFileId，用于后面更新字段用 
+                                //取得回调的视频serverFileId，用于后面更新字段用
+                                This.video.status == 'uploaded'; 
                                 This.video.videoId=args.serverFileId; 
                                 //跳转界面
                                 This.idHideStepTwo=true;
@@ -425,41 +437,28 @@ export default {
                   }
               );
 
-            
-              //事件绑定
-              $('#start_upload').on('click', function () {
-                  //@api 上传
-                  qdVideo.uploader.startUpload();
-              });
-
               $('#stop_upload').on('click', function () {
-                  //@api 暂停上传
-                  qdVideo.uploader.stopUpload();
+                  if(This.uploadObj == 'qdVideo'){
+                    //@api 暂停上传
+                    qdVideo.uploader.stopUpload();
+                    //移除这个文件
+                    qdVideo.uploader.deleteFile(This.video.localId);
+                  }else if(This.uploadObj == 'qwVideo'){
+                     //@api 暂停上传
+                    qwVideo.uploader.stopUpload();
+                    //移除这个文件
+                    qwVideo.uploader.deleteFile(This.video.localId);
+                  }
+                  
                   //取消上传，跳转到上传界面
                   This.idHideStepOne=false;
                   This.idHideStepTwo=true;
                   This.idHideStepThree=true;
                   This.idHideStepFour=true;
 
-                  //移除这个文件
-                  qdVideo.uploader.deleteFile(This.video.localId);
+                
                   This.backOrigin();
 
-              });
-
-              $('#re_upload').on('click', function () {
-                  //@api 恢复上传（错误文件重新）
-                  qdVideo.uploader.reUpload();
-              });
-
-              $('#result').on('click', '[data-act="del"]', function (e) {
-                  var $line = $(this).parent();
-                  var fileId = $line.get(0).id;
-                  Log.debug('delete', fileId);
-
-                  $line.remove();
-                  //@api 删除文件
-                  qdVideo.uploader.deleteFile(fileId);
               });
             },
              accountDone2(upBtnId, secretId, isTranscode, isWatermark, transcodeNotifyUrl, classId) { 
@@ -525,6 +524,7 @@ export default {
                        * @param args { id: 文件ID, size: 文件大小, name: 文件名称, status: 状态, percent: 进度 speed: 速度, errorCode: 错误码,serverFileId: 后端文件ID }
                        */
                       onFileUpdate: function (args) {
+                           This.uploadObj='qwVideo';
                           if (args.code == Code.SHA_FAILED){
                               This.$Notice.error({
                                 title: '该浏览器无法计算SHA',
