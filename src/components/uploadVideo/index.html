@@ -29,8 +29,10 @@
     </div>
      <!-- 本地上传-->
     <div :class="{hide:isHideLocal}" style="margin:10px 0;height:350px;" >
-        <div class="video-local-upload video-step-1" :class="{hide:idHideStepOne}">         
-           <Button type="primary" shape="circle" style="margin:80px 0 30px 0;" id="pickfile">上传视频</Button>
+        <div class="video-local-upload video-step-1" :class="{hide:idHideStepOne}">
+           <div style="margin:80px 0 30px 0;display: inline-block" id="step-one-pickfile">         
+                <Button type="primary" shape="circle" id="pickfile">上传视频</Button>
+           </div>
            <div>{{video.loadingMsg}}</div> 
             <p class="local-step1-tip">建议上传720p（1280*720）或更高分辨率的视频，大小不超过2G<br/>视频格式:建议上传mp4和HLS文件<br/>支持格式：MOV,MP4,MP4V,M4V,MKV,AVI,FLV,3GP,RM,RAM,MPG,MPEG,MPE,VOB,DAT,WMV,WM,ASF,ASX</p>
         </div>
@@ -43,7 +45,7 @@
             </div>
         </div>
          <div class="video-local-upload video-step-3" :class="{hide:idHideStepThree}">
-           <div class="title">{{video.name}}</div><Button type="primary" shape="circle" class="re-upload-btn" id="pickfile2">重新上传</Button>
+           <div class="title">{{video.name}}</div><div id="re-upload-area" class="re-upload-btn"></div>
            <div style="display: inline-block;"><div class="video-preview" id="videoPreview" ref="videoPreview">视频正在转码中，请稍候...</div></div><br/>
            <span class="main-color">视频比例16:9</span>
             <div class="video-footer" style="margin-top:10px;">

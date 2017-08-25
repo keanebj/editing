@@ -18,3 +18,17 @@
      text-align:center;
     margin-left:0 !important;
 }
+#audio-upload-pop .ivu-progress-bg{
+    background:linear-gradient(90deg,#F95759,deeppink);
+}
+#audio-upload-pop .ivu-progress-text{
+    position: absolute;
+    left:50%;
+    top:2%;
+    color:#fff;
+    font-size: 20px;
+}
+#audio-upload-pop .ivu-progress-outer{
+    position: relative;
+    padding-right:26px;
+}

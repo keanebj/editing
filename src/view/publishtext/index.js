@@ -143,8 +143,8 @@ export default {
     ...mapState(['menu', 'userinfo'])
   },
 
-  mounted() {
-    this.editor = UE.getEditor("editor", {
+  mounted(){ 
+    this.editor=UE.getEditor("editor",{
       //此处可以定制工具栏的功能，若不设置，则默认是全部的功能
       UEDITOR_HOME_URL: `${this.$conf.root}/static/ueditor/`,
       emotionLocalization: true,
@@ -242,11 +242,8 @@ export default {
           desc: false
         })
       });
-    } else {
-      this.editor.ready(function () {
-        This.editor.setContent('');
-        This.editor.execCommand('inserthtml', This.formTop.content);
-      })
+    } else{
+     
     }
 
     //自动保存:一分钟自动保存一次
@@ -291,8 +288,10 @@ export default {
     insertVideoEditor(videoHtml) {
       this.editor.execCommand('inserthtml', videoHtml, true);
     },
-    insertAudioEditor() {
-
+    insertAudioEditor(data){
+      //需要更改audio样式
+      let audiohtml='<p style="text-align:center;"><audio controls src="'+data.url+'"></audio></p>';
+      this.editor.execCommand('inserthtml',audiohtml,true);
     },
     showPreviewContent: function () {
       //获得编辑器中的内容:这里的预览需要写一个界面（待完善。。。）

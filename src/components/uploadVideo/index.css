@@ -97,6 +97,7 @@
     position: absolute;
     right:50px;
     top:14px;
+    display: inline-block;
 }
 .video-step-2 .title,.video-step-3 .title,.video-step-4 .title{
     background: url('../../assets/error/video-name.svg') left center no-repeat;

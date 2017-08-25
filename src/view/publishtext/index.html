@@ -1,5 +1,5 @@
 <section>
-  <div><upload-audio ref="uploadAudioEle" @insertAudioEditor="insertAudioEditor"></upload-audio></div>
+  <div><upload-audio ref="uploadAudioEle" @onSuccess="insertAudioEditor"></upload-audio></div>
   <Form ref="formTop" :model="formTop" label-position="top" :rules="ruleValidate" style="padding:30px 85px 0;">
     <Row :gutter="34">
       <Col span="17" class="m-t-20">
