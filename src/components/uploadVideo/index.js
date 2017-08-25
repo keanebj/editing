@@ -144,7 +144,7 @@ export default {
             
             $("#videoPreview1").find('embed').prop('width','640px');
             $("#videoPreview1").find('embed').prop('height','360px');
-            let videoHtml='<p style="text-align:center;width:100%;margin-bottom:10px;" class="video_container" serverfileid="'+this.selVideoid+'" id="id_video_container_'+this.selVideoid+'">'+this.$refs.videoPreview1.innerHTML+'</p>';
+            let videoHtml='<p id="videoPreview1" style="text-align:center;width:100%;margin-bottom:10px;" class="video_container" serverfileid="'+this.selVideoid+'" id="id_video_container_'+this.selVideoid+'">'+this.$refs.videoPreview1.innerHTML+'</p>';
             this.$emit("insertVideoEditor",videoHtml,this.selVideoid);
             
             this.uploadVideo=false;
@@ -270,6 +270,7 @@ export default {
                        * @param args { id: 文件ID, size: 文件大小, name: 文件名称, status: 状态, percent: 进度 speed: 速度, errorCode: 错误码,serverFileId: 后端文件ID }
                        */
                       onFileUpdate: function (args) {
+                          console.log(args.code);
                           This.video.status='uploading';
                           This.video.localId=args.id;
                           clearInterval(This.videotimer);
@@ -333,6 +334,7 @@ export default {
                             } 
                             else if(args.code == 6  && This.video.status == 'uploading')//上传完成 
                             { 
+                                console.log(args.serverFileId);
                                 //取得回调的视频serverFileId，用于后面更新字段用                              
                                 This.video.videoId=args.serverFileId; 
                                 //跳转界面
@@ -384,7 +386,7 @@ export default {
                                         
                                         })
                                 },2000) 
-                                },startduration)
+                                },30000)
                                   
                             }
                             else{

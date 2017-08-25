@@ -10484,7 +10484,17 @@ UE.plugins['autotypeset'] = function(){
         indent: false,                  // 行首缩进
         indentValue : '2em',            //行首缩进的大小
         bdc2sb: false,
-        tobdc: false
+        tobdc: false,
+        lineHeight:false,
+        lineHeightValue:'1.5em',
+        rowSpacingTop:false,
+        rowSpacingTopValue:'15',
+        rowSpacingBottom:false,
+        rowSpacingBottomValue:'15',
+        fontFamily:false,
+        fontFamilyValue:'微软雅黑',
+        fontSize:false,
+        fontSizeValue:'18'
     }});
 
     var me = this,
@@ -10606,9 +10616,16 @@ UE.plugins['autotypeset'] = function(){
                 if(opt.textAlign){
                     ci.style.textAlign = opt.textAlign;
                 }
-                // if(opt.lineHeight)
-                //     ci.style.lineHeight = opt.lineHeight + 'cm';
-
+                if(opt.lineHeight)
+                    ci.style.lineHeight = opt.lineHeightValue + 'em';
+                if(opt.rowSpacingTop)
+                    ci.style.marginTop = opt.rowSpacingTopValue + 'px';
+                if(opt.rowSpacingBottom)
+                    ci.style.marginBottom = opt.rowSpacingBottomValue + 'px';
+                if(opt.fontFamily)
+                    ci.style.fontFamily = opt.fontFamilyValue;
+                if(opt.fontSize)
+                    ci.style.fontSize = opt.fontSizeValue+'px'; 
             }
 
             //去掉class,保留的class不去掉
@@ -16383,6 +16400,15 @@ UE.plugins['list'] = function () {
                     });
 
                     me.setContent = orgSetContent;
+
+                    //wy：audio标签替换
+                    // cont=cont.replace(/<audio\b[^>]*src\s*=\s*"[^>"]*\.(?:mp3)"[^>]*>/gi,'<div style="position: relative;width: 600px;height: 100px;border: 1px #f0f0f0 solid;border-radius: 3px;background: #fcfcfc;box-sizing: border-box;overflow: hidden;margin:20px auto;">'+
+                    // '<div style="position: absolute; width:45px;height:45px;top:50%;transform:translateY(-50%);margin-left: 15px;margin-right: 15px;cursor: pointer;"><img src="播放按钮.svg">'+
+                    // +'<audio id="audio"><source = src="IVY - A Ha.mp3" type="audio/mp3"></audio></div></div>');
+                    
+
+
+
 
                     me.setContent(cont);
                     sourceEditor.dispose();
@@ -26169,6 +26195,7 @@ UE.ui = baidu.editor.ui = {};
             var textAlignInputName = 'textAlignValue' + me.uid,
                 imageBlockInputName = 'imageBlockLineValue' + me.uid,
                 symbolConverInputName = 'symbolConverValue' + me.uid;
+                lineHeightName = 'lineHeightValue' + me.uid;
 
             return '<div id="##" class="edui-autotypesetpicker %%">' +
                 '<div class="edui-autotypesetpicker-body">' +
@@ -26200,7 +26227,17 @@ UE.ui = baidu.editor.ui = {};
                 '<td id="' + symbolConverInputName + '">' +
                 '<input type="radio" name="bdc" value="bdc2sb" ' + (opt["bdc2sb"] ? "checked" : "" ) + '>' + lang.bdc2sb +
                 '<input type="radio" name="bdc" value="tobdc" ' + (opt["tobdc"] ? "checked" : "" ) + '>' + lang.tobdc + '' +
-                '</td>' +
+                '</td></tr>' +
+                '<tr>'+
+                '<td nowrap><input type="checkbox" name="lineHeight"'+ (opt["lineHeight"] ? "checked" : "" ) + ' />' + lang.lineHeight + '</td>' +
+                '</tr>' +
+                '<tr>'+
+                '<td nowrap><input type="checkbox" name="fontFamily"'+ (opt["fontFamily"] ? "checked" : "" ) + ' />' + lang.fontFamily + '</td>' +
+                '<td nowrap><input type="checkbox" name="fontSize"'+ (opt["fontSize"] ? "checked" : "" ) + ' />' + lang.fontSize + '</td>' +
+                '</tr>' +
+                '<tr>'+
+                '<td nowrap><input type="checkbox" name="rowSpacingTop"'+ (opt["rowSpacingTop"] ? "checked" : "" ) + ' />' + lang.rowSpacingTop + '</td>' +
+                '<td nowrap><input type="checkbox" name="rowSpacingBottom"'+ (opt["rowSpacingBottom"] ? "checked" : "" ) + ' />' + lang.rowSpacingBottom + '</td>' +
                 '<td nowrap align="right"><button >' + lang.run + '</button></td>' +
                 '</tr>' +
                 '</table>' +
