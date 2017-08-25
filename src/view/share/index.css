@@ -64,20 +64,71 @@
 .video_container embed,.video_container video{
   width:100% !important;
 }
-
+.orginTit{
+	font-size: 30px;
+	font-weight: bold;
+	text-align: left;
+}
+.article_xinxi{
+	text-align: left;
+    margin: 10px 0 20px;
+    color: #ccc;
+}
+.article_xinxi span{
+	display: inline-block;
+    margin-left: 0px;
+    margin-right: 10px;
+}
+.tit_pic img{
+	display: none;
+}
 /*手机端分享*/
 @media screen and (max-width: 768px) {
+	.tit_pic {
+	    width: 100%;
+	    margin-bottom: 24px;
+	    position: relative;
+	    max-height: 445px;
+	    overflow: hidden;
+	}
+	.tit_pic img{
+		display: block;
+		width: 100%;
+		max-width: 100%;
+	}
+	.tit_pic .title_mask{
+		position: absolute;
+	    height: 45%;
+	    width: 100%;
+	    bottom: 0;
+	    left: 0;
+	}
+	.tit_pic .orginTit{
+		position: absolute;
+		color: #fff;
+		bottom: 0;
+		font-size: 24px;
+		padding: 15px;
+	}
 	.con_new{
-		padding: 0 15px;
+		/*padding: 0 15px;*/
+		padding: 0;
+		margin-top: 0;
+	}
+	.article_xinxi{
+		margin-bottom: 10px;
 	}
    .footer{
      display: none;
    }
-   .article .orginTit{
+   /*.article .orginTit{
       font-size:16px;
-   }
+   }*/
    .shareContent video{
      background:#000;
+   }
+   .shareContent{
+   	padding: 0 15px;
    }
   .shareContent p{
     text-indent: 0px;

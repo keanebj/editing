@@ -308,12 +308,12 @@ export default {
     },
     getAdlist() {
       this.$http.get('/api/advertise').then((res) => {
-        if (res.data.status) {
+        if (res.data.status == 1) {
           this.adList = res.data.advertises;
         } else {
           this.$Notice.error({
             title: '错误',
-            desc: response.data.message || '数据列表请求错误'
+            desc: res.data.message || '数据列表请求错误'
           })
         }
       }, (err) => {

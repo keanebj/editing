@@ -39,12 +39,17 @@
 }
 .orginTit{
 	margin-bottom: 10px;
-	font-size: 20px;
-	text-align: center;
-	font-weight: normal;
+	font-size: 30px;
+	text-align: left;
+	font-weight: bold;
 }
-.orginsubTit{
-	margin-bottom: 10px;
-	font-size: 16px;
-	font-weight: normal;
+.article_xinxi{
+	text-align: left; 	
+    margin: 10px 0 20px;
+    color: #ccc;
+}
+.article_xinxi span{
+	display: inline-block;
+    margin-left: 0px;
+    margin-right: 10px;
 }

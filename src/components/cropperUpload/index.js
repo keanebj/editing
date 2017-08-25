@@ -33,6 +33,16 @@ export default {
       type: Number,
       default: 200
     },
+    //裁剪的最小宽度
+    minwidth: {
+    	type: Number,
+      default: 200
+    },
+    //裁剪最小高度
+    minheight: {
+      type: Number,
+      default: 200
+    },
     // 单文件大小限制
     maxSize: {
       type: Number,
@@ -60,7 +70,9 @@ export default {
     let {
       imgFormat,
       width,
-      height
+      height,
+      minwidth,
+      minheight
       } = this
     let allowImgFormat = [
       'jpg',
@@ -172,17 +184,17 @@ export default {
     },
     // 剪裁前准备工作
     startCrop() {
-      let { width, height, sourceImgUrl } = this
+      let { width, height, minwidth, minheight, sourceImgUrl } = this
       let img = new Image()
       img.src = sourceImgUrl
       img.onload = () => {
         let nWidth = img.naturalWidth
         let nHeight = img.naturalHeight
         // 图片像素不达标
-        if (nWidth < width || nHeight < height) {
+        if (nWidth < minwidth || nHeight < minheight) {
           this.$Notice.error({
             title: '错误',
-            desc: '图片最低像素为（宽*高）：' + width + '*' + height
+            desc: '图片最低像素为（宽*高）：' + minwidth + '*' + minheight
           })
           this.visible = false
           return false

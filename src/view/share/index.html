@@ -12,8 +12,12 @@
     <div class="article" style="margin: 0px 0 50px 0;">
       <div>
         <div class="con_new hidden-xs">
-        	<h2 class="orginTit">{{ title }}</h2>
-        	<h2 class="orginTit">{{ subtitle }}</h2>
+        	<div class="tit_pic">
+        		<img :src="cover" alt="" />
+        		<img src="../../assets/bgjianb.png" alt="" class="title_mask" />
+        		<h2 class="orginTit" v-if="subtitle == null">{{ title }}</h2>
+        		<h2 class="orginTit" v-else>{{ subtitle }}</h2>
+        	</div>
         	<div class="article_xinxi">
         		<span>{{ conInfo.channel }}</span>
       			<span>{{ conInfo.time.substring(0,10) }}</span>

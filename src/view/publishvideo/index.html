@@ -7,7 +7,7 @@
         <span class="limit-words">
           <span>{{titleContentCount}}</span>/22
         </span>
-        <Button type="ghost" shape="circle"  class="add-sub-title" :disabled="!isHideSubtitle" @click="isHideSubtitle=!isHideSubtitle">添加副标题</Button>
+        <Button type="ghost" shape="circle"  class="add-sub-title" :disabled="!isHideSubtitle" @click="isHideSubtitle=!isHideSubtitle">添加原标题</Button>
       </Form-item>
       <Form-item label="" prop="subtitle" :class="{hide:isHideSubtitle}">
         <Input id="subTitle" v-model="formTop.subtitle" :maxlength="subtitleMaxCount" class="title-input" placeholder="请输入副标题" @on-change="getSubTitleContent" @on-blur="removetrim"></Input>
@@ -108,7 +108,7 @@
       <Form-item label="封面" prop="cover">
         <Input v-model="formTop.cover" type="text" class="hide"></Input>
         <div class="cover-container" style="margin-bottom: 10px;"><img :src="formTop.cover" style="display: block;" width="100%" v-if="formTop.cover != ''" /></div>
-        <cropper-upload :width="408" :height="272" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048">
+        <cropper-upload :width="408" :height="272" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048" :minwidth="1" :minheight="1">
           <Button type="ghost" shape="circle" class="main-color pointer" @click="fromLocal">本地上传</Button>
         </cropper-upload>
         <span style="padding-left:10px;color:#F95759;">建议图片比例3：2</span>
