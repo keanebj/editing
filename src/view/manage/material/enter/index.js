@@ -59,7 +59,8 @@ export default {
       stopUploading: true,
       uploadError: false,
       transcodeNotifyUrl: '',
-      fileError: 0
+      fileError: 0,
+      routeLeave: false
     }
   },
   computed: {
@@ -220,6 +221,9 @@ export default {
     this.$refs.keywordInput.style.paddingLeft=keypadleft+'px';
     this.placelabel=keypadleft>10?'':'每个关键字最多5个字';
   },
+  beforeDestory () {
+  	
+  },
   methods: {
     onSave () {
       this.$Modal.confirm({
@@ -227,8 +231,10 @@ export default {
         content: '保存此视频到素材管理？',
         onOk: () => {
         	if (this.material.code > 5) {
-        		this.saveMaterial()
+        		this.saveMaterial();
+        		this.routeLeave = true;
         	}else{
+        		this.routeLeave = false;
         		this.$Notice.error({
         			title:'视频上传完成才能保存！',
         			desc: false
@@ -587,8 +593,39 @@ export default {
           })
       }
     }
-  }
+  },
+  beforeRouteLeave (to, from, next) {
+  	this.$Modal.confirm({
+	    title: '确认保存',
+	    content: '保存此视频到素材管理？',
+	    onOk: () => {
+	    	if (this.material.code > 5) {
+		    	this.$http.put('api/material/'+ this.videoId, this.formValidate).then((response) => {
+	          if (response.data.status == 1) {
+	            this.$Notice.success({title:'保存成功',desc: false});
+	            this.$router.push('/manage/material')
+	            next(true)
+	          }else{
+	          	next(false)
+	            this.$Notice.error({title:response.data.message,desc: false});
+	          }
+	        })
+	    	}else{
+	    		this.routeLeave = false;
+	    		this.$Notice.error({
+	    			title:'视频上传完成才能保存！',
+	    			desc: false
+	    		});
+	    		next(false)
+	    	}
+	    },
+	    onCancel : () =>  {
+				this.$router.go(0);
+	    }
+	  })
+	}
 }
+
 
 String.prototype.Trim = function()
 {

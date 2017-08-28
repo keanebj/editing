@@ -44,7 +44,7 @@
           </Form-item>
           <Form-item label="封面" style="width:120%;" prop="cover">
             <Input v-model="formValidate.cover" type="text" class="hide"></Input>
-            <cropper-upload :width="300" :height="200" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048" minwidth="300" minheight="200">
+            <cropper-upload :width="300" :height="200" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048" :minwidth="1" :minheight="1">
               <div class="material_cover">
                 <!-- <img :src="../../../../assets/material/cover_icon.svg" alt=""> -->
                 <img :src="formValidate.cover" alt="">
