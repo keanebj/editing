@@ -599,14 +599,14 @@ export default {
 	    title: '确认保存',
 	    content: '保存此视频到素材管理？',
 	    onOk: () => {
+	    	next(true)
 	    	if (this.material.code > 5) {
 		    	this.$http.put('api/material/'+ this.videoId, this.formValidate).then((response) => {
 	          if (response.data.status == 1) {
 	            this.$Notice.success({title:'保存成功',desc: false});
 	            this.$router.push('/manage/material')
-	            next(true)
 	          }else{
-	          	next(false)
+	          	this.$router.go(-1);
 	            this.$Notice.error({title:response.data.message,desc: false});
 	          }
 	        })
