@@ -1,9 +1,9 @@
 import CropperUpload from '@/components/cropperUpload/index.vue'
 var itemTemplate = {
-  id: null,
   path: '',
   url: '',
-  showtime: null
+  showtime: null,
+  isNew: true
 }
 var match = /^((ht|f)tps?):\/\/([\w\-]+(\.[\w\-]+)*\/)*[\w\-]+(\.[\w\-]+)*\/?(\?([\w\-\.,@?^=%&:\/~\+#]*)+)?/
 export default {
@@ -24,7 +24,7 @@ export default {
       var m = this.data
       for (var k in m) {
         if (m[k].path !== m[k].pathOld || m[k].url !== m[k].urlOld) {
-          if (m[k].id) return true
+          if (m[k].isNew) return true
           else if (m[k].url && m[k].path) return true
         }
       }
@@ -62,7 +62,7 @@ export default {
     },
     onRemove(index) {
       var item = this.data[index]
-      if (!item.id) {
+      if (item.isNew) {
         this.data.splice(index, 1)
         return
       }
@@ -97,6 +97,7 @@ export default {
     },
     onAdd() {
       this.data.push(Object.assign({
+        id: Math.random().toString(36).substr(2),
         isEdit: true,
         pathOld: '',
         urlOld: ''
@@ -111,9 +112,18 @@ export default {
         return n
       })
     },
+    handleDblclick (item) {
+      item.isEdit = true
+      this.$nextTick(() => {
+        var compoent = this.$refs[item.id]
+        if (compoent && compoent[0]) {
+          compoent[0].focus()
+        }
+      })
+    },
     onBlur(index) {
       var item = this.data[index]
-      if (item.id) {
+      if (!item.isNew) {
         item.isEdit = false
       }
     },
@@ -143,7 +153,7 @@ export default {
         }
 
         if (item.path !== item.pathOld || item.url !== item.urlOld) {
-          if (item.id) this.requestUpdate(k, item)
+          if (!item.isNew) this.requestUpdate(k, item)
           else this.requestSave(k, item)
           this.requestCount++
         }
@@ -161,11 +171,15 @@ export default {
         if (this.requestCount <= 0) this.isSubmit = false
         if (data.status) {
           item.id = data.id
-          // item.showtime = new Date()
           item.pathOld = item.path
           item.urlOld = item.url
           item.isEdit = false
           item.ordertime = data.edittime
+          item.isNew = false
+          this.$Notice.success({
+            title: '成功',
+            desc: '序号' + ((index-0) + 1) + '添加成功'
+          })
         } else {
           this.$Notice.error({
             title: '错误',
@@ -193,6 +207,10 @@ export default {
           item.urlOld = item.url
           item.isEdit = false
           item.ordertime = data.edittime
+          this.$Notice.success({
+            title: '成功',
+            desc: '序号' + ((index-0) + 1) + '修改成功'
+          })
         } else {
           this.$Notice.error({
             title: '错误',
@@ -212,7 +230,7 @@ export default {
       var m = this.data
       for (var k in m) {
         var item = m[k]
-        if (item.id) {
+        if (!item.isNew) {
           item.path = item.pathOld
           item.url = item.urlOld
           item.isEdit = false
