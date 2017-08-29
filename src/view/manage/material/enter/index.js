@@ -39,10 +39,7 @@ export default {
         summary: '',//摘要
         cover: '',
         keyword: '',
-        videourl: '',
         materialtype: '',
-        duration: '',
-        size: '',
         videoid: '',
         uploading: true
       },
@@ -147,7 +144,7 @@ export default {
         	}else{
         		this.$Notice.error({title:response.data.message,desc: false});
         	}
-        }, ({err}) => {
+        }, ({error}) => {
         	this.$Notice.error({title:error.data.message,desc: false});
         })
       }
@@ -225,16 +222,19 @@ export default {
   	
   },
   methods: {
+  	cancleSave () {
+  		this.routeLeave = true;
+  		this.$router.push('/manage/material')
+  	},
     onSave () {
       this.$Modal.confirm({
         title: '确认保存',
         content: '保存此视频到素材管理？',
         onOk: () => {
         	if (this.material.code > 5) {
-        		this.saveMaterial();
         		this.routeLeave = true;
+        		this.saveMaterial();
         	}else{
-        		this.routeLeave = false;
         		this.$Notice.error({
         			title:'视频上传完成才能保存！',
         			desc: false
@@ -595,34 +595,44 @@ export default {
     }
   },
   beforeRouteLeave (to, from, next) {
-  	this.$Modal.confirm({
-	    title: '确认保存',
-	    content: '保存此视频到素材管理？',
-	    onOk: () => {
-	    	next(true)
-	    	if (this.material.code > 5) {
-		    	this.$http.put('api/material/'+ this.videoId, this.formValidate).then((response) => {
-	          if (response.data.status == 1) {
-	            this.$Notice.success({title:'保存成功',desc: false});
-	            this.$router.push('/manage/material')
-	          }else{
-	          	this.$router.go(-1);
-	            this.$Notice.error({title:response.data.message,desc: false});
-	          }
-	        })
-	    	}else{
-	    		this.routeLeave = false;
-	    		this.$Notice.error({
-	    			title:'视频上传完成才能保存！',
-	    			desc: false
-	    		});
-	    		next(false)
-	    	}
-	    },
-	    onCancel : () =>  {
-				this.$router.go(0);
-	    }
-	  })
+  	if (!this.routeLeave) {
+  		this.formValidate.summary = this.zhaiyao;//摘要
+      this.formValidate.keyword = this.labelArr.join(" ");//标签
+      this.formValidate.materialtype = this.select;
+      if (this.formValidate.title == '') {
+        this.ruleValidate.title[0].required = true
+      }
+			this.$Modal.confirm({
+		    title: '确认保存',
+		    content: '保存此视频到素材管理？',
+		    onOk: () => {
+		    	next(true)
+		    	if (this.material.code > 5) {
+			    	this.$http.put('api/material/'+ this.videoId, this.formValidate).then((response) => {
+		          if (response.data.status == 1) {
+		            this.$Notice.success({title:'保存成功',desc: false});
+		            this.$router.push('/manage/material')
+		          }else{
+		          	this.$router.go(-1);
+		            this.$Notice.error({title:response.data.message,desc: false});
+		          }
+		        })
+		    	}else{
+		    		this.routeLeave = false;
+		    		this.$Notice.error({
+		    			title:'视频上传完成才能保存！',
+		    			desc: false
+		    		});
+		    		next(false)
+		    	}
+		    },
+		    onCancel : () =>  {
+					this.$router.go(0);
+		    }
+		  })
+  	}else{
+  		next(true)
+  	}
 	}
 }
 
