@@ -156,7 +156,7 @@ export default {
           this.pageAll = Math.ceil(this.videoTotal/this.pageSize)
           this.videoList = data.materials;
           for (let i = 0; i<this.videoList.length; i++) {
-            this.videoList[i].addtime = this.videoList[i].addtime.substring(0,10)
+            this.videoList[i].addtime = this.videoList[i].modifytime.substring(0,10)
             let sec = (this.videoList[i].duration % 60) >= 10 ? (this.videoList[i].duration % 60) : "0" + (this.videoList[i].duration % 60)
             let minu = parseInt(this.videoList[i].duration / 60) >= 10 ? parseInt(this.videoList[i].duration / 60) : "0" + parseInt(this.videoList[i].duration / 60);
             this.videoList[i].duration = minu + ':' + sec;

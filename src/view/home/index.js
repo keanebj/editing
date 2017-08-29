@@ -207,11 +207,15 @@ export default {
             this.noticeTotal = 1;
           }
           if (response.data.contents && response.data.total) {
-            for (let i = 0; i < response.data.contents.length; i++) {
-              if (response.data.contents[i].addtime != null) {
-                response.data.contents[i].addtime = response.data.contents[i].addtime.substring(0, 16)
-              }
-            }
+            for(let i=0;i<response.data.contents.length;i++){
+	          	if (response.data.contents[i].publishdate != null ) {
+	          		response.data.contents[i].addtime = response.data.contents[i].publishdate.substring(0,10);
+	          	}else if (response.data.contents[i].publishdate == null && response.data.contents[i].modifytime != null){
+	          		response.data.contents[i].addtime=response.data.contents[i].modifytime.substring(0,10);
+	          	}else{
+	          		response.data.contents[i].addtime = response.data.contents[i].addtime.substring(0,10);
+	          	}
+	          }
           }
           //				改变颜色
           if (Cookies.get('clickedNo') != undefined) {
@@ -266,11 +270,15 @@ export default {
             this.articleTotal = 1;
           }
           if (response.data.contents && response.data.total) {
-            for (let i = 0; i < response.data.contents.length; i++) {
-              if (response.data.contents[i].addtime != null) {
-                response.data.contents[i].addtime = response.data.contents[i].addtime.substring(0, 16);
-              }
-            }
+            for(let i=0;i<response.data.contents.length;i++){
+	          	if (response.data.contents[i].publishdate != null ) {
+	          		response.data.contents[i].addtime = response.data.contents[i].publishdate.substring(0,10);
+	          	}else if (response.data.contents[i].publishdate == null && response.data.contents[i].modifytime != null){
+	          		response.data.contents[i].addtime=response.data.contents[i].modifytime.substring(0,10);
+	          	}else{
+	          		response.data.contents[i].addtime = response.data.contents[i].addtime.substring(0,10);
+	          	}
+	          }
           }
           //				改变颜色
           if (Cookies.get('clickedCo') != undefined) {

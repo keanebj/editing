@@ -191,10 +191,14 @@ export default {
         data
       }) => {
         if (data.status) {
-          for (let i = 0; i < data.contents.length; i++) {
-            if (data.contents[i].addtime) {
-              data.contents[i].addtime = data.contents[i].addtime.substring(0, 10);
-            }
+          for(let i=0;i<data.contents.length;i++){
+          	if (data.contents[i].publishdate != null ) {
+          		data.contents[i].addtime = data.contents[i].publishdate.substring(0,10);
+          	}else if (data.contents[i].publishdate == null && data.contents[i].modifytime != null){
+          		data.contents[i].addtime=data.contents[i].modifytime.substring(0,10);
+          	}else{
+          		data.contents[i].addtime = data.contents[i].addtime.substring(0,10);
+          	}
           }
           this.data = data.contents
           this.total = data.total

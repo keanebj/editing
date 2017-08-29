@@ -237,9 +237,13 @@ export default {
             this.isActiveHide=false;
           }
           for(let i=0;i<response.data.contents.length;i++){
-            if(response.data.contents[i].addtime){
-              response.data.contents[i].addtime=response.data.contents[i].addtime.substring(0,10);
-            }
+          	if (response.data.contents[i].publishdate != null ) {
+          		response.data.contents[i].addtime = response.data.contents[i].publishdate.substring(0,10);
+          	}else if (response.data.contents[i].publishdate == null && response.data.contents[i].modifytime != null){
+          		response.data.contents[i].addtime=response.data.contents[i].modifytime.substring(0,10);
+          	}else{
+          		response.data.contents[i].addtime = response.data.contents[i].addtime.substring(0,10);
+          	}
           }
         }else{
           //没有查询到数据
