@@ -32,23 +32,44 @@ export default {
 
   },
   mounted () {
-	    this.initUpload('pickfiles11', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1,null, null);
-	    this.initUpload('pickfiles111', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1,null, null);
+//	    this.initUpload('pickfiles11', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1,null, null);
+//	    this.initUpload('pickfiles111', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1,null, null);
   },
   methods: {
-    playVideo (title, videoid, videourl) {
-      this.playVideoModel = true;
-      this.playVideoTitle = title;
-      this.playVideoUrl = videourl;
-      var option = {
-          "auto_play": "0",
-          "file_id": videoid,
-          "app_id": "1252018592",
-          "width": 1010,
-          "height": 480,
-          "https": 1
-      }; /*调用播放器进行播放*/
-      var x = new qcVideo.Player("videoPlayer", option);
+  	routerLink () {
+  		this.$router.push({path: '/manage/material/enter'})
+  	},
+    playVideo (title, videoid, videourl, state) {
+    	if (state == 2) {
+    		this.playVideoModel = true;
+	      this.playVideoTitle = title;
+	      this.playVideoUrl = videourl;
+	      var option = {
+	          "auto_play": "0",
+	          "file_id": videoid,
+	          "app_id": "1252018592",
+	          "width": 1010,
+	          "height": 480,
+	          "https": 1
+	      }; /*调用播放器进行播放*/
+	      var x = new qcVideo.Player("videoPlayer", option);
+    	}else if (state == 3){
+    		this.$Notice.error({
+          title: '视频转码错误，请重新上传!',
+          desc: false
+        })
+    	}else if(state == 1){
+    		this.$Notice.info({
+          title: '视频正在转码中，请稍等!',
+          desc: false
+        })
+    	}else{
+    		this.$Notice.info({
+          title: '视频上传失败，请重新上传！',
+          desc: false
+        })
+    	}
+      
     },
     cancel () {
 
@@ -57,15 +78,27 @@ export default {
       this.$refs.thisInput.select();
       document.execCommand("Copy");
     },
-    share (url) {
+    share (url, state) {
       // debugger
-      this.videourl = url;
-      this.qCode = true;
-      var canvas = document.getElementById('videoItem');
-      QRCode.toCanvas(canvas, url, function (error) {
-        if (error) console.error(error)
-        console.log('success!');
-      })
+      if (state == 1) {
+      	this.$Notice.info({
+          title: '视频正在转码，请稍后分享！',
+          desc: false
+        })
+      }else if (state == 3) {
+      	this.$Notice.info({
+          title: '视频转码失败！',
+          desc: false
+        })
+      }else if (state == 2) {
+      	this.videourl = url;
+	      this.qCode = true;
+	      var canvas = document.getElementById('videoItem');
+	      QRCode.toCanvas(canvas, url, function (error) {
+	        if (error) console.error(error)
+	        console.log('success!');
+	      })
+      }
     },
     errorProcess(resData) {
       let status = resData.status
@@ -118,11 +151,15 @@ export default {
         }
       }).then(({ data }) => {
         if (data.status == 1) {
+        	console.log(data)
           this.videoTotal = data.total;
           this.pageAll = Math.ceil(this.videoTotal/this.pageSize)
           this.videoList = data.materials;
           for (let i = 0; i<this.videoList.length; i++) {
-            this.videoList[i].addtime = this.videoList[i].addtime.substring(0,10)
+            this.videoList[i].addtime = this.videoList[i].modifytime.substring(0,10)
+            let sec = (this.videoList[i].duration % 60) >= 10 ? (this.videoList[i].duration % 60) : "0" + (this.videoList[i].duration % 60)
+            let minu = parseInt(this.videoList[i].duration / 60) >= 10 ? parseInt(this.videoList[i].duration / 60) : "0" + parseInt(this.videoList[i].duration / 60);
+            this.videoList[i].duration = minu + ':' + sec;
           }
           if (this.videoList.length == 0) {
           	this.tabViews = true;
@@ -143,32 +180,45 @@ export default {
         })
       })
     },
-    editVideo (id) {
-      this.$store.videoId = id;
-      this.$router.push({path: '/manage/material/enter', query: {id: id}});
+    editVideo (id, state) {
+    	if (state == 1) {
+    		this.$Notice.info({
+          title: '视频正在转码，请稍后再试！',
+          desc: false
+        })
+    	}else{
+    		this.$store.videoId = id;
+      	this.$router.push({path: '/manage/material/enter', query: {id: id}});
+    	}
     },
-    deleteVideo (id) {
-       this.videoId = id;
-       this.$Modal.confirm({
-         title: '确认提示',
-         content: '<p>你确定要删除吗？</p>',
-         onOk: ()=> {
-          this.$http.delete('api/material/' + this.videoId).then((response) => {
-            if (response.data.status == 1) {
-              this.$Notice.success({title:'删除成功',desc: false});
-              this.getVideoList();
-            }else{
-              this.errorProcess(response.data)
-            }
-          }, (response) => {
-            this.$Notice.error({title:error.data.message,desc: false});
-          })
-        },
-        onCancel: () => {
-
-        }
-       })
-
+    deleteVideo (id, state) {
+    	if (state == 1) {
+    		this.$Notice.info({
+          title: '视频正在转码',
+          desc: false
+        })
+    	}else{
+    		this.videoId = id;
+	       this.$Modal.confirm({
+	         title: '确认提示',
+	         content: '<p>你确定要删除吗？</p>',
+	         onOk: ()=> {
+	          this.$http.delete('api/material/' + this.videoId).then((response) => {
+	            if (response.data.status == 1) {
+	              this.$Notice.success({title:'删除成功',desc: false});
+	              this.getVideoList();
+	            }else{
+	              this.errorProcess(response.data)
+	            }
+	          }, (response) => {
+	            this.$Notice.error({title:error.data.message,desc: false});
+	          })
+	        },
+	        onCancel: () => {
+	
+	        }
+	       })
+    	}
     },
     initUpload (upBtnId, secretId, isTranscode, isWatermark, transcodeNotifyUrl, classId) {
       var $ = qbVideo.get('$');

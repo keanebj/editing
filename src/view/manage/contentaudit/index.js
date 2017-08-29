@@ -1,3 +1,4 @@
+import ScrollBar from '@/view/scroll/index.vue'
 var statusMaps = {
   'PendingAudit': '待审核',
   'Publish': '已发表',
@@ -51,6 +52,9 @@ import {
 } from 'lodash'
 export default {
   name: 'ViewManageContentAudit',
+  components: {
+    ScrollBar
+  },
   data() {
     return {
       data: [],
@@ -63,7 +67,20 @@ export default {
       searchValue: '',
       checkIds: [],
       statusMaps: statusMaps,
-      studios: []
+      studios: [],
+      elements: [],
+      articleID: -1,
+      previewContent: false,
+      previewCon: [{
+          title: '',
+          subtitle: '',
+          content: '',
+          studioname: '',
+          time: ''
+        },
+        []
+      ],
+      tabView: 'pc'
     }
   },
   computed: {
@@ -83,6 +100,80 @@ export default {
     }
   },
   methods: {
+    //滚动条
+    changeView: function (view) {
+      this.tabView = view;
+      this.elements[0].style.top = '0px'; //内容高度
+      this.elements[1].style.top = '0px'; //条的高度
+      var ele = this.elements;
+      clearTimeout(time)
+      var time = setTimeout(function () {
+        if (ele[3].clientHeight < ele[0].clientHeight) {
+          ele[1].style.display = 'block';
+          ele[2].style.display = 'block';
+
+          var scale = ele[3].clientHeight / ele[0].clientHeight;
+          ele[1].style.height = ele[2].clientHeight * scale + 'px'
+        } else {
+          console.log(ele[0])
+          ele[1].style.display = 'none';
+          ele[2].style.display = 'none';
+        }
+      }, 10)
+
+    },
+    // 预览代码
+    showPreviewContent: function (aId) {
+      this.articleID = aId
+      //获得编辑器中的内容:这里的预览需要写一个界面（待完善。。。）
+      if (this.articleID > -1) {
+        this.isLoading = true
+        //    	保存显示预览(后台返回数据问题)
+        this.$http.get("/api/content/" + this.articleID).then((response) => {
+          let data = response.data.content;
+          //给数据值
+          this.previewCon[0].title = data.title;
+          this.previewCon[0].subtitle = data.subtitle;
+          this.previewCon[0].content = data.content;
+          this.previewCon[0].time = data.addtime;
+          this.previewCon[0].studioname = this.studioName;
+          this.$refs.yulan.previewConauthor(data.author);
+          this.previewCon[0].channel = data.channel;
+          if (response.data.operatortype == "Edit") {
+            this.previewCon[0].author = data.author;
+          }
+        }, (error) => {
+          this.$Notice.error({
+            title: error.data.message,
+            desc: false
+          })
+        });
+        this.isLoading = false
+        this.previewContent = true;
+        var ele = this.elements;
+        clearTimeout(time);
+        var time = setTimeout(function () {
+          if (ele[3].clientHeight >= ele[0].clientHeight) {
+            ele[1].style.display = 'none';
+            ele[2].style.display = 'none';
+          } else {
+            ele[1].style.display = 'block';
+            ele[2].style.display = 'block';
+            var scale = ele[3].clientHeight / ele[0].clientHeight;
+            ele[1].style.height = ele[2].clientHeight * scale + 'px'
+          }
+        }, 200)
+      } else {
+        //    	不显示预览
+        this.$Notice.warning({
+          title: '保存后才能预览',
+          desc: false
+        })
+      }
+    },
+    change(element) {
+      this.elements = element;
+    },
     /**
      * 请求内容审核列表
      */
@@ -100,10 +191,14 @@ export default {
         data
       }) => {
         if (data.status) {
-          for (let i = 0; i < data.contents.length; i++) {
-            if (data.contents[i].addtime) {
-              data.contents[i].addtime = data.contents[i].addtime.substring(0, 10);
-            }
+          for(let i=0;i<data.contents.length;i++){
+          	if (data.contents[i].publishdate != null ) {
+          		data.contents[i].addtime = data.contents[i].publishdate.substring(0,10);
+          	}else if (data.contents[i].publishdate == null && data.contents[i].modifytime != null){
+          		data.contents[i].addtime=data.contents[i].modifytime.substring(0,10);
+          	}else{
+          		data.contents[i].addtime = data.contents[i].addtime.substring(0,10);
+          	}
           }
           this.data = data.contents
           this.total = data.total

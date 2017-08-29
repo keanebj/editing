@@ -41,7 +41,32 @@
     <img class="remain-img" src="../../assets/login/bg2-2.png" alt="">
     <img class="remain-img" src="../../assets/login/bg2-3.png" alt="">
     <img class="remain-img" src="../../assets/login/bg2-4.png" alt="">
-    <img class="remain-img" src="../../assets/login/bg2-5.png" alt="">
+    <div class="login-container friendLink partnerLink">
+      <h3 class="title-head">合作伙伴</h3>
+      <Row class="form-extra">
+          <Col span="4" v-for="(item,index) in partnerLink1" key="index">
+            <a :href="item.url" target="_blank">
+              <img :src="item.imgsrc" alt="">
+            </a>
+          </Col>
+      </Row>
+      <hr class="partner-line">
+      <Row class="form-extra">
+          <Col span="4" v-for="(item,index) in partnerLink2" key="index">
+            <a :href="item.url" target="_blank">
+              <img :src="item.imgsrc" alt="">
+            </a>
+          </Col>
+      </Row>
+      <hr class="partner-line">
+      <Row class="form-extra">
+          <Col span="4" v-for="(item,index) in partnerLink3" key="index">
+            <a :href="item.url" target="_blank">
+              <img :src="item.imgsrc" alt="">
+            </a>
+          </Col>
+      </Row>
+    </div>
     <div class="login-container friendLink">
       <h3 class="title-head">友情链接</h3>
       <Row class="form-extra">

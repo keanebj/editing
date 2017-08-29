@@ -7,7 +7,7 @@
         <span class="limit-words">
           <span>{{titleContentCount}}</span>/22
         </span>
-        <Button type="ghost" shape="circle"  class="add-sub-title" :disabled="!isHideSubtitle" @click="isHideSubtitle=!isHideSubtitle">添加副标题</Button>
+        <Button type="ghost" shape="circle"  class="add-sub-title" :disabled="!isHideSubtitle" @click="isHideSubtitle=!isHideSubtitle">添加原标题</Button>
       </Form-item>
       <Form-item label="" prop="subtitle" :class="{hide:isHideSubtitle}">
         <Input id="subTitle" v-model="formTop.subtitle" :maxlength="subtitleMaxCount" class="title-input" placeholder="请输入副标题" @on-change="getSubTitleContent" @on-blur="removetrim"></Input>
@@ -24,7 +24,7 @@
       </Form-item>
 
     <div :class="{hide:ishideone}">
-      <div class="video-upload-label">上传视频 <Button type="primary" shape="circle" style="margin-left:30px;" @click="showUploadPop">上传视频</Button><!--<span :class="{hide:!isSuccess}" style="padding-left:30px;color:#F95759;">上传成功</span>--></div>
+      <div class="video-upload-label">上传视频 <Button type="primary" shape="circle" style="margin-left:30px;" @click="showUploadPop">上传视频</Button></div>
       <p style="padding-left:100px;padding-right:30px;line-height: 30px;color:#cccccc;margin-top:20px;"><span style="color:#F35C61;">建议上传720p（1280x720）或更高分辨率的视频，大小不超过2G </span><br/>
         视频格式：建议上传MP4 和 HLS 文件。 <br/>
         支持格式： MOV，MP4，MP4V，M4V，MKV，AVI，FLV，F4V，3GP RM, RMVB，RA，RAM ,MPG， MPEG，MPE，VOB，DAT，WMV，WM，ASF，ASX</p>
@@ -32,6 +32,7 @@
      <div :class="{hide:!ishideone}">
       <div class="video-upload-label">上传视频 <span style="margin-left:30px;">{{videoname}}</span><Button type="primary" shape="circle" style="margin-left:30px;float:right;" @click="reuploadvideo">重新上传</Button></div>
       <div id="videoTabPreview" ref="videoTabPreview" class="video_container" v-html="formTop.content"></div>
+      <span style="color:#F95759;padding:100px;">视频比例为16:9</span>
     </div>
 
       </Col>
@@ -107,7 +108,7 @@
       <Form-item label="封面" prop="cover">
         <Input v-model="formTop.cover" type="text" class="hide"></Input>
         <div class="cover-container" style="margin-bottom: 10px;"><img :src="formTop.cover" style="display: block;" width="100%" v-if="formTop.cover != ''" /></div>
-        <cropper-upload :width="408" :height="272" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048">
+        <cropper-upload :width="408" :height="272" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048" :minwidth="1" :minheight="1">
           <Button type="ghost" shape="circle" class="main-color pointer" @click="fromLocal">本地上传</Button>
         </cropper-upload>
         <span style="padding-left:10px;color:#F95759;">建议图片比例3：2</span>

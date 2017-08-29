@@ -1,16 +1,17 @@
 <section>
+  <div><upload-audio ref="uploadAudioEle" @onSuccess="insertAudioEditor"></upload-audio></div>
   <Form ref="formTop" :model="formTop" label-position="top" :rules="ruleValidate" style="padding:30px 85px 0;">
     <Row :gutter="34">
       <Col span="17" class="m-t-20">
       <Form-item label="" prop="title">
-        <Input id="titleContent" style="width:84%;" v-model="formTop.title" :maxlength="titleMaxCount" class="title-input" placeholder="请输入标题" @on-change="getTitleContent" @on-blur="removetrim"></Input>
+        <Input id="titleContent" style="width:84%;" v-model="formTop.title" :maxlength="titleMaxCount"  class="title-input" placeholder="请输入标题" @on-change="getTitleContent" @on-blur="removetrim"></Input>
         <span class="limit-words">
           <span>{{titleContentCount}}</span>/22
         </span>
-        <Button type="ghost" shape="circle" class="add-sub-title" :disabled="!isHideSubtitle" @click="isHideSubtitle=!isHideSubtitle">添加副标题</Button>
+        <Button type="ghost" shape="circle" class="add-sub-title" :disabled="!isHideSubtitle" @click="isHideSubtitle=!isHideSubtitle">添加原标题</Button>
       </Form-item>
       <Form-item label="" prop="subtitle" :class="{hide:isHideSubtitle}">
-        <Input id="subTitle" v-model="formTop.subtitle" :maxlength="subtitleMaxCount" class="title-input" placeholder="请输入副标题" @on-change="getSubTitleContent" @on-blur="removetrim"></Input>
+        <Input id="subTitle" v-model="formTop.subtitle" :maxlength="subtitleMaxCount"  class="title-input" placeholder="请输入副标题" @on-change="getSubTitleContent" @on-blur="removetrim"></Input>
         <span class="sub-limit-words">
           <span>{{subtitleContentCount}}</span>/60
           <div class="delete-icon" @click="deleteSubTitle"></div>
@@ -93,7 +94,7 @@
         <Input v-model="formTop.cover" type="text" class="hide"></Input>
         <div class="cover-container" style="margin-bottom: 10px;"><img :src="formTop.cover" style="display: block;" width="100%" v-if="formTop.cover != ''" /></div>
         <Button type="ghost" shape="circle" class="m-r-20 main-color pointer" @click="fromContent">正文选择</Button>
-        <cropper-upload :width="408" :height="272" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048">
+        <cropper-upload :width="408" :height="272" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048" :minwidth="1" :minheight="1">
           <Button type="ghost" shape="circle" class="main-color pointer" @click="fromLocal">本地上传</Button>
         </cropper-upload>
         <span style="padding-left:10px;color:#F95759;">建议图片比例3：2</span>
@@ -114,7 +115,7 @@
           </div>
         </div>
         <p slot="footer">
-          <cropper-upload @fromContent="fromContent" ref="corup" :width="408" :height="272" :image="baseimg" :noSel="noSel" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048">
+          <cropper-upload @fromContent="fromContent" ref="corup" :width="408" :height="272" :image="baseimg" :noSel="noSel" :cropUploadSuccess="onSuccess" :minwidth="1" :minheight="1" :cropUploadFail="onError" :maxSize="2048">
             <Button type="primary" shape="circle" @click="clickCoverOk($event)">确定</Button>
           </cropper-upload>
         </p>

@@ -43,6 +43,20 @@
     </Radio-group>
     </Col>
   </Row>
+  <!-- PC、移动端 预览  开始 -->
+  <Modal v-model="previewContent" width="768" :class-name="tabView" class="previewContent">
+    <p slot="header" ref="scrollWarp">
+      <span :class="{ select: tabView == 'pc' }" @click="changeView('pc')">pc样式预览</span>
+      <span :class="{ select: tabView == 'mobile' }" @click="changeView('mobile')">移动端样式预览</span>
+    </p>
+    <ul class="set-max-height">
+      <div class="set-line"></div>
+      <ScrollBar @element="change" :elements="elements" :preview-con="previewCon[0]" ref="yulan"></ScrollBar>
+    </ul>
+    <p slot="footer">
+    </p>
+  </Modal>
+  <!-- PC、移动端 预览  结束 -->
   <div v-if="!isLoading && data.length>0">
     <table class="table" style="margin-top:20px;">
       <thead>
@@ -64,10 +78,12 @@
             <Checkbox :value="checkIds.indexOf(item.id)>=0" @on-change="handleCheck(item.id)"></Checkbox>
           </td>
           <td>
-            <a :href="'/article?id='+item.id" target="_blank"><img :src="item.cover" alt="" width="100"></a>
+            <!-- :href="'/article?id='+item.id"  -->
+            <a @click="showPreviewContent(item.id)"><img :src="item.cover" alt="" width="100"></a>
           </td>
           <td style="text-align:left">
-            <a :href="'/article?id='+item.id" target="_blank" style="color:#333333">{{item.title}}
+            <!-- :href="'/article?id='+item.id" -->
+            <a @click="showPreviewContent(item.id)" style="color:#333333">{{item.title}}
               <br/><br/>
               <span style="color: #999999">融合号：{{item.studioname}}</span>
             </a>

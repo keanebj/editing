@@ -677,6 +677,9 @@ div.edui-box {
 .edui-default  .edui-for-myvideo .edui-icon {
     background-position: -320px -20px;
 }
+.edui-default  .edui-for-audio .edui-icon {
+    background-position: -18px -40px
+}
 
 .edui-default  .edui-for-time .edui-icon {
     background-position: -160px -20px;

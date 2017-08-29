@@ -232,7 +232,12 @@ UE.I18N['zh-cn'] = {
         'run':"执行",
         'symbol':'符号转换',
         'bdc2sb':'全角转半角',
-        'tobdc':'半角转全角'
+        'tobdc':'半角转全角',
+        'lineHeight':'1.5倍行距',
+        'rowSpacingTop':'15像素上边距',
+        'rowSpacingBottom':'15像素下边距',
+        'fontFamily':'微软雅黑',
+        'fontSize':'18号字'
     },
 
     'background':{

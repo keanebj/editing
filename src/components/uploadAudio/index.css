@@ -1,0 +1,34 @@
+#audio-upload-pop  .ivu-modal-header{
+    background: #F3F3F3; 
+}
+#audio-upload-pop  .ivu-modal-header p{
+    color:#999999;
+    font-weight: 500; 
+}
+#audio-upload-pop .ivu-modal-footer{
+    display: none;
+}
+.audio-content-container{
+    text-align: left;
+    padding:50px 50px 20px 50px;
+    background: url('../../assets/svg/audio-back.svg') center center no-repeat;
+    background-size: 80% 80%;
+}
+.link-btn .ivu-form-item-content{
+     text-align:center;
+    margin-left:0 !important;
+}
+#audio-upload-pop .ivu-progress-bg{
+    background:linear-gradient(90deg,#F95759,deeppink);
+}
+#audio-upload-pop .ivu-progress-text{
+    position: absolute;
+    left:50%;
+    top:2%;
+    color:#fff;
+    font-size: 20px;
+}
+#audio-upload-pop .ivu-progress-outer{
+    position: relative;
+    padding-right:26px;
+}

@@ -53,14 +53,15 @@
         'directionalityltr', 'directionalityrtl', 'indent', '|',
         'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
         'link',  'anchor', '|',
-         'insertimage', 'myvideo', 'attachment', 'map', 'insertcode',  'pagebreak', 'template', 'background', '|',
+         'insertimage', 'audio','myvideo', 'attachment', 'map', 'insertcode',  'pagebreak', 'template', 'background', '|',
         'horizontal', 'date', 'time', 'spechars',  '|',
         'inserttable', '|',
          'searchreplace', 'help'
       ]]
         //当鼠标放在工具栏上时显示的tooltip提示,留空支持自动多语言配置，否则以配置值为准
         ,labelMap:{
-            'myvideo':'自定义',
+            'audio':'音频',
+            'myvideo':'视频',
             'anchor':'', 'undo':''
         }
 
@@ -315,23 +316,33 @@
 
         //autotypeset
         //自动排版参数
-        //,autotypeset: {
-        //    mergeEmptyline: true,           //合并空行
-        //    removeClass: true,              //去掉冗余的class
-        //    removeEmptyline: false,         //去掉空行
-        //    textAlign:"left",               //段落的排版方式，可以是 left,right,center,justify 去掉这个属性表示不执行排版
-        //    imageBlockLine: 'center',       //图片的浮动方式，独占一行剧中,左右浮动，默认: center,left,right,none 去掉这个属性表示不执行排版
-        //    pasteFilter: false,             //根据规则过滤没事粘贴进来的内容
-        //    clearFontSize: false,           //去掉所有的内嵌字号，使用编辑器默认的字号
-        //    clearFontFamily: false,         //去掉所有的内嵌字体，使用编辑器默认的字体
-        //    removeEmptyNode: false,         // 去掉空节点
-        //    //可以去掉的标签
-        //    removeTagNames: {标签名字:1},
-        //    indent: false,                  // 行首缩进
-        //    indentValue : '2em',            //行首缩进的大小
-        //    bdc2sb: false,
-        //    tobdc: false
-        //}
+        ,autotypeset: {
+           mergeEmptyline: true,           //合并空行
+           removeClass: true,              //去掉冗余的class
+           removeEmptyline: false,         //去掉空行
+           textAlign:"left",               //段落的排版方式，可以是 left,right,center,justify 去掉这个属性表示不执行排版
+           imageBlockLine: 'center',       //图片的浮动方式，独占一行剧中,左右浮动，默认: center,left,right,none 去掉这个属性表示不执行排版
+           pasteFilter: false,             //根据规则过滤没事粘贴进来的内容
+           clearFontSize: false,           //去掉所有的内嵌字号，使用编辑器默认的字号
+           clearFontFamily: false,         //去掉所有的内嵌字体，使用编辑器默认的字体
+           removeEmptyNode: false,         // 去掉空节点
+           //可以去掉的标签
+           removeTagNames: {标签名字:1},
+           indent: false,                  // 行首缩进
+           indentValue : '2em',            //行首缩进的大小
+           bdc2sb: false,
+           tobdc: false,
+           lineHeight:true,
+           lineHeightValue:'1.5',
+           rowSpacingTop:true,
+           rowSpacingTopValue:'15',
+           rowSpacingBottom:true,
+           rowSpacingBottomValue:'15',
+           fontFamily:true,
+           fontFamilyValue:'微软雅黑',
+           fontSize:true,
+           fontSizeValue:'18'
+        }
 
         //tableDragable
         //表格是否可以拖拽

@@ -211,7 +211,24 @@
   display: block;
   margin-bottom: 20px;
 }
+.friendLink.partnerLink img{
+  width:100%;
+  display: block;
+}
+.friendLink.partnerLink a{
+  margin-bottom: 14px;
+}
 
+.friendLink.partnerLink .form-extra:nth-of-type(2){
+  padding: 9px 0;
+}
+.friendLink.partnerLink .form-extra:nth-of-type(3){
+  padding-top: 9px;
+}
+.partner-line{
+   border: 1px solid #EDEDED;
+   margin: 20px 0;
+}
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px white inset !important;
 }

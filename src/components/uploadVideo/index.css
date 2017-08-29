@@ -4,8 +4,14 @@
     margin-top:20px;
     width:400px;
     height:225px;
-    background:url('../../assets/error/local-video.svg') center center no-repeat;
-    background-size:60% 60%;
+    margin-top:0;
+    margin-bottom:4px;
+    display: table-cell;
+    vertical-align: middle;
+    font-size:16px;
+    color:#F95759;
+    /*background:url('../../assets/error/local-video.svg') center center no-repeat;
+    background-size:60% 60%;*/
 }
 .video-preview-link{
     border:1px solid #ddd;
@@ -91,6 +97,7 @@
     position: absolute;
     right:50px;
     top:14px;
+    display: inline-block;
 }
 .video-step-2 .title,.video-step-3 .title,.video-step-4 .title{
     background: url('../../assets/error/video-name.svg') left center no-repeat;
@@ -110,6 +117,7 @@
 }
 #resource-manage img{
     width:100%;
+    height: 137px;
 }
 #resource-manage .video-item{
     border-bottom: 1px solid #ddd;

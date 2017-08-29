@@ -1,7 +1,7 @@
 <section>
   <div class="material" >
     <Row class="material_shangchuan" :gutter="16" :class="{hide:!vievShow}">
-      <Col span="12">
+      <Col span="12" ref="material_xx_con" class="material_xx_cons">
         <Button id="pick" shape="circle" class="upload_btn"><img src="../../../../assets/material/upload_icon.svg" alt="" width="15" height="15" ><span>上传视频</span></Button>
         <span>建议上传720p（1280x720）或更高分辨率的视频，大小不超过2G</span>
       </Col>
@@ -10,7 +10,7 @@
       </Col>
     </Row>
     <Row  class="material_xx" :class="{hide:vievShow}">
-      <div class="material_xx_con">
+      <div class="material_xx_con" ref="material_xx_cons">
         <h2>{{ material.name }}</h2>
         <div>
           <Progress :percent=parseInt(material.percent) :stroke-width="20" status="wrong" hide-info></Progress>
@@ -44,7 +44,7 @@
           </Form-item>
           <Form-item label="封面" style="width:120%;" prop="cover">
             <Input v-model="formValidate.cover" type="text" class="hide"></Input>
-            <cropper-upload :width="300" :height="200" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048">
+            <cropper-upload :width="300" :height="200" :cropUploadSuccess="onSuccess" :cropUploadFail="onError" :maxSize="2048" :minwidth="1" :minheight="1">
               <div class="material_cover">
                 <!-- <img :src="../../../../assets/material/cover_icon.svg" alt=""> -->
                 <img :src="formValidate.cover" alt="">
@@ -78,9 +78,7 @@
           </Form-item> -->
           <Form-item style="margin-top:80px;">
             <Button type="primary" shape="circle" style="margin-left: 10%;padding:6px 25px;" @click="onSave">保存</Button>
-            <router-link to="/manage/material">
-              <Button type="ghost" shape="circle" style="margin-left:10%;color: #F95759;border-color:#F95759;padding:6px 25px;">取消</Button>
-            </router-link>
+            <Button @click="cancleSave" type="ghost" shape="circle" style="margin-left:10%;color: #F95759;border-color:#F95759;padding:6px 25px;">取消</Button>
           </Form-item>
         </Form>
       </Col>

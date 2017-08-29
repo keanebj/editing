@@ -6,7 +6,7 @@
     <Row :gutter="34" class="material_no_con">
       <Col span="12" class="material_no_con_img">
         <img src="../../../assets/material/upload.svg" alt="">
-        <Button type="primary" id="pickfiles11" shape="circle" style="padding:6px 25px;margin-top:20px;">上传视频</Button>
+        <Button type="primary" id="pickfiles11" shape="circle"  @click="routerLink" style="padding:6px 25px;margin-top:20px;">上传视频</Button>
       </Col>
       <Col span="12" class="material_no_con_info">
         <div>
@@ -19,7 +19,7 @@
   <div class="material_has" :class="{hide:  tabView}">
     <Row class="material_has_tit">
       <Col span="12">
-        <Button type="primary" shape="circle" class="addvideo_btn" id="pickfiles111">
+        <Button type="primary" shape="circle" class="addvideo_btn" id="pickfiles111" @click="routerLink">
           <img src="../../../assets/operator/create.svg" class="icon-create" width="15" height="18"></img>
           <span class="arti-create">添加视频</span>
         </Button>
@@ -33,22 +33,24 @@
         <div class="video_list_in">
           <div class="video_list_item">
             <img :src="videoItem.cover" alt="">
-            <span><Icon type="ios-play"></Icon></span>
-            <div class="mask" @click="playVideo(videoItem.title, videoItem.videoid, videoItem.videourl)">
-              <span @click.stop="deleteVideo(videoItem.id)">
+            <span v-if="videoItem.transcodingstate == 2"><Icon type="ios-play"></Icon></span>
+            <div style="position: absolute;left: 0px;top: 0px;color: #F95759;z-index: 4;" v-if="videoItem.transcodingstate == 1">转码中...</div>
+            <div style="position: absolute;left: 0px;top: 0px;color: #F95759;z-index: 4;" v-if="videoItem.transcodingstate == 3">转码失败...</div>
+            <div class="mask" @click="playVideo(videoItem.title, videoItem.videoid, videoItem.videourl, videoItem.transcodingstate)">
+              <span @click.stop="deleteVideo(videoItem.id, videoItem.transcodingstate)">
                 <Icon type="android-close"></Icon>
               </span>
             </div>
             <div class="bottom">
               <span class="left">{{videoItem.addtime}}</span>
-              <span class="right hide">{{videoItem.duration}}</span>
+              <span class="right">{{videoItem.duration}}</span>
             </div>
           </div>
           <div class="video_info">
             <span class="video_info_tit">{{videoItem.title}}</span>
             <span class="video_info_icon">
-              <img src="../../../assets/material/edit_video.svg" alt="" @click="editVideo(videoItem.id)">
-              <img src="../../../assets/material/video_share.svg" alt="" @click="share(videoItem.videourl)">
+              <img src="../../../assets/material/edit_video.svg" alt="" @click="editVideo(videoItem.id,videoItem.transcodingstate)">
+              <img src="../../../assets/material/video_share.svg" alt="" @click="share(videoItem.videourl,videoItem.transcodingstate)">
             </span>
           </div>
         </div>

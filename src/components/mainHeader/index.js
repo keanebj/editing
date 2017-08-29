@@ -13,11 +13,11 @@ export default {
     },
     userName: {
       type: String,
-      default: '熊老师'
+      default: ''
     },
     studioName: {
     	type: String,
-      default: '熊老师'
+      default: ''
     }
   },
   methods: {},

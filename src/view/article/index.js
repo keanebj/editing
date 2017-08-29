@@ -11,6 +11,7 @@ export default {
       type: 'notice',
       noticeID: -1,
       title: '',
+      subtitle: '',
       content: '',
       conInfo: {
       	channel: '',
@@ -46,11 +47,13 @@ export default {
 	    }
 	    this.$http.get(this.getUrl + this.noticeID).then(({ data }) => {
 	      //给公告的内容赋值
-	      if (data.status) {
+	      if (data.status == 1) {
+	      	console.log(data)
 	      	this.title=data.content.title;
 	      	this.content=data.content.content;
 	      	this.conInfo.channel = data.content.channel;
           this.conInfo.time = data.content.addtime;
+          this.subtitle = data.content.subtitle;
           if (data.operatortype == "Manage") {
           	this.conInfo.author = "";
           }else{

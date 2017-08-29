@@ -8,7 +8,9 @@ export default {
     return {
       shareId: -1,
       title: '',
+      subtitle: '',
       content: '',
+      cover: '',
       conInfo: {
       	channel: '',
       	time: '',
@@ -24,8 +26,11 @@ export default {
     this.$http.get("/api/content/share/" + this.shareId)
       .then((response) => {
         if(response.data.status == 1){
+        	console.log(response.data)
             this.noData=true;
             this.title = response.data.content.title;
+            this.cover = response.data.content.cover;
+            this.subtitle = response.data.content.subtitle;
             this.conInfo.channel = response.data.content.channel;
             this.content = response.data.content.content;
             this.conInfo.time = response.data.content.addtime;
@@ -56,18 +61,19 @@ export default {
        setTimeout(function(){
           let count=$(".video_container").size();
           if(count > 0){
-            for(var i=0;i<count;i++){
-                let serverfileid=$(".video_container").eq(i).html('').attr('serverfileid');
-                var option = {
-                    "auto_play": "1",
-                    "file_id": serverfileid,
-                    "app_id": "1252018592",
-                    "width": 640,
-                    "height": 480
-                };
-               new qcVideo.Player("id_video_container_"+option.file_id,option); 
-            }
-               
+          	if ($(".video_container").eq(i).find('embed').length > 0) {
+          		for(var i=0;i<count;i++){
+	                let serverfileid=$(".video_container").eq(i).html('').attr('serverfileid');
+	                var option = {
+	                    "auto_play": "1",
+	                    "file_id": serverfileid,
+	                    "app_id": "1252018592",
+	                    "width": 640,
+	                    "height": 480
+	                };
+	               new qcVideo.Player("id_video_container_"+option.file_id,option); 
+	            }
+          	}   
           }                 
         },500)
   }

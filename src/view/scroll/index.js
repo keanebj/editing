@@ -16,7 +16,8 @@ export default {
       i:-1,
       contentCoverSrc: '',
       author: '',
-      currentvideoid:''
+      currentvideoid:'',
+
     }
   },
   watch:{
@@ -36,12 +37,38 @@ export default {
 //  previewCon: function () {
 ////  	return this.previewCon
 //  }
+   
   },
   mounted () {
     this.$emit('element', [this.$refs.onscroll, this.$refs.scrollCon, this.$refs.scroll, this.$refs.setCon]);
+
   },
   updated () {  
     this.$emit('iIndex', [this.i, this.contentCoverSrc]);
+    //  if(this.previewCon.title){
+    
+    // //播放器
+    //  //找到编辑器里面的视频内容 ，进行 替换
+    //    let $=qbVideo.get("$");
+    //    setTimeout(function(){
+    //       let count=$(".yulan").find(".video_container").size();
+    //       if(count > 0){
+    //         for(var i=0;i<count;i++){
+    //             let serverfileid=$(".yulan").find(".video_container").eq(i).html('').attr('serverfileid');
+    //             $(".yulan").find(".video_container").eq(i).attr('id','new_container_'+i);
+    //             var option = {
+    //                 "auto_play": "0",
+    //                 "file_id": '9031868223147413212',
+    //                 "app_id": "1252018592",
+    //                 "width": 640,
+    //                 "height": 480
+    //             };
+    //            new qcVideo.Player("new_container"+i,option); 
+    //         }
+               
+    //       }                 
+    //     },900)
+    //     }
   },
   methods: {
   	previewConauthor: function (author) {
