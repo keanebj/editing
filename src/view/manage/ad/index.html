@@ -31,9 +31,9 @@
           </cropper-upload>
         </th>
         <td>
-          <Input v-if="item.isEdit" v-model="item.url" @on-blur="onBlur(index)" placeholder="请输入链接" style="width: 250px"></Input>
-          <span v-else @dblclick="item.isEdit=true">
-            <span v-if="item.url">{{item.url}}</span>
+          <Input :ref="item.id" v-if="item.isEdit" v-model="item.url" @on-blur="onBlur(index)" placeholder="请输入链接" style="width: 250px"></Input>
+          <span v-else @dblclick="handleDblclick(item)">
+            <span v-if="item.url">{{item.url}} <span style="color:#999">双击修改链接</span></span>
             <span v-else>双击输入链接</span>
           </span>
         </td>
