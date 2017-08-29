@@ -20,7 +20,7 @@
             <Row id="resource-manage">  
                 <Col span="8" v-for="(value,key) in previewCon" :key="key">
                     <div class="video-item">
-                      <div class="video_list_item">
+                      <div class="video_list_item" @click="changeRadio(value.videoid)">
                         <img :src="value.cover"/>
                         <span v-if="value.transcodingstate == 2"><Icon type="ios-play"></Icon></span>
                          <div style="position: absolute;left: 0px;top: 0px;color: #F95759;z-index: 4;" v-if="value.transcodingstate == 1">转码中...</div>

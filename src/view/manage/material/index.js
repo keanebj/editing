@@ -194,7 +194,7 @@ export default {
     deleteVideo (id, state) {
     	if (state == 1) {
     		this.$Notice.info({
-          title: '视频正在转码',
+          title: '视频正在转码，请稍后再试！',
           desc: false
         })
     	}else{

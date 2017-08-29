@@ -33,9 +33,11 @@
 }
 .con_new embed{
 	max-width: 100%;
+	height: auto;
 }
 .con_new video{
 	max-width: 100%;
+	height: auto;
 }
 .orginTit{
 	margin-bottom: 10px;

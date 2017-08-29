@@ -71,6 +71,9 @@ export default {
     //     }
   },
   methods: {
+  	changeRadio (id) {
+  		this.currentvideoid = id;
+  	},
   	previewConauthor: function (author) {
   		this.author = author;
   	},
