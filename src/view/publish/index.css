@@ -299,7 +299,7 @@
 }
 
 .set-con {
-  padding: 10px 20px;
+  padding: 10px 10px;
   height: 430px;
   margin: 10px 0 0 0;
   overflow: hidden;
@@ -337,7 +337,7 @@
 
 .set-posi {
   position: absolute;
-  width: 92%;
+  width: 97%;
 }
 
 /*在手机上预览*/

@@ -15,14 +15,37 @@
 	left: 5px;
 	background: #ccc;
 }
+.pc .head>img{
+	display: none;
+}
+.mobile .head{
+	margin-bottom: 10px;
+}
+.head{
+	position: relative;
+}
+.mobile .head>img{
+	display: block;
+}
+.mobile .head>.yulan-tit{
+	position: absolute;
+	color: #FFF;
+	bottom: 0px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+.ivu-modal-wrap.mobile .set-con .yulan .head .title_mask{
+	position: absolute;
+	bottom: 0;
+	height: 60%;
+	width: 100%;
+}
+/*.head*/
 .yulan-tit{
 	font-size: 20px;
-	text-align: center;
-	font-weight: normal;
 	margin-bottom: 10px;
 }
 .yulan-xinxi{
-	text-align: center;
 	margin-bottom: 20px;
 }
 .yulan-xinxi span{
@@ -31,14 +54,22 @@
 	margin-left: 10px;
 	margin-right: 10px;
 }
+.yulan-xinxi span:first-child{
+	margin-left: 0px;
+}
 .ivu-modal-wrap.mobile .yulan-tit{
 	font-size: 20px !important;
 	margin-bottom: 10px;
 	margin-top: 5px;
+	font-family: "微软雅黑";
+	font-weight: bold;
 }
 .mobile .yulan-xinxi span{
 	margin-left: 5px;
 	margin-right: 5px;
+}
+.mobile .yulan-xinxi span:first-child{
+	margin-left: 0px;
 }
 .video_list_item{
   position: relative;

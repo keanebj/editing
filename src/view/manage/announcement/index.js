@@ -93,7 +93,7 @@ export default {
       ).then((response)=>{
         if(!tip){
             this.$Notice.success({
-            title: response.data.message,
+            title: '取消置顶成功！',
             desc: false
           })
         }

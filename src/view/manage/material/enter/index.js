@@ -227,10 +227,10 @@ export default {
   		this.$router.push('/manage/material')
   	},
     onSave () {
-      this.$Modal.confirm({
-        title: '确认保存',
-        content: '保存此视频到素材管理？',
-        onOk: () => {
+//    this.$Modal.confirm({
+//      title: '确认保存',
+//      content: '保存此视频到素材管理？',
+//      onOk: () => {
         	if (this.material.code > 5) {
         		this.routeLeave = true;
         		this.saveMaterial();
@@ -240,8 +240,8 @@ export default {
         			desc: false
         		});
         	}
-        }
-      })
+//      }
+//    })
     },
     saveMaterial: function () {
       this.formValidate.summary = this.zhaiyao;//摘要

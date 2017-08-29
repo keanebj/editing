@@ -92,7 +92,8 @@ export default {
           subtitle: '',
           content: '',
           studioname: '',
-          time: ''
+          time: '',
+          cover: ''
         },
         []
       ],
@@ -301,6 +302,7 @@ export default {
           let data = response.data.content;
           //给数据值
           this.previewCon[0].title = data.title;
+          this.previewCon[0].cover = data.cover;
           this.previewCon[0].subtitle = data.subtitle;
           this.previewCon[0].content = data.content;
           this.previewCon[0].time = data.addtime;
@@ -333,7 +335,7 @@ export default {
       } else {
         //    	不显示预览
         this.$Notice.warning({
-          title: '保存后才能预览',
+          title: '请先保存，保存后才能预览！',
           desc: false
         })
       }
@@ -349,8 +351,8 @@ export default {
       //未匹配到图片
       if (!imgArr) {
         this.$Notice.warning({
-          title: '正文还没有图片',
-          desc: false
+          title: '正文中无可用图片',
+          desc: '请在正文中插入符合条件的图片!'
         })
       } else {
         this.previewCon[1] = [];
@@ -626,7 +628,7 @@ export default {
       let title = this.formTop.title;
       if (!content && !title) {
         this.$Notice.warning({
-          title: "标题和正文为空,无法生成摘要",
+          title: "标题和正文的文字内容为空,无法生成摘要",
           desc: false
         });
       } else {
@@ -806,7 +808,7 @@ export default {
           this.qCode = true;
         } else {
           this.$Notice.warning({
-            title: '保存后才能分享！',
+            title: '请先保存，保存后才能分享！',
             desc: false
           })
         }

@@ -78,7 +78,8 @@ export default {
           title: '',
           content: '',
           studioname: '',
-          time: ''
+          time: '',
+          cover: ''
         },
         []
       ],
@@ -249,6 +250,7 @@ export default {
           let data = response.data.content;
           //给数据值
           this.previewCon[0].title = data.title;
+          this.previewCon[0].cover = data.cover;
           this.previewCon[0].subtitle = data.subtitle;
 	          this.previewCon[0].content = data.content;          
 	          this.previewCon[0].time = data.addtime;
@@ -306,7 +308,7 @@ export default {
       }else{
 //    	不显示预览
         this.$Notice.warning({
-          title: '保存后才能预览',
+          title: '请先保存，保存后才能预览！',
           desc: false
         })
       }
@@ -628,7 +630,7 @@ abstractWordCount:function(event){
               this.qCode = true;
             }else{
                this.$Notice.warning({
-                title: '保存后才能分享！',
+                title: '请先保存，保存后才能分享！',
                 desc: false
                })
             }
