@@ -13,7 +13,8 @@
       		<span>{{ previewCon.time.substring(0,10) }}</span>
       		<span>{{ author }}</span>
       	</div>
-      	<div v-html="previewCon.content"></div>
+        <div v-my-directive-audio="previewCon.content"></div>
+      	<!--<div v-html="previewCon.content"></div>-->
       </div>
       <div v-else-if="selVideoid">
          <Radio-group v-model="currentvideoid">
