@@ -152,6 +152,7 @@
 }
 .video_list{
   margin-top: 30px;
+  height: calc(12vw);
 }
 .video_list_in{
   padding-bottom: 0px;
@@ -161,9 +162,11 @@
   position: relative;
   height: 100%;
   cursor: pointer;
+  overflow: hidden;
 }
 .video_list_item img{
   width: 100%;
+  /*height: calc(10vw);*/
   display: block;
 }
 

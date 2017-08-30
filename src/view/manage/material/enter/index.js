@@ -253,6 +253,7 @@ export default {
 //    if (this.videoId > -1) {
         this.$http.put('api/material/'+ this.videoId, this.formValidate).then((response) => {
           if (response.data.status == 1) {
+          	this.routeLeave = true;
             this.$Notice.success({title:'保存成功',desc: false});
             this.$router.push('/manage/material')
           }else{
@@ -606,10 +607,12 @@ export default {
 		    title: '确认保存',
 		    content: '保存此视频到素材管理？',
 		    onOk: () => {
-		    	next(true)
 		    	if (this.material.code > 5) {
+		    		next(true)
 			    	this.$http.put('api/material/'+ this.videoId, this.formValidate).then((response) => {
+			    		
 		          if (response.data.status == 1) {
+		          	
 		            this.$Notice.success({title:'保存成功',desc: false});
 		            this.$router.push('/manage/material')
 		          }else{
@@ -632,6 +635,10 @@ export default {
 		  })
   	}else{
   		next(true)
+//		this.$Notice.error({
+//				title:'请填写对应的视频信息！',
+//				desc: false
+//			});
   	}
 	}
 }

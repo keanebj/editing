@@ -299,7 +299,7 @@
 }
 
 .set-con {
-  padding: 10px 10px;
+  padding: 10px 15px;
   height: 430px;
   margin: 10px 0 0 0;
   overflow: hidden;
@@ -312,15 +312,15 @@
 }
 
 .set-con ol.list-paddingleft-2 {
-  list-style: decimal;
+  padding-left: 20px;
 }
 
 .set-con ul.list-paddingleft-2 {
-  list-style: disc;
+  padding-left: 20px;
 }
 
 .set-con .yulan img {
-  max-width: 100%;
+  max-width: 98%;
   height: auto;
 }
 

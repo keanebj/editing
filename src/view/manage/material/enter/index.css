@@ -103,6 +103,9 @@
   float: left;
   font-size: 14px;
   font-weight: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .material_xx_con>div{
   width: 65%;
