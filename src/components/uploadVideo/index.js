@@ -136,14 +136,13 @@ export default {
                 "auto_play": "0",
                 "file_id": this.selVideoid,
                 "app_id": "1252018592",
-                "width": 400,
-                "height": 225,
+                "width": 640,
+                "height": 360,
             }; 
             new qcVideo.Player("videoPreview1", option); 
-            let $ = qdVideo.get('$');
-            
-            $("#videoPreview1").find('embed').prop('width','640px');
-            $("#videoPreview1").find('embed').prop('height','360px');
+            let $ = qdVideo.get('$');           
+             $("#videoPreview1").find('embed').prop('width','640px');
+             $("#videoPreview1").find('embed').prop('height','360px');
             let videoHtml='<p id="videoPreview1" style="text-align:center;width:100%;margin-bottom:10px;" class="video_container" serverfileid="'+this.selVideoid+'" id="id_video_container_'+this.selVideoid+'">'+this.$refs.videoPreview1.innerHTML+'</p>';
             this.$emit("insertVideoEditor",videoHtml,this.selVideoid);
             
@@ -386,7 +385,7 @@ export default {
                                         
                                         })
                                 },2000) 
-                                },30000)
+                                },startduration)
                                   
                             }
                             else{

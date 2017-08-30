@@ -225,8 +225,8 @@ export default {
               "auto_play": "0",
               "file_id": id,
               "app_id": "1252018592",
-              "width": 400,
-              "height": 225,
+              "width": 640,
+              "height": 360,
           };     
           new qcVideo.Player("videoTabPreview", option);
           this.videoid=id;

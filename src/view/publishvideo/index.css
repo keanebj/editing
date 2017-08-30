@@ -17,10 +17,10 @@
     color: #ed3f14;
   }
   #videoTabPreview{
-    width:400px;
-    height:225px;
+    width:640px;
+    height:360px;
     border:1px solid #cccccc;
-    margin-left:100px;
+    margin-left:10%;
     margin-top:30px;
   }
   #videoTabPreview video{
@@ -36,20 +36,17 @@
     color:#fff;
   }
 
-  @media screen and (max-width: 870px) {
+  @media screen and (max-width: 1150px) {
     #videoTabPreview{
        width:100%;
-       height:100%;
        margin-left:0;
     }
      #videoTabPreview video{
-    width:100% !important;
-    height:100% !important;
-    border:1px solid #cccccc;
+      width:100% !important;
+      border:1px solid #cccccc;
     }
    #videoTabPreview embed{
-    width:100% !important;
-    height:100% !important;
+      width:100% !important;
   }
 }
 
