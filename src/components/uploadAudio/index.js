@@ -1,4 +1,4 @@
-
+import conf from '@/config'
 export default {
   name: 'ComponentsUploadAudio',
   data(){
@@ -26,6 +26,7 @@ export default {
           isfinishupload:false,
           audioname:'',
           audioUrl:'',
+          uid:'',
           canceluploadFlag:false
          
     }
@@ -36,7 +37,7 @@ export default {
   props:{
       onSuccess: Function,
       action: {
-        default: 'http://mp.dev.hubpd.com/media/ueditor?action=uploadfile'
+        default: conf.host +conf.serverRoot+'/ueditor?action=uploadfile'
       }, 
   },
   watch:{
@@ -82,12 +83,12 @@ export default {
         this.isuploading=false;
         this.isfail=false;
         this.isfinishupload=true;
-        this.audioUrl="http://mp.dev.hubpd.com/media"+res.url;  
-
+        this.audioUrl=conf.host + conf.serverRoot + res.url; 
+        this.uid=file.uid;
     },
     insertAudioEditor(data){
         if(!data){
-            data={name:this.audioname,url:this.audioUrl};
+            data={name:this.audioname,url:this.audioUrl,uid:this.uid};
         }   
         this.$emit('onSuccess',data);
         this.uploadAudio=false;
