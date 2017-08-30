@@ -1,6 +1,6 @@
 <section>
   <div class="set-con" @wheel.prevent="scrollBar($event)" ref="setCon" :style="{height: setConHeight}">
-    <div class="set-posi" ref="onscroll" @mousedown.prevent="mouseScroll($event)">
+    <div class="set-posi" ref="onscroll">
       <div v-if="previewCon.title"  class="yulan">
       	<div class="head">	
 	      	<img :src="previewCon.cover" alt="" />
