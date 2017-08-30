@@ -389,18 +389,6 @@
   font-size: 16px !important;
 }
 
-.ivu-modal-wrap.mobile p {
-  /*font-size: 12px!important;
-  line-height:20px !important;
-  margin-top:4px !important;
-  margin-bottom:4px !important;*/
-}
-
-.ivu-modal-wrap.mobile p span {
-  /*font-size: 12px !important;
-  line-height:16px !important;*/
-}
-
 .ivu-modal-wrap.pc embed {
   margin: 10px auto;
 }
@@ -411,6 +399,23 @@
   display: block;
   margin: 10px auto;
 }
+.mobile .audioWrap{
+  width:100%;
+  height:84px;
+}
+.mobile .audioBtn{
+  width:30px;
+  height:30px;
+  top:40%;
+}
+.mobile .content{
+  width:80%;
+  margin-left:60px;
+}
+.mobile .timeContemt,.mobile .progress,.mobile .songName{
+  width:90%;
+}
+
 
 .cover-tip {
   margin-left: 10px;
