@@ -749,10 +749,18 @@
 
             $upload.on('click', function () {
                 var imgsize=uploader.getFiles();
-                if(imgsize.length && imgsize.length <= 1){
-                    alert("请先选择要上传的图片");
+                var file,readyFile=0;
+                for (i = 0; file = imgsize[i++]; ) {
+                    status = file.getStatus();
+                    if (status == 'queued' || status == 'uploading' || status == 'progress') readyFile++;
+                }
+
+                if(readyFile == 0){
+                    alert("请选择要上传的图片");
                     return;
                 }
+
+                
                 if ($(this).hasClass('disabled')) {
                     return false;
                 }

@@ -7340,9 +7340,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
             var me = this;
 
             me.fireEvent('beforesetcontent', html);
-          /*  var root = UE.htmlparser(html);
+            var root = UE.htmlparser(html);
             me.filterInputRule(root);
-            html = root.toHtml();*/
+            html = root.toHtml();
 
             me.body.innerHTML = (isAppendTo ? me.body.innerHTML : '') + html;
 
@@ -10065,36 +10065,36 @@ UE.plugins['defaultfilter'] = function () {
                             node.innerHTML(browser.ie ? '&nbsp;' : '<br/>')
                         }
                         break;
-                    case 'div':
-                        if(node.getAttr('cdata_tag')){
-                            break;
-                        }
-                        //针对代码这里不处理插入代码的div
-                        val = node.getAttr('class');
-                        if(val && /^line number\d+/.test(val)){
-                            break;
-                        }
-                        if(!allowDivTransToP){
-                            break;
-                        }
-                        var tmpNode, p = UE.uNode.createElement('p');
-                        while (tmpNode = node.firstChild()) {
-                            if (tmpNode.type == 'text' || !UE.dom.dtd.$block[tmpNode.tagName]) {
-                                p.appendChild(tmpNode);
-                            } else {
-                                if (p.firstChild()) {
-                                    node.parentNode.insertBefore(p, node);
-                                    p = UE.uNode.createElement('p');
-                                } else {
-                                    node.parentNode.insertBefore(tmpNode, node);
-                                }
-                            }
-                        }
-                        if (p.firstChild()) {
-                            node.parentNode.insertBefore(p, node);
-                        }
-                        node.parentNode.removeChild(node);
-                        break;
+                    // case 'div':
+                    //     if(node.getAttr('cdata_tag')){
+                    //         break;
+                    //     }
+                    //     //针对代码这里不处理插入代码的div
+                    //     val = node.getAttr('class');
+                    //     if(val && /^line number\d+/.test(val)){
+                    //         break;
+                    //     }
+                    //     if(!allowDivTransToP){
+                    //         break;
+                    //     }
+                    //     var tmpNode, p = UE.uNode.createElement('p');
+                    //     while (tmpNode = node.firstChild()) {
+                    //         if (tmpNode.type == 'text' || !UE.dom.dtd.$block[tmpNode.tagName]) {
+                    //             p.appendChild(tmpNode);
+                    //         } else {
+                    //             if (p.firstChild()) {
+                    //                 node.parentNode.insertBefore(p, node);
+                    //                 p = UE.uNode.createElement('p');
+                    //             } else {
+                    //                 node.parentNode.insertBefore(tmpNode, node);
+                    //             }
+                    //         }
+                    //     }
+                    //     if (p.firstChild()) {
+                    //         node.parentNode.insertBefore(p, node);
+                    //     }
+                    //     node.parentNode.removeChild(node);
+                    //     break;
                     case 'dl':
                         node.tagName = 'ul';
                         break;
@@ -10610,22 +10610,25 @@ UE.plugins['autotypeset'] = function(){
 
             }
             if(isLine(ci,true) && ci.tagName != 'SPAN'){
-                if(opt.indent){
-                    ci.style.textIndent = opt.indentValue;
+                if(ci.className.indexOf("myDirectiveAudio") == -1 ){   
+                
+                    if(opt.indent){
+                        ci.style.textIndent = opt.indentValue;
+                    }
+                    if(opt.textAlign){
+                        ci.style.textAlign = opt.textAlign;
+                    }
+                    if(opt.lineHeight)
+                        ci.style.lineHeight = opt.lineHeightValue + 'em';
+                    if(opt.rowSpacingTop)
+                        ci.style.marginTop = opt.rowSpacingTopValue + 'px';
+                    if(opt.rowSpacingBottom)
+                        ci.style.marginBottom = opt.rowSpacingBottomValue + 'px';
+                    if(opt.fontFamily)
+                        ci.style.fontFamily = opt.fontFamilyValue;
+                    if(opt.fontSize)
+                        ci.style.fontSize = opt.fontSizeValue+'px'; 
                 }
-                if(opt.textAlign){
-                    ci.style.textAlign = opt.textAlign;
-                }
-                if(opt.lineHeight)
-                    ci.style.lineHeight = opt.lineHeightValue + 'em';
-                if(opt.rowSpacingTop)
-                    ci.style.marginTop = opt.rowSpacingTopValue + 'px';
-                if(opt.rowSpacingBottom)
-                    ci.style.marginBottom = opt.rowSpacingBottomValue + 'px';
-                if(opt.fontFamily)
-                    ci.style.fontFamily = opt.fontFamilyValue;
-                if(opt.fontSize)
-                    ci.style.fontSize = opt.fontSizeValue+'px'; 
             }
 
             //去掉class,保留的class不去掉
@@ -10638,7 +10641,7 @@ UE.plugins['autotypeset'] = function(){
             }
 
             //表情不处理
-            if(opt.imageBlockLine && ci.tagName.toLowerCase() == 'img' && !ci.getAttribute('emotion')){
+            if(opt.imageBlockLine && ci.tagName.toLowerCase() == 'img' && ci.className.indexOf("myDirectiveAudio") == -1 && !ci.getAttribute('emotion')){
                 if(html){
                     var img = ci;
                     switch (opt.imageBlockLine){
@@ -16276,6 +16279,180 @@ UE.plugins['list'] = function () {
         }
     };
 
+    //wangyi test audio
+   UE.plugins['audio'] = function (){
+	var me =this,editor= this; 
+      me.addListener('delkeydown',function(type,evt){  
+       var delele=me.selection.getStart();
+       var delEleFather=$(delele).parents('[uetag="edui-audio-embed"]');
+       if(delEleFather.length >0){
+           //在audio内，删除这个audio
+            domUtils.remove(delEleFather.get(0));
+       } 
+    }) 
+    //添加播放点击事件
+    me.addListener('click', function (type, e) {    
+        var range = me.selection.getRange();
+        img = range.getClosedNode();
+        
+        if (img && img.tagName == 'IMG' && img.className.indexOf("audioBtnImg") != -1) {
+           //播放音频
+           var father=$(img).parents('[uetag="edui-audio-embed"]');
+           var prefix=father.attr("audio-prefix");
+           var audio=$(father).find('audio').get(0);
+           e.stopPropagation();
+           var timer=null;
+           if(audio.paused){
+               audio.play();
+               //img 的图片
+               img.src=prefix+'static/ueditor/audioimages/playing.gif';
+               
+               //刷新时间 
+               clearInterval(timer);
+                 timer=setInterval(function(){
+                    var currentTime = audio.currentTime;
+                    $(father).find('.currentTime').html(_time(currentTime));
+
+                    var currentTime = audio.currentTime;
+                    var totleTime = audio.duration;
+                    var percent = (currentTime / totleTime) * 100;
+                    $(father).find('.progress').val(percent);
+
+                    if(currentTime ==  audio.duration){
+                        img.src=prefix+'/static/ueditor/audioimages/play.svg';
+                        clearInterval(timer);
+                    }
+           },100); //当前播放时间更新 
+            } else { 
+                img.src=prefix+'static/ueditor/audioimages/play.svg';
+                audio.pause();
+                clearInterval(timer);
+            }
+             //获得时长
+            getTotleTime(father);
+            $(".edui-popup-body").hide();
+        }else{
+            $(".edui-popup-body").show();
+        }
+    })
+
+
+    //加载css
+     me.ready(function(){
+        UE.utils.cssRule('audio',
+           '.audioWrap{position: relative;width: 600px; height: 100px;border: 1px #f0f0f0 solid;border-radius: 3px;background: #fcfcfc;box-sizing: border-box;margin:20px auto;}'+
+    '.audioBtn{ position: absolute;width:45px;height:45px;top:50%;transform:translateY(-50%);margin-left: 15px;margin-right: 15px;cursor: pointer;}'+
+    '.content{margin-left: 75px; width: 500px;height:100px; box-sizing: border-box;overflow: hidden;}'+
+    '.songName{height:20px;margin:15px 0;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}'+
+    '.progress{width:500px;margin:10px 0 0 0;cursor: pointer;height:3px;-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none;appearance:none;}'+
+    '.progress::-ms-fill{ background:#f95858;}.progress::-moz-progress-bar{background:#f95858;}.progress::-webkit-progress-value{background:#f95858;}'+
+    '.timeContemt{position: relative;width: 500px;height:20px;box-sizing: border-box;overflow: hidden;}'+
+    '.time{width:40px;height:20px;font-size:12px;color:#b2b2b2;position: absolute;top:0;padding-top:3px;}'+
+    '.currentTime{left: 0; text-align: left;}'+
+    '.audioBtnImg::selection{background:none;}'+
+    '.download{position:absolute;bottom:-20px;right:0;text-decoration:none;padding-left:50px;display:inline-block;color:#b2b2b2;background:url(http://mp.dev.hubpd.com/static/ueditor/audioimages/download.svg) left center no-repeat;background-size:80% 80%;}'+
+    '.totleTime{ right: 0;text-align: right;}', me.document);    
+    });
+
+    let muplayerTmpl='<div uetag="edui-audio-embed" contenteditable="false" audio-prefix="{Prefix}" audio-audioname="{AudioName}" audiorela="{ID}" audio-url="{URL}" class="audioWrap myDirectiveAudio"'+ 
+      '><div class="audioBtn myDirectiveAudio"><img class="audioBtnImg myDirectiveAudio" src="{Prefix}/static/ueditor/audioimages/play.svg">'+
+            '<audio src="{URL}" width="200" height="18"></audio></div>'+ 
+            '<div class="content myDirectiveAudio"><p class="songName myDirectiveAudio">{AudioName}</p><progress class="progress myDirectiveAudio" value="0"'+
+            'max="100"></progress>'+
+            '<div class="timeContemt myDirectiveAudio"><div class="time currentTime myDirectiveAudio">00:00</div><div class="time totleTime myDirectiveAudio"></div></div></div>'+
+            '<a href="{URL}" class="download myDirectiveAudio" target="_blank" download="{AudioName}">下载音频</a></div>';
+	
+    //var embedTmpl = '<audio controls="" uetag="edui-audio-embed" audio-prefix="{Prefix}" audio-audioname="{AudioName}" audiorela="{ID}" audio-url="{URL}"' + 'src="{URL}" width="200" height="18"></audio>';
+	//var muplayerTmpl ='<div id="audio{ID}" v-my-directive="renderPlayer" audio-prefix="{Prefix}" uetag="edui-audio-embed" audio-audioname="{AudioName}" audiorela="{ID}" audio-url="{URL}"></div>';
+	//var muplayerJS = "<script src=\"{{Prefix}}/static/ueditor/muplayer.js\"></script><script>console.log('dfdfsdfs');</script>";
+	    // 设计视图转为源码视图的规则
+     me.addOutputRule(function(root){
+        switchRule(root,true);
+     });  
+     // 源码视图转为设计视图的规则
+    //  me.addInputRule(function(root){
+    //  	switchRule(root);
+    // });
+
+ //总时长显示
+  var getTotleTime=function(father) {
+    var totleTime = $(father).find('audio').get(0).duration;
+    setTimeout(function () {  
+      if(isNaN(totleTime)){
+        getTotleTime();
+      }
+      else{
+        $(father).find('.totleTime').html(_time(totleTime)); 
+      }
+    }, 100);
+  };
+        //时间显示模式
+    var _time=function(time) {
+        var minute = changeNum(Math.floor(time / 60));
+        var second = changeNum(Math.floor(time % 60));
+        var time = minute + ':' + second;
+        return time;
+    };
+    //时间为个位数时在前面添0
+    var changeNum=function(num, n = 2){
+        var len = num.toString().length;
+        while (len < n) {
+        num = '0' + num;
+        len++;
+        }
+        return num
+    };
+    var tmpl=function(str,obj){
+        return str.replace(/\{([\w_$]+)\}/g,function(c,$1){
+            var a=obj[$1];
+            if(a === undefined || a === null){
+                return '';
+            }
+            if('[object Function]' == Object.prototype.toString.call(a)){
+                a=a($1);
+            }
+            return a;
+        })
+    };
+	//代码视图和设计视图切换时进行相应元素节点的替换
+    var switchRule = function(root,isOutput){
+    	var nodes=root.getNodesByTagName(isOutput?'div':'div');
+    	if(isOutput){  		
+    		UE.utils.each(nodes,function(node){
+    			if(node.getAttr('uetag')==='edui-audio-embed'){                     
+ 					//console.log(28,node)
+					var data={
+    					'ID':node.getAttr('audiorela'),
+    					'AudioName':node.getAttr('audio-audioname'),
+    					'URL': node.getAttr('audio-url'),
+                        'Prefix':node.getAttr('audio-prefix')
+    				};
+    				var html=muplayerTmpl;                   
+        			var newNode=UE.uNode.createElement(tmpl(html,data));				
+    				node.parentNode.replaceChild(newNode,node); 
+                        			
+				}
+    		});
+		}else{
+			UE.utils.each(nodes,function(node){
+				if(node.getAttr('uetag')==='edui-audio-embed'){
+					console.log(53,node)
+					var data={
+						'ID':node.getAttr('audiorela'),
+						'AudioName':node.getAttr('audio-audioname'),
+						'URL': node.getAttr('audio-url'),
+                        'Prefix':node.getAttr('audio-prefix')
+					};
+					var html = embedTmpl;                  
+					var newNode=UE.uNode.createElement(tmpl(html,data));				
+					node.parentNode.replaceChild(newNode,node); 
+				}
+			});
+		}
+	}	
+};
+
+
     UE.plugins['source'] = function (){
         var me = this;
         var opt = this.options;
@@ -16321,8 +16498,7 @@ UE.plugins['list'] = function () {
 
         me.commands['source'] = {
             execCommand: function (){
-
-                sourceMode = !sourceMode;
+                sourceMode = !sourceMode;               
                 if (sourceMode) {
                     bakAddress = me.selection.getRange().createAddress(false,true);
                     me.undoManger && me.undoManger.save(true);
@@ -16359,8 +16535,9 @@ UE.plugins['list'] = function () {
                     me.fireEvent('aftergetcontent');
 
                     var content = root.toHtml(true);
+                   
 
-                    sourceEditor = createSourceEditor(me.iframe.parentNode);
+                    me.sourceEditor = sourceEditor = createSourceEditor(me.iframe.parentNode);
 
                     sourceEditor.setContent(content);
 
@@ -16399,20 +16576,17 @@ UE.plugins['list'] = function () {
                         return a.replace(/(^[\n\r\t]*)|([\n\r\t]*$)/g,'')
                     });
 
-                    me.setContent = orgSetContent;
 
-                    //wy：audio标签替换
-                    // cont=cont.replace(/<audio\b[^>]*src\s*=\s*"[^>"]*\.(?:mp3)"[^>]*>/gi,'<div style="position: relative;width: 600px;height: 100px;border: 1px #f0f0f0 solid;border-radius: 3px;background: #fcfcfc;box-sizing: border-box;overflow: hidden;margin:20px auto;">'+
-                    // '<div style="position: absolute; width:45px;height:45px;top:50%;transform:translateY(-50%);margin-left: 15px;margin-right: 15px;cursor: pointer;"><img src="播放按钮.svg">'+
-                    // +'<audio id="audio"><source = src="IVY - A Ha.mp3" type="audio/mp3"></audio></div></div>');
-                    
+
+                
 
 
 
-
+                    me.setContent = orgSetContent;        
+        
                     me.setContent(cont);
                     sourceEditor.dispose();
-                    sourceEditor = null;
+                    me.sourceEditor = sourceEditor = null;
                     //还原getContent方法
                     me.getContent = oldGetContent;
                     var first = me.body.firstChild;
@@ -16421,6 +16595,7 @@ UE.plugins['list'] = function () {
                         me.body.innerHTML = '<p>'+(browser.ie?'':'<br/>')+'</p>';
                         first = me.body.firstChild;
                     }
+                    
 
 
                     //要在ifm为显示时ff才能取到selection,否则报错
@@ -17140,6 +17315,12 @@ UE.plugins['fiximgclick'] = (function () {
                     img = range.getClosedNode();
 
                 if (img && img.tagName == 'IMG' && me.body.contentEditable!="false") {
+
+                    //wangyi  add：reject audio play img
+                    if(img.className.indexOf('audioBtnImg') >-1 ){
+                        return;
+                    }
+
 
                     if (img.className.indexOf("edui-faked-music") != -1 ||
                         img.getAttribute("anchorname") ||
