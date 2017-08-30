@@ -176,6 +176,14 @@
 
 /*手机端分享*/
 @media screen and (max-width: 768px) {
+	.con_new embed{
+		max-width: 100%;
+		height: auto;
+	}
+	.con_new video{
+		max-width: 100%;
+		height: auto;
+	}
     .audioWrap{
         width:95%;
         height:84px;
