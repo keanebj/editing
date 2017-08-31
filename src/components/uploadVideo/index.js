@@ -94,10 +94,19 @@ export default {
             return;
         }
 
-         //调用父组件中的
-        let linkvideoHtml=this.$refs.linkVideoHtml.innerHTML;
-        this.$emit("insertVideoEditor",linkvideoHtml);
-        this.uploadVideo=false;
+        //判断视频地址是否正确
+         let linkvideo=document.getElementById("linkvideo");
+         if(isNaN(linkvideo.duration)){
+            this.$Notice.warning({
+                title:'视频地址不存在',
+                desc:false
+             });
+         }else{
+             //调用父组件中的
+            let linkvideoHtml=this.$refs.linkVideoHtml.innerHTML;
+            this.$emit("insertVideoEditor",linkvideoHtml);
+            this.uploadVideo=false;
+         } 
       },
       addLocalVideo(){
         let $ = qdVideo.get('$'); 
@@ -353,8 +362,6 @@ export default {
                                 fileEle[0].innerHTML="重新上传"; 
                                 fileEle.appendTo("#re-upload-area"); 
 
-
-
                                 //加载中动画
                                This.loadingTimer=setInterval(function(){
                                     let index=$("#videoPreview").find('i.active').index();
@@ -364,9 +371,6 @@ export default {
                                     }
                                      $("#videoPreview").find("i").eq(index+1).addClass('active');
                                 },500)
-
-
-                                
                                 
                                 //需要估算一个时间 (目前先这样定时处理)
                                 let startduration=Math.round(args.size/1000000)*5 >0 ? Math.round(args.size/1000000)*5000 :10000;
@@ -416,7 +420,6 @@ export default {
                                 This.idHideStepFour=false;
                             }       
                       },
-
                       /**
                        * 文件状态发生变化
                        * @param info  { done: 完成数量 , fail: 失败数量 , sha: 计算SHA或者等待计算SHA中的数量 , wait: 等待上传数量 , uploading: 上传中的数量 }
@@ -425,7 +428,6 @@ export default {
                           $('#count').text('各状态总数-->' + JSON.stringify(info));
 
                       },
-
                       /**
                        *  上传时错误文件过滤提示
                        * @param args {code:{-1: 文件类型异常,-2: 文件名异常} , message: 错误原因 ， solution: 解决方法}
@@ -436,10 +438,8 @@ export default {
                                 desc: false
                            })                       
                       }
-
                   }
               );
-
               $('#stop_upload').on('click', function () {
                   //@api 暂停上传
                   qdVideo.uploader.stopUpload();
@@ -478,7 +478,6 @@ export default {
   },
   mounted() {
       this.initUpload();
-    
   },
   destroy(){
       //清除定时器

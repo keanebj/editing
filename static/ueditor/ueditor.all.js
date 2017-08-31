@@ -16300,6 +16300,8 @@ UE.plugins['list'] = function () {
            var father=$(img).parents('[uetag="edui-audio-embed"]');
            var prefix=father.attr("audio-prefix");
            var audio=$(father).find('audio').get(0);
+  
+
            e.stopPropagation();
            var timer=null;
            if(audio.paused){

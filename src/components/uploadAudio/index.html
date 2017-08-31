@@ -21,6 +21,7 @@
                     <Button type="ghost" shape="circle" @click="uploadAudio = false" style="margin-left: 20px">取消</Button>
                 </Form-item>
             </Form>
+            <audio style="display: none;" :src="linkForm.url" id="linkaudio"></audio>
         </div>
         <div v-show="source == 'local'">
             <div class="select-audio" :class="{hide:ishideone}">

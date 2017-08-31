@@ -27,7 +27,8 @@ export default {
           audioname:'',
           audioUrl:'',
           uid:'',
-          canceluploadFlag:false
+          canceluploadFlag:false,
+          linkAudioNull:false
          
     }
   },
@@ -52,17 +53,25 @@ export default {
         this.uploadAudio=true;   
       },
       submitLinkAudio (name) {
-                this.$refs[name].validate((valid) => {
-                    if (valid) {
-                        this.insertAudioEditor(this.linkForm);
-                    } else {
+        this.$refs[name].validate((valid) => {
+            if (valid) {
+                let linkaudio=document.getElementById("linkaudio");
+                     if(isNaN(linkaudio.duration)){
                         this.$Notice.error({
-                            title: '表单验证失败!',
+                            title: '音频地址不存在！',
                             desc: false
                         });
-                    }
-                })
-            },
+                    }else{
+                        this.insertAudioEditor(this.linkForm);
+                    } 
+            } else {
+                this.$Notice.error({
+                    title: '表单验证失败!',
+                    desc: false
+                });
+            }
+        })
+      },
     handleBeforeUpload(){
         this.ishideone=true;
         this.isuploading=true;
