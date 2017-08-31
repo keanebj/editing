@@ -6,7 +6,7 @@
          <Form-item label="LOGO" prop="logofile">
         <img v-if="formValidateM.logofile" style="max-width:100px;border:1px solid #eee" :src="formValidateM.logofile"
         />
-        <cropper-upload :width="300" :height="200" :cropUploadSuccess="cropUploadSuccess" :cropUploadFail="cropUploadSuccess" minwidth="300" minheight="200">
+        <cropper-upload :width="300" :height="200" :cropUploadSuccess="cropUploadSuccess" :cropUploadFail="cropUploadSuccess" :minwidth="300" :minheight="200">
           <a v-if="formValidateM.logofile" href="javascript:void(0)">
             <Icon type="edit"></Icon>
           </a>

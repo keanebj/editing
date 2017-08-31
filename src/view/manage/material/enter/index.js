@@ -616,7 +616,7 @@ export default {
 		            this.$Notice.success({title:'保存成功',desc: false});
 		            this.$router.push('/manage/material')
 		          }else{
-		          	this.$router.go(-1);
+		          	next(false);
 		            this.$Notice.error({title:response.data.message,desc: false});
 		          }
 		        })
@@ -630,7 +630,7 @@ export default {
 		    	}
 		    },
 		    onCancel : () =>  {
-					this.$router.go(0);
+					next(true);
 		    }
 		  })
   	}else{
