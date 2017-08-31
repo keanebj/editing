@@ -776,7 +776,7 @@ export default {
                 this.articleID = response.data.id;
               }, (response) => {
                 this.$Notice.error({
-                  title: error.data.message,
+                  title: response.data.message,
                   desc: false
                 });
               });

@@ -47,8 +47,10 @@ export default {
       
   },
   methods: {
-  	changeRadio (id) {
-  		this.currentvideoid = id;
+  	changeRadio (id,code) {
+  		if (code == 2) {
+  			this.currentvideoid = id;
+  		}
   	},
   	previewConauthor: function (author) {
   		this.author = author;
