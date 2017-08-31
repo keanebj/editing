@@ -11,7 +11,7 @@
         <Button type="ghost" shape="circle" class="add-sub-title" :disabled="!isHideSubtitle" @click="isHideSubtitle=!isHideSubtitle">添加原标题</Button>
       </Form-item>
       <Form-item label="" prop="subtitle" :class="{hide:isHideSubtitle}">
-        <Input id="subTitle" v-model="formTop.subtitle" :maxlength="subtitleMaxCount"  class="title-input" placeholder="请输入副标题" @on-change="getSubTitleContent" @on-blur="removetrim"></Input>
+        <Input id="subTitle" v-model="formTop.subtitle" :maxlength="subtitleMaxCount"  class="title-input" placeholder="请输入原标题" @on-change="getSubTitleContent" @on-blur="removetrim"></Input>
         <span class="sub-limit-words">
           <span>{{subtitleContentCount}}</span>/60
           <div class="delete-icon" @click="deleteSubTitle"></div>
