@@ -16354,7 +16354,7 @@ UE.plugins['list'] = function () {
     '.totleTime{ right: 0;text-align: right;}', me.document);    
     });
 
-    let muplayerTmpl='<div uetag="edui-audio-embed" contenteditable="false" audio-prefix="{Prefix}" audio-audioname="{AudioName}" audiorela="{ID}" audio-url="{URL}" class="audioWrap myDirectiveAudio"'+ 
+    var muplayerTmpl='<div uetag="edui-audio-embed" contenteditable="false" audio-prefix="{Prefix}" audio-audioname="{AudioName}" audiorela="{ID}" audio-url="{URL}" class="audioWrap myDirectiveAudio"'+ 
       '><div class="audioBtn myDirectiveAudio"><img class="audioBtnImg myDirectiveAudio" src="{Prefix}/static/ueditor/audioimages/play.svg">'+
             '<audio src="{URL}" width="200" height="18"></audio></div>'+ 
             '<div class="content myDirectiveAudio"><p class="songName myDirectiveAudio">{AudioName}</p><progress class="progress myDirectiveAudio" value="0"'+

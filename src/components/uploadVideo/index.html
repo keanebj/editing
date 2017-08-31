@@ -1,22 +1,9 @@
 <Modal v-model="uploadVideo" width="768" id="video-upload-pop">
-    <p slot="header">
-        <span class="video-header-span" :class="tabName == 'link'?'main-color':''" @click="changeTab('link')">视频外链</span>
+    <p slot="header">  
         <span class="video-header-span" :class="tabName == 'local'?'main-color':''" @click="changeTab('local')">本地上传</span>
         <span class="video-header-span" :class="tabName == 'resource'?'main-color':''" @click="changeTab('resource')">素材管理</span>
+        <span class="video-header-span" :class="tabName == 'link'?'main-color':''" @click="changeTab('link')">视频外链</span>
     </p>
-    <!-- 外链地址-->
-    <div :class="{hide:isHideLink}" style="text-align: center;margin:10px 0;height:350px;">
-         <Input v-model="videoLink" placeholder="视频外链添加，建议格式为mp4" style="width:80%;"></Input>
-         <div class="video-preview-link" style="position: relative;">
-             <span class="link-preview-tip">视频预览窗口</span>
-             <h2 style="position: absolute;left:15%;top:40%;z-index: 1;" v-if="videoLink">输入的视频地址有误，请检查后再试</h2>
-             <div ref="linkVideoHtml" id="previewLinkVideo"><p style="text-align:center;"><video :class="{hide:ishidelinkvideo}" width="640" height="auto" wmode="transparent" play="true" loop="false" menu="false" allowscriptaccess="never" allowfullscreen="true"  :src="videoLink"  preload="load" controls="controls"><source :src="videoLink"  type="video/mp4" /></video></p></div>
-         </div>
-         <div class="video-footer">
-            <Button type="primary" shape="circle" style="margin:0 20px;" @click="addLinkVideo">添加</Button>
-            <Button type="ghost" shape="circle" style="margin:0 20px;" @click="reset">取消</Button>
-        </div>
-    </div>
      <!-- 素材管理-->
     <div :class="{hide:isHideResource}" style="height:370px;overflow:hidden;">
        <ScrollBar v-if="!isHideSourceBtn" :previewCon="materialVideos" @changeSelVideo="changeSelVideo" :selVideoid="selVideoid" scrollHeight="290px" setConHeight="300px"></ScrollBar>
@@ -46,7 +33,7 @@
         </div>
          <div class="video-local-upload video-step-3" :class="{hide:idHideStepThree}">
            <div class="title">{{video.name}}</div><div id="re-upload-area" class="re-upload-btn"></div>
-           <div style="display: inline-block;"><div class="video-preview" id="videoPreview" ref="videoPreview">视频正在转码中，请稍候...</div></div><br/>
+           <div style="display: inline-block;"><div class="video-preview" id="videoPreview" ref="videoPreview">视频正在转码,请不要刷新或关闭页面</div></div><br/>
            <span class="main-color">视频比例16:9</span>
             <div class="video-footer" style="margin-top:10px;">
             <Button type="primary" shape="circle" style="margin:0 20px;" :disabled="enableAddLocalVideo" @click="addLocalVideo">添加</Button>
@@ -62,6 +49,19 @@
                 <Button type="primary" shape="circle" style="margin:0 20px;" @click="reUpload">重新上传</Button>
                 <Button type="ghost" shape="circle" style="margin:0 20px;" @click="reset">取消</Button>
             </div>
+        </div>
+    </div>
+    <!-- 外链地址-->
+    <div :class="{hide:isHideLink}" style="text-align: center;margin:10px 0;height:350px;">
+         <Input v-model="videoLink" placeholder="视频外链添加，建议格式为mp4" style="width:80%;"></Input>
+         <div class="video-preview-link" style="position: relative;">
+             <span class="link-preview-tip">视频预览窗口</span>
+             <h2 style="position: absolute;left:15%;top:40%;z-index: 1;" v-if="videoLink">输入的视频地址有误，请检查后再试</h2>
+             <div ref="linkVideoHtml" id="previewLinkVideo"><p style="text-align:center;"><video :class="{hide:ishidelinkvideo}" width="640" height="auto" wmode="transparent" play="true" loop="false" menu="false" allowscriptaccess="never" allowfullscreen="true"  :src="videoLink"  preload="load" controls="controls"><source :src="videoLink"  type="video/mp4" /></video></p></div>
+         </div>
+         <div class="video-footer">
+            <Button type="primary" shape="circle" style="margin:0 20px;" @click="addLinkVideo">添加</Button>
+            <Button type="ghost" shape="circle" style="margin:0 20px;" @click="reset">取消</Button>
         </div>
     </div>
     

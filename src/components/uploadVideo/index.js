@@ -6,7 +6,7 @@ export default {
         videotimer:null,
         videoLink:'',
         uploadVideo:false,
-        tabName:'link',
+        tabName:'local',
         isHideLocal:true,
         isHideLink:false,
         isHideResource:true,
@@ -110,7 +110,7 @@ export default {
         this.videoLink='';
         $("#videoPreview").html("");
         this.reUpload();
-        this.changeTab('link');
+        this.changeTab('local');
         this.selVideoid= '111';
         this.uploadVideo=false; 
         //同时需要取消上传
@@ -176,7 +176,7 @@ export default {
         this.enableAddLocalVideo=true;
         clearInterval(this.videotimer);
         clearTimeout(this.onceTimer);
-        this.$refs.videoPreview.innerHTML="视频正在转码中，请稍候...";  
+        this.$refs.videoPreview.innerHTML="视频正在转码,请不要刷新或关闭页面";  
       },
       previewVideo(){
         var option = {
@@ -342,7 +342,7 @@ export default {
                                 This.idHideStepThree=false;
                                 This.idHideStepFour=true;
                                 //转码中 ，不进行任何操作
-                                This.$refs.videoPreview.innerHTML="视频正在转码中，请稍候...";
+                                This.$refs.videoPreview.innerHTML="视频正在转码,请不要刷新或关闭页面";
                                 This.enableAddLocalVideo=true; 
 
                                 //上传完成以后，移除上传文件到重新上传                               
@@ -369,7 +369,7 @@ export default {
                                                     clearTimeout(This.onceTimer);
                                                 }else if(res.data.fileset.status== 4){
                                                     //转码中 ，不进行任何操作
-                                                    This.$refs.videoPreview.innerHTML="视频正在转码中，请稍候..."; 
+                                                    This.$refs.videoPreview.innerHTML="视频正在转码,请不要刷新或关闭页面"; 
                                                 }else{
                                                     //转码失败
                                                     This.$refs.videoPreview.innerHTML="很抱歉，转码失败！"; 
