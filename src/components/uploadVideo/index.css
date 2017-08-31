@@ -10,8 +10,6 @@
     vertical-align: middle;
     font-size:16px;
     color:#F95759;
-    /*background:url('../../assets/error/local-video.svg') center center no-repeat;
-    background-size:60% 60%;*/
 }
 .video-preview-link{
     border:1px solid #ddd;
@@ -42,6 +40,18 @@
 }
 #video-upload-pop  .ivu-modal-header{
     background: #F3F3F3;   
+}
+#videoPreview i{
+    display: inline-block;
+    margin:0 3px;
+    border-radius: 50%;
+    width:6px;
+    height:6px;
+    background:#999999;
+}
+#videoPreview i.active{
+    background: #F95759;
+    box-shadow: 0px 0px 5px #000;
 }
 .video-header-span{
     padding:0 5px;

@@ -7,8 +7,8 @@ export default {
         videoLink:'',
         uploadVideo:false,
         tabName:'local',
-        isHideLocal:true,
-        isHideLink:false,
+        isHideLocal:false,
+        isHideLink:true,
         isHideResource:true,
         id:'',
         ishidelinkvideo:true,
@@ -34,7 +34,8 @@ export default {
         isHideSourceBtn:false,
         playInfo:'',
         enableAddLocalVideo:true,
-        onceTimer:null,  
+        onceTimer:null, 
+        loadingTimer:null 
     }
   },
   components:{
@@ -125,6 +126,7 @@ export default {
         this.idHideStepFour=true;
         clearInterval(this.videotimer);
         clearTimeout(this.onceTimer);
+        clearTimeout(this.loadingTimer); 
         var fileElement = $("#pickfile").detach();
         fileElement[0].innerText="上传视频"; 
         fileElement.appendTo("#step-one-pickfile"); 
@@ -176,7 +178,7 @@ export default {
         this.enableAddLocalVideo=true;
         clearInterval(this.videotimer);
         clearTimeout(this.onceTimer);
-        this.$refs.videoPreview.innerHTML="视频正在转码,请不要刷新或关闭页面";  
+        clearTimeout(this.loadingTimer); 
       },
       previewVideo(){
         var option = {
@@ -274,6 +276,7 @@ export default {
                           This.video.localId=args.id;
                           clearInterval(This.videotimer);
                           clearTimeout(This.onceTimer);
+                          clearTimeout(This.loadingTimer); 
                           if (args.code == Code.SHA_FAILED){
                               This.$Notice.error({
                                 title: '该浏览器无法计算SHA',
@@ -342,13 +345,27 @@ export default {
                                 This.idHideStepThree=false;
                                 This.idHideStepFour=true;
                                 //转码中 ，不进行任何操作
-                                This.$refs.videoPreview.innerHTML="视频正在转码,请不要刷新或关闭页面";
+                                This.$refs.videoPreview.innerHTML="视频正在转码,请不要刷新或关闭页面<i class='active'></i><i></i><i></i>";
                                 This.enableAddLocalVideo=true; 
 
                                 //上传完成以后，移除上传文件到重新上传                               
                                 var fileEle = $("#pickfile").detach();
-                                fileEle[0].innerText="重新上传"; 
+                                fileEle[0].innerHTML="重新上传"; 
                                 fileEle.appendTo("#re-upload-area"); 
+
+
+
+                                //加载中动画
+                               This.loadingTimer=setInterval(function(){
+                                    let index=$("#videoPreview").find('i.active').index();
+                                    $("#videoPreview").find("i").eq(index).removeClass('active');
+                                    if(index == 2){
+                                        index = -1;
+                                    }
+                                     $("#videoPreview").find("i").eq(index+1).addClass('active');
+                                },500)
+
+
                                 
                                 
                                 //需要估算一个时间 (目前先这样定时处理)
@@ -367,20 +384,22 @@ export default {
                                                     //清除定时器
                                                     clearInterval(This.videotimer);
                                                     clearTimeout(This.onceTimer);
+                                                    clearTimeout(This.loadingTimer);     
                                                 }else if(res.data.fileset.status== 4){
                                                     //转码中 ，不进行任何操作
-                                                    This.$refs.videoPreview.innerHTML="视频正在转码,请不要刷新或关闭页面"; 
                                                 }else{
                                                     //转码失败
                                                     This.$refs.videoPreview.innerHTML="很抱歉，转码失败！"; 
                                                     //清除定时器
                                                     clearInterval(This.videotimer);
                                                     clearTimeout(This.onceTimer);
+                                                    clearTimeout(This.loadingTimer); 
                                                 }
                                             }else{
                                                 This.$refs.videoPreview.innerHTML=res.data.message;
                                                 clearInterval(This.videotimer);
                                                 clearTimeout(This.onceTimer);
+                                                clearTimeout(This.loadingTimer); 
                                             }
                                         
                                         })
@@ -465,6 +484,7 @@ export default {
       //清除定时器
       clearInterval(this.videotimer);
       clearTimeout(this.onceTimer);
+      clearTimeout(This.loadingTimer); 
   }
 
 }
