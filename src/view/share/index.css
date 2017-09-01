@@ -178,11 +178,11 @@
 @media screen and (max-width: 768px) {
 	.con_new embed{
 		max-width: 100%;
-		height: auto;
+		/*height: auto;*/
 	}
 	.con_new video{
 		max-width: 100%;
-		height: auto;
+		/*height: auto;*/
 	}
     .audioWrap{
         width:95%;
