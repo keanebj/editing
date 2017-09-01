@@ -18,7 +18,7 @@
     width:400px;
     height:225px;
     background:url('../../assets/svg/外链预览框icon.svg') center center no-repeat;
-    background-size:70% 60%;
+    background-size:320px 270px;
 }
 .video-preview-link .link-preview-tip{
     color:#F95759;
@@ -39,7 +39,7 @@
     display: none;
 }
 #video-upload-pop  .ivu-modal-header{
-    background: #F3F3F3;   
+    background: #F3F3F3;
 }
 #videoPreview i{
     display: inline-block;

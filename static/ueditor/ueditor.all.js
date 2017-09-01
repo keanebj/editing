@@ -16350,7 +16350,7 @@ UE.plugins['list'] = function () {
     '.time{width:40px;height:20px;font-size:12px;color:#b2b2b2;position: absolute;top:0;padding-top:3px;}'+
     '.currentTime{left: 0; text-align: left;}'+
     '.audioBtnImg::selection{background:none;}'+
-    '.download{position:absolute;bottom:-20px;right:0;text-decoration:none;padding-left:50px;display:inline-block;color:#b2b2b2;background:url(http://mp.dev.hubpd.com/static/ueditor/audioimages/download.svg) left center no-repeat;background-size:80% 80%;}'+
+    '.download{position:absolute;bottom:-24px;right:0;text-decoration:none;padding-left:20px;display:inline-block;color:#b2b2b2;background:url(http://mp.dev.hubpd.com/static/ueditor/audioimages/download.svg) left center no-repeat;background-size:14px 14px;}'+
     '.totleTime{ right: 0;text-align: right;}', me.document);
     });
 

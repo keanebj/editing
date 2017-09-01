@@ -158,14 +158,14 @@
 }
 .download{
     position:absolute;
-    bottom:-30px;
+    bottom:-24px;
     right:0;
     text-decoration:none;
-    padding-left:50px;
+    padding-left:20px;
     display:inline-block;
     color:#b2b2b2;
     background:url(http://mp.dev.hubpd.com/static/ueditor/audioimages/download.svg) left center no-repeat;
-    background-size:65% 65%;
+    background-size:14px 14px;
 }
 .totleTime{
      right: 0;

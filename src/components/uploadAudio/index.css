@@ -11,8 +11,9 @@
 .audio-content-container{
     text-align: left;
     padding:50px 50px 20px 50px;
-    background: url('../../assets/svg/audio-back.svg') center center no-repeat;
-    background-size: 250px 160px;
+    background: url('../../assets/svg/audio-back.svg') center center no-repeat #fff;
+    background-size: 320px 270px;
+    height:328px;
 }
 .link-btn .ivu-form-item-content{
     text-align:center;
