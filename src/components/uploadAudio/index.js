@@ -29,17 +29,16 @@ export default {
           uid:'',
           canceluploadFlag:false,
           linkAudioNull:false
-         
     }
   },
   computed:{
-      
+
   },
   props:{
       onSuccess: Function,
       action: {
         default: conf.host +conf.serverRoot+'/ueditor?action=uploadfile'
-      }, 
+      },
   },
   watch:{
     uploadAudio(val){
@@ -50,25 +49,20 @@ export default {
   },
   methods: {
       showModal(){
-        this.uploadAudio=true;   
+        this.uploadAudio=true;
       },
       submitLinkAudio (name) {
         this.$refs[name].validate((valid) => {
             if (valid) {
                 let linkaudio=document.getElementById("linkaudio");
-                     if(isNaN(linkaudio.duration)){
-                        this.$Notice.error({
-                            title: '音频地址不存在！',
-                            desc: false
-                        });
-                    }else{
-                        this.insertAudioEditor(this.linkForm);
-                    } 
-            } else {
-                this.$Notice.error({
-                    title: '表单验证失败!',
-                    desc: false
-                });
+                    if(isNaN(linkaudio.duration)){
+                      this.$Notice.error({
+                          title: '音频地址不存在！',
+                          desc: false
+                      });
+                  }else{
+                      this.insertAudioEditor(this.linkForm);
+                  }
             }
         })
       },
@@ -85,20 +79,20 @@ export default {
             this.uploadtip="上传中...";
             this.audioname=file.name;
             this.percentage=parseInt(event.percent);
-        }     
+        }
     },
     handleSuccess (res, file) {
         this.uploadtip="上传成功";
         this.isuploading=false;
         this.isfail=false;
         this.isfinishupload=true;
-        this.audioUrl=conf.host + conf.serverRoot + res.url; 
+        this.audioUrl=conf.host + conf.serverRoot + res.url;
         this.uid=file.uid;
     },
     insertAudioEditor(data){
         if(!data){
             data={name:this.audioname,url:this.audioUrl,uid:this.uid};
-        }   
+        }
         this.$emit('onSuccess',data);
         this.uploadAudio=false;
     },
@@ -118,7 +112,7 @@ export default {
             title: '文件格式不正确',
             desc: '文件 ' + file.name + ' 格式不正确，请上传 mp3格式的音频。'
         });
-    }, 
+    },
     handleMaxSize (file) {
         this.$Notice.warning({
             title: '超出文件大小限制',
@@ -147,18 +141,18 @@ export default {
          this.isfinishupload=false;
          this.audioname='';
          this.canceluploadFlag=true;
-    }                 
+    }
   },
   created() {
-        
-       
+
+
   },
   mounted() {
-      
-    
+
+
   },
   destroy(){
-     
+
   }
 
 }
