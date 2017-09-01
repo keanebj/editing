@@ -176,6 +176,9 @@
 
 /*手机端分享*/
 @media screen and (max-width: 768px) {
+	.article_xinxi span{
+		margin-left: 5px;
+	}
 	.con_new embed{
 		max-width: 100%;
 		/*height: auto;*/
