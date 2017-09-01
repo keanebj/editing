@@ -61,20 +61,20 @@ export default {
        setTimeout(function(){
           let count=$(".video_container").size();
           if(count > 0){
-          	if ($(".video_container").eq(i).find('embed').length > 0) {
           		for(var i=0;i<count;i++){
+                if ($(".video_container").eq(i).find('embed').length > 0) {
 	                let serverfileid=$(".video_container").eq(i).html('').attr('serverfileid');
 	                var option = {
 	                    "auto_play": "1",
 	                    "file_id": serverfileid,
 	                    "app_id": "1252018592",
 	                    "width": 640,
-	                    "height": 480
+	                    "height": 360
 	                };
-	               new qcVideo.Player("id_video_container_"+option.file_id,option); 
+	               new qcVideo.Player("id_video_container_"+option.file_id,option);
 	            }
-          	}   
-          }                 
+          	}
+          }
         },500)
   }
 }
