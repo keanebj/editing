@@ -37,7 +37,7 @@ export default {
   props:{
       onSuccess: Function,
       action: {
-        default: conf.host +conf.serverRoot+'/ueditor?action=uploadfile'
+        default: conf.host +conf.serverRoot+'ueditor?action=uploadfile'
       },
   },
   watch:{

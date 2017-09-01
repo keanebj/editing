@@ -86,7 +86,7 @@
 }
 .video-step-1{
     background: url('../../assets/svg/localAddBack.svg') center center no-repeat;
-    background-size: 90% 90%;
+    background-size: 320px 270px;
     text-align:center;
 }
 .local-step1-tip{

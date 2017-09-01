@@ -65,7 +65,7 @@ export default {
                 if ($(".video_container").eq(i).find('embed').length > 0) {
 	                let serverfileid=$(".video_container").eq(i).html('').attr('serverfileid');
 	                var option = {
-	                    "auto_play": "1",
+	                    "auto_play": "0",
 	                    "file_id": serverfileid,
 	                    "app_id": "1252018592",
 	                    "width": 640,
