@@ -546,13 +546,13 @@ export default {
                   //     '');
                   // $('#error').html(msg);
 //                console.log(args)
-								self.fileError += 1;
-								if (self.fileError%2 == 0) {
+//								self.fileError += 2;
+//								if (self.fileError%2 == 0) {
 									self.$Notice.error({
 						        title: args.message,
 						        desc: false
 						      }) 
-								}
+//								}
               }
           }
       );
