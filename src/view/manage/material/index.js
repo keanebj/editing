@@ -188,7 +188,8 @@ export default {
         })
     	}else{
     		this.$store.videoId = id;
-      	this.$router.push({path: '/manage/material/enter', query: {id: id}});
+//    	this.$router.push({path: '/manage/material/enter', query: {id: id}});
+      	window.location.href = window.location.href + '/enter?id=' + id
     	}
     },
     deleteVideo (id, state) {

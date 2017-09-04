@@ -291,12 +291,17 @@ export default {
     },
     insertAudioEditor(data){
       //需要更改audio样式
-
+			let embedtempLink = '';
+			if (navigator.userAgent.indexOf('Firefox') > -1) {//判断火狐浏览器，解决下载问题
+				embedtempLink = 'javascript:window.open(\''+data.url+'\')';
+			}else{
+				embedtempLink = data.url;
+			}
       let embedtemp='<div uetag="edui-audio-embed" contenteditable="false" audio-prefix ="'+this.$conf.host+'" src="'+data.url+'" audio-audioname="'+data.name+'" audiorela="'+data.uid+'" audio-url="'+data.url+'" class="audioWrap myDirectiveAudio"'+ 
       '><div class="audioBtn myDirectiveAudio"><img class="audioBtnImg myDirectiveAudio" src="'+this.$conf.host+'static/ueditor/audioimages/play.svg"><audio src="'+data.url+'" width="200" height="18"></audio></div>'+ 
             '<div class="content myDirectiveAudio"><p class="songName myDirectiveAudio">'+data.name+'</p><progress class="progress myDirectiveAudio" value="0"'+
             'max="100"></progress>'+
-             '<div class="timeContemt myDirectiveAudio"><div class="time currentTime myDirectiveAudio">00:00</div><div class="time totleTime myDirectiveAudio"></div></div><a href="'+data.url+'" class="download myDirectiveAudio" target="_blank" download="'+data.name+'">下载音频</a></div></div>';
+             '<div class="timeContemt myDirectiveAudio"><div class="time currentTime myDirectiveAudio">00:00</div><div class="time totleTime myDirectiveAudio"></div></div><a href="'+embedtempLink+'" class="download myDirectiveAudio" target="_blank" download="'+data.name+'">下载音频</a></div></div>';
       let audiohtml='<p style="text-align:center;">'+embedtemp+'</p>';
       this.editor.execCommand('inserthtml',audiohtml,true);
     },

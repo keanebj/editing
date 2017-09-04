@@ -6,7 +6,9 @@
     <Row :gutter="34" class="material_no_con">
       <Col span="12" class="material_no_con_img">
         <img src="../../../assets/material/upload.svg" alt="">
+        <a href="/manage/material/enter">
         <Button type="primary" id="pickfiles11" shape="circle"  @click="routerLink" style="padding:6px 25px;margin-top:20px;">上传视频</Button>
+        </a>
       </Col>
       <Col span="12" class="material_no_con_info">
         <div>
@@ -19,10 +21,12 @@
   <div class="material_has" :class="{hide:  tabView}">
     <Row class="material_has_tit">
       <Col span="12">
-        <Button type="primary" shape="circle" class="addvideo_btn" id="pickfiles111" @click="routerLink">
+      	<a href="/manage/material/enter">
+        <Button type="primary" shape="circle" class="addvideo_btn" id="pickfiles111">
           <img src="../../../assets/operator/create.svg" class="icon-create" width="15" height="18"></img>
-          <span class="arti-create">添加视频</span>
+          <span href="" class="arti-create">添加视频</span>
         </Button>
+        </a>
       </Col>
       <Col span="12">
         <Input icon="ios-search-strong" placeholder="请搜索标题、简介" style="width:250px;float:right;" @on-enter="getVideoList()" @on-click="getVideoList()" v-model="searchValue"></Input>

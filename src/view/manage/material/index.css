@@ -145,6 +145,10 @@
 }
 .arti-create{
   padding-left: 20px;
+  color: #fff;
+}
+.arti-create:hover{
+	color: #fff;
 }
 .material_has_tit{
   padding-bottom: 20px;

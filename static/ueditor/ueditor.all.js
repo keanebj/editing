@@ -16353,15 +16353,19 @@ UE.plugins['list'] = function () {
     '.download{position:absolute;bottom:-24px;right:0;text-decoration:none;padding-left:20px;display:inline-block;color:#b2b2b2;background:url(http://mp.dev.hubpd.com/static/ueditor/audioimages/download.svg) left center no-repeat;background-size:14px 14px;}'+
     '.totleTime{ right: 0;text-align: right;}', me.document);
     });
-
+	var muplayerTmplLink = '';
+	if (navigator.userAgent.indexOf('Firefox') > -1) {//判断火狐浏览器，解决下载问题
+		muplayerTmplLink = '<a href="javascript:window.open(\'{URL}\')" class="download myDirectiveAudio" target="_blank" download="{AudioName}">下载音频</a></div>';
+	}else{
+		muplayerTmplLink = '<a href="{URL}" class="download myDirectiveAudio" target="_blank" download="{AudioName}">下载音频</a></div>';
+	}
     var muplayerTmpl='<div uetag="edui-audio-embed" contenteditable="false" audio-prefix="{Prefix}" audio-audioname="{AudioName}" audiorela="{ID}" audio-url="{URL}" class="audioWrap myDirectiveAudio"'+
       '><div class="audioBtn myDirectiveAudio"><img class="audioBtnImg myDirectiveAudio" src="{Prefix}/static/ueditor/audioimages/play.svg">'+
             '<audio src="{URL}" width="200" height="18"></audio></div>'+
             '<div class="content myDirectiveAudio"><p class="songName myDirectiveAudio">{AudioName}</p><progress class="progress myDirectiveAudio" value="0"'+
             'max="100"></progress>'+
-            '<div class="timeContemt myDirectiveAudio"><div class="time currentTime myDirectiveAudio">00:00</div><div class="time totleTime myDirectiveAudio"></div></div></div>'+
-            '<a href="{URL}" class="download myDirectiveAudio" target="_blank" download="{AudioName}">下载音频</a></div>';
-
+            '<div class="timeContemt myDirectiveAudio"><div class="time currentTime myDirectiveAudio">00:00</div><div class="time totleTime myDirectiveAudio"></div></div></div>'
+            + muplayerTmplLink;
     //var embedTmpl = '<audio controls="" uetag="edui-audio-embed" audio-prefix="{Prefix}" audio-audioname="{AudioName}" audiorela="{ID}" audio-url="{URL}"' + 'src="{URL}" width="200" height="18"></audio>';
 	//var muplayerTmpl ='<div id="audio{ID}" v-my-directive="renderPlayer" audio-prefix="{Prefix}" uetag="edui-audio-embed" audio-audioname="{AudioName}" audiorela="{ID}" audio-url="{URL}"></div>';
 	//var muplayerJS = "<script src=\"{{Prefix}}/static/ueditor/muplayer.js\"></script><script>console.log('dfdfsdfs');</script>";
@@ -16424,7 +16428,7 @@ UE.plugins['list'] = function () {
 					var data={
     					'ID':node.getAttr('audiorela'),
     					'AudioName':node.getAttr('audio-audioname'),
-    					'URL': node.getAttr('audio-url'),
+    					'URL': node.getAttr('audio-url').toString(),
                         'Prefix':node.getAttr('audio-prefix')
     				};
     				var html=muplayerTmpl;
