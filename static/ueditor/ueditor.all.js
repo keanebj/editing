@@ -13014,20 +13014,22 @@ UE.plugins['horizontal'] = function(){
         if(domUtils.isStartInblock(rng)){
             var tmpNode = rng.startContainer;
             var pre = tmpNode.previousSibling;
+            var sibdiv = pre.previousSibling;
             if(pre && domUtils.isTagNode(pre,'hr')){
                 domUtils.remove(pre);
                 rng.select();
                 domUtils.preventDefault(evt);
                 return true;
 
+            }else if (sibdiv&&domUtils.isTagNode(pre,'p')&&pre.innerHTML == ''&&domUtils.hasClass(sibdiv, "audioWrap myDirectiveAudio")){
+                  domUtils.remove(pre);
+                  domUtils.remove(sibdiv);
+                  domUtils.remove(sibdiv.previousSibling);
             }
         }
 
     })
 };
-
-
-
 // plugins/time.js
 /**
  * 插入时间和日期
@@ -16283,12 +16285,15 @@ UE.plugins['list'] = function () {
    UE.plugins['audio'] = function (){
 	var me =this,editor= this;
       me.addListener('delkeydown',function(type,evt){
-       var delele=me.selection.getStart();
-       var delEleFather=$(delele).parents('[uetag="edui-audio-embed"]');
-       if(delEleFather.length >0){
-           //在audio内，删除这个audio
-            domUtils.remove(delEleFather.get(0));
-       }
+//    	debugger;
+      //   var range = me.selection.getRange();
+      //  var delele=me.selection.getStart();
+      //  var delEleFather=$(delele).parents('[uetag="edui-audio-embed"]');
+      //  console.log(me)
+      //  if(delEleFather.length >0){
+      //      //在audio内，删除这个audio
+      //       domUtils.remove(delEleFather.get(0));
+      //  }
     })
     //添加播放点击事件
     me.addListener('click', function (type, e) {
