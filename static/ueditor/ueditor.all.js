@@ -16333,8 +16333,8 @@ UE.plugins['list'] = function () {
                                 clearInterval(timer);
                             }
                         },100); //当前播放时间更新
-                      },300)
-              },2000)
+                      },1000)
+              },1000)
            }else if(audio.paused && audio.duration > 0){
                audio.play();
                 img.src=prefix+'static/ueditor/audioimages/playing.gif';
