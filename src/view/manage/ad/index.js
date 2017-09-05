@@ -241,10 +241,11 @@ export default {
       }
     },
     onSuccess(response, field, ki) {
+      console.log(response.path)
       if (response.path) {
-        console.log(this.data);
+        console.log('data='+JSON.stringify(this.data)+'ki='+ki);
         this.data.forEach((n,index) => {
-          if (index === ki) {
+          if (n.id === ki) {
             n.path = response.path
           }
         })
