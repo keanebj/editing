@@ -116,7 +116,7 @@ export default {
 				}else{
 					this.initUpload('picks', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
 				}
-      	
+
         this.formValidate.videoname = this.material.name;//视频名字
         // this.formValidate.videourl = '#'//视频地址
         this.formValidate.materialtype = this.formValidate.select;//视频类型
@@ -133,14 +133,14 @@ export default {
 //        this.$Notice.error({title:error.data.message,desc: false});
 //      })
         this.material.percent = '100';
-        
+
         this.$http.get('api/material/init/' + this.videoId,{
         		params: {
 	          	fileid: this.material.serverFileId
         		}
         }).then((response) => {
         	if (response.data.status == 1) {
-        		
+
         	}else{
         		this.$Notice.error({title:response.data.message,desc: false});
         	}
@@ -164,7 +164,7 @@ export default {
         this.zhaiyao = data.material.summary;
         this.select = data.material.materialtype;
         if (data.material.keyword == '') {
-        	this.labelArr = []; 
+        	this.labelArr = [];
         }else{
         	this.labelArr = data.material.keyword.split(" ");
         }
@@ -173,7 +173,7 @@ export default {
         this.uploading = true;
         this.getTitleContent();
         this.getSummaryContent();
-        
+
 //      var $ = qaVideo.get('$')
 //				console.log($('.material_xx_con').find('.moxie-shim').length)
 //				$('.material_xx_con')[0].removeChild($('.material_xx_con').find('.moxie-shim')[0]);
@@ -192,12 +192,12 @@ export default {
 	  		this.$Notice.error({title:error.data.message,desc: false});
 	  	})
     }
-    
-    
+
+
     if (this.vievShow) {
     	this.uploading = true;
     }
-  }, 
+  },
   created() {
     if (this.material.code == 2) {
       qbVideo.uploader.startUpload();
@@ -406,9 +406,9 @@ export default {
     cancaleUpload () {
     	this.stopUploading = false;
 			qaVideo.uploader.stopUpload();
-			
-			
-			
+
+
+
       this.cancaleUploadInfo();
     },
     cancaleUploadInfo () {
@@ -419,7 +419,7 @@ export default {
         	qaVideo.uploader.deleteFile(this.material.id);
         	this.stopUploading = true;
         	this.material.code = 0;
-          this.vievShow = true;	
+          this.vievShow = true;
           var $ = qaVideo.get('$')
 					if ($('.material_xx_cons').find('.moxie-shim').length > 0) {
 						$('.material_xx_cons')[0].removeChild($('.material_xx_cons').find('.moxie-shim')[0]);
@@ -598,11 +598,14 @@ export default {
 		    	if (this.material.code > 5) {
 		    		next(true)
 			    	this.$http.put('api/material/'+ this.videoId, this.formValidate).then((response) => {
-			    		
+              this.$Notice.success({title:'保存成功',desc: false});
 		          if (response.data.status == 1) {
-		          	
-		            this.$Notice.success({title:'保存成功',desc: false});
-		            this.$router.push('/manage/material')
+		          	if (to.name == 'publish') {
+                  var index = window.location.href.indexOf('/manage');
+                  window.location.href = window.location.href.substring(0,index) + to.fullPath;
+                }else{
+                  this.$router.push('/manage/material')
+                }
 		          }else{
 		          	next(false);
 		            this.$Notice.error({title:response.data.message,desc: false});

@@ -13024,7 +13024,6 @@ UE.plugins['horizontal'] = function(){
             }else if (sibdiv&&domUtils.isTagNode(pre,'p')&&pre.innerHTML == ''&&domUtils.hasClass(sibdiv, "audioWrap myDirectiveAudio")){
                   domUtils.remove(pre);
                   domUtils.remove(sibdiv);
-                  domUtils.remove(sibdiv.previousSibling);
             }
         }
 
