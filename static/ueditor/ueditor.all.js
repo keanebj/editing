@@ -5670,6 +5670,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                     var child = range.startContainer.childNodes[range.startOffset];
                     if (child && child.nodeType == 1 && (dtd.$empty[child.tagName] || dtd.$nonChild[child.tagName])) {
                         node = child;
+                        console.log(node);
                     }
                 }
             }
@@ -10610,8 +10611,8 @@ UE.plugins['autotypeset'] = function(){
 
             }
             if(isLine(ci,true) && ci.tagName != 'SPAN'){
-                if(ci.className.indexOf("myDirectiveAudio") == -1 ){   
-                
+                if(ci.className.indexOf("myDirectiveAudio") == -1 ){
+
                     if(opt.indent){
                         ci.style.textIndent = opt.indentValue;
                     }
@@ -10627,7 +10628,7 @@ UE.plugins['autotypeset'] = function(){
                     if(opt.fontFamily)
                         ci.style.fontFamily = opt.fontFamilyValue;
                     if(opt.fontSize)
-                        ci.style.fontSize = opt.fontSizeValue+'px'; 
+                        ci.style.fontSize = opt.fontSizeValue+'px';
                 }
             }
 
@@ -13020,14 +13021,13 @@ UE.plugins['horizontal'] = function(){
                 domUtils.preventDefault(evt);
                 return true;
 
+            }else if (pre&&domUtils.hasClass(pre, "audioWrap myDirectiveAudio")){
+                  domUtils.remove(pre);
             }
         }
 
     })
 };
-
-
-
 // plugins/time.js
 /**
  * 插入时间和日期
@@ -16281,57 +16281,86 @@ UE.plugins['list'] = function () {
 
     //wangyi test audio
    UE.plugins['audio'] = function (){
-	var me =this,editor= this; 
-      me.addListener('delkeydown',function(type,evt){  
-       var delele=me.selection.getStart();
-       var delEleFather=$(delele).parents('[uetag="edui-audio-embed"]');
-       if(delEleFather.length >0){
-           //在audio内，删除这个audio
-            domUtils.remove(delEleFather.get(0));
-       } 
-    }) 
+	var me =this,editor= this;
     //添加播放点击事件
-    me.addListener('click', function (type, e) {    
-        var range = me.selection.getRange();
-        img = range.getClosedNode();
-        
+    me.addListener('click', function (type, e) {
+       // var range = me.selection.getRange();
+        //img = range.getClosedNode();
+        //为了解决浏览器的问题获得的getRange不同
+        var img=e.target;
         if (img && img.tagName == 'IMG' && img.className.indexOf("audioBtnImg") != -1) {
            //播放音频
            var father=$(img).parents('[uetag="edui-audio-embed"]');
            var prefix=father.attr("audio-prefix");
            var audio=$(father).find('audio').get(0);
-  
-
            e.stopPropagation();
-           var timer=null;
-           if(audio.paused){
-               audio.play();
-               //img 的图片
-               img.src=prefix+'static/ueditor/audioimages/playing.gif';
-               
-               //刷新时间 
-               clearInterval(timer);
-                 timer=setInterval(function(){
-                    var currentTime = audio.currentTime;
-                    $(father).find('.currentTime').html(_time(currentTime));
-
-                    var currentTime = audio.currentTime;
+          var timer=null;
+           audio.onended =function(){
+             img.src=prefix+'/static/ueditor/audioimages/play.svg';
+             clearInterval(timer);
+           }
+           //暂停状态
+           if(audio.paused && (audio.duration == Infinity || isNaN(audio.duration))){
+            img.src=prefix+'static/ueditor/audioimages/loading.gif';
+            setTimeout(function(){
                     var totleTime = audio.duration;
-                    var percent = (currentTime / totleTime) * 100;
-                    $(father).find('.progress').val(percent);
+                    if(totleTime == Infinity || isNaN(totleTime)){
+                          //替换元素
+                          var cloneAudio=$(audio).clone(true);
+                          $(audio).remove();
+                          audio=$(cloneAudio).get(0);
+                          $(father).find(".audioBtn").append(cloneAudio);
+                      }
+                      setTimeout(function(){
+                          //这里可以得到总时长了
+                           audio.play();
+                           img.src=prefix+'static/ueditor/audioimages/playing.gif';
+                          //刷新时间
+                          clearInterval(timer);
+                          timer=setInterval(function(){
+                            var currentTime = audio.currentTime;
+                            $(father).find('.currentTime').html(_time(currentTime));
 
-                    if(currentTime ==  audio.duration){
-                        img.src=prefix+'/static/ueditor/audioimages/play.svg';
-                        clearInterval(timer);
-                    }
-           },100); //当前播放时间更新 
-            } else { 
-                img.src=prefix+'static/ueditor/audioimages/play.svg';
-                audio.pause();
-                clearInterval(timer);
-            }
-             //获得时长
-            getTotleTime(father);
+                            var currentTime = audio.currentTime;
+                            var totleTime = audio.duration;
+
+                            $(father).find('.totleTime').html(_time(totleTime));
+                            var percent = (currentTime / totleTime) * 100;
+                            $(father).find('.progress').val(percent);
+
+                            if(currentTime ==  audio.duration){
+                                img.src=prefix+'/static/ueditor/audioimages/play.svg';
+                                clearInterval(timer);
+                            }
+                        },100); //当前播放时间更新
+                      },1000)
+              },1000)
+           }else if(audio.paused && audio.duration > 0){
+               audio.play();
+                img.src=prefix+'static/ueditor/audioimages/playing.gif';
+               //刷新时间
+               clearInterval(timer);
+               timer=setInterval(function(){
+                var currentTime = audio.currentTime;
+                $(father).find('.currentTime').html(_time(currentTime));
+
+                var currentTime = audio.currentTime;
+                var totleTime = audio.duration;
+
+                $(father).find('.totleTime').html(_time(totleTime));
+                var percent = (currentTime / totleTime) * 100;
+                $(father).find('.progress').val(percent);
+
+                if(currentTime ==  audio.duration){
+                    img.src=prefix+'/static/ueditor/audioimages/play.svg';
+                    clearInterval(timer);
+                }
+              },100); //当前播放时间更新
+           }else{
+                 img.src=prefix+'static/ueditor/audioimages/play.svg';
+                 clearInterval(timer);
+                 audio.pause();
+           }
             $(".edui-popup-body").hide();
         }else{
             $(".edui-popup-body").show();
@@ -16352,42 +16381,34 @@ UE.plugins['list'] = function () {
     '.time{width:40px;height:20px;font-size:12px;color:#b2b2b2;position: absolute;top:0;padding-top:3px;}'+
     '.currentTime{left: 0; text-align: left;}'+
     '.audioBtnImg::selection{background:none;}'+
-    '.download{position:absolute;bottom:-20px;right:0;text-decoration:none;padding-left:50px;display:inline-block;color:#b2b2b2;background:url(http://mp.dev.hubpd.com/static/ueditor/audioimages/download.svg) left center no-repeat;background-size:80% 80%;}'+
-    '.totleTime{ right: 0;text-align: right;}', me.document);    
+    '.download{position:absolute;bottom:-24px;right:0;text-decoration:none;padding-left:20px;display:inline-block;color:#b2b2b2;background:url(http://mp.dev.hubpd.com/static/ueditor/audioimages/download.svg) left center no-repeat;background-size:14px 14px;}'+
+    '.totleTime{ right: 0;text-align: right;}', me.document);
     });
-
-    var muplayerTmpl='<div uetag="edui-audio-embed" contenteditable="false" audio-prefix="{Prefix}" audio-audioname="{AudioName}" audiorela="{ID}" audio-url="{URL}" class="audioWrap myDirectiveAudio"'+ 
+	var muplayerTmplLink = '';
+	if (navigator.userAgent.indexOf('Firefox') > -1) {//判断火狐浏览器，解决下载问题
+		muplayerTmplLink = '<a href="javascript:window.open(\'{URL}\')" class="download myDirectiveAudio" target="_blank" download="{AudioName}">下载音频</a></div>';
+	}else{
+		muplayerTmplLink = '<a href="{URL}" class="download myDirectiveAudio" target="_blank" download="{AudioName}">下载音频</a></div>';
+	}
+    var muplayerTmpl= embedTmpl = '<div uetag="edui-audio-embed" contenteditable="false" audio-prefix="{Prefix}" audio-audioname="{AudioName}" audiorela="{ID}" audio-url="{URL}" class="audioWrap myDirectiveAudio"'+
       '><div class="audioBtn myDirectiveAudio"><img class="audioBtnImg myDirectiveAudio" src="{Prefix}/static/ueditor/audioimages/play.svg">'+
-            '<audio src="{URL}" width="200" height="18"></audio></div>'+ 
+            '<audio src="{URL}" width="200" height="18" controls="controls" style="display:none" preload="auto"></audio></div>'+
             '<div class="content myDirectiveAudio"><p class="songName myDirectiveAudio">{AudioName}</p><progress class="progress myDirectiveAudio" value="0"'+
             'max="100"></progress>'+
-            '<div class="timeContemt myDirectiveAudio"><div class="time currentTime myDirectiveAudio">00:00</div><div class="time totleTime myDirectiveAudio"></div></div></div>'+
-            '<a href="{URL}" class="download myDirectiveAudio" target="_blank" download="{AudioName}">下载音频</a></div>';
-	
+            '<div class="timeContemt myDirectiveAudio"><div class="time currentTime myDirectiveAudio">00:00</div><div class="time totleTime myDirectiveAudio"></div></div></div>'
+            + muplayerTmplLink;
     //var embedTmpl = '<audio controls="" uetag="edui-audio-embed" audio-prefix="{Prefix}" audio-audioname="{AudioName}" audiorela="{ID}" audio-url="{URL}"' + 'src="{URL}" width="200" height="18"></audio>';
 	//var muplayerTmpl ='<div id="audio{ID}" v-my-directive="renderPlayer" audio-prefix="{Prefix}" uetag="edui-audio-embed" audio-audioname="{AudioName}" audiorela="{ID}" audio-url="{URL}"></div>';
 	//var muplayerJS = "<script src=\"{{Prefix}}/static/ueditor/muplayer.js\"></script><script>console.log('dfdfsdfs');</script>";
 	    // 设计视图转为源码视图的规则
      me.addOutputRule(function(root){
         switchRule(root,true);
-     });  
+     });
      // 源码视图转为设计视图的规则
-    //  me.addInputRule(function(root){
-    //  	switchRule(root);
-    // });
+     me.addInputRule(function(root){
+     	switchRule(root);
+    });
 
- //总时长显示
-  var getTotleTime=function(father) {
-    var totleTime = $(father).find('audio').get(0).duration;
-    setTimeout(function () {  
-      if(isNaN(totleTime)){
-        getTotleTime();
-      }
-      else{
-        $(father).find('.totleTime').html(_time(totleTime)); 
-      }
-    }, 100);
-  };
         //时间显示模式
     var _time=function(time) {
         var minute = changeNum(Math.floor(time / 60));
@@ -16419,39 +16440,38 @@ UE.plugins['list'] = function () {
 	//代码视图和设计视图切换时进行相应元素节点的替换
     var switchRule = function(root,isOutput){
     	var nodes=root.getNodesByTagName(isOutput?'div':'div');
-    	if(isOutput){  		
+    	if(isOutput){
     		UE.utils.each(nodes,function(node){
-    			if(node.getAttr('uetag')==='edui-audio-embed'){                     
- 					//console.log(28,node)
+    			if(node.getAttr('uetag')==='edui-audio-embed'){
 					var data={
     					'ID':node.getAttr('audiorela'),
     					'AudioName':node.getAttr('audio-audioname'),
-    					'URL': node.getAttr('audio-url'),
+    					'URL': node.getAttr('audio-url').toString(),
                         'Prefix':node.getAttr('audio-prefix')
     				};
-    				var html=muplayerTmpl;                   
-        			var newNode=UE.uNode.createElement(tmpl(html,data));				
-    				node.parentNode.replaceChild(newNode,node); 
-                        			
+    				var html=muplayerTmpl;
+        		var newNode=UE.uNode.createElement(tmpl(html,data));
+    				node.parentNode.replaceChild(newNode,node);
+
 				}
     		});
 		}else{
 			UE.utils.each(nodes,function(node){
 				if(node.getAttr('uetag')==='edui-audio-embed'){
-					console.log(53,node)
 					var data={
 						'ID':node.getAttr('audiorela'),
 						'AudioName':node.getAttr('audio-audioname'),
 						'URL': node.getAttr('audio-url'),
-                        'Prefix':node.getAttr('audio-prefix')
+            'Prefix':node.getAttr('audio-prefix')
 					};
-					var html = embedTmpl;                  
-					var newNode=UE.uNode.createElement(tmpl(html,data));				
-					node.parentNode.replaceChild(newNode,node); 
+					var html = embedTmpl;
+					var newNode=UE.uNode.createElement(tmpl(html,data));
+					node.parentNode.replaceChild(newNode,node);
+
 				}
 			});
 		}
-	}	
+	}
 };
 
 
@@ -16500,7 +16520,7 @@ UE.plugins['list'] = function () {
 
         me.commands['source'] = {
             execCommand: function (){
-                sourceMode = !sourceMode;               
+                sourceMode = !sourceMode;
                 if (sourceMode) {
                     bakAddress = me.selection.getRange().createAddress(false,true);
                     me.undoManger && me.undoManger.save(true);
@@ -16537,7 +16557,7 @@ UE.plugins['list'] = function () {
                     me.fireEvent('aftergetcontent');
 
                     var content = root.toHtml(true);
-                   
+
 
                     me.sourceEditor = sourceEditor = createSourceEditor(me.iframe.parentNode);
 
@@ -16579,13 +16599,8 @@ UE.plugins['list'] = function () {
                     });
 
 
+                    me.setContent = orgSetContent;
 
-                
-
-
-
-                    me.setContent = orgSetContent;        
-        
                     me.setContent(cont);
                     sourceEditor.dispose();
                     me.sourceEditor = sourceEditor = null;
@@ -16597,7 +16612,7 @@ UE.plugins['list'] = function () {
                         me.body.innerHTML = '<p>'+(browser.ie?'':'<br/>')+'</p>';
                         first = me.body.firstChild;
                     }
-                    
+
 
 
                     //要在ifm为显示时ff才能取到selection,否则报错

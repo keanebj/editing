@@ -25,7 +25,7 @@ var vueEle=new Vue({
   store,
   template: '<app/>',
   components: { app },
-  methods:{     
+  methods:{
    //时间显示模式
   _time(time) {
     var minute = this.changeNum(Math.floor(time / 60));
@@ -51,8 +51,8 @@ Vue.directive('my-directive-audio', {
     // 比如添加事件监听器，或是其他只需要执行一次的复杂操作
     if(binding.value){
       el.innerHTML=binding.value;
-      //看是否有音乐播放器 
-      let audioArr=el.getElementsByClassName('audioWrap'); 
+      //看是否有音乐播放器
+      let audioArr=el.getElementsByClassName('audioWrap');
       if(audioArr && audioArr.length > 0 ){
           //添加播放事件
           for (var item of audioArr) {
@@ -63,25 +63,25 @@ Vue.directive('my-directive-audio', {
             let progress=item.getElementsByTagName('progress')[0];
             let totleTimeDiv=item.getElementsByClassName('totleTime')[0];
             let currentTimeDiv=item.getElementsByClassName('currentTime')[0];
-            
+
             //添加点击事件
             playimg.onclick=function(){
                 //获得时长
                 var totleTime = audio.duration;
-                setTimeout(function () {  
+                setTimeout(function () {
                   if(isNaN(totleTime)){
                     totleTime = audio.duration;
                   }
                   else{
-                    totleTimeDiv.innerHTML=vueEle._time(totleTime); 
+                    totleTimeDiv.innerHTML=vueEle._time(totleTime);
                   }
                 }, 100);
                 if(audio.paused){
                   audio.play();
                   //img 的图片
                   playimg.src=playimg.getAttribute("src").replace('play.svg','playing.gif');
-                
-                  //刷新时间 
+
+                  //刷新时间
                   clearInterval(timer);
                     timer=setInterval(function(){
                         var currentTime = audio.currentTime;
@@ -95,7 +95,7 @@ Vue.directive('my-directive-audio', {
                         if(currentTime ==  audio.duration){
                             playimg.src=playimg.getAttribute("src").replace('playing.gif','play.svg');
                             clearInterval(timer);
-                        } 
+                        }
                   },100)
                 }else{
                     playimg.src=playimg.getAttribute("src").replace('playing.gif','play.svg');
@@ -103,7 +103,7 @@ Vue.directive('my-directive-audio', {
                     clearInterval(timer);
                 }
           }
-        }   
+        }
       }
     }
 
@@ -113,13 +113,13 @@ Vue.directive('my-directive-audio', {
   update: function (el,binding) {
     // 根据获得的新值执行对应的更新
     // 对于初始值也会被调用一次
-   
+
   },
   componentUpdated:function(el,binding){
     //被绑定元素所在模板完成一次更新周期时调用
     el.innerHTML=binding.value;
-    //看是否有音乐播放器 
-    let audioArr=el.getElementsByClassName('audioWrap'); 
+    //看是否有音乐播放器
+    let audioArr=el.getElementsByClassName('audioWrap');
     if(audioArr && audioArr.length > 0 ){
         //添加播放事件
         for (var item of audioArr) {
@@ -130,25 +130,25 @@ Vue.directive('my-directive-audio', {
           let progress=item.getElementsByTagName('progress')[0];
           let totleTimeDiv=item.getElementsByClassName('totleTime')[0];
           let currentTimeDiv=item.getElementsByClassName('currentTime')[0];
-          
+
           //添加点击事件
           playimg.onclick=function(){
               //获得时长
               var totleTime = audio.duration;
-              setTimeout(function () {  
+              setTimeout(function () {
                 if(isNaN(totleTime)){
                   totleTime = audio.duration;
                 }
                 else{
-                  totleTimeDiv.innerHTML=vueEle._time(totleTime); 
+                  totleTimeDiv.innerHTML=vueEle._time(totleTime);
                 }
               }, 100);
               if(audio.paused){
                  audio.play();
                  //img 的图片
                  playimg.src=playimg.getAttribute("src").replace('play.svg','playing.gif');
-               
-                 //刷新时间 
+
+                 //刷新时间
                  clearInterval(timer);
                   timer=setInterval(function(){
                       var currentTime = audio.currentTime;
@@ -162,7 +162,7 @@ Vue.directive('my-directive-audio', {
                       if(currentTime ==  audio.duration){
                           playimg.src=playimg.getAttribute("src").replace('playing.gif','play.svg');
                           clearInterval(timer);
-                      } 
+                      }
                 },100)
               }else{
                   playimg.src=playimg.getAttribute("src").replace('playing.gif','play.svg');
@@ -170,7 +170,7 @@ Vue.directive('my-directive-audio', {
                   clearInterval(timer);
               }
         }
-      }   
+      }
     }
   },
   unbind: function () {

@@ -130,7 +130,7 @@ export default {
   computed: {
     ...mapState(['menu', 'userinfo'])
 },
-  mounted(){  
+  mounted(){
     let This=this;
     //判断一下是编辑还是草稿通过文章的id
     if(this.$route.query.articleID){
@@ -143,7 +143,7 @@ export default {
           let data = response.data.content;
           //给数据值
           this.formTop.title = data.title;
-          
+
           this.formTop.publishchannel = data.channel;
           this.formTop.authorArr=data.author.split(/\s+/g);
           if (data.keyword != null) {
@@ -169,7 +169,7 @@ export default {
           this.articleID=-1;
           //禁用video
           this.$emit('disabledTab','video');
-        }      
+        }
       }, (error) => {
         this.$Notice.error({
           title: error.data.message,
@@ -218,29 +218,17 @@ export default {
       this.$router.go(-1);
     },
     insertVideoEditor(html,id,name){
+      this.$refs.videoTabPreview.innerHTML=html;
       if(id){
-         this.$refs.videoTabPreview.innerHTML='';
-        //腾讯云里面的视频
-          var option = {
-              "auto_play": "0",
-              "file_id": id,
-              "app_id": "1252018592",
-              "width": 640,
-              "height": 360,
-          };     
-          new qcVideo.Player("videoTabPreview", option);
-          this.videoid=id;
-          this.videoname=name;
-      }else{
-        //外链的视频
-        this.$refs.videoTabPreview.innerHTML=html;
-        this.videoid='';
+        this.videoid=id;
+      }else if(name){
+        this.videoname=name;
       }
       this.ishideone=true;
     },
     reuploadvideo(){
       //展示弹框
-       this.$emit('showUploadPop');  
+       this.$emit('showUploadPop');
     },
     showPreviewContent:function(){
       //获得编辑器中的内容:这里的预览需要写一个界面（待完善。。。）
@@ -252,15 +240,15 @@ export default {
           this.previewCon[0].title = data.title;
           this.previewCon[0].cover = data.cover;
           this.previewCon[0].subtitle = data.subtitle;
-	          this.previewCon[0].content = data.content;          
+	          this.previewCon[0].content = data.content;
 	          this.previewCon[0].time = data.addtime;
 	          this.previewCon[0].studioname = this.studioName;
 	          this.$refs.yulan.previewConauthor(data.author);
 	          this.previewCon[0].channel = data.channel;
-          if (response.data.operatortype == "Edit") {      
+          if (response.data.operatortype == "Edit") {
 	          this.previewCon[0].author = data.author;
           }
-          
+
 //        let $=qbVideo.get("$");
 //        let _this = this;
 //        setTimeout(function () {
@@ -268,7 +256,7 @@ export default {
 //        	let count = $(".previewContent .video_container").size();
 //        	for (let i = 0; i < count; i++){
 //        		if ($(".previewContent .video_container").eq(i).html() != '') {
-//        			let serverfileid = 
+//        			let serverfileid =
 //              $(".previewContent .video_container").eq(i).html('').attr('serverfileid');
 //              $(".previewContent .video_container").eq(i).attr('id', 'video_container'+ serverfileid);
 //              let id_con = $(".previewContent .video_container").eq(i).attr('id');
@@ -283,7 +271,7 @@ export default {
 //              new qcVideo.Player(id_con,options);
 //        		}
 //        	}
-//        	 
+//
 //        },500)
         }, (error) => {
           this.$Notice.error({
@@ -313,7 +301,7 @@ export default {
         })
       }
     },
-   
+
     fromLocal:function(){
       this.localModal=true;
     },
@@ -539,11 +527,7 @@ abstractWordCount:function(event){
       }
     },
     save:function(name,hideTip){
-      let videohtml=this.$refs.videoTabPreview.innerHTML;
-      if(this.videoid){
-        videohtml='<p style="text-align:center" class="video_container" serverfileid="'+this.videoid+'" id="id_video_container_'+this.videoid+'">'+this.$refs.videoTabPreview.innerHTML+'</p>';
-      }
-      this.formTop.content=videohtml;
+      this.formTop.content=this.$refs.videoTabPreview.innerHTML;
       this.formTop.author=this.formTop.authorArr.join(" ");
       this.formTop.keyword=this.formTop.keywordArr.join(" ");
       if(!this.formTop.author){
@@ -572,7 +556,7 @@ abstractWordCount:function(event){
                 //更新
                 this.$http.put("/api/content/"+this.articleID,this.formTop
                ).then((response) => {
-               
+
                		if (response.data.status == 1) {
                			this.$Notice.success({title:response.data.message,desc: false});
                		}else{

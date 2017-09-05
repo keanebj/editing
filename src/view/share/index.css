@@ -96,7 +96,7 @@
     box-sizing: border-box;
     margin:20px auto;
 }
-.audioBtn{ 
+.audioBtn{
     position: absolute;
     width:45px;
     height:45px;
@@ -107,7 +107,7 @@
     cursor: pointer;
 }
 .content{
-    margin-left: 75px; 
+    margin-left: 75px;
     width: 80%;
     height:100px;
     box-sizing: border-box;
@@ -131,7 +131,7 @@
     -ms-appearance:none;
     appearance:none;
 }
-.progress::-ms-fill{ 
+.progress::-ms-fill{
     background:#f95858;
 }
 .progress::-moz-progress-bar{
@@ -158,14 +158,14 @@
 }
 .download{
     position:absolute;
-    bottom:-30px;
+    bottom:-24px;
     right:0;
     text-decoration:none;
-    padding-left:50px;
+    padding-left:20px;
     display:inline-block;
     color:#b2b2b2;
     background:url(http://mp.dev.hubpd.com/static/ueditor/audioimages/download.svg) left center no-repeat;
-    background-size:65% 65%;
+    background-size:14px 14px;
 }
 .totleTime{
      right: 0;
@@ -185,7 +185,7 @@
 	}
 	.con_new video{
 		max-width: 100%;
-		/*height: auto;*/
+		height: auto;
 	}
     .audioWrap{
         width:95%;
@@ -266,8 +266,8 @@
    .article .shareContent{
      font-size:12px !important;
    }
-  .article .shareContent video{
-    width:70% !important;
-    height: auto;
-  }
+  /*.article .shareContent video{
+     width:70% !important;
+     height: auto;
+  }*/
 }

@@ -26,7 +26,7 @@
         <div v-show="source == 'local'">
             <div class="select-audio" :class="{hide:ishideone}">
                 <label  style="width:80px;padding-left:32px;">文件：</label>
-                <Input v-model="linkForm.url" placeholder="*.mp3" style="width:60%" readonly></Input>
+                <Input  placeholder="*.mp3" style="width:60%" readonly></Input>
                 <Upload :action="action" 
                         :format="['mp3']"
                         accept=".mp3"

@@ -1,9 +1,9 @@
 #audio-upload-pop  .ivu-modal-header{
-    background: #F3F3F3; 
+    background: #F3F3F3;
 }
 #audio-upload-pop  .ivu-modal-header p{
     color:#999999;
-    font-weight: 500; 
+    font-weight: 500;
 }
 #audio-upload-pop .ivu-modal-footer{
     display: none;
@@ -11,11 +11,12 @@
 .audio-content-container{
     text-align: left;
     padding:50px 50px 20px 50px;
-    background: url('../../assets/svg/audio-back.svg') center center no-repeat;
-    background-size: 80% 80%;
+    background: url('../../assets/svg/audio-back.svg') center center no-repeat #fff;
+    background-size: 320px 270px;
+    height:328px;
 }
 .link-btn .ivu-form-item-content{
-     text-align:center;
+    text-align:center;
     margin-left:0 !important;
 }
 #audio-upload-pop .ivu-progress-bg{

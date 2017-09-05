@@ -116,7 +116,7 @@ export default {
 				}else{
 					this.initUpload('picks', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
 				}
-      	
+
         this.formValidate.videoname = this.material.name;//视频名字
         // this.formValidate.videourl = '#'//视频地址
         this.formValidate.materialtype = this.formValidate.select;//视频类型
@@ -133,14 +133,14 @@ export default {
 //        this.$Notice.error({title:error.data.message,desc: false});
 //      })
         this.material.percent = '100';
-        
+
         this.$http.get('api/material/init/' + this.videoId,{
         		params: {
 	          	fileid: this.material.serverFileId
         		}
         }).then((response) => {
         	if (response.data.status == 1) {
-        		
+
         	}else{
         		this.$Notice.error({title:response.data.message,desc: false});
         	}
@@ -151,6 +151,8 @@ export default {
     }
   },
   mounted() {
+//	window.location.reload();
+//	this.$router.go(0)
     if (this.$route.query.id) {
     	this.initUpload('picks', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
       this.$http.get('/api/material/' + this.$route.query.id).then(({data}) => {
@@ -162,15 +164,16 @@ export default {
         this.zhaiyao = data.material.summary;
         this.select = data.material.materialtype;
         if (data.material.keyword == '') {
-        	this.labelArr = []; 
+        	this.labelArr = [];
         }else{
         	this.labelArr = data.material.keyword.split(" ");
         }
         this.videoId = data.material.id;
         this.hasImg = false;
         this.uploading = true;
-        
-        
+        this.getTitleContent();
+        this.getSummaryContent();
+
 //      var $ = qaVideo.get('$')
 //				console.log($('.material_xx_con').find('.moxie-shim').length)
 //				$('.material_xx_con')[0].removeChild($('.material_xx_con').find('.moxie-shim')[0]);
@@ -189,12 +192,12 @@ export default {
 	  		this.$Notice.error({title:error.data.message,desc: false});
 	  	})
     }
-    
-    
+
+
     if (this.vievShow) {
     	this.uploading = true;
     }
-  }, 
+  },
   created() {
     if (this.material.code == 2) {
       qbVideo.uploader.startUpload();
@@ -219,7 +222,6 @@ export default {
     this.placelabel=keypadleft>10?'':'每个关键字最多5个字';
   },
   beforeDestory () {
-  	
   },
   methods: {
   	cancleSave () {
@@ -404,9 +406,9 @@ export default {
     cancaleUpload () {
     	this.stopUploading = false;
 			qaVideo.uploader.stopUpload();
-			
-			
-			
+
+
+
       this.cancaleUploadInfo();
     },
     cancaleUploadInfo () {
@@ -417,7 +419,7 @@ export default {
         	qaVideo.uploader.deleteFile(this.material.id);
         	this.stopUploading = true;
         	this.material.code = 0;
-          this.vievShow = true;	
+          this.vievShow = true;
           var $ = qaVideo.get('$')
 					if ($('.material_xx_cons').find('.moxie-shim').length > 0) {
 						$('.material_xx_cons')[0].removeChild($('.material_xx_cons').find('.moxie-shim')[0]);
@@ -432,15 +434,6 @@ export default {
       });
     },
     reUpload () {
-//			this.$http.put('api/video/upload/' + this.videoId).then((response) => {
-//				if (response.data.status == 1) {
-//					this.videoId = response.data.id;
-//				}else{
-//					this.$Notice.error({title:response.data.message,desc: false});
-//				}
-//			}, (response) => {
-//				this.$Notice.error({title:response.data.message,desc: false});
-//			})
     },
     initUpload (upBtnId, secretId, isTranscode, isWatermark, transcodeNotifyUrl, classId) {
       var $ = qaVideo.get('$');
@@ -466,8 +459,6 @@ export default {
           util = qaVideo.get('util'),
           Code = qaVideo.get('Code'),
           Version = qaVideo.get('Version');
-
-//        console.log($('#picks'))
       //您的secretKey
       var secret_key =  'UmsnV4Sgw65rRE0e6OUTGtK3viKky4yh';
       var secret_id = secretId;
@@ -502,14 +493,14 @@ export default {
               after_sha_start_upload: false,//sha计算完成后，开始上传 (默认关闭立即上传)
               sha1js_path: '/static/upload/calculator_worker_sha1.js', //计算sha1的位置
               // sha1js_path: "./calculator_worker_sha1.js",
-              disable_multi_selection: false, //禁用多选 ，默认为false
+              disable_multi_selection: true, //禁用多选 ，默认为false
 
               transcodeNotifyUrl: transcodeNotifyUrl, //(转码成功后的回调地址)isTranscode==true,时开启； 回调url的返回数据格式参考  https://www.qcloud.com/document/product/266/1407
               classId: classId,
               // mime_types, 默认是常用的视频和音频文件扩展名，如MP4, MKV, MP3等, video_only 默认为false，可允许音频文件上传
               filters: {
-                  max_file_size: '8gb',
-                  mime_types: [],
+                  max_file_size: '2gb',
+                  mime_types: ['MOV','MP4','MP4V','M4V','MKV','AVI','FLV','3GP','RM','RAM','MPG','MPEG','MPE','VOB','DAT','WMV','WM','ASF','ASX'],
                   video_only: true
               },
               forceH5Worker: true // 使用HTML5 webworker计算
@@ -533,7 +524,6 @@ export default {
                */
               onFileStatus: function (info) {
                   // $('#count').text('各状态总数-->' + JSON.stringify(info));
-
               },
 
               /**
@@ -541,18 +531,10 @@ export default {
                * @param args {code:{-1: 文件类型异常,-2: 文件名异常} , message: 错误原因 ， solution: 解决方法}
                */
               onFilterError: function (args) {
-              	
-                  // var msg = 'message:' + args.message + (args.solution ? (';solution==' + args.solution) :
-                  //     '');
-                  // $('#error').html(msg);
-//                console.log(args)
-								self.fileError += 1;
-								if (self.fileError%2 == 0) {
 									self.$Notice.error({
-						        title: args.message,
-						        desc: false
-						      }) 
-								}
+	                    title: '只能上传视频文件',
+	                    desc: false
+	              	})
               }
           }
       );
@@ -595,6 +577,12 @@ export default {
       }
     }
   },
+  beforeRouteEnter (to, from, next) {
+		 // 在渲染该组件的对应路由被 confirm 前调用
+		 // 不！能！获取组件实例 `this`
+		 // 因为当钩子执行前，组件实例还没被创建
+		  next();
+	},
   beforeRouteLeave (to, from, next) {
   	if (!this.routeLeave) {
   		this.formValidate.summary = this.zhaiyao;//摘要
@@ -610,11 +598,14 @@ export default {
 		    	if (this.material.code > 5) {
 		    		next(true)
 			    	this.$http.put('api/material/'+ this.videoId, this.formValidate).then((response) => {
-			    		
+              this.$Notice.success({title:'保存成功',desc: false});
 		          if (response.data.status == 1) {
-		          	
-		            this.$Notice.success({title:'保存成功',desc: false});
-		            this.$router.push('/manage/material')
+		          	if (to.name == 'publish') {
+                  var index = window.location.href.indexOf('/manage');
+                  window.location.href = window.location.href.substring(0,index) + to.fullPath;
+                }else{
+                  this.$router.push('/manage/material')
+                }
 		          }else{
 		          	next(false);
 		            this.$Notice.error({title:response.data.message,desc: false});
