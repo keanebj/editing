@@ -13015,16 +13015,14 @@ UE.plugins['horizontal'] = function(){
         if(domUtils.isStartInblock(rng)){
             var tmpNode = rng.startContainer;
             var pre = tmpNode.previousSibling;
-            var sibdiv = pre.previousSibling;
             if(pre && domUtils.isTagNode(pre,'hr')){
                 domUtils.remove(pre);
                 rng.select();
                 domUtils.preventDefault(evt);
                 return true;
 
-            }else if (sibdiv&&domUtils.isTagNode(pre,'p')&&pre.innerHTML == ''&&domUtils.hasClass(sibdiv, "audioWrap myDirectiveAudio")){
+            }else if (pre&&domUtils.hasClass(pre, "audioWrap myDirectiveAudio")){
                   domUtils.remove(pre);
-                  domUtils.remove(sibdiv);
             }
         }
 
