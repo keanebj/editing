@@ -316,7 +316,7 @@ export default {
           this.previewCon[0].content = data.content;
           this.previewCon[0].time = data.addtime;
           this.previewCon[0].studioname = this.studioName;
-          this.$refs.yulan.previewConauthor(data.author);
+          // this.$refs.yulan.previewConauthor(data.author);
           this.previewCon[0].channel = data.channel;
           if (response.data.operatortype == "Edit") {
             this.previewCon[0].author = data.author;
