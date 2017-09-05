@@ -144,7 +144,7 @@ export default {
     ...mapState(['menu', 'userinfo'])
   },
 
-  mounted(){ 
+  mounted(){
     this.editor=UE.getEditor("editor",{
       //此处可以定制工具栏的功能，若不设置，则默认是全部的功能
       UEDITOR_HOME_URL: `${this.$conf.root}/static/ueditor/`,
@@ -231,7 +231,6 @@ export default {
             This.editor.setContent('');
             This.editor.execCommand('inserthtml', This.formTop.content);
           })
-
         } else {
           this.articleID = -1;
           //禁用图文
@@ -244,7 +243,7 @@ export default {
         })
       });
     } else{
-     
+
     }
 
     //自动保存:一分钟自动保存一次
@@ -297,13 +296,12 @@ export default {
 			}else{
 				embedtempLink = data.url;
 			}
-      let embedtemp='<div uetag="edui-audio-embed" contenteditable="false" audio-prefix ="'+this.$conf.host+'" src="'+data.url+'" audio-audioname="'+data.name+'" audiorela="'+data.uid+'" audio-url="'+data.url+'" class="audioWrap myDirectiveAudio"'+ 
-      '><div class="audioBtn myDirectiveAudio"><img class="audioBtnImg myDirectiveAudio" src="'+this.$conf.host+'static/ueditor/audioimages/play.svg"><audio src="'+data.url+'" width="200" height="18"></audio></div>'+ 
+      let embedtemp='<div uetag="edui-audio-embed" contenteditable="false" audio-prefix ="'+this.$conf.host+'" src="'+data.url+'" audio-audioname="'+data.name+'" audiorela="'+data.uid+'" audio-url="'+data.url+'" class="audioWrap myDirectiveAudio"'+
+      '><div class="audioBtn myDirectiveAudio"><img class="audioBtnImg myDirectiveAudio" src="'+this.$conf.host+'static/ueditor/audioimages/play.svg"><audio src="'+data.url+'" width="200" height="18"></audio></div>'+
             '<div class="content myDirectiveAudio"><p class="songName myDirectiveAudio">'+data.name+'</p><progress class="progress myDirectiveAudio" value="0"'+
-            'max="100"></progress>'+
-             '<div class="timeContemt myDirectiveAudio"><div class="time currentTime myDirectiveAudio">00:00</div><div class="time totleTime myDirectiveAudio"></div></div><a href="'+embedtempLink+'" class="download myDirectiveAudio" target="_blank" download="'+data.name+'">下载音频</a></div></div>';
-      let audiohtml='<p style="text-align:center;">'+embedtemp+'</p>';
-      this.editor.execCommand('inserthtml',audiohtml,true);
+            'max="100"></progress>'+'<div class="timeContemt myDirectiveAudio"><div class="time currentTime myDirectiveAudio">00:00</div><div class="time totleTime myDirectiveAudio"></div></div><a href="'+embedtempLink+'" class="download myDirectiveAudio" target="_blank" download="'+data.name+'">下载音频</a></div></div>';
+     // let audiohtml='<p style="text-align:center;">'+embedtemp+'</p>';
+      this.editor.execCommand('inserthtml',embedtemp,true);
     },
     showPreviewContent: function () {
       //获得编辑器中的内容:这里的预览需要写一个界面（待完善。。。）

@@ -5670,6 +5670,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                     var child = range.startContainer.childNodes[range.startOffset];
                     if (child && child.nodeType == 1 && (dtd.$empty[child.tagName] || dtd.$nonChild[child.tagName])) {
                         node = child;
+                        console.log(node);
                     }
                 }
             }
@@ -16283,57 +16284,85 @@ UE.plugins['list'] = function () {
     //wangyi test audio
    UE.plugins['audio'] = function (){
 	var me =this,editor= this;
-      me.addListener('delkeydown',function(type,evt){
-//    	debugger;
-      //   var range = me.selection.getRange();
-      //  var delele=me.selection.getStart();
-      //  var delEleFather=$(delele).parents('[uetag="edui-audio-embed"]');
-      //  console.log(me)
-      //  if(delEleFather.length >0){
-      //      //在audio内，删除这个audio
-      //       domUtils.remove(delEleFather.get(0));
-      //  }
-    })
     //添加播放点击事件
     me.addListener('click', function (type, e) {
-        var range = me.selection.getRange();
-        img = range.getClosedNode();
+       // var range = me.selection.getRange();
+        //img = range.getClosedNode();
+        //为了解决浏览器的问题获得的getRange不同
+        var img=e.target;
         if (img && img.tagName == 'IMG' && img.className.indexOf("audioBtnImg") != -1) {
            //播放音频
            var father=$(img).parents('[uetag="edui-audio-embed"]');
            var prefix=father.attr("audio-prefix");
            var audio=$(father).find('audio').get(0);
-
            e.stopPropagation();
-           var timer=null;
-           if(audio.paused){
-               audio.play();
-               //img 的图片
-               img.src=prefix+'static/ueditor/audioimages/playing.gif';
+          var timer=null;
+           audio.onended =function(){
+             img.src=prefix+'/static/ueditor/audioimages/play.svg';
+             clearInterval(timer);
+           }
+           //暂停状态
+           if(audio.paused && (audio.duration == Infinity || isNaN(audio.duration))){
+            img.src=prefix+'static/ueditor/audioimages/loading.gif';
+            setTimeout(function(){
+                    var totleTime = audio.duration;
+                    if(totleTime == Infinity || isNaN(totleTime)){
+                          //替换元素
+                          var cloneAudio=$(audio).clone(true);
+                          $(audio).remove();
+                          audio=$(cloneAudio).get(0);
+                          $(father).find(".audioBtn").append(cloneAudio);
+                      }
+                      setTimeout(function(){
+                          //这里可以得到总时长了
+                           audio.play();
+                           img.src=prefix+'static/ueditor/audioimages/playing.gif';
+                          //刷新时间
+                          clearInterval(timer);
+                          timer=setInterval(function(){
+                            var currentTime = audio.currentTime;
+                            $(father).find('.currentTime').html(_time(currentTime));
 
+                            var currentTime = audio.currentTime;
+                            var totleTime = audio.duration;
+
+                            $(father).find('.totleTime').html(_time(totleTime));
+                            var percent = (currentTime / totleTime) * 100;
+                            $(father).find('.progress').val(percent);
+
+                            if(currentTime ==  audio.duration){
+                                img.src=prefix+'/static/ueditor/audioimages/play.svg';
+                                clearInterval(timer);
+                            }
+                        },100); //当前播放时间更新
+                      },300)
+              },2000)
+           }else if(audio.paused && audio.duration > 0){
+               audio.play();
+                img.src=prefix+'static/ueditor/audioimages/playing.gif';
                //刷新时间
                clearInterval(timer);
-                 timer=setInterval(function(){
-                    var currentTime = audio.currentTime;
-                    $(father).find('.currentTime').html(_time(currentTime));
+               timer=setInterval(function(){
+                var currentTime = audio.currentTime;
+                $(father).find('.currentTime').html(_time(currentTime));
 
-                    var currentTime = audio.currentTime;
-                    var totleTime = audio.duration;
-                    var percent = (currentTime / totleTime) * 100;
-                    $(father).find('.progress').val(percent);
+                var currentTime = audio.currentTime;
+                var totleTime = audio.duration;
 
-                    if(currentTime ==  audio.duration){
-                        img.src=prefix+'/static/ueditor/audioimages/play.svg';
-                        clearInterval(timer);
-                    }
-           },100); //当前播放时间更新
-            } else {
-                img.src=prefix+'static/ueditor/audioimages/play.svg';
-                audio.pause();
-                clearInterval(timer);
-            }
-             //获得时长
-            getTotleTime(father);
+                $(father).find('.totleTime').html(_time(totleTime));
+                var percent = (currentTime / totleTime) * 100;
+                $(father).find('.progress').val(percent);
+
+                if(currentTime ==  audio.duration){
+                    img.src=prefix+'/static/ueditor/audioimages/play.svg';
+                    clearInterval(timer);
+                }
+              },100); //当前播放时间更新
+           }else{
+                 img.src=prefix+'static/ueditor/audioimages/play.svg';
+                 clearInterval(timer);
+                 audio.pause();
+           }
             $(".edui-popup-body").hide();
         }else{
             $(".edui-popup-body").show();
@@ -16363,9 +16392,9 @@ UE.plugins['list'] = function () {
 	}else{
 		muplayerTmplLink = '<a href="{URL}" class="download myDirectiveAudio" target="_blank" download="{AudioName}">下载音频</a></div>';
 	}
-    var muplayerTmpl='<div uetag="edui-audio-embed" contenteditable="false" audio-prefix="{Prefix}" audio-audioname="{AudioName}" audiorela="{ID}" audio-url="{URL}" class="audioWrap myDirectiveAudio"'+
+    var muplayerTmpl= embedTmpl = '<div uetag="edui-audio-embed" contenteditable="false" audio-prefix="{Prefix}" audio-audioname="{AudioName}" audiorela="{ID}" audio-url="{URL}" class="audioWrap myDirectiveAudio"'+
       '><div class="audioBtn myDirectiveAudio"><img class="audioBtnImg myDirectiveAudio" src="{Prefix}/static/ueditor/audioimages/play.svg">'+
-            '<audio src="{URL}" width="200" height="18"></audio></div>'+
+            '<audio src="{URL}" width="200" height="18" controls="controls" style="display:none" preload="auto"></audio></div>'+
             '<div class="content myDirectiveAudio"><p class="songName myDirectiveAudio">{AudioName}</p><progress class="progress myDirectiveAudio" value="0"'+
             'max="100"></progress>'+
             '<div class="timeContemt myDirectiveAudio"><div class="time currentTime myDirectiveAudio">00:00</div><div class="time totleTime myDirectiveAudio"></div></div></div>'
@@ -16378,22 +16407,10 @@ UE.plugins['list'] = function () {
         switchRule(root,true);
      });
      // 源码视图转为设计视图的规则
-    //  me.addInputRule(function(root){
-    //  	switchRule(root);
-    // });
+     me.addInputRule(function(root){
+     	switchRule(root);
+    });
 
- //总时长显示
-  var getTotleTime=function(father) {
-    var totleTime = $(father).find('audio').get(0).duration;
-    setTimeout(function () {
-      if(isNaN(totleTime)){
-        getTotleTime();
-      }
-      else{
-        $(father).find('.totleTime').html(_time(totleTime));
-      }
-    }, 100);
-  };
         //时间显示模式
     var _time=function(time) {
         var minute = changeNum(Math.floor(time / 60));
@@ -16428,7 +16445,6 @@ UE.plugins['list'] = function () {
     	if(isOutput){
     		UE.utils.each(nodes,function(node){
     			if(node.getAttr('uetag')==='edui-audio-embed'){
- 					//console.log(28,node)
 					var data={
     					'ID':node.getAttr('audiorela'),
     					'AudioName':node.getAttr('audio-audioname'),
@@ -16436,7 +16452,7 @@ UE.plugins['list'] = function () {
                         'Prefix':node.getAttr('audio-prefix')
     				};
     				var html=muplayerTmpl;
-        			var newNode=UE.uNode.createElement(tmpl(html,data));
+        		var newNode=UE.uNode.createElement(tmpl(html,data));
     				node.parentNode.replaceChild(newNode,node);
 
 				}
@@ -16444,16 +16460,16 @@ UE.plugins['list'] = function () {
 		}else{
 			UE.utils.each(nodes,function(node){
 				if(node.getAttr('uetag')==='edui-audio-embed'){
-					console.log(53,node)
 					var data={
 						'ID':node.getAttr('audiorela'),
 						'AudioName':node.getAttr('audio-audioname'),
 						'URL': node.getAttr('audio-url'),
-                        'Prefix':node.getAttr('audio-prefix')
+            'Prefix':node.getAttr('audio-prefix')
 					};
 					var html = embedTmpl;
 					var newNode=UE.uNode.createElement(tmpl(html,data));
 					node.parentNode.replaceChild(newNode,node);
+
 				}
 			});
 		}
@@ -16583,11 +16599,6 @@ UE.plugins['list'] = function () {
                         }
                         return a.replace(/(^[\n\r\t]*)|([\n\r\t]*$)/g,'')
                     });
-
-
-
-
-
 
 
                     me.setContent = orgSetContent;

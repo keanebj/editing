@@ -116,7 +116,6 @@ Vue.directive('my-directive-audio', {
 
   },
   componentUpdated:function(el,binding){
-    console.log(1234);
     //被绑定元素所在模板完成一次更新周期时调用
     el.innerHTML=binding.value;
     //看是否有音乐播放器
