@@ -16294,29 +16294,17 @@ UE.plugins['list'] = function () {
            var prefix=father.attr("audio-prefix");
            var audio=$(father).find('audio').get(0);
            e.stopPropagation();
-<<<<<<< HEAD
           var timer=null;
-=======
-           var timer=null;
->>>>>>> 3cce3d24e8c8247ae2f98886b9e4381bdeb11ff2
            audio.onended =function(){
              img.src=prefix+'/static/ueditor/audioimages/play.svg';
              clearInterval(timer);
            }
            //暂停状态
-<<<<<<< HEAD
            if(audio.paused && (audio.duration == Infinity || isNaN(audio.duration))){
             img.src=prefix+'static/ueditor/audioimages/loading.gif';
             setTimeout(function(){
                     var totleTime = audio.duration;
                     if(totleTime == Infinity || isNaN(totleTime)){
-=======
-           if(audio.paused && (audio.duration == 0 || audio.duration == Infinity || isNaN(audio.duration))){
-            img.src=prefix+'static/ueditor/audioimages/loading.gif';
-            setTimeout(function(){
-                    var totleTime = audio.duration;
-                    if(totleTime == Infinity || totleTime == 0 || isNaN(totleTime)){
->>>>>>> 3cce3d24e8c8247ae2f98886b9e4381bdeb11ff2
                           //替换元素
                           var cloneAudio=$(audio).clone(true);
                           $(audio).remove();
@@ -16345,11 +16333,7 @@ UE.plugins['list'] = function () {
                                 clearInterval(timer);
                             }
                         },100); //当前播放时间更新
-<<<<<<< HEAD
                       },1000)
-=======
-                      },10000)
->>>>>>> 3cce3d24e8c8247ae2f98886b9e4381bdeb11ff2
               },1000)
            }else if(audio.paused && audio.duration > 0){
                audio.play();
@@ -16387,7 +16371,7 @@ UE.plugins['list'] = function () {
     //加载css
      me.ready(function(){
         UE.utils.cssRule('audio',
-           '.audioWrap{position: relative;width: 600px; height: 100px;border: 1px #f0f0f0 solid;border-radius: 3px;background: #fcfcfc;box-sizing: border-box;margin:30px auto;}'+
+           '.audioWrap{position: relative;width: 600px; height: 100px;border: 1px #f0f0f0 solid;border-radius: 3px;background: #fcfcfc;box-sizing: border-box;margin:20px auto;}'+
     '.audioBtn{ position: absolute;width:45px;height:45px;top:50%;transform:translateY(-50%);margin-left: 15px;margin-right: 15px;cursor: pointer;}'+
     '.content{margin-left: 75px; width: 500px;height:100px; box-sizing: border-box;overflow: hidden;}'+
     '.songName{height:20px;margin:15px 0;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}'+

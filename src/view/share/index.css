@@ -94,7 +94,7 @@
     border-radius: 3px;
     background: #fcfcfc;
     box-sizing: border-box;
-    margin:30px auto;
+    margin:20px auto;
 }
 .audioBtn{
     position: absolute;
@@ -125,7 +125,7 @@
     width:96%;
     margin:10px 0 0 0;
     cursor: pointer;
-    height:6px;
+    height:3px;
     -webkit-appearance:none;
     -moz-appearance:none;
     -ms-appearance:none;
@@ -142,7 +142,7 @@
 }
 .timeContemt{
     position: relative;
-    width: 96%;
+    width: 90%;
     height:20px;
     box-sizing: border-box;
     overflow: hidden;
@@ -154,6 +154,7 @@
     color:#b2b2b2;
     position: absolute;
     top:0;
+    padding-top:3px;
 }
 .download{
     position:absolute;

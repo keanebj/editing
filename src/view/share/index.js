@@ -57,7 +57,7 @@ export default {
   },
   mounted() {
        //找到编辑器里面的视频内容 ，进行 替换
-       let $=qaVideo.get("$");
+       let $=qbVideo.get("$");
        setTimeout(function(){
           let count=$(".video_container").size();
           if(count > 0){

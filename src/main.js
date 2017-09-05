@@ -75,7 +75,7 @@ Vue.directive('my-directive-audio', {
                   else{
                     totleTimeDiv.innerHTML=vueEle._time(totleTime);
                   }
-                }, 500);
+                }, 100);
                 if(audio.paused){
                   audio.play();
                   //img 的图片
@@ -142,7 +142,7 @@ Vue.directive('my-directive-audio', {
                 else{
                   totleTimeDiv.innerHTML=vueEle._time(totleTime);
                 }
-              }, 500);
+              }, 100);
               if(audio.paused){
                  audio.play();
                  //img 的图片
@@ -158,7 +158,6 @@ Vue.directive('my-directive-audio', {
                       var totleTime = audio.duration;
                       var percent = (currentTime / totleTime) * 100;
                       progress.value=percent;
-                      console.log(percent);
 
                       if(currentTime ==  audio.duration){
                           playimg.src=playimg.getAttribute("src").replace('playing.gif','play.svg');
