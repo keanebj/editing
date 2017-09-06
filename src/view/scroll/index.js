@@ -61,7 +61,10 @@ export default {
   		var scroll = this.$refs.scroll;
   		var scrollCon = this.$refs.scrollCon;
   		clearTimeout(time)
+  		
       var time=setTimeout(function () {
+      	console.log(setCon.clientHeight)
+  		console.log(onscroll.clientHeight)
       	if (setCon.clientHeight < onscroll.clientHeight) {
 	      	scrollCon.style.display = 'block';
 	      	scroll.style.display = 'block';
