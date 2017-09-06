@@ -85,10 +85,14 @@
 
 
 
-/*暂时添加audio样式*/
+
+
+
+/*添加audio样式*/
 .audioWrap{
     position: relative;
-    width: 95%;
+    /*width: 95%;*/
+    width:100% !important;
     height: 100px;
     border: 1px #f0f0f0 solid;
     border-radius: 3px;
@@ -108,7 +112,8 @@
 }
 .content{
     margin-left: 75px;
-    width: 80%;
+    /*width: 80%;*/
+     width:auto !important;
     height:100px;
     box-sizing: border-box;
     overflow: hidden;
@@ -116,13 +121,14 @@
 .songName{
     height:20px;
     width: 90%;
-    margin:15px 0;
+    margin:15px 0 10px 0;
     overflow: hidden;
     text-overflow:ellipsis;
     white-space: nowrap;
 }
 .progress{
-    width:96%;
+    /*width:96%;*/
+    width:98% !important;
     margin:10px 0 0 0;
     cursor: pointer;
     height:3px;
@@ -143,7 +149,8 @@
 }
 .timeContemt{
     position: relative;
-    width: 90%;
+    /*width: 90%;*/
+    width:98% !important;
     height:20px;
     box-sizing: border-box;
     overflow: hidden;
@@ -258,7 +265,7 @@
     text-align: left;
     font-size: 12px;
     line-height: 20px !important;
-    margin: 4px 0;
+    margin: 10px 0 0 0;
   }
   .shareContent p span{
     font-size: 12px;
