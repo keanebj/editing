@@ -41,44 +41,60 @@ var vueEle=new Vue({
     }
     return num
   },
-  playAudio (audio,playimg,totleTimeDiv,timer,currentTimeDiv,progress) {
-  	var totleTime = audio.duration;
-	    setTimeout(function () {
-	      if(isNaN(totleTime)){
-	        totleTime = audio.duration;
-	      }
-	      else{
-	        totleTimeDiv.innerHTML=vueEle._time(totleTime);
-	      }
-	    }, 100);
-	    if(audio.paused){
-	      audio.play();
-	      //img 的图片
-	      playimg.src=playimg.getAttribute("src").replace('loading.gif','playing.gif');
+  playAudio(audio,playimg,timer,currentTimeDiv,progress,audioBtn,prefix){
+    if(audio.paused){
+        audio.play();
+        //img 的图片
+        playimg.style.display="block";
+        playimg.src=playimg.getAttribute("src").replace('play.svg','playing.gif');
+        audioBtn.style.backgroundImage='';
+        //刷新时间
+        clearInterval(timer);
+          timer=setInterval(function(){
+              var currentTime = audio.currentTime;
+              currentTimeDiv.innerHTML=vueEle._time(currentTime);
 
-	      //刷新时间
-	      clearInterval(timer);
-	        timer=setInterval(function(){
-	            var currentTime = audio.currentTime;
-	            currentTimeDiv.innerHTML=vueEle._time(currentTime);
+              var currentTime = audio.currentTime;
+              var totleTime = audio.duration;
+              var percent = (currentTime / totleTime) * 100;
+              progress.value=percent;
 
-	            var currentTime = audio.currentTime;
-	            var totleTime = audio.duration;
-	            var percent = (currentTime / totleTime) * 100;
-	            progress.value=percent;
-
-	            if(currentTime ==  audio.duration){
-	                playimg.src=playimg.getAttribute("src").replace('playing.gif','play.svg');
-	                clearInterval(timer);
-	            }
-	      },100)
-	    }else{
-	        playimg.src=playimg.getAttribute("src").replace('playing.gif','play.svg');
-	        audio.pause();
-	        clearInterval(timer);
-	    }
+              if(currentTime ==  audio.duration){
+                  audioBtn.style.backgroundImage = 'url("'+prefix+'static/ueditor/audioimages/play.svg")';
+                  playimg.style.display = 'none';
+                  clearInterval(timer);
+              }
+        },100)
+    }else{
+        audioBtn.style.backgroundImage = 'url("'+prefix+'static/ueditor/audioimages/play.svg")';
+        playimg.style.display = 'none';
+        audio.pause();
+        clearInterval(timer);
+    }
+  },
+  getDuration (audio,playimg,totleTimeDiv,timer,currentTimeDiv,progress,audioBtn,prefix) {
+    var totleTime =audio.duration;
+      //判断是否获得了时长(因为手机端会获得不到时间)
+      if(totleTime == 0 || totleTime == Infinity || isNaN(totleTime)){
+          clearInterval(checkDurTimer);
+          var checkDurTimer=setInterval(function(){
+              totleTime = audio.duration;
+              if(totleTime == 0 || totleTime == Infinity || isNaN(totleTime)){
+                  // 没有获得到时间,一直是loading的状态
+              }else{
+                  //获得到了时长
+                  clearInterval(checkDurTimer);
+                  totleTimeDiv.innerHTML=vueEle._time(totleTime);
+                  vueEle.playAudio(audio,playimg,timer,currentTimeDiv,progress,audioBtn,prefix);
+              }
+          },1000)
+      }else{
+          //获得到了时长
+              totleTimeDiv.innerHTML=vueEle._time(totleTime);
+              vueEle.playAudio(audio,playimg,timer,currentTimeDiv,progress,audioBtn,prefix);
+      }
   }
-  }
+}
 })
 
 //自定义指令--音频播放
@@ -96,26 +112,33 @@ Vue.directive('my-directive-audio', {
             let timer=null;
             //获得audio
             var item = audioArr[i];
+            let prefix=item.getAttribute("audio-prefix");
             let audio=item.getElementsByTagName('audio')[0];
             let playimg=item.getElementsByTagName('img')[0];
             let progress=item.getElementsByTagName('progress')[0];
             let totleTimeDiv=item.getElementsByClassName('totleTime')[0];
             let currentTimeDiv=item.getElementsByClassName('currentTime')[0];
-
+            let audioBtn = item.getElementsByClassName('audioBtn')[0];
+					  audioBtn.style.backgroundImage = 'url("'+prefix+'static/ueditor/audioimages/play.svg")';
+            audioBtn.style.backgroundRepeat='no-repeat';
+            audioBtn.style.backgroundSize = '42px 42px';
+					  playimg.style.display = 'none';
+            audio.onended =function(){
+	            audioBtn.style.backgroundImage = 'url("'+prefix+'static/ueditor/audioimages/play.svg")';
+              playimg.style.display = 'none';
+	            clearInterval(timer);
+	          }
             //添加点击事件
-            playimg.onclick=function(){
-              //获得时长
-              playimg.src=playimg.getAttribute("src").replace('play.svg','loading.gif');
-              audio.onloadedmetadata = vueEle.playAudio(audio,playimg,totleTimeDiv,timer,currentTimeDiv,progress)
-							audio.onended =function(){
-		            playimg.src=playimg.getAttribute("src").replace('playing.gif','play.svg');
-		            clearInterval(timer);
-		          }
+            audioBtn.onclick=function(){
+              if(audio.duration == 0 || audio.duration == Infinity || isNaN(audio.duration)){
+                //获得到时长
+                audioBtn.style.backgroundImage = 'url("'+prefix+'static/ueditor/audioimages/loading.gif")';
+              }
+              audio.onloadedmetadata = vueEle.getDuration(audio,playimg,totleTimeDiv,timer,currentTimeDiv,progress,audioBtn,prefix);
           }
         }
       }
     }
-
   },
   inserted:function(el,binding){
 
@@ -130,32 +153,38 @@ Vue.directive('my-directive-audio', {
     //被绑定元素所在模板完成一次更新周期时调用
     el.innerHTML=binding.value;
     //看是否有音乐播放器
-
     let audioArr=el.getElementsByClassName('audioWrap');
 
     if(audioArr && audioArr.length > 0 ){
         //添加播放事件
-        for (var i = 0;i<audioArr.length;i++) {
+        for (var i = 0;i < audioArr.length;i++) {
           let timer=null;
           //获得audio
-          var item = audioArr[i];
+          let item = audioArr[i];
+          let prefix=item.getAttribute("audio-prefix");
           let audio=item.getElementsByTagName('audio')[0];
           let playimg=item.getElementsByTagName('img')[0];
           let progress=item.getElementsByTagName('progress')[0];
           let totleTimeDiv=item.getElementsByClassName('totleTime')[0];
           let currentTimeDiv=item.getElementsByClassName('currentTime')[0];
-
-
-
-          //添加点击事件
-          playimg.onclick=function(){
-              //获得时长
-            playimg.src=playimg.getAttribute("src").replace('play.svg','loading.gif');
-            audio.onloadedmetadata = vueEle.playAudio(audio,playimg,totleTimeDiv,timer,currentTimeDiv,progress)
-						audio.onended =function(){
-	            playimg.src=playimg.getAttribute("src").replace('playing.gif','play.svg');
+          let audioBtn = item.getElementsByClassName('audioBtn')[0];
+					audioBtn.style.backgroundImage = 'url("'+prefix+'static/ueditor/audioimages/play.svg")';
+          audioBtn.style.backgroundRepeat='no-repeat';
+					audioBtn.style.backgroundSize = '42px 42px';
+					playimg.style.display = 'none';
+          audio.onended =function(){
+	            audioBtn.style.backgroundImage= 'url("'+prefix+'static/ueditor/audioimages/play.svg")';
+              playimg.style.display = 'none';
 	            clearInterval(timer);
 	          }
+          //添加点击事件
+          audioBtn.onclick=function(){
+            if(audio.duration == 0 || audio.duration == Infinity || isNaN(audio.duration)){
+              //获得到时长
+              audioBtn.style.backgroundImage = 'url("'+prefix+'static/ueditor/audioimages/loading.gif")';
+            }
+            audio.onloadedmetadata = vueEle.getDuration(audio,playimg,totleTimeDiv,timer,currentTimeDiv,progress,audioBtn,prefix)
+
         }
       }
     }

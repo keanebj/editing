@@ -16293,7 +16293,7 @@ UE.plugins['list'] = function () {
            e.stopPropagation();
           var timer=null;
            audio.onended =function(){
-             img.src=prefix+'/static/ueditor/audioimages/play.svg';
+             img.src=prefix+'static/ueditor/audioimages/play.svg';
              clearInterval(timer);
            }
 
@@ -16332,7 +16332,7 @@ UE.plugins['list'] = function () {
 		muplayerTmplLink = '<a href="{URL}" class="download myDirectiveAudio" target="_blank" download="{AudioName}">下载音频</a></div>';
 	}
     var muplayerTmpl= embedTmpl = '<div uetag="edui-audio-embed" contenteditable="false" audio-prefix="{Prefix}" audio-audioname="{AudioName}" audiorela="{ID}" audio-url="{URL}" class="audioWrap myDirectiveAudio"'+
-      '><div class="audioBtn myDirectiveAudio"><img class="audioBtnImg myDirectiveAudio" src="{Prefix}/static/ueditor/audioimages/play.svg">'+
+      '><div class="audioBtn myDirectiveAudio"><img class="audioBtnImg myDirectiveAudio" src="{Prefix}static/ueditor/audioimages/play.svg">'+
             '<audio src="{URL}" width="200" height="18" controls="controls" style="display:none" preload="metadata"></audio></div>'+
             '<div class="content myDirectiveAudio"><p class="songName myDirectiveAudio">{AudioName}</p><progress class="progress myDirectiveAudio" value="0"'+
             'max="100"></progress>'+
@@ -16370,7 +16370,7 @@ UE.plugins['list'] = function () {
                 $(father).find('.progress').val(percent);
 
                 if(currentTime ==  audio.duration){
-                    img.src=prefix+'/static/ueditor/audioimages/play.svg';
+                    img.src=prefix+'static/ueditor/audioimages/play.svg';
                     clearInterval(timer);
                 }
               },100); //当前播放时间更新

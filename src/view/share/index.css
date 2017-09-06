@@ -100,6 +100,9 @@
     box-sizing: border-box;
     margin:30px auto;
 }
+.audioBtnImg{
+  width:42px !important;
+}
 .audioBtn{
     position: absolute;
     width:45px;
@@ -203,6 +206,10 @@
         width:30px;
         height:30px;
         top:40%;
+        background-size: 30px 30px !important;
+    }
+    .audioBtnImg{
+      width:30px !important;
     }
     .content{
         width:80%;

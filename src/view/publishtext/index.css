@@ -60,6 +60,9 @@
       box-sizing: border-box;
       overflow: hidden;
     }
+    .audioBtnImg{
+      width:42px !important;
+    }
     .time{
       width:40px;
       height:20px;
