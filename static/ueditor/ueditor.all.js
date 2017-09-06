@@ -16303,68 +16303,6 @@ UE.plugins['list'] = function () {
            }
            audio.onloadedmetadata=getDuration(img,father,prefix,audio,timer);
 
-           //暂停状态:替换元素的写法
-          //  if(audio.paused && (audio.duration == Infinity || isNaN(audio.duration))){
-          //   img.src=prefix+'static/ueditor/audioimages/loading.gif';
-          //   setTimeout(function(){
-          //           var totleTime = audio.duration;
-          //           if(totleTime == Infinity || isNaN(totleTime)){
-          //                 //替换元素
-          //                 var cloneAudio=$(audio).clone(true);
-          //                 $(audio).remove();
-          //                 audio=$(cloneAudio).get(0);
-          //                 $(father).find(".audioBtn").append(cloneAudio);
-          //             }
-          //             setTimeout(function(){
-          //                 //这里可以得到总时长了
-          //                  audio.play();
-          //                  img.src=prefix+'static/ueditor/audioimages/playing.gif';
-          //                 //刷新时间
-          //                 clearInterval(timer);
-          //                 timer=setInterval(function(){
-          //                   var currentTime = audio.currentTime;
-          //                   $(father).find('.currentTime').html(_time(currentTime));
-
-          //                   var currentTime = audio.currentTime;
-          //                   var totleTime = audio.duration;
-
-          //                   $(father).find('.totleTime').html(_time(totleTime));
-          //                   var percent = (currentTime / totleTime) * 100;
-          //                   $(father).find('.progress').val(percent);
-
-          //                   if(currentTime ==  audio.duration){
-          //                       img.src=prefix+'/static/ueditor/audioimages/play.svg';
-          //                       clearInterval(timer);
-          //                   }
-          //               },100); //当前播放时间更新
-          //             },1000)
-          //     },1000)
-          //  }else if(audio.paused && audio.duration > 0){
-          //      audio.play();
-          //       img.src=prefix+'static/ueditor/audioimages/playing.gif';
-          //      //刷新时间
-          //      clearInterval(timer);
-          //      timer=setInterval(function(){
-          //       var currentTime = audio.currentTime;
-          //       $(father).find('.currentTime').html(_time(currentTime));
-
-          //       var currentTime = audio.currentTime;
-          //       var totleTime = audio.duration;
-
-          //       $(father).find('.totleTime').html(_time(totleTime));
-          //       var percent = (currentTime / totleTime) * 100;
-          //       $(father).find('.progress').val(percent);
-
-          //       if(currentTime ==  audio.duration){
-          //           img.src=prefix+'/static/ueditor/audioimages/play.svg';
-          //           clearInterval(timer);
-          //       }
-          //     },100); //当前播放时间更新
-          //  }else{
-          //        img.src=prefix+'static/ueditor/audioimages/play.svg';
-          //        clearInterval(timer);
-          //        audio.pause();
-          //  }
             $(".edui-popup-body").hide();
         }else{
             $(".edui-popup-body").show();
