@@ -16297,96 +16297,74 @@ UE.plugins['list'] = function () {
              clearInterval(timer);
            }
 
-          //  if(audio.duration == 0 || audio.duration == Infinity || isNaN(audio.duration)){
-          //     img.src=prefix+'static/ueditor/audioimages/loading.gif';
+           if(audio.duration == 0 || audio.duration == Infinity || isNaN(audio.duration)){
+              img.src=prefix+'static/ueditor/audioimages/loading.gif';
 
-          //  }
-          //  audio.onloadedmetadata=getDuration(img,father,prefix,audio,timer);
-
-         //暂停状态，没有得到时长
-          //  if(audio.paused && (audio.duration == 0 || audio.duration == Infinity || isNaN(audio.duration))){
-          //        img.src=prefix+'static/ueditor/audioimages/loading.gif';
-          //       //替换元素
-          //       setTimeout(function(){
-          //         //如果1秒后没有获得到时长，就替换元素
-          //         if(audio.duration == 0 || audio.duration == Infinity || isNaN(audio.duration)){
-          //             var cloneAudio=$(audio).clone(true);
-          //             $(audio).remove();
-          //             audio=$(cloneAudio).get(0);
-          //             $(father).find(".audioBtn").append(cloneAudio);
-          //         }
-          //         //替换元素以后，隔200ms，添加事件
-          //         setTimeout(function(){
-          //             audio.onloadedmetadata=getDuration(img,father,prefix,audio,timer);
-          //         },200)
-          //       },1000)
-          //  }else{
-          //    audio.onloadedmetadata=getDuration(img,father,prefix,audio,timer);
-          //  }
-
-
-           //暂停状态
-           if(audio.paused && (audio.duration == Infinity || isNaN(audio.duration))){
-            img.src=prefix+'static/ueditor/audioimages/loading.gif';
-            setTimeout(function(){
-                    var totleTime = audio.duration;
-                    if(totleTime == Infinity || isNaN(totleTime)){
-                          //替换元素
-                          var cloneAudio=$(audio).clone(true);
-                          $(audio).remove();
-                          audio=$(cloneAudio).get(0);
-                          $(father).find(".audioBtn").append(cloneAudio);
-                      }
-                      setTimeout(function(){
-                          //这里可以得到总时长了
-                           audio.play();
-                           img.src=prefix+'static/ueditor/audioimages/playing.gif';
-                          //刷新时间
-                          clearInterval(timer);
-                          timer=setInterval(function(){
-                            var currentTime = audio.currentTime;
-                            $(father).find('.currentTime').html(_time(currentTime));
-
-                            var currentTime = audio.currentTime;
-                            var totleTime = audio.duration;
-
-                            $(father).find('.totleTime').html(_time(totleTime));
-                            var percent = (currentTime / totleTime) * 100;
-                            $(father).find('.progress').val(percent);
-
-                            if(currentTime ==  audio.duration){
-                                img.src=prefix+'/static/ueditor/audioimages/play.svg';
-                                clearInterval(timer);
-                            }
-                        },100); //当前播放时间更新
-                      },1000)
-              },1000)
-           }else if(audio.paused && audio.duration > 0){
-               audio.play();
-                img.src=prefix+'static/ueditor/audioimages/playing.gif';
-               //刷新时间
-               clearInterval(timer);
-               timer=setInterval(function(){
-                var currentTime = audio.currentTime;
-                $(father).find('.currentTime').html(_time(currentTime));
-
-                var currentTime = audio.currentTime;
-                var totleTime = audio.duration;
-
-                $(father).find('.totleTime').html(_time(totleTime));
-                var percent = (currentTime / totleTime) * 100;
-                $(father).find('.progress').val(percent);
-
-                if(currentTime ==  audio.duration){
-                    img.src=prefix+'/static/ueditor/audioimages/play.svg';
-                    clearInterval(timer);
-                }
-              },100); //当前播放时间更新
-           }else{
-                 img.src=prefix+'static/ueditor/audioimages/play.svg';
-                 clearInterval(timer);
-                 audio.pause();
            }
+           audio.onloadedmetadata=getDuration(img,father,prefix,audio,timer);
+
+           //暂停状态:替换元素的写法
+          //  if(audio.paused && (audio.duration == Infinity || isNaN(audio.duration))){
+          //   img.src=prefix+'static/ueditor/audioimages/loading.gif';
+          //   setTimeout(function(){
+          //           var totleTime = audio.duration;
+          //           if(totleTime == Infinity || isNaN(totleTime)){
+          //                 //替换元素
+          //                 var cloneAudio=$(audio).clone(true);
+          //                 $(audio).remove();
+          //                 audio=$(cloneAudio).get(0);
+          //                 $(father).find(".audioBtn").append(cloneAudio);
+          //             }
+          //             setTimeout(function(){
+          //                 //这里可以得到总时长了
+          //                  audio.play();
+          //                  img.src=prefix+'static/ueditor/audioimages/playing.gif';
+          //                 //刷新时间
+          //                 clearInterval(timer);
+          //                 timer=setInterval(function(){
+          //                   var currentTime = audio.currentTime;
+          //                   $(father).find('.currentTime').html(_time(currentTime));
+
+          //                   var currentTime = audio.currentTime;
+          //                   var totleTime = audio.duration;
+
+          //                   $(father).find('.totleTime').html(_time(totleTime));
+          //                   var percent = (currentTime / totleTime) * 100;
+          //                   $(father).find('.progress').val(percent);
+
+          //                   if(currentTime ==  audio.duration){
+          //                       img.src=prefix+'/static/ueditor/audioimages/play.svg';
+          //                       clearInterval(timer);
+          //                   }
+          //               },100); //当前播放时间更新
+          //             },1000)
+          //     },1000)
+          //  }else if(audio.paused && audio.duration > 0){
+          //      audio.play();
+          //       img.src=prefix+'static/ueditor/audioimages/playing.gif';
+          //      //刷新时间
+          //      clearInterval(timer);
+          //      timer=setInterval(function(){
+          //       var currentTime = audio.currentTime;
+          //       $(father).find('.currentTime').html(_time(currentTime));
+
+          //       var currentTime = audio.currentTime;
+          //       var totleTime = audio.duration;
+
+          //       $(father).find('.totleTime').html(_time(totleTime));
+          //       var percent = (currentTime / totleTime) * 100;
+          //       $(father).find('.progress').val(percent);
+
+          //       if(currentTime ==  audio.duration){
+          //           img.src=prefix+'/static/ueditor/audioimages/play.svg';
+          //           clearInterval(timer);
+          //       }
+          //     },100); //当前播放时间更新
+          //  }else{
+          //        img.src=prefix+'static/ueditor/audioimages/play.svg';
+          //        clearInterval(timer);
+          //        audio.pause();
+          //  }
             $(".edui-popup-body").hide();
         }else{
             $(".edui-popup-body").show();
@@ -16397,7 +16375,7 @@ UE.plugins['list'] = function () {
     //加载css
      me.ready(function(){
         UE.utils.cssRule('audio',
-           '.audioWrap{position: relative;width: 600px; height: 100px;border: 1px #f0f0f0 solid;border-radius: 3px;background: #fcfcfc;box-sizing: border-box;margin:20px auto;}'+
+           '.audioWrap{position: relative;width: 600px; height: 100px;border: 1px #f0f0f0 solid;border-radius: 3px;background: #fcfcfc;box-sizing: border-box;margin:30px auto;}'+
     '.audioBtn{ position: absolute;width:45px;height:45px;top:50%;transform:translateY(-50%);margin-left: 15px;margin-right: 15px;cursor: pointer;}'+
     '.content{margin-left: 75px; width: 500px;height:100px; box-sizing: border-box;overflow: hidden;}'+
     '.songName{height:20px;text-align:left;margin:15px 0;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}'+
@@ -16436,16 +16414,6 @@ UE.plugins['list'] = function () {
     });
     var getDuration=function(img,father,prefix,audio,timer){
           var totleTime=audio.duration;
-
-          // var checktimer=setInterval(function(){
-          //   totleTime=audio.duration;
-          //   if(totleTime > 0 && totleTime != Infinity && !isNaN(totleTime)){
-          //       //能播放
-          //       alert(totleTime);
-          //       clearInterval(checktimer);
-          //   }
-          // },1000)
-
           if(totleTime > 0 && totleTime != Infinity && !isNaN(totleTime)){
               //得到了时长，暂停状态
            if(audio.paused){
@@ -16474,8 +16442,6 @@ UE.plugins['list'] = function () {
                  clearInterval(timer);
                  audio.pause();
            }
-          }else{
-            getDuration(img,father,prefix,audio,timer);
           }
     };
 
