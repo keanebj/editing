@@ -432,10 +432,18 @@ export default {
                        * @param args {code:{-1: 文件类型异常,-2: 文件名异常} , message: 错误原因 ， solution: 解决方法}
                        */
                       onFilterError: function (args) {
-                          This.$Notice.error({
-                                title: '只能上传视频文件',
-                                desc: false
-                           })
+                      	if (args.code == -3) {
+                      		This.$Notice.error({
+	                            title: '文件大小超出限制',
+	                            desc: false
+	                       })
+                      	}else{
+                      		This.$Notice.error({
+	                            title: '只能上传视频文件',
+	                            desc: false
+	                       })
+                      	}
+                          
                       }
                   }
               );
