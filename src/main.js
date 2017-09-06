@@ -92,9 +92,10 @@ Vue.directive('my-directive-audio', {
       let audioArr=el.getElementsByClassName('audioWrap');
       if(audioArr && audioArr.length > 0 ){
           //添加播放事件
-          for (var item of audioArr) {
+          for (var i = 0;i<audioArr.length;i++) {
             let timer=null;
             //获得audio
+            var item = audioArr[i];
             let audio=item.getElementsByTagName('audio')[0];
             let playimg=item.getElementsByTagName('img')[0];
             let progress=item.getElementsByTagName('progress')[0];
@@ -103,10 +104,13 @@ Vue.directive('my-directive-audio', {
 
             //添加点击事件
             playimg.onclick=function(){
-                //获得时长
-                playimg.src=playimg.getAttribute("src").replace('play.svg','loading.gif');
-                audio.onloadedmetadata = vueEle.playAudio(audio,playimg,totleTimeDiv,timer,currentTimeDiv,progress)
-
+              //获得时长
+              playimg.src=playimg.getAttribute("src").replace('play.svg','loading.gif');
+              audio.onloadedmetadata = vueEle.playAudio(audio,playimg,totleTimeDiv,timer,currentTimeDiv,progress)
+							audio.onended =function(){
+		            playimg.src=playimg.getAttribute("src").replace('playing.gif','play.svg');
+		            clearInterval(timer);
+		          }
           }
         }
       }
@@ -124,12 +128,15 @@ Vue.directive('my-directive-audio', {
     //被绑定元素所在模板完成一次更新周期时调用
     el.innerHTML=binding.value;
     //看是否有音乐播放器
+    
     let audioArr=el.getElementsByClassName('audioWrap');
+    
     if(audioArr && audioArr.length > 0 ){
         //添加播放事件
-        for (var item of audioArr) {
+        for (var i = 0;i<audioArr.length;i++) {
           let timer=null;
           //获得audio
+          var item = audioArr[i];
           let audio=item.getElementsByTagName('audio')[0];
           let playimg=item.getElementsByTagName('img')[0];
           let progress=item.getElementsByTagName('progress')[0];
@@ -139,10 +146,12 @@ Vue.directive('my-directive-audio', {
           //添加点击事件
           playimg.onclick=function(){
               //获得时长
-
             playimg.src=playimg.getAttribute("src").replace('play.svg','loading.gif');
             audio.onloadedmetadata = vueEle.playAudio(audio,playimg,totleTimeDiv,timer,currentTimeDiv,progress)
-
+						audio.onended =function(){
+	            playimg.src=playimg.getAttribute("src").replace('playing.gif','play.svg');
+	            clearInterval(timer);
+	          }
 //            var totleTime = audio.duration;
 //            setTimeout(function () {
 //              if(isNaN(totleTime)){

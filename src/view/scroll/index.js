@@ -63,8 +63,6 @@ export default {
   		clearTimeout(time)
   		
       var time=setTimeout(function () {
-      	console.log(setCon.clientHeight)
-  		console.log(onscroll.clientHeight)
       	if (setCon.clientHeight < onscroll.clientHeight) {
 	      	scrollCon.style.display = 'block';
 	      	scroll.style.display = 'block';
