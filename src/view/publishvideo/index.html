@@ -16,7 +16,7 @@
           <div class="delete-icon" @click="deleteSubTitle"></div>
         </span>
       </Form-item>
-      
+
       <div style="font-size:14px;color:#495060;margin-bottom:10px;">视频简介</div>
        <Form-item label="">
         <Input v-model="formTop.summary" type="textarea" :autosize="{minRows: 8,maxRows: 8}" :maxlength="summaryMaxCount" @on-change="abstractWordCount"></Input>
@@ -32,7 +32,7 @@
      <div :class="{hide:!ishideone}">
       <div class="video-upload-label">上传视频 <span style="margin-left:30px;">{{videoname}}</span><Button type="primary" shape="circle" style="margin-left:30px;float:right;" @click="reuploadvideo">重新上传</Button></div>
       <div id="videoTabPreview" ref="videoTabPreview" class="video_container" v-html="formTop.content"></div>
-      <span style="color:#F95759;padding:100px;">视频比例为16:9</span>
+      <span class="video-scale-tip">视频比例为16:9</span>
     </div>
 
       </Col>

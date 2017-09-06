@@ -28,7 +28,8 @@ export default {
           audioUrl:'',
           uid:'',
           canceluploadFlag:false,
-          linkAudioNull:false
+          linkAudioNull:false,
+          maskClosable:false
     }
   },
   computed:{

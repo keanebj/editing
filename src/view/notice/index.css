@@ -1,11 +1,11 @@
-.con_new p{    
+/*.con_new p{
     text-align: left;
     text-indent: 20px;
     font-size: 14px;
     line-height: 24px;
     margin: 14px 0;
-}
-.con_new{    
+}*/
+.con_new{
     text-align: center;
 }
 .con_new img[src^="/static/ueditor/dialogs/attachment/fileTypeImages"]{
@@ -42,6 +42,18 @@
 	text-align: center;
 	font-weight: normal;
 }
+
+/*控制音频的格式*/
+.audioWrap{
+  width:100% !important;
+}
+.content{
+  width:auto !important;
+}
+.progress,.timeContemt{
+  width:98% !important;
+}
+
 
 
 

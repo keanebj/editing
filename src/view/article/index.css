@@ -13,14 +13,14 @@
 .right img:first-child{
     margin-bottom: 20px;
 }
-.con_new p{    
+/*.con_new p{
     text-align: left;
     text-indent: 20px;
     font-size: 14px;
     line-height: 24px;
     margin: 5px 0;
-}
-.con_new{    
+}*/
+.con_new{
     text-align: center;
 }
 .con_new img{
@@ -44,7 +44,7 @@
 	font-weight: bold;
 }
 .article_xinxi{
-	text-align: left; 	
+	text-align: left;
     margin: 10px 0 20px;
     color: #ccc;
 }
@@ -52,4 +52,17 @@
 	display: inline-block;
     margin-left: 0px;
     margin-right: 10px;
+}
+
+
+
+/*控制音频的格式*/
+.audioWrap{
+  width:100% !important;
+}
+.content{
+  width:auto !important;
+}
+.progress,.timeContemt{
+  width:98% !important;
 }

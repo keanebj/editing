@@ -28,6 +28,12 @@
     height:100% !important;
     border:1px solid #cccccc;
   }
+  .video-scale-tip{
+    color:#F95759;
+    display: block;
+    margin-left:10%;
+    margin-top:5px;
+  }
   .add-sub-title{
     font-size:14px;
   }
@@ -40,6 +46,9 @@
     #videoTabPreview{
        width:100%;
        margin-left:0;
+    }
+    .video-scale-tip{
+      margin-left:0;
     }
      #videoTabPreview video{
       width:100% !important;

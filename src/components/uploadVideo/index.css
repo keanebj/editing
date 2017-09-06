@@ -18,7 +18,7 @@
     width:400px;
     height:225px;
     background:url('../../assets/svg/外链预览框icon.svg') center center no-repeat;
-    background-size:320px 270px;
+    background-size:320px 160px;
 }
 .video-preview-link .link-preview-tip{
     color:#F95759;

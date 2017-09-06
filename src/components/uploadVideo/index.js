@@ -35,7 +35,8 @@ export default {
         playInfo:'',
         enableAddLocalVideo:true,
         onceTimer:null,
-        loadingTimer:null
+        loadingTimer:null,
+        maskClosable:false
     }
   },
   components:{

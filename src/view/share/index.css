@@ -130,6 +130,7 @@
     -moz-appearance:none;
     -ms-appearance:none;
     appearance:none;
+    border:none;
 }
 .progress::-ms-fill{
     background:#f95858;

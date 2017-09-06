@@ -175,6 +175,7 @@
   overflow: hidden;
   text-overflow:ellipsis;
   white-space: nowrap;
+  text-align:left;
 }
 .progress{
   width:500px;
@@ -185,6 +186,7 @@
   -moz-appearance:none;
   -ms-appearance:none;
   appearance:none;
+  border:none;
 }
 .progress::-ms-fill{
   background:#f95858;

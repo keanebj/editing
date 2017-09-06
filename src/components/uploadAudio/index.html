@@ -1,11 +1,11 @@
-<Modal v-model="uploadAudio" width="768" id="audio-upload-pop">
+<Modal v-model="uploadAudio" :mask-closable="maskClosable" width="768" id="audio-upload-pop">
     <p slot="header">音频资源上传</p>
     <div class="audio-content-container">
         <div class="ivu-form-item">
             <label  style="width:80px;padding-left:32px;">来源：</label>
             <Radio-group v-model="source" style="margin-left:10px;" >
                  <Radio label="local">本地上传</Radio>
-                 <Radio label="link">网络</Radio>            
+                 <Radio label="link">网络</Radio>
              </Radio-group>
         </div>
         <div v-show="source == 'link'">
@@ -27,11 +27,11 @@
             <div class="select-audio" :class="{hide:ishideone}">
                 <label  style="width:80px;padding-left:32px;">文件：</label>
                 <Input  placeholder="*.mp3" style="width:60%" readonly></Input>
-                <Upload :action="action" 
+                <Upload :action="action"
                         :format="['mp3']"
                         accept=".mp3"
                         :max-size="30720"
-                        :show-upload-list=false 
+                        :show-upload-list=false
                         style="display: inline-block;"
                         :on-exceeded-size="handleMaxSize"
                         :before-upload="handleBeforeUpload"
@@ -41,7 +41,7 @@
                         :on-format-error="handleFormatError"
                         >
                     <Button type="primary" shape="circle" style="margin-left:20px;">选择文件</Button>
-                </Upload>       
+                </Upload>
             </div>
             <div class="upload-audio" :class="{hide:!ishideone}">
                 <label  style="width:80px;padding-left:32px;">文件：</label>
@@ -50,11 +50,11 @@
                 <Progress :percent="percentage" :stroke-width="30" style="margin:35px 0 35px 30px;"></Progress>
                 <div style="text-align:center;"><Button type="ghost" shape="circle" :class="{hide:!isuploading}" @click="cancelUpload">取消上传</Button></div>
                 <div style="text-align:center;" :class="{hide:!isfail}">
-                     <Upload :action="action" 
+                     <Upload :action="action"
                         :format="['mp3']"
                         accept=".mp3"
                         :max-size="30720"
-                        :show-upload-list=false 
+                        :show-upload-list=false
                         style="display: inline-block;"
                         :on-exceeded-size="handleMaxSize"
                         :before-upload="handleBeforeUpload"
@@ -64,8 +64,8 @@
                         :on-format-error="handleFormatError"
                         >
                     <Button type="primary" shape="circle" style="margin-left:20px;">重新上传</Button>
-                </Upload>        
-                </div> 
+                </Upload>
+                </div>
                 <div style="text-align:center" :class="{hide:!isfinishupload}">
                     <Button type="primary" shape="circle" @click="insertAudioEditor('')">确定</Button>
                     <Button type="ghost" shape="circle" style="margin-left: 20px" @click="uploadAudio =false">取消</Button>
