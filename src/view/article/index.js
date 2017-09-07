@@ -4,7 +4,7 @@ import {
 export default {
   name: 'Article',
   created() {
-  	
+
   },
   data() {
     return {
@@ -52,7 +52,11 @@ export default {
 	      	this.title=data.content.title;
 	      	this.content=data.content.content;
 	      	this.conInfo.channel = data.content.channel;
-          this.conInfo.time = data.content.addtime;
+          if (data.content.publishdate == null) {
+            this.conInfo.time = data.content.addtime;
+          }else{
+            this.conInfo.time = data.content.publishdate;
+          }
           this.subtitle = data.content.subtitle;
           if (data.operatortype == "Manage") {
           	this.conInfo.author = "";

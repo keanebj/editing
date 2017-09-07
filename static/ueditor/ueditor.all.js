@@ -16303,6 +16303,15 @@ UE.plugins['list'] = function () {
            audio.onloadedmetadata=getDuration(img,father,prefix,audio,timer);
 
             $(".edui-popup-body").hide();
+        }else if (img && img.tagName == "SPAN" && img.className.indexOf('download')>-1) {
+          // alert(img.getAttribute("url"))
+          // var OpenWindow=window.open(img.getAttribute("url"),  'newwin', 'height=200,width=400,top=200,left=200,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no');
+          // OpenWindow.document.write("<TITLE>下载</TITLE>")
+          // OpenWindow.document.write("<BODY BGCOLOR=#ffffff>")
+          // OpenWindow.document.write('<a href="'+img.getAttribute("url")+'" class="download myDirectiveAudio" target="_blank" download>下载音频</a></div>')
+          // OpenWindow.document.write("</BODY>")
+          // OpenWindow.document.write("</HTML>")
+          // OpenWindow.document.close()
         }else{
             $(".edui-popup-body").show();
         }
@@ -16327,7 +16336,9 @@ UE.plugins['list'] = function () {
     });
 	var muplayerTmplLink = '';
 	if (navigator.userAgent.indexOf('Firefox') > -1) {//判断火狐浏览器，解决下载问题
-		muplayerTmplLink = '<a href="javascript:window.open(\'{URL}\')" class="download myDirectiveAudio" target="_blank" download="{AudioName}">下载音频</a></div>';
+    muplayerTmplLink = '<a href="javascript:window.open(\'{URL}\')" class="download myDirectiveAudio" filename="{AudioName}.mp3" download="{AudioName}.mp3">下载音频</a></div>';
+    // muplayerTmplLink = '<a href="javascript:window.open(\'{URL}\')" class="download myDirectiveAudio" download="{AudioName}.mp3">下载音频</a></div>';
+    // muplayerTmplLink = '<a href="{URL}" class="download myDirectiveAudio" target="_blank" download="{AudioName}">下载音频</a></div>';
 	}else{
 		muplayerTmplLink = '<a href="{URL}" class="download myDirectiveAudio" target="_blank" download="{AudioName}">下载音频</a></div>';
 	}
