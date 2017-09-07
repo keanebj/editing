@@ -147,29 +147,13 @@ export default {
     previewContent(){
       //检测预览的弹框
       if(!this.previewContent){
-          //如果关闭了弹框 就停止所有音频的播放
-          let audioBtnArr=this.$refs.yulan.$el.getElementsByClassName('audioBtn');
-          if(audioBtnArr && audioBtnArr.length > 0){
-            for(var i=0;i<audioBtnArr.length;i++){
-              let audio=audioBtnArr[i].childNodes[1];
-              let img=audioBtnArr[i].childNodes[0];
-              let progressCon=audioBtnArr[i].nextSibling.childNodes[1];
-              let currentTimeCon=audioBtnArr[i].nextSibling.childNodes[2].childNodes[0];
-              if(!audio.paused){
-                //就停止所有音频的播放，清定时器
-                audio.pause();
-                audio.currentTime = 0;
-                clearInterval(audio.timer);
-                //修改图标
-                img.style.display="none";
-                audioBtnArr[i].style.backgroundImage = 'url("http://mp.dev.hubpd.com/static/ueditor/audioimages/play.svg")';
-                //设置进度条初始时间
-                progressCon.value=0;
-                currentTimeCon.innerHTML="00:00";
-              }
-            }
-          }
+          this.stopAudio();
       }
+    },
+    tabView(){
+          //如果关闭了弹框 就停止所有音频的播放,切换了tab
+          this.stopAudio();
+          this.stopVideo();
     }
   },
   mounted(){
@@ -301,6 +285,67 @@ export default {
 
   },
   methods: {
+    stopAudio(){
+      //如果关闭了弹框 就停止所有音频的播放
+          let audioBtnArr=this.$refs.yulan.$el.getElementsByClassName('audioBtn');
+          if(audioBtnArr && audioBtnArr.length > 0){
+            for(var i=0;i<audioBtnArr.length;i++){
+              let audio=audioBtnArr[i].childNodes[1];
+              let img=audioBtnArr[i].childNodes[0];
+              let progressCon=audioBtnArr[i].nextSibling.childNodes[1];
+              let currentTimeCon=audioBtnArr[i].nextSibling.childNodes[2].childNodes[0];
+              if(!audio.paused){
+                //就停止所有音频的播放，清定时器
+                audio.pause();
+                audio.currentTime = 0;
+                clearInterval(audio.timer);
+                //修改图标
+                img.style.display="none";
+                audioBtnArr[i].style.backgroundImage = 'url("http://mp.dev.hubpd.com/static/ueditor/audioimages/play.svg")';
+                //设置进度条初始时间
+                progressCon.value=0;
+                currentTimeCon.innerHTML="00:00";
+              }
+            }
+          }
+    },
+    stopVideo(){
+      //视频:embed或者video::embed 的暂停暂时不能解决
+          let videoArr=this.$refs.yulan.$el.getElementsByTagName('video');
+          if(videoArr && videoArr.length > 0){
+            for(var i=0;i<videoArr.length;i++){
+              var video=videoArr[i];
+                if(!video.paused){
+                    //播放状态；修改为暂停
+                    video.pause();
+                    video.currentTime = 0;
+                }
+            }
+          }
+          //如果是embed，需要重新生成播放器
+          let embedArr=this.$refs.yulan.$el.getElementsByClassName('video_container');
+          if(embedArr && embedArr.length > 0){
+            for(var i=0;i<embedArr.length;i++){
+              //清空html
+                embedArr[i].innerHTML="";
+                var selVideoid=embedArr[i].getAttribute("serverfileid");
+                var id=embedArr[i].getAttribute("id");
+                var option = {
+                "auto_play": "0",
+                "file_id": selVideoid,
+                "app_id": "1252018592",
+                "width": 640,
+                "height": 360,
+            };
+            var player=new qcVideo.Player(id, option);
+            if(this.tabView == 'pc'){
+                embedArr[i].getElementsByTagName('embed')[0].style.width="640px";
+                embedArr[i].getElementsByTagName('embed')[0].style.height="360px";
+            }
+            player.pause();
+            }
+          }
+    },
     useqrcode(url) {
       var canvas = document.getElementById('canvas');
       QRCode.toCanvas(canvas, url, function (error) {
