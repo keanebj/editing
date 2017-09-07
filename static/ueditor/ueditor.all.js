@@ -16443,7 +16443,6 @@ UE.plugins['list'] = function () {
            }
           }
     };
->>>>>>> Stashed changes
 
         //时间显示模式
     var _time=function(time) {
