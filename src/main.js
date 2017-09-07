@@ -81,6 +81,8 @@ var vueEle=new Vue({
               totleTime = audio.duration;
               if(totleTime == 0 || totleTime == Infinity || isNaN(totleTime)){
                   // 没有获得到时间,一直是loading的状态
+                  audio.play();
+                  audio.pause();
               }else{
                   //获得到了时长
                   clearInterval(checkDurTimer);
