@@ -26,7 +26,6 @@ export default {
     this.$http.get("/api/content/share/" + this.shareId)
       .then((response) => {
         if(response.data.status == 1){
-        	console.log(response.data)
             this.noData=true;
             this.title = response.data.content.title;
             this.cover = response.data.content.cover;
@@ -75,17 +74,20 @@ export default {
 	            }
           	}
           }
-
-          if (navigator.userAgent.indexOf('Firefox') > -1) {
+          // alert(window.screen.width < 640)
+          if (window.screen.width < 640) {
             for (var i = 0; i<$('.download').size(); i++) {
-              var src = $('.audioWrap.myDirectiveAudio').eq(i).attr('audio-url');
-              $('.download').eq(i).attr('href', "javascript:window.open('"+ src + "')");
+                $('.download').eq(i).css('display', 'none');
             }
           }else{
             for (var i = 0; i<$('.download').size(); i++) {
-              $('.download').eq(i).attr('href', $('.audioWrap.myDirectiveAudio').eq(i).attr('audio-url'));
+              $('.download').eq(i).attr('href', $('.audioWrap.myDirectiveAudio').eq(i).attr('audio-url'))
+              if (navigator.userAgent.indexOf('Firefox') > -1 && $('.download').eq(i).attr('href')[0].indexOf(window.location.host) == -1) {
+                $('.download').eq(i).html('右键点击另存为下载文件！');
+              }
             }
           }
+
         },500)
   }
 }

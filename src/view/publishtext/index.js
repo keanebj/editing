@@ -365,18 +365,15 @@ export default {
       //需要更改audio样式
       let embedtempLink = '';
       let filename = '';
-      if (navigator.userAgent.indexOf('Firefox') > -1) {//判断火狐浏览器，解决下载问题
-        embedtempLink = 'javascript:window.open(\''+data.url+'\')';
-        data.name = data.name + '.mp3';
-        filename = data.name;
-			}else{
-        embedtempLink = data.url;
-        filename = '';
-			}
+      // if (navigator.userAgent.indexOf('Firefox') > -1 && data.url.indexOf(window.location.host) == -1) {//判断火狐浏览器，解决下载问题
+      //   embedtempLink = '右键点击另存为下载文件！';
+			// }else{
+      //   embedtempLink = '下载音频';
+			// }
       let embedtemp='<div uetag="edui-audio-embed" contenteditable="false" audio-prefix ="'+this.$conf.host+'" src="'+data.url+'" audio-audioname="'+data.name+'" audiorela="'+data.uid+'" audio-url="'+data.url+'" class="audioWrap myDirectiveAudio"'+
       '><div class="audioBtn myDirectiveAudio"><img class="audioBtnImg myDirectiveAudio" src="'+this.$conf.host+'static/ueditor/audioimages/play.svg"><audio src="'+data.url+'" width="200" height="18" preload="metadata" controls="controls" style="display:none;" timer=""></audio></div>'+
             '<div class="content myDirectiveAudio"><p class="songName myDirectiveAudio">'+data.name+'</p><progress class="progress myDirectiveAudio" value="0"'+
-            'max="100"></progress>'+'<div class="timeContemt myDirectiveAudio"><div class="time currentTime myDirectiveAudio">00:00</div><div class="time totleTime myDirectiveAudio"></div></div><a href="'+embedtempLink+'" filename='+data.name+' class="download myDirectiveAudio" target="_blank" download="'+data.name+'">下载音频</a></div></div>';
+            'max="100"></progress>'+'<div class="timeContemt myDirectiveAudio"><div class="time currentTime myDirectiveAudio">00:00</div><div class="time totleTime myDirectiveAudio"></div></div><a href="'+data.url+'" filename='+data.name+' class="download myDirectiveAudio" target="_blank" download="'+data.name+'">下载音频</a></div></div>';
       this.editor.execCommand('inserthtml',embedtemp);
     },
     showPreviewContent: function () {
@@ -415,6 +412,13 @@ export default {
             ele[2].style.display = 'block';
             var scale = ele[3].clientHeight / ele[0].clientHeight;
             ele[1].style.height = ele[2].clientHeight * scale + 'px'
+          }
+          let $=qaVideo.get("$");
+          for (var i = 0; i<$('.download').size(); i++) {
+            $('.download').eq(i).attr('href', $('.audioWrap.myDirectiveAudio').eq(i).attr('audio-url'))
+            if (navigator.userAgent.indexOf('Firefox') > -1 && $('.download').eq(i).attr('href')[0].indexOf(window.location.host) == -1) {
+              $('.download').eq(i).html('右键点击另存为下载文件！');
+            }
           }
         }, 200)
       } else {
@@ -911,6 +915,13 @@ export default {
       this.elements[1].style.top = '0px'; //条的高度
       var ele = this.elements;
       clearTimeout(time)
+      let $=qaVideo.get("$");
+      for (var i = 0; i<$('.download').size(); i++) {
+        $('.download').eq(i).attr('href', $('.audioWrap.myDirectiveAudio').eq(i).attr('audio-url'))
+        if (navigator.userAgent.indexOf('Firefox') > -1 && $('.download').eq(i).attr('href')[0].indexOf(window.location.host) == -1) {
+          $('.download').eq(i).html('右键点击另存为下载文件！');
+        }
+      }
       var time = setTimeout(function () {
         if (ele[3].clientHeight < ele[0].clientHeight) {
           ele[1].style.display = 'block';

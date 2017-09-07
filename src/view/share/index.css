@@ -201,6 +201,7 @@
     .audioWrap{
         width:95%;
         height:84px;
+        margin:15px auto;
     }
     .audioBtn{
         width:30px;

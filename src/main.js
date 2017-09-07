@@ -82,7 +82,6 @@ var vueEle=new Vue({
       var ua = navigator.userAgent.toLowerCase();
       if(ua.match(/MicroMessenger/i)=="micromessenger") {
           totleTime =audio.duration;
-          //totleTimeDiv.innerHTML=vueEle._time(totleTime);
           vueEle.playAudio(audio,playimg,totleTimeDiv,currentTimeDiv,progress,audioBtn,prefix);
        } else {
         if(totleTime == 0 || totleTime == Infinity || isNaN(totleTime)){
@@ -91,8 +90,6 @@ var vueEle=new Vue({
               totleTime = audio.duration;
               if(totleTime == 0 || totleTime == Infinity || isNaN(totleTime)){
                   // 没有获得到时间,一直是loading的状态
-                  audio.play();
-                  audio.pause();
               }else{
                   //获得到了时长
                   clearInterval(checkDurTimer);

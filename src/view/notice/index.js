@@ -51,18 +51,13 @@ export default {
 
         let $=qaVideo.get("$");
         setTimeout(function () {
-          let count = $('.download').size();
-          if (navigator.userAgent.indexOf('Firefox') > -1) {
-            for (var i = 0; i<$('.download').size(); i++) {
-              var src = $('.audioWrap.myDirectiveAudio').eq(i).attr('audio-url');
-              $('.download').eq(i).attr('href', "javascript:window.open('"+ src + "')");
-            }
-          }else{
-            for (var i = 0; i<$('.download').size(); i++) {
-              $('.download').eq(i).attr('href', $('.audioWrap.myDirectiveAudio').eq(i).attr('audio-url'));
+          for (var i = 0; i<$('.download').size(); i++) {
+            $('.download').eq(i).attr('href', $('.audioWrap.myDirectiveAudio').eq(i).attr('audio-url'))
+            if (navigator.userAgent.indexOf('Firefox') > -1 && $('.download').eq(i).attr('href')[0].indexOf(window.location.host) == -1) {
+              $('.download').eq(i).html('右键点击另存为下载文件！');
             }
           }
-        },500)
+        },200)
 
 
   },
