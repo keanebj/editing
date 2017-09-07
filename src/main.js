@@ -41,7 +41,7 @@ var vueEle=new Vue({
     }
     return num
   },
-  playAudio(audio,playimg,currentTimeDiv,progress,audioBtn,prefix){
+  playAudio(audio,playimg,totleTimeDiv,currentTimeDiv,progress,audioBtn,prefix){
     if(audio.paused){
         audio.play();
         //img 的图片
@@ -53,9 +53,13 @@ var vueEle=new Vue({
           audio.timer=setInterval(function(){
               var currentTime = audio.currentTime;
               currentTimeDiv.innerHTML=vueEle._time(currentTime);
-
               var currentTime = audio.currentTime;
               var totleTime = audio.duration;
+              if (isNaN(totleTime)) {
+                totleTimeDiv.innerHTML = "加载...";
+              }else{
+                totleTimeDiv.innerHTML=vueEle._time(totleTime);
+              }
               var percent = (currentTime / totleTime) * 100;
               progress.value=percent;
 
@@ -75,7 +79,13 @@ var vueEle=new Vue({
   getDuration (audio,playimg,totleTimeDiv,currentTimeDiv,progress,audioBtn,prefix) {
     var totleTime =audio.duration;
       //判断是否获得了时长(因为手机端会获得不到时间)
-      if(totleTime == 0 || totleTime == Infinity || isNaN(totleTime)){
+      var ua = navigator.userAgent.toLowerCase();
+      if(ua.match(/MicroMessenger/i)=="micromessenger") {
+          totleTime =audio.duration;
+          //totleTimeDiv.innerHTML=vueEle._time(totleTime);
+          vueEle.playAudio(audio,playimg,totleTimeDiv,currentTimeDiv,progress,audioBtn,prefix);
+       } else {
+        if(totleTime == 0 || totleTime == Infinity || isNaN(totleTime)){
           clearInterval(checkDurTimer);
           var checkDurTimer=setInterval(function(){
               totleTime = audio.duration;
@@ -87,14 +97,16 @@ var vueEle=new Vue({
                   //获得到了时长
                   clearInterval(checkDurTimer);
                   totleTimeDiv.innerHTML=vueEle._time(totleTime);
-                  vueEle.playAudio(audio,playimg,currentTimeDiv,progress,audioBtn,prefix);
+                  vueEle.playAudio(audio,playimg,totleTimeDiv,currentTimeDiv,progress,audioBtn,prefix);
               }
           },1000)
-      }else{
-          //获得到了时长
-              totleTimeDiv.innerHTML=vueEle._time(totleTime);
-              vueEle.playAudio(audio,playimg,currentTimeDiv,progress,audioBtn,prefix);
+        }else{
+            //获得到了时长
+                totleTimeDiv.innerHTML=vueEle._time(totleTime);
+                vueEle.playAudio(audio,playimg,totleTimeDiv,currentTimeDiv,progress,audioBtn,prefix);
+        }
       }
+
   }
 }
 })
@@ -136,7 +148,7 @@ Vue.directive('my-directive-audio', {
                 //获得到时长
                 audioBtn.style.backgroundImage = 'url("'+prefix+'static/ueditor/audioimages/loading.gif")';
               }
-              audio.onloadedmetadata = vueEle.getDuration(audio,playimg,totleTimeDiv,currentTimeDiv,progress,audioBtn,prefix);
+              audio.canplaythrough = vueEle.getDuration(audio,playimg,totleTimeDiv,currentTimeDiv,progress,audioBtn,prefix);
           }
         }
       }
@@ -181,6 +193,7 @@ Vue.directive('my-directive-audio', {
 	          }
           //添加点击事件
           audioBtn.onclick=function(){
+
             if(audio.duration == 0 || audio.duration == Infinity || isNaN(audio.duration)){
               //获得到时长
               audioBtn.style.backgroundImage = 'url("'+prefix+'static/ueditor/audioimages/loading.gif")';
