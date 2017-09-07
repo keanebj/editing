@@ -20,11 +20,17 @@ export default {
         this.$http.get(this.getUrl + this.noticeID).then(({ data }) => {
           //给公告的内容赋值
           if (data.status == 1) {
+            console.log(data)
 						this.title=data.content.title;
 						this.subtitle=data.content.subtitle;
 	          this.content=data.content.content;
-	          this.conInfo.channel = data.content.channel;
-	          this.conInfo.time = data.content.addtime;
+            this.conInfo.channel = data.content.channel;
+            if (data.content.publishdate == null) {
+              this.conInfo.time = data.content.addtime;
+            }else{
+              this.conInfo.time = data.content.publishdate;
+            }
+
 	          if (data.operatortype == "Manage") {
 	          	this.conInfo.author = "";
 	          }else{

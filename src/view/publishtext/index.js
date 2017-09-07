@@ -143,7 +143,35 @@ export default {
   computed: {
     ...mapState(['menu', 'userinfo'])
   },
-
+  watch:{
+    previewContent(){
+      //检测预览的弹框
+      if(!this.previewContent){
+          //如果关闭了弹框 就停止所有音频的播放
+          let audioBtnArr=this.$refs.yulan.$el.getElementsByClassName('audioBtn');
+          if(audioBtnArr && audioBtnArr.length > 0){
+            for(var i=0;i<audioBtnArr.length;i++){
+              let audio=audioBtnArr[i].childNodes[1];
+              let img=audioBtnArr[i].childNodes[0];
+              let progressCon=audioBtnArr[i].nextSibling.childNodes[1];
+              let currentTimeCon=audioBtnArr[i].nextSibling.childNodes[2].childNodes[0];
+              if(!audio.paused){
+                //就停止所有音频的播放，清定时器
+                audio.pause();
+                audio.currentTime = 0;
+                clearInterval(audio.timer);
+                //修改图标
+                img.style.display="none";
+                audioBtnArr[i].style.backgroundImage = 'url("http://mp.dev.hubpd.com/static/ueditor/audioimages/play.svg")';
+                //设置进度条初始时间
+                progressCon.value=0;
+                currentTimeCon.innerHTML="00:00";
+              }
+            }
+          }
+      }
+    }
+  },
   mounted(){
     this.editor=UE.getEditor("editor",{
       //此处可以定制工具栏的功能，若不设置，则默认是全部的功能
@@ -297,10 +325,9 @@ export default {
 				embedtempLink = data.url;
 			}
       let embedtemp='<div uetag="edui-audio-embed" contenteditable="false" audio-prefix ="'+this.$conf.host+'" src="'+data.url+'" audio-audioname="'+data.name+'" audiorela="'+data.uid+'" audio-url="'+data.url+'" class="audioWrap myDirectiveAudio"'+
-      '><div class="audioBtn myDirectiveAudio"><img class="audioBtnImg myDirectiveAudio" src="'+this.$conf.host+'static/ueditor/audioimages/play.svg"><audio src="'+data.url+'" width="200" height="18"></audio></div>'+
+      '><div class="audioBtn myDirectiveAudio"><img class="audioBtnImg myDirectiveAudio" src="'+this.$conf.host+'static/ueditor/audioimages/play.svg"><audio src="'+data.url+'" width="200" height="18" preload="metadata" controls="controls" style="display:none;" timer=""></audio></div>'+
             '<div class="content myDirectiveAudio"><p class="songName myDirectiveAudio">'+data.name+'</p><progress class="progress myDirectiveAudio" value="0"'+
             'max="100"></progress>'+'<div class="timeContemt myDirectiveAudio"><div class="time currentTime myDirectiveAudio">00:00</div><div class="time totleTime myDirectiveAudio"></div></div><a href="'+embedtempLink+'" class="download myDirectiveAudio" target="_blank" download="'+data.name+'">下载音频</a></div></div>';
-      //let audiohtml='<p style="text-align:center;">'+embedtemp+'</p>';
       this.editor.execCommand('inserthtml',embedtemp);
     },
     showPreviewContent: function () {
