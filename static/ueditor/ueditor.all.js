@@ -16284,6 +16284,9 @@ UE.plugins['list'] = function () {
 	var me =this,editor= this;
     //添加播放点击事件
     me.addListener('click', function (type, e) {
+       // var range = me.selection.getRange();
+        //img = range.getClosedNode();
+        //为了解决浏览器的问题获得的getRange不同
         var img=e.target;
         if (img && img.tagName == 'IMG' && img.className.indexOf("audioBtnImg") != -1) {
            //播放音频
@@ -16293,78 +16296,46 @@ UE.plugins['list'] = function () {
            e.stopPropagation();
           var timer=null;
            audio.onended =function(){
-             img.src=prefix+'static/ueditor/audioimages/play.svg';
+             img.src=prefix+'/static/ueditor/audioimages/play.svg';
              clearInterval(timer);
            }
+           //暂停状态
+           if(audio.paused && (audio.duration == Infinity || isNaN(audio.duration))){
+            img.src=prefix+'static/ueditor/audioimages/loading.gif';
+            setTimeout(function(){
+                    var totleTime = audio.duration;
+                    if(totleTime == Infinity || isNaN(totleTime)){
+                          //替换元素
+                          var cloneAudio=$(audio).clone(true);
+                          $(audio).remove();
+                          audio=$(cloneAudio).get(0);
+                          $(father).find(".audioBtn").append(cloneAudio);
+                      }
+                      setTimeout(function(){
+                          //这里可以得到总时长了
+                           audio.play();
+                           img.src=prefix+'static/ueditor/audioimages/playing.gif';
+                          //刷新时间
+                          clearInterval(timer);
+                          timer=setInterval(function(){
+                            var currentTime = audio.currentTime;
+                            $(father).find('.currentTime').html(_time(currentTime));
 
-           if(audio.duration == 0 || audio.duration == Infinity || isNaN(audio.duration)){
-              img.src=prefix+'static/ueditor/audioimages/loading.gif';
-           }
-           audio.onloadedmetadata=getDuration(img,father,prefix,audio,timer);
+                            var currentTime = audio.currentTime;
+                            var totleTime = audio.duration;
 
-            $(".edui-popup-body").hide();
-        }else if (img && img.tagName == "SPAN" && img.className.indexOf('download')>-1) {
-          // alert(img.getAttribute("url"))
-          // var OpenWindow=window.open(img.getAttribute("url"),  'newwin', 'height=200,width=400,top=200,left=200,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no');
-          // OpenWindow.document.write("<TITLE>下载</TITLE>")
-          // OpenWindow.document.write("<BODY BGCOLOR=#ffffff>")
-          // OpenWindow.document.write('<a href="'+img.getAttribute("url")+'" class="download myDirectiveAudio" target="_blank" download>下载音频</a></div>')
-          // OpenWindow.document.write("</BODY>")
-          // OpenWindow.document.write("</HTML>")
-          // OpenWindow.document.close()
-        }else{
-            $(".edui-popup-body").show();
-        }
-    })
+                            $(father).find('.totleTime').html(_time(totleTime));
+                            var percent = (currentTime / totleTime) * 100;
+                            $(father).find('.progress').val(percent);
 
-
-    //加载css
-     me.ready(function(){
-        UE.utils.cssRule('audio',
-           '.audioWrap{position: relative;width: 600px; height: 100px;border: 1px #f0f0f0 solid;border-radius: 3px;background: #fcfcfc;box-sizing: border-box;margin:30px auto;}'+
-    '.audioBtn{ position: absolute;width:45px;height:45px;top:50%;transform:translateY(-50%);margin-left: 15px;margin-right: 15px;cursor: pointer;}'+
-    '.content{margin-left: 75px; width: 500px;height:100px; box-sizing: border-box;overflow: hidden;}'+
-    '.songName{height:20px;text-align:left;margin:15px 0;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}'+
-    '.progress{width:500px;margin:10px 0 0 0;cursor: pointer;border:none;height:3px;-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none;appearance:none;}'+
-    '.progress::-ms-fill{ background:#f95858;}.progress::-moz-progress-bar{background:#f95858;}.progress::-webkit-progress-value{background:#f95858;}'+
-    '.timeContemt{position: relative;width: 500px;height:20px;box-sizing: border-box;overflow: hidden;}'+
-    '.time{width:40px;height:20px;font-size:12px;color:#b2b2b2;position: absolute;top:0;padding-top:3px;}'+
-    '.currentTime{left: 0; text-align: left;}'+
-    '.audioBtnImg::selection{background:none;}'+
-    '.download{position:absolute;bottom:-24px;right:0;text-decoration:none;padding-left:20px;display:inline-block;color:#b2b2b2;background:url(http://mp.dev.hubpd.com/static/ueditor/audioimages/download.svg) left center no-repeat;background-size:14px 14px;}'+
-    '.totleTime{ right: 0;text-align: right;}', me.document);
-    });
-	var muplayerTmplLink = '';
-	if (navigator.userAgent.indexOf('Firefox') > -1) {//判断火狐浏览器，解决下载问题
-    muplayerTmplLink = '<a href="javascript:window.open(\'{URL}\')" class="download myDirectiveAudio" filename="{AudioName}.mp3" download="{AudioName}.mp3">下载音频</a></div>';
-    // muplayerTmplLink = '<a href="javascript:window.open(\'{URL}\')" class="download myDirectiveAudio" download="{AudioName}.mp3">下载音频</a></div>';
-    // muplayerTmplLink = '<a href="{URL}" class="download myDirectiveAudio" target="_blank" download="{AudioName}">下载音频</a></div>';
-	}else{
-		muplayerTmplLink = '<a href="{URL}" class="download myDirectiveAudio" target="_blank" download="{AudioName}">下载音频</a></div>';
-	}
-    var muplayerTmpl= embedTmpl = '<div uetag="edui-audio-embed" contenteditable="false" audio-prefix="{Prefix}" audio-audioname="{AudioName}" audiorela="{ID}" audio-url="{URL}" class="audioWrap myDirectiveAudio"'+
-      '><div class="audioBtn myDirectiveAudio"><img class="audioBtnImg myDirectiveAudio" src="{Prefix}static/ueditor/audioimages/play.svg">'+
-            '<audio src="{URL}" width="200" height="18" controls="controls" style="display:none" preload="metadata" timer=""></audio></div>'+
-            '<div class="content myDirectiveAudio"><p class="songName myDirectiveAudio">{AudioName}</p><progress class="progress myDirectiveAudio" value="0"'+
-            'max="100"></progress>'+
-            '<div class="timeContemt myDirectiveAudio"><div class="time currentTime myDirectiveAudio">00:00</div><div class="time totleTime myDirectiveAudio"></div></div></div>'
-            + muplayerTmplLink;
-    //var embedTmpl = '<audio controls="" uetag="edui-audio-embed" audio-prefix="{Prefix}" audio-audioname="{AudioName}" audiorela="{ID}" audio-url="{URL}"' + 'src="{URL}" width="200" height="18"></audio>';
-	//var muplayerTmpl ='<div id="audio{ID}" v-my-directive="renderPlayer" audio-prefix="{Prefix}" uetag="edui-audio-embed" audio-audioname="{AudioName}" audiorela="{ID}" audio-url="{URL}"></div>';
-	//var muplayerJS = "<script src=\"{{Prefix}}/static/ueditor/muplayer.js\"></script><script>console.log('dfdfsdfs');</script>";
-	    // 设计视图转为源码视图的规则
-     me.addOutputRule(function(root){
-        switchRule(root,true);
-     });
-     // 源码视图转为设计视图的规则
-     me.addInputRule(function(root){
-     	switchRule(root);
-    });
-    var getDuration=function(img,father,prefix,audio,timer){
-          var totleTime=audio.duration;
-          if(totleTime > 0 && totleTime != Infinity && !isNaN(totleTime)){
-              //得到了时长，暂停状态
-           if(audio.paused){
+                            if(currentTime ==  audio.duration){
+                                img.src=prefix+'/static/ueditor/audioimages/play.svg';
+                                clearInterval(timer);
+                            }
+                        },100); //当前播放时间更新
+                      },1000)
+              },1000)
+           }else if(audio.paused && audio.duration > 0){
                audio.play();
                 img.src=prefix+'static/ueditor/audioimages/playing.gif';
                //刷新时间
@@ -16381,7 +16352,7 @@ UE.plugins['list'] = function () {
                 $(father).find('.progress').val(percent);
 
                 if(currentTime ==  audio.duration){
-                    img.src=prefix+'static/ueditor/audioimages/play.svg';
+                    img.src=prefix+'/static/ueditor/audioimages/play.svg';
                     clearInterval(timer);
                 }
               },100); //当前播放时间更新
@@ -16390,8 +16361,53 @@ UE.plugins['list'] = function () {
                  clearInterval(timer);
                  audio.pause();
            }
-          }
-    };
+            $(".edui-popup-body").hide();
+        }else{
+            $(".edui-popup-body").show();
+        }
+    })
+
+
+    //加载css
+     me.ready(function(){
+        UE.utils.cssRule('audio',
+           '.audioWrap{position: relative;width: 600px; height: 100px;border: 1px #f0f0f0 solid;border-radius: 3px;background: #fcfcfc;box-sizing: border-box;margin:20px auto;}'+
+    '.audioBtn{ position: absolute;width:45px;height:45px;top:50%;transform:translateY(-50%);margin-left: 15px;margin-right: 15px;cursor: pointer;}'+
+    '.content{margin-left: 75px; width: 500px;height:100px; box-sizing: border-box;overflow: hidden;}'+
+    '.songName{height:20px;margin:15px 0;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}'+
+    '.progress{width:500px;margin:10px 0 0 0;cursor: pointer;height:3px;-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none;appearance:none;}'+
+    '.progress::-ms-fill{ background:#f95858;}.progress::-moz-progress-bar{background:#f95858;}.progress::-webkit-progress-value{background:#f95858;}'+
+    '.timeContemt{position: relative;width: 500px;height:20px;box-sizing: border-box;overflow: hidden;}'+
+    '.time{width:40px;height:20px;font-size:12px;color:#b2b2b2;position: absolute;top:0;padding-top:3px;}'+
+    '.currentTime{left: 0; text-align: left;}'+
+    '.audioBtnImg::selection{background:none;}'+
+    '.download{position:absolute;bottom:-24px;right:0;text-decoration:none;padding-left:20px;display:inline-block;color:#b2b2b2;background:url(http://mp.dev.hubpd.com/static/ueditor/audioimages/download.svg) left center no-repeat;background-size:14px 14px;}'+
+    '.totleTime{ right: 0;text-align: right;}', me.document);
+    });
+	var muplayerTmplLink = '';
+	if (navigator.userAgent.indexOf('Firefox') > -1) {//判断火狐浏览器，解决下载问题
+		muplayerTmplLink = '<a href="javascript:window.open(\'{URL}\')" class="download myDirectiveAudio" target="_blank" download="{AudioName}">下载音频</a></div>';
+	}else{
+		muplayerTmplLink = '<a href="{URL}" class="download myDirectiveAudio" target="_blank" download="{AudioName}">下载音频</a></div>';
+	}
+    var muplayerTmpl= embedTmpl = '<div uetag="edui-audio-embed" contenteditable="false" audio-prefix="{Prefix}" audio-audioname="{AudioName}" audiorela="{ID}" audio-url="{URL}" class="audioWrap myDirectiveAudio"'+
+      '><div class="audioBtn myDirectiveAudio"><img class="audioBtnImg myDirectiveAudio" src="{Prefix}/static/ueditor/audioimages/play.svg">'+
+            '<audio src="{URL}" width="200" height="18" controls="controls" style="display:none" preload="auto"></audio></div>'+
+            '<div class="content myDirectiveAudio"><p class="songName myDirectiveAudio">{AudioName}</p><progress class="progress myDirectiveAudio" value="0"'+
+            'max="100"></progress>'+
+            '<div class="timeContemt myDirectiveAudio"><div class="time currentTime myDirectiveAudio">00:00</div><div class="time totleTime myDirectiveAudio"></div></div></div>'
+            + muplayerTmplLink;
+    //var embedTmpl = '<audio controls="" uetag="edui-audio-embed" audio-prefix="{Prefix}" audio-audioname="{AudioName}" audiorela="{ID}" audio-url="{URL}"' + 'src="{URL}" width="200" height="18"></audio>';
+	//var muplayerTmpl ='<div id="audio{ID}" v-my-directive="renderPlayer" audio-prefix="{Prefix}" uetag="edui-audio-embed" audio-audioname="{AudioName}" audiorela="{ID}" audio-url="{URL}"></div>';
+	//var muplayerJS = "<script src=\"{{Prefix}}/static/ueditor/muplayer.js\"></script><script>console.log('dfdfsdfs');</script>";
+	    // 设计视图转为源码视图的规则
+     me.addOutputRule(function(root){
+        switchRule(root,true);
+     });
+     // 源码视图转为设计视图的规则
+     me.addInputRule(function(root){
+     	switchRule(root);
+    });
 
         //时间显示模式
     var _time=function(time) {
@@ -16401,9 +16417,9 @@ UE.plugins['list'] = function () {
         return time;
     };
     //时间为个位数时在前面添0
-    var changeNum=function(num){
+    var changeNum=function(num, n = 2){
         var len = num.toString().length;
-        while (len < 2) {
+        while (len < n) {
         num = '0' + num;
         len++;
         }
