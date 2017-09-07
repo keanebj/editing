@@ -23,7 +23,6 @@ export default {
             percent:0,
             speed:'...',
             leftTime:'...',
-            loadingMsg:'',
             videoId:'',
             localId:'',
             status:''
@@ -36,6 +35,8 @@ export default {
         enableAddLocalVideo:true,
         onceTimer:null,
         loadingTimer:null,
+        loadingMsgTimer:null,
+        uploadVideoCodeStatus:false,
         maskClosable:false
     }
   },
@@ -58,6 +59,22 @@ export default {
             this.reset();
 
         }
+    },
+    uploadVideoCodeStatus(){
+      //加载中动画
+      if(this.uploadVideoCodeStatus){
+        clearInterval(this.loadingMsgTimer);
+        this.loadingMsgTimer=setInterval(function(){
+            var index=$("#loadingMsg").find('i.active').index();
+            $("#loadingMsg").find("i").eq(index).removeClass('active');
+            if(index == 2){
+                index = -1;
+            }
+            $("#loadingMsg").find("i").eq(index+1).addClass('active');
+        },500)
+      }else{
+        clearInterval(this.loadingMsgTimer);
+      }
     }
   },
   methods: {
@@ -136,6 +153,10 @@ export default {
         clearInterval(this.videotimer);
         clearTimeout(this.onceTimer);
         clearTimeout(this.loadingTimer);
+        clearInterval(this.loadingMsgTimer);
+        this.$refs.loadingMsg.innerHTML='';
+        $("#pickfile").show();
+        this.uploadVideoCodeStatus=false;
         var fileElement = $("#pickfile").detach();
         fileElement[0].innerText="上传视频";
         fileElement.appendTo("#step-one-pickfile");
@@ -174,7 +195,6 @@ export default {
         this.video.percent=0;
         this.video.speed='';
         this.video.leftTime='...';
-        this.video.loadingMsg='';
         this.video.videoId='';
       },
       reUpload(){
@@ -299,14 +319,22 @@ export default {
                                 //你的逻辑，比如显示文件名等信息
                                 This.video.name=args.name;
                                 This.video.allSize=util.getHStorage(args.size);
-                                This.video.loadingMsg="正在解析"+args.name+"视频文件，稍等一下...";
+                                //按钮隐藏
+                                $("#pickfile").hide();
+                                if(!This.uploadVideoCodeStatus){
+                                    This.$refs.loadingMsg.innerHTML="正在解析"+args.name+"视频文件，请不要刷新或关闭页面<i class='active'></i><i></i><i></i>";
+                                    This.uploadVideoCodeStatus=true;
+                                }
                             }
                             else if(args.code == 2) //计算完SHA
                             {
-                                This.video.loadingMsg='';
+                                This.uploadVideoCodeStatus=false;
+                                clearInterval(This.loadingMsgTimer);
+                                This.$refs.loadingMsg.innerHTML='';
                                 This.video.percent=0;
                                 //计算完SHA值，准备开始上传，这步执行完之后才能执行qdVideo.uploader.startUpload()即上传操作
                                 //跳转到另外一个界面，然后显示
+                                $("#pickfile").show();
 
                             } else if(args.code == 4 && This.video.status == 'uploading'){
                                 This.idHideStepTwo=false;
@@ -345,7 +373,6 @@ export default {
                             }
                             else if(args.code == 6  && This.video.status == 'uploading')//上传完成
                             {
-                                console.log(args.serverFileId);
                                 //取得回调的视频serverFileId，用于后面更新字段用
                                 This.video.videoId=args.serverFileId;
                                 //跳转界面
@@ -444,7 +471,7 @@ export default {
 	                            desc: false
 	                       })
                       	}
-                          
+
                       }
                   }
               );

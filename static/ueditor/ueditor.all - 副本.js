@@ -16299,6 +16299,69 @@ UE.plugins['list'] = function () {
               img.src=prefix+'static/ueditor/audioimages/loading.gif';
            }
            audio.onloadedmetadata=getDuration(img,father,prefix,audio,timer);
+
+           //暂停状态
+          //  if(audio.paused && (audio.duration == Infinity || isNaN(audio.duration))){
+          //   img.src=prefix+'static/ueditor/audioimages/loading.gif';
+          //   setTimeout(function(){
+          //           var totleTime = audio.duration;
+          //           if(totleTime == Infinity || isNaN(totleTime)){
+          //                 //替换元素
+          //                 var cloneAudio=$(audio).clone(true);
+          //                 $(audio).remove();
+          //                 audio=$(cloneAudio).get(0);
+          //                 $(father).find(".audioBtn").append(cloneAudio);
+          //             }
+          //             setTimeout(function(){
+          //                 //这里可以得到总时长了
+          //                  audio.play();
+          //                  img.src=prefix+'static/ueditor/audioimages/playing.gif';
+          //                 //刷新时间
+          //                 clearInterval(timer);
+          //                 timer=setInterval(function(){
+          //                   var currentTime = audio.currentTime;
+          //                   $(father).find('.currentTime').html(_time(currentTime));
+
+          //                   var currentTime = audio.currentTime;
+          //                   var totleTime = audio.duration;
+
+          //                   $(father).find('.totleTime').html(_time(totleTime));
+          //                   var percent = (currentTime / totleTime) * 100;
+          //                   $(father).find('.progress').val(percent);
+
+          //                   if(currentTime ==  audio.duration){
+          //                       img.src=prefix+'/static/ueditor/audioimages/play.svg';
+          //                       clearInterval(timer);
+          //                   }
+          //               },100); //当前播放时间更新
+          //             },1000)
+          //     },1000)
+          //  }else if(audio.paused && audio.duration > 0){
+          //      audio.play();
+          //       img.src=prefix+'static/ueditor/audioimages/playing.gif';
+          //      //刷新时间
+          //      clearInterval(timer);
+          //      timer=setInterval(function(){
+          //       var currentTime = audio.currentTime;
+          //       $(father).find('.currentTime').html(_time(currentTime));
+
+          //       var currentTime = audio.currentTime;
+          //       var totleTime = audio.duration;
+
+          //       $(father).find('.totleTime').html(_time(totleTime));
+          //       var percent = (currentTime / totleTime) * 100;
+          //       $(father).find('.progress').val(percent);
+
+          //       if(currentTime ==  audio.duration){
+          //           img.src=prefix+'/static/ueditor/audioimages/play.svg';
+          //           clearInterval(timer);
+          //       }
+          //     },100); //当前播放时间更新
+          //  }else{
+          //        img.src=prefix+'static/ueditor/audioimages/play.svg';
+          //        clearInterval(timer);
+          //        audio.pause();
+          //  }
             $(".edui-popup-body").hide();
         }else{
             $(".edui-popup-body").show();
@@ -16322,6 +16385,33 @@ UE.plugins['list'] = function () {
     '.download{position:absolute;bottom:-24px;right:0;text-decoration:none;padding-left:20px;display:inline-block;color:#b2b2b2;background:url(http://mp.dev.hubpd.com/static/ueditor/audioimages/download.svg) left center no-repeat;background-size:14px 14px;}'+
     '.totleTime{ right: 0;text-align: right;}', me.document);
     });
+	// var muplayerTmplLink = '';
+  // if (navigator.userAgent.indexOf('Firefox') > -1) {//判断火狐浏览器，解决下载问题
+  //   alert(1111)
+  //   muplayerTmplLink = '<a href="javascript:window.open(\'{URL}\')" class="download myDirectiveAudio" filename="{AudioName}" download="{AudioName}">下载音频</a></div>';
+  //   // muplayerTmplLink = '<a href="javascript:window.open(\'{URL}\')" class="download myDirectiveAudio" download="{AudioName}.mp3">下载音频</a></div>';
+  //   // muplayerTmplLink = '<a href="{URL}" class="download myDirectiveAudio" target="_blank" download="{AudioName}">下载音频</a></div>';
+	// }else{
+	// 	muplayerTmplLink = '<a href="{URL}" class="download myDirectiveAudio" target="_blank" download="{AudioName}">下载音频</a></div>';
+	// }
+    // var muplayerTmpl= embedTmpl = '<div uetag="edui-audio-embed" contenteditable="false" audio-prefix="{Prefix}" audio-audioname="{AudioName}" audiorela="{ID}" audio-url="{URL}" class="audioWrap myDirectiveAudio"'+
+    //   '><div class="audioBtn myDirectiveAudio"><img class="audioBtnImg myDirectiveAudio" src="{Prefix}static/ueditor/audioimages/play.svg">'+
+    //         '<audio src="{URL}" width="200" height="18" controls="controls" style="display:none" preload="metadata" timer=""></audio></div>'+
+    //         '<div class="content myDirectiveAudio"><p class="songName myDirectiveAudio">{AudioName}</p><progress class="progress myDirectiveAudio" value="0"'+
+    //         'max="100"></progress>'+
+    //         '<div class="timeContemt myDirectiveAudio"><div class="time currentTime myDirectiveAudio">00:00</div><div class="time totleTime myDirectiveAudio"></div></div></div>'
+    //         + '<a href="{URL}" class="download myDirectiveAudio" target="_blank" download="{AudioName}">下载音频</a></div>';
+    //var embedTmpl = '<audio controls="" uetag="edui-audio-embed" audio-prefix="{Prefix}" audio-audioname="{AudioName}" audiorela="{ID}" audio-url="{URL}"' + 'src="{URL}" width="200" height="18"></audio>';
+	//var muplayerTmpl ='<div id="audio{ID}" v-my-directive="renderPlayer" audio-prefix="{Prefix}" uetag="edui-audio-embed" audio-audioname="{AudioName}" audiorela="{ID}" audio-url="{URL}"></div>';
+	//var muplayerJS = "<script src=\"{{Prefix}}/static/ueditor/muplayer.js\"></script><script>console.log('dfdfsdfs');</script>";
+	    // 设计视图转为源码视图的规则
+    //  me.addOutputRule(function(root){
+    //     switchRule(root,true);
+    //  });
+    //  // 源码视图转为设计视图的规则
+    //  me.addInputRule(function(root){
+    //  	switchRule(root);
+    // });
     var getDuration=function(img,father,prefix,audio,timer){
           var totleTime=audio.duration;
           if(totleTime > 0 && totleTime != Infinity && !isNaN(totleTime)){
@@ -16383,6 +16473,41 @@ UE.plugins['list'] = function () {
             return a;
         })
     };
+	//代码视图和设计视图切换时进行相应元素节点的替换
+  //   var switchRule = function(root,isOutput){
+  //   	var nodes=root.getNodesByTagName(isOutput?'div':'div');
+  //   	if(isOutput){
+  //   		UE.utils.each(nodes,function(node){
+  //   			if(node.getAttr('uetag')==='edui-audio-embed'){
+	// 				var data={
+  //   					'ID':node.getAttr('audiorela'),
+  //   					'AudioName':node.getAttr('audio-audioname'),
+  //   					'URL': node.getAttr('audio-url').toString(),
+  //                       'Prefix':node.getAttr('audio-prefix')
+  //   				};
+  //   				var html=muplayerTmpl;
+  //       		var newNode=UE.uNode.createElement(tmpl(html,data));
+  //   				node.parentNode.replaceChild(newNode,node);
+
+	// 			}
+  //   		});
+	// 	}else{
+	// 		UE.utils.each(nodes,function(node){
+	// 			if(node.getAttr('uetag')==='edui-audio-embed'){
+	// 				var data={
+	// 					'ID':node.getAttr('audiorela'),
+	// 					'AudioName':node.getAttr('audio-audioname'),
+	// 					'URL': node.getAttr('audio-url'),
+  //           'Prefix':node.getAttr('audio-prefix')
+	// 				};
+	// 				var html = embedTmpl;
+	// 				var newNode=UE.uNode.createElement(tmpl(html,data));
+	// 				node.parentNode.replaceChild(newNode,node);
+
+	// 			}
+	// 		});
+	// 	}
+	// }
 };
 
 

@@ -41,7 +41,7 @@
 #video-upload-pop  .ivu-modal-header{
     background: #F3F3F3;
 }
-#videoPreview i{
+#videoPreview i,#loadingMsg i{
     display: inline-block;
     margin:0 3px;
     border-radius: 50%;
@@ -49,7 +49,7 @@
     height:6px;
     background:#999999;
 }
-#videoPreview i.active{
+#videoPreview i.active,#loadingMsg i.active{
     background: #F95759;
     box-shadow: 0px 0px 5px #000;
 }
