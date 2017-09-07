@@ -16333,7 +16333,7 @@ UE.plugins['list'] = function () {
 	}
     var muplayerTmpl= embedTmpl = '<div uetag="edui-audio-embed" contenteditable="false" audio-prefix="{Prefix}" audio-audioname="{AudioName}" audiorela="{ID}" audio-url="{URL}" class="audioWrap myDirectiveAudio"'+
       '><div class="audioBtn myDirectiveAudio"><img class="audioBtnImg myDirectiveAudio" src="{Prefix}static/ueditor/audioimages/play.svg">'+
-            '<audio src="{URL}" width="200" height="18" controls="controls" style="display:none" preload="metadata"></audio></div>'+
+            '<audio src="{URL}" width="200" height="18" controls="controls" style="display:none" preload="metadata" timer=""></audio></div>'+
             '<div class="content myDirectiveAudio"><p class="songName myDirectiveAudio">{AudioName}</p><progress class="progress myDirectiveAudio" value="0"'+
             'max="100"></progress>'+
             '<div class="timeContemt myDirectiveAudio"><div class="time currentTime myDirectiveAudio">00:00</div><div class="time totleTime myDirectiveAudio"></div></div></div>'

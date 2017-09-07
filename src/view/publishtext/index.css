@@ -18,6 +18,9 @@
       margin-right: 15px;
       cursor: pointer;
     }
+    .mobile .audioBtn{
+      background-size: 30px 30px !important;
+    }
     .content{
       margin-left: 75px;
       width: 500px;
