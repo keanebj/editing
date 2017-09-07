@@ -109,6 +109,7 @@ export default {
         });
     },
     handleFormatError (file) {
+        this.ishideone=false;
         this.$Notice.warning({
             title: '文件格式不正确',
             desc: '文件 ' + file.name + ' 格式不正确，请上传 mp3格式的音频。'
