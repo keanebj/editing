@@ -6,7 +6,7 @@
   height: 100vh;
   background: url(../../assets/login/bg1.png) no-repeat;
   background-size: cover;
-  background-position: center；
+  background-position: center;
 }
 
 .sys-logo {
@@ -34,6 +34,7 @@
   right: 0;
   margin: 0 auto;
   text-align: center;
+  top: 80px;
 }
 .sys-txt-t3::before {
   content: "";
@@ -63,10 +64,13 @@
 }
 
 .sys-txt img {
-  display: block;
   margin: 0 auto 28px auto;
+  float: left;
 }
-
+.sys-txt img:first-child{
+  margin-right: 10px;
+  margin-left: 19%;
+}
 .first-screen .bg {
   background: #000;
   opacity: 0;
