@@ -75,6 +75,17 @@ export default {
 	            }
           	}
           }
+
+          if (navigator.userAgent.indexOf('Firefox') > -1) {
+            for (var i = 0; i<$('.download').size(); i++) {
+              var src = $('.audioWrap.myDirectiveAudio').eq(i).attr('audio-url');
+              $('.download').eq(i).attr('href', "javascript:window.open('"+ src + "')");
+            }
+          }else{
+            for (var i = 0; i<$('.download').size(); i++) {
+              $('.download').eq(i).attr('href', $('.audioWrap.myDirectiveAudio').eq(i).attr('audio-url'));
+            }
+          }
         },500)
   }
 }
