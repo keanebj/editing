@@ -26,24 +26,24 @@
 	        <span class="title-t-1">融合号指数</span>
 	        	<span class="title-t-2" v-text="accountIndex"></span>
 	      </div>
-	    
+
     </div>
     </Col>
   </Row>
   <Row v-if="adList.length>0">
     <Col span="24">
     <div class="home-ad">
-      <swiper :options="swiperOption" ref="mySwiper"> 
-        <!-- 这部分放你要渲染的那些内容 -->  
-        <swiper-slide v-for="ad in adList"  key="ad.id"> 
+      <swiper :options="swiperOption" ref="mySwiper">
+        <!-- 这部分放你要渲染的那些内容 -->
+        <swiper-slide v-for="ad in adList"  key="ad.id">
         	<a :href="ad.url" target="_blank">
       			<img :src="ad.path">
       		</a>
         </swiper-slide>
-        <!-- 这是轮播的小圆点 -->  
-        <div class="swiper-pagination" slot="pagination"></div>  
-        
-    	</swiper>  
+        <!-- 这是轮播的小圆点 -->
+        <div class="swiper-pagination" slot="pagination"></div>
+
+    	</swiper>
     	<!-- 如果需要导航按钮 -->
     		<div class="swiper-button-prev swiper-button-white"></div>
     		<div class="swiper-button-next swiper-button-white"></div>
@@ -85,7 +85,7 @@
     	<div  v-show="collegeList.length > 0">
 	      <ul class="home-notices">
 	        <li v-for="(college,index) in collegeList" key="college.id" :class="{readed: college.isReaded}" @click="readed($event,college.id,index)">
-	          <router-link :to="{path:'./article',query:{id:college.id}}" target="_blank">
+	          <router-link :to="{path:'./notice',query:{id:college.id}}" target="_blank">
 		          <i></i>
 		          <span class="home-notice-content"  :title="college.title">
 								{{college.title}}
