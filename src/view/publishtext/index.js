@@ -339,8 +339,15 @@ export default {
             };
             var player=new qcVideo.Player(id, option);
             if(this.tabView == 'pc'){
-                embedArr[i].getElementsByTagName('embed')[0].style.width="640px";
-                embedArr[i].getElementsByTagName('embed')[0].style.height="360px";
+                 var renderEmbed=embedArr[i].getElementsByTagName('embed')[0];
+                 var renderVideo=embedArr[i].getElementsByTagName('video')[0];
+                 if(renderEmbed){
+                    renderEmbed.style.width="640px";
+                    renderEmbed.style.height="360px";
+                 }else if(renderVideo){
+                    renderVideo.style.width="640px";
+                    renderVideo.style.height="360px";
+                 }
             }
             player.pause();
             }
