@@ -370,13 +370,6 @@ export default {
     },
     insertAudioEditor(data){
       //需要更改audio样式
-      let embedtempLink = '';
-      let filename = '';
-      // if (navigator.userAgent.indexOf('Firefox') > -1 && data.url.indexOf(window.location.host) == -1) {//判断火狐浏览器，解决下载问题
-      //   embedtempLink = '右键点击另存为下载文件！';
-			// }else{
-      //   embedtempLink = '下载音频';
-			// }
       let embedtemp='<div uetag="edui-audio-embed" contenteditable="false" audio-prefix ="'+this.$conf.host+'" src="'+data.url+'" audio-audioname="'+data.name+'" audiorela="'+data.uid+'" audio-url="'+data.url+'" class="audioWrap myDirectiveAudio"'+
       '><div class="audioBtn myDirectiveAudio"><img class="audioBtnImg myDirectiveAudio" src="'+this.$conf.host+'static/ueditor/audioimages/play.svg"><audio src="'+data.url+'" width="200" height="18" preload="metadata" controls="controls" style="display:none;" timer=""></audio></div>'+
             '<div class="content myDirectiveAudio"><p class="songName myDirectiveAudio">'+data.name+'</p><progress class="progress myDirectiveAudio" value="0"'+
@@ -791,9 +784,9 @@ export default {
     save: function (name, hideTip) {
       this.formTop.content = this.editor.getContent();
       if (!this.formTop.content && this.editor.body.innerHTML.indexOf('<video') > -1) {
+        //设计视图的代码
         this.formTop.content = this.editor.body.innerHTML;
       }
-
       this.formTop.author = this.formTop.authorArr.join(" ");
       this.formTop.keyword = this.formTop.keywordArr.join(" ");
       if (!this.formTop.author) {

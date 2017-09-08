@@ -177,7 +177,6 @@ export default {
              $("#videoPreview1").find('embed').prop('height','360px');
             let videoHtml='<p style="text-align:center;width:100%;margin-bottom:10px;" class="video_container" serverfileid="'+this.selVideoid+'" id="id_video_container_'+this.selVideoid+'">'+this.$refs.videoPreview1.innerHTML+'</p>';
             this.$emit("insertVideoEditor",videoHtml,this.selVideoid);
-
             this.uploadVideo=false;
          }else{
              //没有选择素材

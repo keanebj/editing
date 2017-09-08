@@ -6930,16 +6930,28 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                     '<script type=\'text/javascript\' ' + (ie ? 'defer=\'defer\'' : '' ) +' id=\'_initialScript\'>' +
                     'setTimeout(function(){editor = window.parent.UE.instants[\'ueditorInstant' + me.uid + '\'];editor._setup(document);},0);' +
                     'var _tmpScript = document.getElementById(\'_initialScript\');_tmpScript.parentNode.removeChild(_tmpScript);</script></html>';
-                container.appendChild(domUtils.createElement(document, 'iframe', {
+//                 container.appendChild(domUtils.createElement(document, 'iframe', {
+//                     id: 'ueditor_' + me.uid,
+//                     width: "100%",
+//                     height: "100%",
+//                     frameborder: "0",
+//                     //先注释掉了，加的原因忘记了，但开启会直接导致全屏模式下内容多时不会出现滚动条
+// //                    scrolling :'no',
+//                     //src: 'javascript:void(function(){document.open();' + (options.customDomain && document.domain != location.hostname ?  'document.domain="' + document.domain + '";' : '') +
+//                         //'document.write("' + html + '");document.close();}())'
+//                     src: 'about:blank'
+//                 }));
+              var iframe=domUtils.createElement(document, 'iframe', {
                     id: 'ueditor_' + me.uid,
                     width: "100%",
                     height: "100%",
                     frameborder: "0",
                     //先注释掉了，加的原因忘记了，但开启会直接导致全屏模式下内容多时不会出现滚动条
 //                    scrolling :'no',
-                    src: 'javascript:void(function(){document.open();' + (options.customDomain && document.domain != location.hostname ?  'document.domain="' + document.domain + '";' : '') +
-                        'document.write("' + html + '");document.close();}())'
-                }));
+                    src: 'about:blank'
+                });
+                container.appendChild(iframe);
+                iframe.contentDocument.write(html);
                 container.style.overflow = 'hidden';
                 //解决如果是给定的百分比，会导致高度算不对的问题
                 setTimeout(function(){

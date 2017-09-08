@@ -207,7 +207,6 @@ watch:{
   methods: {
      stopVideo(){
       //视频:embed或者video::embed 的暂停暂时不能解决
-      debugger;
           let videoArr=this.$refs.yulan.$el.getElementsByTagName('video');
           if(videoArr && videoArr.length > 0){
             for(var i=0;i<videoArr.length;i++){
