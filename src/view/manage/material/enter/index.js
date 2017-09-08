@@ -249,12 +249,20 @@ export default {
       this.formValidate.summary = this.zhaiyao;//摘要
       this.formValidate.keyword = this.labelArr.join(" ");//标签
       this.formValidate.materialtype = this.select;
+      if (this.formValidate.transcodingstate){
+        delete this.formValidate.transcodingstate;
+        delete this.formValidate.videoid;
+        delete this.formValidate.videoname;
+        delete this.formValidate.videourl;
+        delete this.formValidate.duration;
+      }
       if (this.formValidate.title == '') {
         this.ruleValidate.title[0].required = true
       }
 //    if (this.videoId > -1) {
         this.$http.put('api/material/'+ this.videoId, this.formValidate).then((response) => {
           if (response.data.status == 1) {
+
           	this.routeLeave = true;
             this.$Notice.success({title:'保存成功',desc: false});
             this.$router.push('/manage/material')
