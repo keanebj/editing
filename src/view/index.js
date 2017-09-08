@@ -21,15 +21,15 @@ export default {
       isToken : true
     }
   },
-  beforeCreate() {   
-    
+  beforeCreate() {
+
     //监听浏览器的返回按钮
     window.addEventListener("popstate", function (e) {
       location.reload();
     }, false);
   },
   mounted() {
-   
+
     /*if (window.location.href.indexOf('publish') > -1) {
       this.$store.commit('set', {
         isActive: true
@@ -51,7 +51,6 @@ export default {
   },
   methods: {
     getLocalUserInfo() {
-      console.log('userinfo = ' + localStorage.getItem('userinfo'))
       if (localStorage.getItem('userinfo')) {
         let _userinfo = {}
         _userinfo = JSON.parse(localStorage.getItem('userinfo'))

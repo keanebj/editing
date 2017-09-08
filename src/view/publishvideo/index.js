@@ -130,6 +130,12 @@ export default {
   computed: {
     ...mapState(['menu', 'userinfo'])
 },
+watch:{
+    tabView(){
+          //如果关闭了弹框 就停止所有音频的播放,切换了tab
+          this.stopVideo();
+    }
+  },
   mounted(){
     let This=this;
     //判断一下是编辑还是草稿通过文章的id
@@ -199,6 +205,53 @@ export default {
     clearInterval(this.temptimer);
   },
   methods: {
+     stopVideo(){
+      //视频:embed或者video::embed 的暂停暂时不能解决
+      debugger;
+          let videoArr=this.$refs.yulan.$el.getElementsByTagName('video');
+          if(videoArr && videoArr.length > 0){
+            for(var i=0;i<videoArr.length;i++){
+              var video=videoArr[i];
+                if(!video.paused){
+                    //播放状态；修改为暂停
+                    video.pause();
+                    video.currentTime = 0;
+                }
+            }
+          }
+          //如果是embed，需要重新生成播放器
+          let embedArr=this.$refs.yulan.$el.getElementsByClassName('video_container');
+          if(embedArr && embedArr.length > 0){
+            for(var i=0;i<embedArr.length;i++){
+              //清空html
+                embedArr[i].innerHTML="";
+                var selVideoid=embedArr[i].getAttribute("serverfileid");
+                var id=embedArr[i].getAttribute("id");
+                embedArr[i].setAttribute("id",id+'_Preview');
+                var option = {
+                    "auto_play": "0",
+                    "file_id": selVideoid,
+                    "app_id": "1252018592",
+                    "width": 640,
+                    "height": 360,
+                };
+                var player=new qcVideo.Player(id+'_Preview', option);
+                if(this.tabView == 'pc'){
+                    //可能是embed，也可能是video：这里暂时先这样处理
+                    var renderEmbed=embedArr[i].getElementsByTagName('embed')[0];
+                    var renderVideo=embedArr[i].getElementsByTagName('video')[0];
+                    if(renderEmbed){
+                        renderEmbed.style.width="640px";
+                        renderEmbed.style.height="360px";
+                    }else if(renderVideo){
+                        renderVideo.style.width="640px";
+                        renderVideo.style.height="360px";
+                    }
+                }
+                player.pause();
+            }
+          }
+    },
     useqrcode(url){
       var canvas = document.getElementById('canvasvideo');
       QRCode.toCanvas(canvas, url, function (error) {
@@ -248,31 +301,6 @@ export default {
           if (response.data.operatortype == "Edit") {
 	          this.previewCon[0].author = data.author;
           }
-
-//        let $=qbVideo.get("$");
-//        let _this = this;
-//        setTimeout(function () {
-//        	console.log($(".previewContent .video_container").size())
-//        	let count = $(".previewContent .video_container").size();
-//        	for (let i = 0; i < count; i++){
-//        		if ($(".previewContent .video_container").eq(i).html() != '') {
-//        			let serverfileid =
-//              $(".previewContent .video_container").eq(i).html('').attr('serverfileid');
-//              $(".previewContent .video_container").eq(i).attr('id', 'video_container'+ serverfileid);
-//              let id_con = $(".previewContent .video_container").eq(i).attr('id');
-//              console.log(serverfileid)
-//        			let options = {
-//                  "auto_play": "0",
-//                  "file_id": serverfileid,
-//                  "app_id": "1252018592",
-//                  "width": 640,
-//                  "height": 480
-//             };
-//              new qcVideo.Player(id_con,options);
-//        		}
-//        	}
-//
-//        },500)
         }, (error) => {
           this.$Notice.error({
             title: error.data.message,

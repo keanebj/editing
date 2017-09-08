@@ -21,6 +21,11 @@
   font-size: 12px;
 }
 
+#title a{
+  color: #495060;
+  text-align: left;
+}
+
 .table thead th {
   font-size: 14px!important;
 }
@@ -65,7 +70,7 @@
   width: 4px;
   background: rgb(249, 87, 89);
   height: 20px;
-  
+
 }
 .draft-back{
   background:  url(../../../assets/svg/草稿.svg) left center no-repeat ;
