@@ -129,7 +129,7 @@ export default {
         let $ = qdVideo.get('$');
         $("#videoPreview").find('embed').prop('width','640px');
         $("#videoPreview").find('embed').prop('height','360px');
-        let videoHtml='<p style="text-align:center" class="video_container" serverfileid="'+this.video.videoId+'" id="id_video_container_'+this.video.videoId+'">'+this.$refs.videoPreview.innerHTML+'</p>';
+        let videoHtml='<br/><p contenteditable="false" style="text-align:center" class="video_container" serverfileid="'+this.video.videoId+'" id="id_video_container_'+this.video.videoId+'">'+this.$refs.videoPreview.innerHTML+'</p>';
         this.$emit("insertVideoEditor",videoHtml,this.video.videoId,this.video.name);
         this.uploadVideo=false;
       },
@@ -173,9 +173,10 @@ export default {
             };
             new qcVideo.Player("videoPreview1", option);
             let $ = qdVideo.get('$');
-             $("#videoPreview1").find('embed').prop('width','640px');
-             $("#videoPreview1").find('embed').prop('height','360px');
-            let videoHtml='<p style="text-align:center;width:100%;margin-bottom:10px;" class="video_container" serverfileid="'+this.selVideoid+'" id="id_video_container_'+this.selVideoid+'">'+this.$refs.videoPreview1.innerHTML+'</p>';
+            $("#videoPreview1").find('embed').prop('width','640px');
+            $("#videoPreview1").find('embed').prop('height','360px');
+            $("#videoPreview1").find('object').prop('contenteditable','false');
+            let videoHtml='<br/><p contenteditable="false" style="text-align:center;width:100%;" class="video_container" serverfileid="'+this.selVideoid+'" id="id_video_container_'+this.selVideoid+'">'+this.$refs.videoPreview1.innerHTML+'</p>';
             this.$emit("insertVideoEditor",videoHtml,this.selVideoid);
             this.uploadVideo=false;
          }else{
