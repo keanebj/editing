@@ -61,8 +61,9 @@ export default {
           let count=$(".video_container").size();
           if(count > 0){
           		for(var i=0;i<count;i++){
-                if ($(".video_container").eq(i).find('embed').length > 0) {
 	                let serverfileid=$(".video_container").eq(i).html('').attr('serverfileid');
+                  //替换容器的id，用于解决id重复的问题
+                  $(".video_container").eq(i).attr('id',"id_video_container_"+serverfileid+"_"+i);
 	                var option = {
 	                    "auto_play": "0",
 	                    "file_id": serverfileid,
@@ -70,8 +71,7 @@ export default {
 	                    "width": 640,
 	                    "height": 360
 	                };
-	               new qcVideo.Player("id_video_container_"+option.file_id,option);
-	            }
+	               new qcVideo.Player("id_video_container_"+serverfileid+"_"+i,option);
           	}
           }
           // alert(window.screen.width < 640)

@@ -310,7 +310,7 @@ export default {
           }
     },
     stopVideo(){
-      //视频:embed或者video::embed 的暂停暂时不能解决
+      //视频:embed或者video
           let videoArr=this.$refs.yulan.$el.getElementsByTagName('video');
           if(videoArr && videoArr.length > 0){
             for(var i=0;i<videoArr.length;i++){
@@ -330,14 +330,16 @@ export default {
                 embedArr[i].innerHTML="";
                 var selVideoid=embedArr[i].getAttribute("serverfileid");
                 var id=embedArr[i].getAttribute("id");
+                //id重复的情况
+                embedArr[i].setAttribute("id",id+"_index_"+i);
                 var option = {
-                "auto_play": "0",
-                "file_id": selVideoid,
-                "app_id": "1252018592",
-                "width": 640,
-                "height": 360,
-            };
-            var player=new qcVideo.Player(id, option);
+                    "auto_play": "0",
+                    "file_id": selVideoid,
+                    "app_id": "1252018592",
+                    "width": 640,
+                    "height": 360,
+                };
+            var player=new qcVideo.Player(id+"_index_"+i, option);
             if(this.tabView == 'pc'){
                  var renderEmbed=embedArr[i].getElementsByTagName('embed')[0];
                  var renderVideo=embedArr[i].getElementsByTagName('video')[0];
