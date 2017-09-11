@@ -9,7 +9,7 @@ export default {
     'setConHeight'
   ],
   created () {
-  	
+
   },
   data () {
     return {
@@ -37,19 +37,32 @@ export default {
 //  previewCon: function () {
 ////  	return this.previewCon
 //  }
-   
+
   },
   mounted () {
     this.$emit('element', [this.$refs.onscroll, this.$refs.scrollCon, this.$refs.scroll, this.$refs.setCon]);
   },
-  updated () {  
+  updated () {
     this.$emit('iIndex', [this.i, this.contentCoverSrc]);
-      
+
   },
   methods: {
-  	changeRadio (id,code) {
+    changeRadios (id) {
+      let $=qaVideo.get("$");
+      let This = this;
+      setTimeout(function () {
+        for (var i=0;i<$('#resource-manage').find('label').length;i++) {
+          if ($('#resource-manage').find('label').eq(i).hasClass('ivu-radio-wrapper-checked')) {
+            This.$store.state.videourl = $('#resource-manage').find('label').eq(i).attr('url');
+          }
+        }
+      },200)
+    },
+  	changeRadio (id,code,url) {
   		if (code == 2) {
-  			this.currentvideoid = id;
+        this.currentvideoid = id;
+        this.$store.state.videourl = url;
+        console.log(url)
   		}
   	},
   	previewConauthor: function (author) {
@@ -61,7 +74,7 @@ export default {
   		var scroll = this.$refs.scroll;
   		var scrollCon = this.$refs.scrollCon;
   		clearTimeout(time)
-  		
+
       var time=setTimeout(function () {
       	if (setCon.clientHeight < onscroll.clientHeight) {
 	      	scrollCon.style.display = 'block';
@@ -82,7 +95,7 @@ export default {
     	this.i = -1;
     },
     scrollBar: function (e) {
-    	
+
       if (this.$refs.setCon.clientHeight >= this.$refs.onscroll.clientHeight) {
         return;
       }else{

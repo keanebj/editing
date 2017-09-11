@@ -11,6 +11,21 @@
 .con_new img[src^="/static/ueditor/dialogs/attachment/fileTypeImages"]{
 	width:auto;
 }
+.con_new p{
+  position: relative;
+
+}
+.con_new p .download_video{
+  position: absolute;
+  bottom: -24px;
+  right: calc((100% - 640px) / 2);
+  text-decoration: none;
+  padding-left: 20px;
+  display: inline-block;
+  color: #b2b2b2;
+  background: url(http://mp.dev.hubpd.com/static/ueditor/audioimages/download.svg) left center no-repeat;
+  background-size: 14px 14px;
+}
 .con_new img{
     width: auto;
     max-width: 95%;

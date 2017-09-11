@@ -26,7 +26,12 @@
     bottom:28%;
     left:42%;
 }
-
+#previewLinkVideo{
+  height: 100%;
+}
+#previewLinkVideo p{
+  height: 100%;
+}
 #previewLinkVideo video{
     width:100% !important;
     height:100% !important;

@@ -14,6 +14,7 @@ const store = new Vuex.Store({
     userinfo: userinfo,
     token: token,
     isActive: false,
+    videourl: '',
     material: {}
   },
   getters: {

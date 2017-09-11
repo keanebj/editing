@@ -61,6 +61,11 @@ export default {
           let count=$(".video_container").size();
           if(count > 0){
           		for(var i=0;i<count;i++){
+<<<<<<< Updated upstream
+=======
+                // if ($(".video_container").eq(i).find('embed').length > 0) {
+                  let a = $(".video_container").eq(i).find('.download_video')[0];
+>>>>>>> Stashed changes
 	                let serverfileid=$(".video_container").eq(i).html('').attr('serverfileid');
                   //替换容器的id，用于解决id重复的问题
                   $(".video_container").eq(i).attr('id',"id_video_container_"+serverfileid+"_"+i);
@@ -71,18 +76,42 @@ export default {
 	                    "width": 640,
 	                    "height": 360
 	                };
+<<<<<<< Updated upstream
 	               new qcVideo.Player("id_video_container_"+serverfileid+"_"+i,option);
+=======
+                 new qcVideo.Player("id_video_container_"+option.file_id,option,function (ev) {
+                   if (ev == 'ready') {
+                    $(".video_container")[i].append(a)
+                   }
+                 });
+                //  $(".video_container").eq(i)[0].appendChild(a);
+
+	            // }
+>>>>>>> Stashed changes
           	}
           }
           if (window.screen.width < 640) {
             for (var i = 0; i<$('.download').size(); i++) {
                 $('.download').eq(i).css('display', 'none');
             }
+            for (var i = 0; i<$('.download_video').size(); i++) {
+                $('.download_video').eq(i).css('display', 'none');
+            }
           }else{
             for (var i = 0; i<$('.download').size(); i++) {
               $('.download').eq(i).attr('href', $('.audioWrap.myDirectiveAudio').eq(i).attr('audio-url'))
               if (navigator.userAgent.indexOf('Firefox') > -1 && $('.download').eq(i).attr('href')[0].indexOf(window.location.host) == -1) {
+                console.log(111)
                 $('.download').eq(i).html('右键点击另存为下载文件！');
+              }else{
+                $('.download').eq(i).html('下载音频');
+              }
+            }
+            for (var i = 0; i<$('.download_video').size(); i++) {
+              if (navigator.userAgent.indexOf('Firefox') > -1 && $('.download_video').eq(i).attr('href')[0].indexOf(window.location.host) == -1) {
+                $('.download_video').eq(i).html('右键点击另存为下载视频！');
+              }else{
+                $('.download_video').eq(i).html('下载视频！');
               }
             }
           }

@@ -21,6 +21,21 @@ img {
 .edui-default .edui-autotypesetpicker-body td{
 	text-align: left;
 }
+.video_container{
+  position: relative;
+  margin: 10px auto;
+}
+.download_video{
+  position: absolute;
+  bottom: -24px;
+  right: calc((100% - 640px) / 2);
+  text-decoration: none;
+  padding-left: 20px;
+  display: inline-block;
+  color: #b2b2b2;
+  background: url(http://mp.dev.hubpd.com/static/ueditor/audioimages/download.svg) left center no-repeat;
+  background-size: 14px 14px;
+}
 /*.download.myDirectiveAudio{
     position:absolute;
     bottom:-20px;right:0;

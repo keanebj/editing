@@ -57,7 +57,7 @@
          <div class="video-preview-link" style="position: relative;">
              <span class="link-preview-tip">视频预览窗口</span>
              <h2 style="position: absolute;left:15%;top:40%;z-index: 1;" v-if="videoLink">输入的视频地址有误，请检查后再试</h2>
-             <div ref="linkVideoHtml" id="previewLinkVideo"><p class="set_cursor_video"><br/></p><p contenteditable="false"  style="text-align:center;"><video id="linkvideo" :class="{hide:ishidelinkvideo}" width="640" height="360" wmode="transparent" play="true" loop="false" menu="false" allowscriptaccess="never" allowfullscreen="true"  :src="videoLink"  preload="load" controls="controls"><source :src="videoLink"  type="video/mp4" /></video></p></div>
+             <div ref="linkVideoHtml" id="previewLinkVideo"><p class="set_cursor_video"><br/></p><p contenteditable="false"  style="text-align:center;"><video id="linkvideo" :class="{hide:ishidelinkvideo}" width="640" height="360" wmode="transparent" play="true" loop="false" menu="false" allowscriptaccess="never" allowfullscreen="true"  :src="videoLink"  preload="load" controls="controls"><source :src="videoLink"  type="video/mp4" /></video><a :href="videoLink" contenteditable="false" download class="download_video" target="_blank" :_href="videoLink">下载视频</a></p></div>
          </div>
          <div class="video-footer">
             <Button type="primary" shape="circle" style="margin:0 20px;" @click="addLinkVideo">添加</Button>

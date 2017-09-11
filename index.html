@@ -16,4 +16,16 @@
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
+  <script>
+    var ainnerHTML = '';
+    function changeAInnerHtml(){
+      if (navigator.userAgent.indexOf('Firefox') > -1) {
+        ainnerHTML = '右键点击另存为下载视频！';
+        return ainnerHTML;
+      }else{
+        ainnerHTML = '下载视频';
+        return ainnerHTML;
+      }
+    }
+  </script>
 </html>

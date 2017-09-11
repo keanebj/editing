@@ -309,7 +309,19 @@
 
 .set-con p {
   margin: 5px 0;
+  position: relative;
   word-break: break-all;
+}
+.set-con p .download_video{
+  position: absolute;
+  bottom: -14px;
+  right: calc((100% - 640px) / 2);
+  text-decoration: none;
+  padding-left: 20px;
+  display: inline-block;
+  color: #b2b2b2;
+  background: url(http://mp.dev.hubpd.com/static/ueditor/audioimages/download.svg) left center no-repeat;
+  background-size: 14px 14px;
 }
 
 .set-con ol.list-paddingleft-2 {
@@ -370,6 +382,11 @@
   -webkit-transform: scale(0.75);
   -o-transform: scale(0.75);
   -moz-transform: scale(0.75);
+}
+
+.ivu-modal-wrap.mobile .set-con .download_video{
+  right: 10px;
+  bottom: -20px;
 }
 
 .ivu-modal-wrap.mobile .set-max-height h2 {

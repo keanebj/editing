@@ -63,7 +63,22 @@
     margin-left: 0px;
     margin-right: 10px;
 }
+.con_new p{
+  position: relative;
+  margin-bottom: 30px;
 
+}
+.con_new p .download_video{
+  position: absolute;
+  bottom: -24px;
+  right: calc((100% - 640px) / 2);
+  text-decoration: none;
+  padding-left: 20px;
+  display: inline-block;
+  color: #b2b2b2;
+  background: url(http://mp.dev.hubpd.com/static/ueditor/audioimages/download.svg) left center no-repeat;
+  background-size: 14px 14px;
+}
 
 
 /*控制音频的格式*/

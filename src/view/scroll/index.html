@@ -2,7 +2,7 @@
   <div class="set-con" @wheel.prevent="scrollBar($event)" ref="setCon" :style="{height: setConHeight}">
     <div class="set-posi" ref="onscroll">
       <div v-if="previewCon.title"  class="yulan">
-      	<div class="head">	
+      	<div class="head">
 	      	<img :src="previewCon.cover" alt="" />
 	        <img src="../../assets/bgjianb.png" alt="" class="title_mask" />
 	      	<h1  class="yulan-tit" v-if="previewCon.subtitle == null">{{ previewCon.title }}</h1>
@@ -17,21 +17,23 @@
       	<!--<div v-html="previewCon.content"></div>-->
       </div>
       <div v-else-if="selVideoid">
-         <Radio-group v-model="currentvideoid">
-            <Row id="resource-manage">  
+        <Radio-group v-model="currentvideoid" ref="currentvideoid" :on-change="changeRadios(currentvideoid)">
+            <Row id="resource-manage">
                 <Col span="8" v-for="(value,key) in previewCon" :key="key">
                     <div class="video-item">
-                      <div class="video_list_item" @click="changeRadio(value.videoid,value.transcodingstate)">
+                      <div class="video_list_item" @click="changeRadio(value.videoid,value.transcodingstate,value.videourl)">
                         <img :src="value.cover"/>
                         <span v-if="value.transcodingstate == 2"><Icon type="ios-play"></Icon></span>
                          <div style="position: absolute;left: 0px;top: 0px;color: #F95759;z-index: 4;" v-if="value.transcodingstate == 1">转码中...</div>
                          <div style="position: absolute;left: 0px;top: 0px;color: #F95759;z-index: 4;" v-if="value.transcodingstate == 3">转码失败...</div>
-                      </div>                      
-                        <span style="float:left;">{{value.title}}</span><Radio :label="value.videoid" :disabled="value.transcodingstate != 2" style="float:right;margin-right:0;"><span></span></Radio>
+                      </div>
+
+                        <span style="float:left;">{{value.title}}</span><Radio :label="value.videoid" :url="value.videourl" :disabled="value.transcodingstate != 2" style="float:right;margin-right:0;"><span></span></Radio>
+
                     </div>
-                </Col>                          
+                </Col>
             </Row>
-         </Radio-group>
+          </Radio-group>
       </div>
       <div v-else>
         <Row :gutter="34" style="margin-left:-20px;margin-right:0px;">
