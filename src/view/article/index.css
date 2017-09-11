@@ -32,10 +32,14 @@
 	width:auto;
 }
 .con_new embed{
-	max-width: 100%;
+	/*max-width: 100%;*/
+  width:41.6vw;
+  height:23.4vw;
 }
 .con_new video{
-	max-width: 100%;
+	/*max-width: 100%;*/
+  width:41.6vw;
+  height:23.4vw;
 }
 .orginTit{
 	margin-bottom: 10px;

@@ -20,10 +20,14 @@
     margin: 50px 0;
 }
 #notice_video .con_new embed{
-	max-width: 100%;
+	/*max-width: 100%;*/
+  width:41.6vw;
+  height:23.4vw;
 }
 #notice_video .con_new video{
-	max-width: 100%;
+	/*max-width: 100%;*/
+  width:41.6vw;
+  height:23.4vw;
 }
 .article_xinxi{
 	text-align: center;
