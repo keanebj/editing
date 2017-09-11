@@ -82,7 +82,6 @@
   height: 50px;
 }
 
-
 .slide-fade-enter-active {
   transition: all .3s ease;
 }
@@ -228,3 +227,4 @@
   right: 0;
   text-align: right;
 }
+

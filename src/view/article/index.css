@@ -13,6 +13,12 @@
 .right img:first-child{
     margin-bottom: 20px;
 }
+.set_cursor_video{
+  display: none;
+}
+.video_container{
+  margin-bottom:10px;
+}
 /*.con_new p{
     text-align: left;
     text-indent: 20px;

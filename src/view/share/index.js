@@ -74,7 +74,6 @@ export default {
 	               new qcVideo.Player("id_video_container_"+serverfileid+"_"+i,option);
           	}
           }
-          // alert(window.screen.width < 640)
           if (window.screen.width < 640) {
             for (var i = 0; i<$('.download').size(); i++) {
                 $('.download').eq(i).css('display', 'none');

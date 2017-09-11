@@ -263,6 +263,9 @@ export default {
       //存到数据库
       This.save('formTop', true);
     }, 60000);
+
+
+
   },
   updated() {
     let padleft = this.$refs.authorContainer.clientWidth;
@@ -285,6 +288,16 @@ export default {
 
   },
   methods: {
+    clearPVideo(){
+      let nullparr=this.$refs.yulan.$el.getElementsByClassName('set_cursor_video');
+      if(nullparr && nullparr.length > 0){
+          for(var i=0;i<nullparr.length;i++){
+              if( nullparr[i].innerHTML == '<br>' ){
+                  nullparr[i].style.display = "none";
+              }
+          }
+      }
+    },
     stopAudio(){
       //如果关闭了弹框 就停止所有音频的播放
           let audioBtnArr=this.$refs.yulan.$el.getElementsByClassName('audioBtn');
@@ -405,7 +418,10 @@ export default {
         this.previewContent = true;
         var ele = this.elements;
         clearTimeout(time);
+        let This=this;
         var time = setTimeout(function () {
+          //预览清除空p
+          This.clearPVideo();
           if (ele[3].clientHeight >= ele[0].clientHeight) {
             ele[1].style.display = 'none';
             ele[2].style.display = 'none';
@@ -422,7 +438,7 @@ export default {
               $('.download').eq(i).html('右键点击另存为下载文件！');
             }
           }
-        }, 200)
+        }, 500)
       } else {
         //    	不显示预览
         this.$Notice.warning({
