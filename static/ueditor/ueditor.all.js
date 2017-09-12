@@ -16298,9 +16298,38 @@ UE.plugins['list'] = function () {
         }
     };
 
+    UE.plugins['myvideo'] = function (){
+      var me =this,editor= this;
+      me.addInputRule(function(root){
+        $.each(root.getNodesByTagName('a'),function(i,node){
+            if(node.getAttr('class') == 'download_video'){
+              if (navigator.userAgent.indexOf('Firefox') > -1) {
+                node.children[0].data="右键点击另存为下载视频！";
+             }else{
+                node.children[0].data="下载视频";
+              }
+
+            }
+        });
+      });
+    }
+
     //wangyi test audio
    UE.plugins['audio'] = function (){
-	 var me =this,editor= this;
+   var me =this,editor= this;
+     var me =this,editor= this;
+     me.addInputRule(function(root){
+       $.each(root.getNodesByTagName('a'),function(i,node){
+           if(node.getAttr('class')== 'download myDirectiveAudio'){
+             if (navigator.userAgent.indexOf('Firefox') > -1) {
+               node.children[0].data="右键点击另存为下载文件！";
+             }else{
+               node.children[0].data="下载音频";
+             }
+
+           }
+       });
+     });
     //添加播放点击事件
     me.addListener('click', function (type, e) {
         var img=e.target;
