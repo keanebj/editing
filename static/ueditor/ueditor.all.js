@@ -13032,7 +13032,6 @@ UE.plugins['horizontal'] = function(){
         if(domUtils.isStartInblock(rng)){
             var tmpNode = rng.startContainer;
             var pre = tmpNode.previousSibling;
-            console.log(pre.getAttribute('contenteditable'))
             if(pre && domUtils.isTagNode(pre,'hr')){
                 domUtils.remove(pre);
                 rng.select();
