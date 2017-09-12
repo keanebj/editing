@@ -328,7 +328,7 @@
            removeEmptyNode: false,         // 去掉空节点
            //可以去掉的标签
            removeTagNames: {标签名字:1},
-           indent: false,                  // 行首缩进
+           indent: true,                  // 行首缩进
            indentValue : '2em',            //行首缩进的大小
            bdc2sb: false,
            tobdc: false,
