@@ -16383,9 +16383,9 @@ UE.plugins['list'] = function () {
         return time;
     };
     //时间为个位数时在前面添0
-    var changeNum=function(num, n = 2){
+    var changeNum=function(num){
         var len = num.toString().length;
-        while (len < n) {
+        while (len < 2) {
         num = '0' + num;
         len++;
         }

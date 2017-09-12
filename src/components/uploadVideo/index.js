@@ -37,7 +37,8 @@ export default {
         loadingTimer:null,
         loadingMsgTimer:null,
         uploadVideoCodeStatus:false,
-        maskClosable:false
+        maskClosable:false,
+        notMozBrowser:true
     }
   },
   components:{
@@ -492,6 +493,12 @@ export default {
             },
   },
   created() {
+      //判断是什么浏览器
+      if(navigator.userAgent.indexOf("Firefox") > -1){
+        this.notMozBrowser=false;
+      }else{
+        this.notMozBrowser=true;
+      }
          //获得素材列表
        this.$http.get('api/material',{params:{pageindex:1,pagesize:10}}).then((response) => {
            if(response.data.status != 1){
