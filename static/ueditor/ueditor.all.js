@@ -13027,6 +13027,7 @@ UE.plugins['horizontal'] = function(){
         if(domUtils.isStartInblock(rng)){
             var tmpNode = rng.startContainer;
             var pre = tmpNode.previousSibling;
+            console.log(pre.getAttribute('contenteditable'))
             if(pre && domUtils.isTagNode(pre,'hr')){
                 domUtils.remove(pre);
                 rng.select();
@@ -13035,6 +13036,8 @@ UE.plugins['horizontal'] = function(){
 
             }else if (pre&&domUtils.hasClass(pre, "audioWrap myDirectiveAudio")){
                   domUtils.remove(pre);
+            }else if (pre&&pre.getAttribute('contenteditable') == 'false') {
+              domUtils.remove(pre);
             }
         }
 
