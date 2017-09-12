@@ -198,7 +198,7 @@
 .con_new p .download_video{
   position: absolute;
   bottom: -24px;
-  right: calc((100% - 640px) / 2);
+  right: calc((100% - 41.6vw) / 2);
   text-decoration: none;
   padding-left: 20px;
   display: inline-block;

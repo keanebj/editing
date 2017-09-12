@@ -29,8 +29,11 @@
 #previewLinkVideo{
   height: 100%;
 }
-#previewLinkVideo p{
+#previewLinkVideo p:last-child{
   height: 100%;
+}
+#previewLinkVideo p a{
+    display:none;
 }
 #previewLinkVideo video{
     width:100% !important;

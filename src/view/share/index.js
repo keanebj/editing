@@ -104,7 +104,7 @@ export default {
               if (navigator.userAgent.indexOf('Firefox') > -1 && $('.download_video').eq(i).attr('href')[0].indexOf(window.location.host) == -1) {
                 $('.download_video').eq(i).html('右键点击另存为下载视频！');
               }else{
-                $('.download_video').eq(i).html('下载视频！');
+                $('.download_video').eq(i).html('下载视频');
               }
             }
           }

@@ -449,11 +449,13 @@ export default {
             $('.download').eq(i).attr('href', $('.audioWrap.myDirectiveAudio').eq(i).attr('audio-url'))
             if (navigator.userAgent.indexOf('Firefox') > -1 && $('.download').eq(i).attr('href')[0].indexOf(window.location.host) == -1) {
               $('.download').eq(i).html('右键点击另存为下载文件！');
+            }else{
+              $('.download').eq(i).html('下载音频');
             }
           }
           for (var i = 0; i<$('.download_video').size(); i++) {
             if (navigator.userAgent.indexOf('Firefox') > -1) {
-              $('.download_video').eq(i).html('右键点击另存为下载视频！');
+              $('.download_video').eq(i).html('下载视频');
             }
           }
         }, 500)
