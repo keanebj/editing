@@ -16333,6 +16333,13 @@ UE.plugins['list'] = function () {
     //添加播放点击事件
     me.addListener('click', function (type, e) {
         var img=e.target;
+        //点击的是视频 ，音频区域，定位光标到其下面
+        if(img.className.indexOf("video_container") != -1 || img.className.indexOf("video_link_container") != -1){
+            this.selection.getRange().setStartAfter(img).setCursor();
+        }
+        if($(img).parents('[uetag="edui-audio-embed"]').length > 0  && $(img).parents('[uetag="edui-audio-embed"]').attr("class").indexOf("audioWrap") != -1){
+            this.selection.getRange().setStartAfter($(img).parents('[uetag="edui-audio-embed"]').get(0)).setCursor();
+        }
         if (img && img.tagName == 'IMG' && img.className.indexOf("audioBtnImg") != -1) {
            //播放音频
            var father=$(img).parents('[uetag="edui-audio-embed"]');

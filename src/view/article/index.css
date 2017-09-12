@@ -13,9 +13,6 @@
 .right img:first-child{
     margin-bottom: 20px;
 }
-.set_cursor_video{
-  display: none;
-}
 .video_container{
   margin-bottom:30px;
 }
