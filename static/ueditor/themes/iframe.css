@@ -36,6 +36,9 @@ img {
   background: url(http://mp.dev.hubpd.com/static/ueditor/audioimages/download.svg) left center no-repeat;
   background-size: 14px 14px;
 }
+img.anchorclass{
+  display: none;
+}
 /*.download.myDirectiveAudio{
     position:absolute;
     bottom:-20px;right:0;
