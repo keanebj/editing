@@ -10617,14 +10617,16 @@ UE.plugins['autotypeset'] = function(){
                             continue;
                         }
                     }
-                    domUtils.remove(ci);
+                    if(tmpNode.childNodes[0].tagName != 'VIDEO'){
+                      domUtils.remove(ci);
+                    }
                     continue;
 
                 }
 
             }
             if(isLine(ci,true) && ci.tagName != 'SPAN'){
-                if(ci.className.indexOf("myDirectiveAudio") == -1 && ci.className.indexOf("video_container") == -1){
+                if(ci.className.indexOf("myDirectiveAudio") == -1 && ci.className.indexOf("video_container") == -1 && ci.className.indexOf("video_link_container") == -1){
                     if(opt.indent){
                         ci.style.textIndent = opt.indentValue;
                     }
@@ -10645,16 +10647,16 @@ UE.plugins['autotypeset'] = function(){
             }
 
             //去掉class,保留的class不去掉
-            if(opt.removeClass && ci.className && !remainClass[ci.className.toLowerCase()]){
+            // if(opt.removeClass && ci.className && !remainClass[ci.className.toLowerCase()]){
 
-                if(highlightCont && highlightCont.contains(ci)){
-                     continue;
-                }
-                if(ci.className.indexOf("myDirefctiveAudio") == -1 && ci.className.indexOf("video_container") == -1){
-                    domUtils.removeAttributes(ci,['class']);
-                }
+            //     if(highlightCont && highlightCont.contains(ci)){
+            //          continue;
+            //     }
+            //     if(ci.className.indexOf("myDirefctiveAudio") == -1 && ci.className.indexOf("video_container") == -1){
+            //         domUtils.removeAttributes(ci,['class']);
+            //     }
 
-            }
+            // }
 
             //表情不处理
             if(opt.imageBlockLine && ci.tagName.toLowerCase() == 'img' && ci.className.indexOf("myDirectiveAudio") == -1 && !ci.getAttribute('emotion')){
