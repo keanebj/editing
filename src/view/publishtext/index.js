@@ -122,7 +122,8 @@ export default {
       uploadVideo: false,
       isHideSubtitle: true,
       oldval: '',
-      newval: ''
+      newval: '',
+      showloadingbtn:false
     }
   },
   created() {
@@ -527,6 +528,7 @@ export default {
       return dataURL;
     },
     clickCoverOk: function (e) {
+      this.showloadingbtn=true;
       //选择的封面显示在文本域中
       if (this.iIndex[0] >= 0) {
         //转为base64
@@ -543,7 +545,11 @@ export default {
           }
           this.tempi = this.iIndex[0];
           this.i = this.iIndex[0];
-          this.contentModal = false;
+          let THIS=this;
+          setTimeout(function () {
+            THIS.contentModal = false;
+            THIS.showloadingbtn=false;
+          },1000)
           let This = this.$refs.corup;
           setTimeout(function () {
             This.handleClick(e, '', 'linkimg');
