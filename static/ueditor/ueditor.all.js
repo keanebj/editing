@@ -10604,9 +10604,10 @@ UE.plugins['autotypeset'] = function(){
                         if(isBr && (!next || next && !domUtils.isBr(next))){
                             break;
                         }
-                        domUtils.remove(tmpNode);
+                        if(tmpNode.childNodes[0].tagName != 'VIDEO'){
+                            domUtils.remove(tmpNode);
+                        }
                     }
-
                 }
                  //去掉空行，保留占位的空行
                 if(opt.removeEmptyline && domUtils.inDoc(ci,cont) && !remainTag[ci.parentNode.tagName.toLowerCase()] ){
@@ -10616,15 +10617,16 @@ UE.plugins['autotypeset'] = function(){
                             continue;
                         }
                     }
-                    domUtils.remove(ci);
+                    if(tmpNode.childNodes[0].tagName != 'VIDEO'){
+                      domUtils.remove(ci);
+                    }
                     continue;
 
                 }
 
             }
             if(isLine(ci,true) && ci.tagName != 'SPAN'){
-                if(ci.className.indexOf("myDirectiveAudio") == -1 ){
-
+                if(ci.className.indexOf("myDirectiveAudio") == -1 && ci.className.indexOf("video_container") == -1 && ci.className.indexOf("video_link_container") == -1){
                     if(opt.indent){
                         ci.style.textIndent = opt.indentValue;
                     }
@@ -10645,13 +10647,16 @@ UE.plugins['autotypeset'] = function(){
             }
 
             //去掉class,保留的class不去掉
-            if(opt.removeClass && ci.className && !remainClass[ci.className.toLowerCase()]){
+            // if(opt.removeClass && ci.className && !remainClass[ci.className.toLowerCase()]){
 
-                if(highlightCont && highlightCont.contains(ci)){
-                     continue;
-                }
-                domUtils.removeAttributes(ci,['class']);
-            }
+            //     if(highlightCont && highlightCont.contains(ci)){
+            //          continue;
+            //     }
+            //     if(ci.className.indexOf("myDirefctiveAudio") == -1 && ci.className.indexOf("video_container") == -1){
+            //         domUtils.removeAttributes(ci,['class']);
+            //     }
+
+            // }
 
             //表情不处理
             if(opt.imageBlockLine && ci.tagName.toLowerCase() == 'img' && ci.className.indexOf("myDirectiveAudio") == -1 && !ci.getAttribute('emotion')){
@@ -16293,36 +16298,10 @@ UE.plugins['list'] = function () {
             };
         }
     };
-    UE.plugins['myvideo'] = function (){
-      var me =this,editor= this;
-      me.addInputRule(function(root){
-        $.each(root.getNodesByTagName('a'),function(i,node){
-            if(node.getAttr('class') == 'download_video'){
-              if (navigator.userAgent.indexOf('Firefox') > -1) {
-                node.children[0].data="右键点击另存为下载视频！";
-              }else{
-                node.children[0].data="下载视频";
-              }
 
-            }
-        });
-      });
-    }
     //wangyi test audio
    UE.plugins['audio'] = function (){
-  var me =this,editor= this;
-  me.addInputRule(function(root){
-    $.each(root.getNodesByTagName('a'),function(i,node){
-        if(node.getAttr('class')== 'download myDirectiveAudio'){
-          if (navigator.userAgent.indexOf('Firefox') > -1) {
-            node.children[0].data="右键点击另存为下载文件！";
-          }else{
-            node.children[0].data="下载音频";
-          }
-
-        }
-    });
-  });
+	 var me =this,editor= this;
     //添加播放点击事件
     me.addListener('click', function (type, e) {
         var img=e.target;
