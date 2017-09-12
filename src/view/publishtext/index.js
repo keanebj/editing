@@ -456,6 +456,8 @@ export default {
           }
           for (var i = 0; i<$('.download_video').size(); i++) {
             if (navigator.userAgent.indexOf('Firefox') > -1) {
+              $('.download_video').eq(i).html('右键点击另存为下载视频！');
+            }else{
               $('.download_video').eq(i).html('下载视频');
             }
           }
