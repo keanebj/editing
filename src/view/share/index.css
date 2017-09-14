@@ -215,7 +215,8 @@
 		/*height: auto;*/
 	}
 	.con_new video{
-		max-width: 100%;
+    max-width: 100%;
+    width:100%;
 		height: auto;
 	}
     .audioWrap{
