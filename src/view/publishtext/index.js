@@ -1126,7 +1126,7 @@ export default {
   },
 }
 
-tring.prototype.Trim = function () {
+String.prototype.Trim = function () {
   return this.replace(/(^\s*)|(\s*$)/g, "");
 }
 String.prototype.len = function () {
