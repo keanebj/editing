@@ -17,7 +17,9 @@ export default {
       	author: ''
       },
       noData:true,
-      notShared: false
+      notShared: false,
+      hideRight: 'block',
+      align: 'left'
     }
   },
   created() {
@@ -55,6 +57,13 @@ export default {
     }
   },
   mounted() {
+  	if (this.$store.state.userinfo.roleType == 'Manage') {
+  		this.align = 'center';
+  		this.hideRight = 'none';
+  	}else{
+  		this.hideRight = 'block';
+  		this.align = 'left';
+  	}
        //找到编辑器里面的视频内容 ，进行 替换
        let $=qaVideo.get("$");
        setTimeout(function(){
@@ -93,15 +102,14 @@ export default {
           }else{
             for (var i = 0; i<$('.download').size(); i++) {
               $('.download').eq(i).attr('href', $('.audioWrap.myDirectiveAudio').eq(i).attr('audio-url'))
-              if (navigator.userAgent.indexOf('Firefox') > -1 && $('.download').eq(i).attr('href')[0].indexOf(window.location.host) == -1) {
-                console.log(111)
+              if (navigator.userAgent.indexOf('Firefox') > -1 && $('.download').eq(i).attr('href').indexOf(window.location.host) == -1) {
                 $('.download').eq(i).html('右键点击另存为下载文件！');
               }else{
                 $('.download').eq(i).html('下载音频');
               }
             }
             for (var i = 0; i<$('.download_video').size(); i++) {
-              if (navigator.userAgent.indexOf('Firefox') > -1 && $('.download_video').eq(i).attr('href')[0].indexOf(window.location.host) == -1) {
+              if (navigator.userAgent.indexOf('Firefox') > -1 && $('.download_video').eq(i).attr('href').indexOf(window.location.host) == -1) {
                 $('.download_video').eq(i).html('右键点击另存为下载视频！');
               }else{
                 $('.download_video').eq(i).html('下载视频');

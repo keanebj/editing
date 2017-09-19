@@ -15,10 +15,10 @@
         	<div class="tit_pic">
         		<img :src="cover" alt="" />
         		<img src="../../assets/bgjianb.png" alt="" class="title_mask" />
-        		<h2 class="orginTit" v-if="subtitle == null">{{ title }}</h2>
-        		<h2 class="orginTit" v-else>{{ subtitle }}</h2>
+        		<h2 class="orginTit" :style="{textAlign: align}" v-if="subtitle == null">{{ title }}</h2>
+        		<h2 class="orginTit" :style="{textAlign: align}" v-else>{{ subtitle }}</h2>
         	</div>
-        	<div class="article_xinxi">
+        	<div class="article_xinxi"  :style="{textAlign: align}">
         		<span>{{ conInfo.channel }}</span>
       			<span>{{ conInfo.time.substring(0,10) }}</span>
       			<span>{{ conInfo.author }}</span>
@@ -32,7 +32,7 @@
       <!-- <img src="../../assets/article/footer.png"> -->
     </div>
     </Col>
-    <Col span="6" :xs="0" :sm="6" :md="6" :lg="6">
+    <Col span="6" :xs="0" :sm="6" :md="6" :lg="6" :style="{display: hideRight}">
     <div class="right">
       <img src="../../assets/article/right-1.png">
       <img src="../../assets/article/right-2.png">
