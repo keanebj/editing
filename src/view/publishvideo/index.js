@@ -188,6 +188,14 @@ watch:{
       //存到数据库
       This.save('formTop',true);
     },60000);
+
+    //挂在元素完成后就行绑定给表单绑定一个事件，防止自动提交
+    var form=document.getElementById('publishvideoform');
+    form.onkeydown=function(event){
+      if(event.keyCode==13){
+        return false;
+      }
+    }
   },
   updated(){
     let padleft=this.$refs.authorContainer.clientWidth;
