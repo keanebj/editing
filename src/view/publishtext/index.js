@@ -264,9 +264,6 @@ export default {
       //存到数据库
       This.save('formTop', true);
     }, 60000);
-
-
-
   },
   updated() {
     let padleft = this.$refs.authorContainer.clientWidth;
@@ -1123,12 +1120,10 @@ export default {
       }
       return len;
     }
-  },
+  }
 }
 
 String.prototype.Trim = function () {
   return this.replace(/(^\s*)|(\s*$)/g, "");
 }
-String.prototype.len = function () {
-  return this.replace(/[^\x00-\xff]/g, "rr").length;
-}
+
