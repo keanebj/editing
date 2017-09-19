@@ -76,13 +76,13 @@
         <th scope="row" width="15%" style="position: relative;padding: 0.75rem;">
           <Icon v-if="item.topflag" class="to-top"></Icon>
           <router-link :to="{path:'../article',query:{id:item.id}}" v-if="roleType == 'Edit'"><img height="60" :src="item.cover" class="content-logo"></router-link>
-          <router-link :to="{path:'../notice',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'Notice'"><img height="60" :src="item.cover" class="content-logo"></router-link>
-          <router-link :to="{path:'../article',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'College'"><img height="60" :src="item.cover" class="content-logo"></router-link>
+          <router-link :to="{path:'../notice',query:{id:item.id}}" v-else-if="roleType == 'Manage'"><img height="60" :src="item.cover" class="content-logo"></router-link>
+          <!--<router-link :to="{path:'../article',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'College'"><img height="60" :src="item.cover" class="content-logo"></router-link>-->
         </th>
         <th scope="row" id="title" width="32%" style="text-align:left;">
           <router-link :to="{path:'../article',query:{id:item.id}}" v-if="roleType == 'Edit'">{{item.title}}</router-link>
-          <router-link :to="{path:'../notice',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'Notice'">{{item.title}}</router-link>
-          <router-link :to="{path:'../article',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'College'">{{item.title}}</router-link>
+          <router-link :to="{path:'../notice',query:{id:item.id}}" v-else-if="roleType == 'Manage'">{{item.title}}</router-link>
+          <!--<router-link :to="{path:'../article',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'College'">{{item.title}}</router-link>-->
         </th>
         <td style="padding: 0.75rem;" width="10%">{{item.author}}</td>
         <td width="90">{{item.addtime}}</td>
