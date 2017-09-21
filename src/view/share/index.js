@@ -82,7 +82,7 @@ export default {
 	                    "width": 640,
 	                    "height": 360
 	                };
-                 new qcVideo.Player("id_video_container_"+option.file_id,option,function (ev) {
+                 new qcVideo.Player("id_video_container_"+serverfileid+"_"+i,option,function (ev) {
                    if (ev == 'ready') {
                     $(".video_container")[i].append(a)
                    }
