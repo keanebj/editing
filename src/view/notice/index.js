@@ -19,9 +19,7 @@ export default {
 		    }
         this.$http.get(this.getUrl + this.noticeID).then(({ data }) => {
           //给公告的内容赋值
-          console.log(data)
           if (data.status == 1) {
-            console.log(data)
 						this.title=data.content.title;
 						this.subtitle=data.content.subtitle;
 	          this.content=data.content.content;
