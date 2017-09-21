@@ -19,6 +19,7 @@ export default {
 		    }
         this.$http.get(this.getUrl + this.noticeID).then(({ data }) => {
           //给公告的内容赋值
+          console.log(data)
           if (data.status == 1) {
             console.log(data)
 						this.title=data.content.title;
@@ -31,11 +32,7 @@ export default {
               this.conInfo.time = data.content.publishdate;
             }
 
-	          if (data.operatortype == "Manage") {
-	          	this.conInfo.author = "";
-	          }else{
-	          	this.conInfo.author = data.content.author;
-	          }
+	          this.conInfo.author = "";
 	        }else{
 	        	this.$Notice.error({
 	            title: '错误',

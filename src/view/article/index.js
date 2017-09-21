@@ -48,7 +48,6 @@ export default {
 	    this.$http.get(this.getUrl + this.noticeID).then(({ data }) => {
 	      //给公告的内容赋值
 	      if (data.status == 1) {
-	      	console.log(data)
 	      	this.title=data.content.title;
 	      	this.content=data.content.content;
 	      	this.conInfo.channel = data.content.channel;
@@ -58,11 +57,7 @@ export default {
             this.conInfo.time = data.content.publishdate;
           }
           this.subtitle = data.content.subtitle;
-          if (data.operatortype == "Manage") {
-          	this.conInfo.author = "";
-          }else{
-          	this.conInfo.author = data.content.author;
-          }
+          this.conInfo.author = data.content.author;
 	      }else{
 	      	this.$Notice.error({
             title: '错误',
