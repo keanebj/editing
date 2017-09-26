@@ -6,7 +6,7 @@
   position: relative;
 }
 .vue-cropper-modal .ivu-modal-body{
-  padding: 0;
+  padding: 0 !important;
   height:400px;
 }
 .vue-cropper-modal .ivu-modal-footer{
