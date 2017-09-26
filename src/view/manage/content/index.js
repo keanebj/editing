@@ -231,11 +231,7 @@ export default {
         //格式化time
         if(response.data.contents && response.data.contents.length){
           //查询到数据
-          if(response.data.total <= this.pageSize){
-            this.isActiveHide=true;
-          }else{
-            this.isActiveHide=false;
-          }
+          this.isActiveHide=false;
           for(let i=0;i<response.data.contents.length;i++){
           	if (response.data.contents[i].publishdate != null ) {
           		response.data.contents[i].addtime = response.data.contents[i].publishdate.substring(0,10);
@@ -283,7 +279,7 @@ export default {
           title: res.message,
           desc: false
         })
- 
+
         Cookies.set('title',res.content.title);
         localStorage.setItem('content',res.content.content);
         Cookies.set('channel',res.content.channel);
