@@ -301,7 +301,7 @@ export default {
                        * @param args { id: 文件ID, size: 文件大小, name: 文件名称, status: 状态, percent: 进度 speed: 速度, errorCode: 错误码,serverFileId: 后端文件ID }
                        */
                       onFileUpdate: function (args) {
-                          console.log(args);
+//                        console.log(args);
                           This.video.status='uploading';
                           This.video.localId=args.id;
                           clearInterval(This.videotimer);

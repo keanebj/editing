@@ -1,7 +1,7 @@
 <section>
    <div v-if="noData">
   <Row type="flex" justify="center">
-    <Col span="18" :xs="0">
+    <Col span="18" class="hidden-xss">
     <div class="header">
       <img src="../../assets/article/header.png">
     </div>
@@ -39,6 +39,7 @@
     </div>
     </Col>
   </Row>
+  <MainFooter></MainFooter>
   </div>
   <div v-else>
     <Row  type="flex" justify="center">

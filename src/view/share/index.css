@@ -204,10 +204,44 @@
   background: url(http://mp.dev.hubpd.com/static/ueditor/audioimages/download.svg) left center no-repeat;
   background-size: 14px 14px;
 }
-
-
+.hidden-xss{
+	display: block;
+}
+.layout-footer{
+  text-align: center;
+  padding: 10px 0 0px;
+}
+.layout-footer-top{
+  font-size: 16px;
+  color: #999;
+  padding: 10px 0 30px;
+}
+.layout-footer-top .item{
+  display: inline-block;
+  margin: 0 10px;
+}
+.layout-footer-top img {
+  height: 20px;
+  position: relative;
+  bottom: -3px
+}
+.layout-footer-bottom {
+  background: #F3F3F3;
+  color: #9ea7b4;
+  line-height: 50px;
+  height: 50px;
+}
 /*手机端分享*/
 @media screen and (max-width: 768px) {
+	.layout-footer{
+		display: none;
+	}
+	.ivu-col-span-xs-0{
+		display: none!important;
+	}
+	.hidden-xss{
+		display: none;
+	}
 	.article_xinxi span{
 		margin-left: 5px;
 	}

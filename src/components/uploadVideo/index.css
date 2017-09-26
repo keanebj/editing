@@ -93,6 +93,7 @@
 .video-step-2,.video-step-3,.video-step-4{
     background: url('../../assets/error/local-video.svg') center center no-repeat;
     width:100%;
+    background-size: 240px 200px;
     text-align:center;
 }
 .video-step-1{

@@ -351,17 +351,19 @@ export default {
                 "width": 640,
                 "height": 360,
             };
-            var player=new qcVideo.Player(id+"_index_"+i, option,function (ev) {
-
-              if (ev == 'ready') {
-                if (navigator.userAgent.indexOf('Firefox') > -1) {
-                  a.innerHTML = '右键点击另存为下载视频！';
-                }else{
-                  a.innerHTML = '下载视频';
-                }
-                ps.append(a);
-              }
-            });
+            var player=new qcVideo.Player(id+"_index_"+i, option
+//          ,function (ev) {
+//
+//            if (ev == 'ready') {
+//              if (navigator.userAgent.indexOf('Firefox') > -1) {
+//                a.innerHTML = '右键点击另存为下载视频！';
+//              }else{
+//                a.innerHTML = '下载视频';
+//              }
+//              ps.append(a);
+//            }
+//          }
+            );
             if(this.tabView == 'pc'){
                  var renderEmbed=embedArr[i].getElementsByTagName('embed')[0];
                  var renderVideo=embedArr[i].getElementsByTagName('video')[0];
@@ -439,22 +441,22 @@ export default {
             var scale = ele[3].clientHeight / ele[0].clientHeight;
             ele[1].style.height = ele[2].clientHeight * scale + 'px'
           }
-          let $=qaVideo.get("$");
-          for (var i = 0; i<$('.download').size(); i++) {
-            $('.download').eq(i).attr('href', $('.audioWrap.myDirectiveAudio').eq(i).attr('audio-url'))
-            if (navigator.userAgent.indexOf('Firefox') > -1 && $('.download').eq(i).attr('href')[0].indexOf(window.location.host) == -1) {
-              $('.download').eq(i).html('右键点击另存为下载文件！');
-            }else{
-              $('.download').eq(i).html('下载音频');
-            }
-          }
-          for (var i = 0; i<$('.download_video').size(); i++) {
-            if (navigator.userAgent.indexOf('Firefox') > -1) {
-              $('.download_video').eq(i).html('右键点击另存为下载视频！');
-            }else{
-              $('.download_video').eq(i).html('下载视频');
-            }
-          }
+//        let $=qaVideo.get("$");
+//        for (var i = 0; i<$('.download').size(); i++) {
+//          $('.download').eq(i).attr('href', $('.audioWrap.myDirectiveAudio').eq(i).attr('audio-url'))
+//          if (navigator.userAgent.indexOf('Firefox') > -1 && $('.download').eq(i).attr('href')[0].indexOf(window.location.host) == -1) {
+//            $('.download').eq(i).html('右键点击另存为下载文件！');
+//          }else{
+//            $('.download').eq(i).html('下载音频');
+//          }
+//        }
+//        for (var i = 0; i<$('.download_video').size(); i++) {
+//          if (navigator.userAgent.indexOf('Firefox') > -1) {
+//            $('.download_video').eq(i).html('右键点击另存为下载视频！');
+//          }else{
+//            $('.download_video').eq(i).html('下载视频');
+//          }
+//        }
         }, 500)
       } else {
         //    	不显示预览
@@ -958,9 +960,9 @@ export default {
       let $=qaVideo.get("$");
       for (var i = 0; i<$('.download').size(); i++) {
         $('.download').eq(i).attr('href', $('.audioWrap.myDirectiveAudio').eq(i).attr('audio-url'))
-        if (navigator.userAgent.indexOf('Firefox') > -1 && $('.download').eq(i).attr('href')[0].indexOf(window.location.host) == -1) {
-          $('.download').eq(i).html('右键点击另存为下载文件！');
-        }
+//      if (navigator.userAgent.indexOf('Firefox') > -1 && $('.download').eq(i).attr('href')[0].indexOf(window.location.host) == -1) {
+//        $('.download').eq(i).html('右键点击另存为下载文件！');
+//      }
       }
       var time = setTimeout(function () {
         if (ele[3].clientHeight < ele[0].clientHeight) {
