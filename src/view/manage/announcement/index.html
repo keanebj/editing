@@ -79,7 +79,7 @@
           <router-link :to="{path:'../notice',query:{id:item.id}}" v-else-if="roleType == 'Manage'"><img height="60" :src="item.cover" class="content-logo"></router-link>
           <!--<router-link :to="{path:'../article',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'College'"><img height="60" :src="item.cover" class="content-logo"></router-link>-->
         </th>
-        <th scope="row" id="title" width="32%" style="text-align:left;">
+        <th scope="row" id="title" class="title" width="32%" style="text-align:left;">
           <router-link :to="{path:'../article',query:{id:item.id}}" v-if="roleType == 'Edit'">{{item.title}}</router-link>
           <router-link :to="{path:'../notice',query:{id:item.id}}" v-else-if="roleType == 'Manage'">{{item.title}}</router-link>
           <!--<router-link :to="{path:'../article',query:{id:item.id}}" v-else-if="roleType == 'Manage' && item.label== 'College'">{{item.title}}</router-link>-->

@@ -20,6 +20,16 @@
 .imagePlaceholder .sub-title {
   font-size: 12px;
 }
+.table_con.table .title{
+	padding: 0px;
+	position: relative;
+	font-size: 14px;
+}
+.table_con.table .title a{
+	position: absolute;
+	top: 0.75rem;
+	left: 0px;
+}
 
 #title a{
   color: #495060;
