@@ -39,13 +39,11 @@
 	font-size: 30px;
 	text-align: left;
 	font-weight: bold;
-  /*text-align: center;*/
 }
 .article_xinxi{
 	text-align: left;
     margin: 10px 0 20px;
     color: #ccc;
-    /*text-align: center;*/
 }
 .article_xinxi span{
 	display: inline-block;

@@ -23,15 +23,22 @@ export default {
       getUrl: '',
       txvideocurrentcount:0,
       txvideocount:0,
+      timer:null
     }
   },
    watch:{
     txvideocurrentcount(val){
         if(val == this.txvideocount){
-            // show
+              // show
             $("#loading-div").css({"display":'none'});
             $("#content-div").css({"opacity":1});
+            clearTimeout(this.timer);
         }
+        clearTimeout(this.timer);
+        this.timer=setTimeout(function(){
+            $("#loading-div").css({"display":'none'});
+            $("#content-div").css({"opacity":1});
+        },10000)
     }
   },
     mounted() {
@@ -105,10 +112,12 @@ export default {
 	                    "file_id": serverfileid,
 	                    "app_id": "1252018592",
 	                    "width": 640,
-	                    "height": 360
+	                    "height": 360,
+                      "hide_h5_error":true
 	                };
-                 new qcVideo.Player("id_video_container_"+serverfileid+"_"+i,option,function(status){
+                 new qcVideo.Player("id_video_container_"+serverfileid+"_"+i,option,function(status,msg){
                    if(status == 'ready'){
+
                           This.txvideocurrentcount++;
                       }
                  });

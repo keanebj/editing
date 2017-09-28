@@ -1,14 +1,14 @@
 <section>
    <div v-if="noData">
   <Row type="flex" justify="center">
-    <Col span="18" class="hidden-xss">
+    <Col span="18" class="hidden-xss" :style="{display:hideHead}">
     <div class="header">
       <img src="../../assets/article/header.png">
     </div>
     </Col>
   </Row>
   <Row type="flex" justify="center">
-    <Col :xs="24" :sm="18" :md="18" :lg="18">
+    <Col :xs="24" :sm="12" :md="12" :lg="12">
     <div class="article" style="margin: 0px 0 50px 0;">
       <div>
         <div class="con_new hidden-xs">
