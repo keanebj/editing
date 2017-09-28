@@ -205,7 +205,6 @@ export default {
       this.$http.get("/api/content",{
         params:{status:this.status,value:this.searchValue,pagesize:this.pageSize,pageindex:this.pageIndex-1}})
         .then((response) => {
-          console.log(response.data.contents);
         //如果没数据
         if(type =='search' && response.data.total == 0){
           this.hidenofound=false;
