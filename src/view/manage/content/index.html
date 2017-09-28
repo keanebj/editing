@@ -88,7 +88,7 @@
         <th scope="row" id="title" class="title" width="35%" style="text-align:left;">
           <router-link :to="{path:'../article',query:{id:item.id}}" v-if="roleType == 'Edit'">{{item.title}}</router-link>
           <router-link :to="{path:'../notice',query:{id:item.id}}" v-else-if="roleType == 'Manage'">{{item.title}}</router-link>
-          <p v-if="item.forward"><span>转发{{item.forward}}</span>&nbsp;<span>浏览{{item.views}}</span></p>
+          <p v-if="roleType == 'Edit' && item.status == 'Publish'"><span>转发{{item.forward}}</span>&nbsp;&nbsp;<span>浏览{{item.views}}</span></p>
         </th>
         <td style="padding: 0.75rem;" width="10%">{{item.author}}</td>
         <td width="90">{{item.addtime}}</td>
