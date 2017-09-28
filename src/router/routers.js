@@ -1,4 +1,5 @@
-export default [{
+export default [
+  {
     name: 'login',
     path: '/login',
     meta: {
@@ -13,7 +14,7 @@ export default [{
       title: '发表-全国党媒融合号'
     },
     component: () => import('@/view/publish/index.vue')
-   },
+  },
   {
     name: 'main',
     path: '/',
@@ -21,7 +22,8 @@ export default [{
       title: '全国党媒融合号'
     },
     component: () => import('@/view/index.vue'),
-    children: [{
+    children: [
+      {
         name: 'home',
         path: '',
         meta: {
@@ -105,27 +107,27 @@ export default [{
         name: 'notice',
         path: '/notice',
         meta: {
-          title: '公告-全国党媒融合号',
+          title: '公告-全国党媒融合号'
         },
-        component: () => import('@/view/notice/index.vue'),
+        component: () => import('@/view/notice/index.vue')
       },
       {
         name: 'article',
         path: '/article',
         meta: {
-          title: '文章-全国党媒融合号',
+          title: '文章-全国党媒融合号'
         },
-        component: () => import('@/view/article/index.vue'),
-      }
+        component: () => import('@/view/article/index.vue')
+      },
     ]
   },
   {
     name: 'share',
     path: '/share',
     meta: {
-      title: '分享-全国党媒融合号',
+      title: '分享-全国党媒融合号'
     },
-    component: () => import('@/view/share/index.vue'),
+    component: () => import('@/view/share/index.vue')
   },
   {
     name: '404',

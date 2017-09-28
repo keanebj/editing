@@ -34,26 +34,18 @@
 .con_new img[src^="/static/ueditor/dialogs/attachment/fileTypeImages"]{
 	width:auto;
 }
-.con_new embed{
-	/*max-width: 100%;*/
-  width:41.6vw;
-  height:23.4vw;
-}
-.con_new video{
-	/*max-width: 100%;*/
-  width:41.6vw;
-  height:23.4vw;
-}
 .orginTit{
 	margin-bottom: 10px;
 	font-size: 30px;
 	text-align: left;
 	font-weight: bold;
+  /*text-align: center;*/
 }
 .article_xinxi{
 	text-align: left;
     margin: 10px 0 20px;
     color: #ccc;
+    /*text-align: center;*/
 }
 .article_xinxi span{
 	display: inline-block;
@@ -65,15 +57,15 @@
   margin-bottom: 30px;
 
 }
-.con_new p .download_video{
+.con_new  .download_video{
   position: absolute;
   bottom: -24px;
-  right: calc((100% - 41.6vw) / 2);
+  right: calc(50% - 320px);
   text-decoration: none;
   padding-left: 20px;
   display: inline-block;
   color: #b2b2b2;
-  background: url(http://mp.dev.hubpd.com/static/ueditor/audioimages/download.svg) left center no-repeat;
+  background: url(../../assets/svg/download.svg) left center no-repeat;
   background-size: 14px 14px;
 }
 

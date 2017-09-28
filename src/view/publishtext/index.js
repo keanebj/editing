@@ -5,7 +5,7 @@ import uploadAudio from '@/components/uploadAudio/index.vue'
 import '../../../static/ueditor/ueditor.config.js'
 import '../../../static/ueditor/ueditor.all.js'
 import '../../../static/ueditor/lang/zh-cn/zh-cn.js'
-import '../../../static/ueditor/ueditor.parse.min.js'
+import '../../../static/ueditor/ueditor.parse.js'
 import Vue from 'vue'
 import Cookies from 'js-cookie'
 import {
@@ -123,7 +123,7 @@ export default {
       isHideSubtitle: true,
       oldval: '',
       newval: '',
-      showloadingbtn:false
+      showloadingbtn:false,
     }
   },
   created() {
@@ -321,6 +321,7 @@ export default {
     },
     stopVideo(){
       //视频:embed或者video
+      let This=this;
           let videoArr=this.$refs.yulan.$el.getElementsByTagName('video');
           if(videoArr && videoArr.length > 0){
             for(var i=0;i<videoArr.length;i++){
@@ -332,50 +333,34 @@ export default {
                 }
             }
           }
-          //如果是embed，需要重新生成播放器
+          //如果是腾讯的，需要重新生成播放器
           let embedArr=this.$refs.yulan.$el.getElementsByClassName('video_container');
+          this.playerallcount=embedArr.length;
           if(embedArr && embedArr.length > 0){
             for(var i=0;i<embedArr.length;i++){
-              //清空html
-                var a = embedArr[i].getElementsByClassName('download_video')[0];
                 embedArr[i].innerHTML="";
                 var selVideoid=embedArr[i].getAttribute("serverfileid");
                 var id=embedArr[i].getAttribute("id");
                 //id重复的情况
                 embedArr[i].setAttribute("id",id+"_index_"+i);
-                var ps = embedArr[i];
                 var option = {
-                "auto_play": "0",
                 "file_id": selVideoid,
                 "app_id": "1252018592",
                 "width": 640,
                 "height": 360,
+                "hide_h5_error":true
             };
-            var player=new qcVideo.Player(id+"_index_"+i, option
-//          ,function (ev) {
-//
-//            if (ev == 'ready') {
-//              if (navigator.userAgent.indexOf('Firefox') > -1) {
-//                a.innerHTML = '右键点击另存为下载视频！';
-//              }else{
-//                a.innerHTML = '下载视频';
-//              }
-//              ps.append(a);
-//            }
-//          }
-            );
+            var player=new qcVideo.Player(id+"_index_"+i, option);
+            player.pause();
+
             if(this.tabView == 'pc'){
-                 var renderEmbed=embedArr[i].getElementsByTagName('embed')[0];
-                 var renderVideo=embedArr[i].getElementsByTagName('video')[0];
-                 if(renderEmbed){
+                //可能是embed，也可能是video：这里暂时先这样处理
+                var renderEmbed=embedArr[i].getElementsByTagName('embed')[0];
+                if(renderEmbed){
                     renderEmbed.style.width="640px";
                     renderEmbed.style.height="360px";
-                 }else if(renderVideo){
-                    renderVideo.style.width="640px";
-                    renderVideo.style.height="360px";
-                 }
+                }
             }
-            player.pause();
 
             }
           }
@@ -404,6 +389,7 @@ export default {
       this.editor.execCommand('inserthtml',embedtemp);
     },
     showPreviewContent: function () {
+      let This=this;
       //获得编辑器中的内容:这里的预览需要写一个界面（待完善。。。）
       if (this.articleID > -1) {
         //    	保存显示预览(后台返回数据问题)
@@ -421,6 +407,13 @@ export default {
           if (response.data.operatortype == "Edit") {
             this.previewCon[0].author = data.author;
           }
+          this.$nextTick(function(){
+              //生成播放器
+              This.stopVideo();
+          });
+
+
+
         }, (error) => {
           this.$Notice.error({
             title: error.data.message,
@@ -429,8 +422,8 @@ export default {
         });
         this.previewContent = true;
         var ele = this.elements;
+
         clearTimeout(time);
-        let This=this;
         var time = setTimeout(function () {
           if (ele[3].clientHeight >= ele[0].clientHeight) {
             ele[1].style.display = 'none';
@@ -441,22 +434,21 @@ export default {
             var scale = ele[3].clientHeight / ele[0].clientHeight;
             ele[1].style.height = ele[2].clientHeight * scale + 'px'
           }
-//        let $=qaVideo.get("$");
-//        for (var i = 0; i<$('.download').size(); i++) {
-//          $('.download').eq(i).attr('href', $('.audioWrap.myDirectiveAudio').eq(i).attr('audio-url'))
-//          if (navigator.userAgent.indexOf('Firefox') > -1 && $('.download').eq(i).attr('href')[0].indexOf(window.location.host) == -1) {
-//            $('.download').eq(i).html('右键点击另存为下载文件！');
-//          }else{
-//            $('.download').eq(i).html('下载音频');
-//          }
-//        }
-//        for (var i = 0; i<$('.download_video').size(); i++) {
-//          if (navigator.userAgent.indexOf('Firefox') > -1) {
-//            $('.download_video').eq(i).html('右键点击另存为下载视频！');
-//          }else{
-//            $('.download_video').eq(i).html('下载视频');
-//          }
-//        }
+          for (var i = 0; i<$('.download').size(); i++) {
+            $('.download').eq(i).attr('href', $('.audioWrap.myDirectiveAudio').eq(i).attr('audio-url'))
+            if (navigator.userAgent.indexOf('Firefox') > -1 && $('.download').eq(i).attr('href')[0].indexOf(window.location.host) == -1) {
+              $('.download').eq(i).html('右键点击另存为下载文件！');
+            }else{
+              $('.download').eq(i).html('下载音频');
+            }
+          }
+          for (var i = 0; i<$('.download_video').size(); i++) {
+            if (navigator.userAgent.indexOf('Firefox') > -1) {
+              $('.download_video').eq(i).html('右键点击另存为下载视频！');
+            }else{
+              $('.download_video').eq(i).html('下载视频');
+            }
+          }
         }, 500)
       } else {
         //    	不显示预览

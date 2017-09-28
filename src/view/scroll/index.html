@@ -14,7 +14,6 @@
       		<span>{{ author }}</span>
       	</div>
         <div v-my-directive-audio="previewCon.content"></div>
-      	<!--<div v-html="previewCon.content"></div>-->
       </div>
       <div v-else-if="selVideoid">
         <Radio-group v-model="currentvideoid" ref="currentvideoid" :on-change="changeRadios(currentvideoid)">

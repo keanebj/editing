@@ -8,7 +8,7 @@
     </Col>
   </Row>
   <Row type="flex" justify="center">
-    <Col :xs="24" :sm="12" :md="12" :lg="12">
+    <Col :xs="24" :sm="18" :md="18" :lg="18">
     <div class="article" style="margin: 0px 0 50px 0;">
       <div>
         <div class="con_new hidden-xs">
@@ -23,8 +23,8 @@
       			<span>{{ conInfo.time.substring(0,10) }}</span>
       			<span>{{ conInfo.author }}</span>
         	</div>
-
-        	<div class="shareContent" v-my-directive-audio="content"></div>
+           <div style="text-align: center;display: block;" id="loading-div"><img style="width:30px;height:30px;" src="../../assets/loading.gif"></div>
+        	<div class="shareContent" v-my-directive-audio="content" style="opacity: 0" id="content-div"></div>
         </div>
       </div>
     </div>
@@ -32,7 +32,7 @@
       <!-- <img src="../../assets/article/footer.png"> -->
     </div>
     </Col>
-    <Col span="6" :xs="0" :sm="6" :md="6" :lg="6" :style="{display: hideRight}">
+    <Col span="6" :xs="0" :sm="6" :md="6" :lg="6" class="shareright" :style="{display: hideRight}">
     <div class="right">
       <img src="../../assets/article/right-1.png">
       <img src="../../assets/article/right-2.png">

@@ -44,7 +44,6 @@ export default {
   },
   updated () {
     this.$emit('iIndex', [this.i, this.contentCoverSrc]);
-
   },
   methods: {
     changeRadios (id) {

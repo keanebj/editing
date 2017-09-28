@@ -149,13 +149,11 @@ watch:{
           let data = response.data.content;
           //给数据值
           this.formTop.title = data.title;
-
           this.formTop.publishchannel = data.channel;
           this.formTop.authorArr=data.author.split(/\s+/g);
           if (data.keyword != null) {
             this.formTop.keywordArr=data.keyword.split(/\s+/g);
           }
-
           this.formTop.cover = data.cover;
           this.formTop.summary = data.summary;
           this.formTop.content = data.content;
@@ -171,6 +169,12 @@ watch:{
             this.subtitleContentCount = Math.ceil(this.gblen(data.subtitle,120,'subtitle')) > 60 ? 60:Math.ceil(this.gblen(data.subtitle,120,'subtitle'));
             this.isHideSubtitle=false;
           }
+          this.$nextTick(function(){
+            //dom更新以后，进行替换
+            var id=$("#temp").find(".video_container").attr("serverfileid") || '';
+            var url=$("#temp").find("a").attr("href");
+            this.insertVideoEditor(this.formTop.content,id,'',url);
+          })
         }else{
           this.articleID=-1;
           //禁用video
@@ -214,7 +218,7 @@ watch:{
   },
   methods: {
      stopVideo(){
-      //视频:embed或者video::embed 的暂停暂时不能解决
+      //外链
           let videoArr=this.$refs.yulan.$el.getElementsByTagName('video');
           if(videoArr && videoArr.length > 0){
             for(var i=0;i<videoArr.length;i++){
@@ -226,7 +230,7 @@ watch:{
                 }
             }
           }
-          //如果是embed，需要重新生成播放器
+          //如果腾讯的
           let embedArr=this.$refs.yulan.$el.getElementsByClassName('video_container');
           if(embedArr && embedArr.length > 0){
             for(var i=0;i<embedArr.length;i++){
@@ -236,23 +240,19 @@ watch:{
                 var id=embedArr[i].getAttribute("id");
                 embedArr[i].setAttribute("id",id+'_Preview');
                 var option = {
-                    "auto_play": "0",
                     "file_id": selVideoid,
                     "app_id": "1252018592",
                     "width": 640,
                     "height": 360,
+                    "hide_h5_error":true
                 };
                 var player=new qcVideo.Player(id+'_Preview', option);
                 if(this.tabView == 'pc'){
                     //可能是embed，也可能是video：这里暂时先这样处理
                     var renderEmbed=embedArr[i].getElementsByTagName('embed')[0];
-                    var renderVideo=embedArr[i].getElementsByTagName('video')[0];
                     if(renderEmbed){
                         renderEmbed.style.width="640px";
                         renderEmbed.style.height="360px";
-                    }else if(renderVideo){
-                        renderVideo.style.width="640px";
-                        renderVideo.style.height="360px";
                     }
                 }
                 player.pause();
@@ -277,13 +277,28 @@ watch:{
     goBack(){
       this.$router.go(-1);
     },
-    insertVideoEditor(html,id,name){
-      this.$refs.videoTabPreview.innerHTML=html;
+    insertVideoEditor(html,id,name,url){
       if(id){
-        this.videoid=id;
-      }else if(name){
-        this.videoname=name;
+        //说明是腾讯云的视频
+        var option = {
+            "auto_play": "0",
+            "file_id": id,
+            "app_id": "1252018592",
+            "width": 640,
+            "height": 360,
+        };
+        new qcVideo.Player("videoTabPreview", option,function(status){
+          if(status == 'ready'){
+            //可以播放，添加下载
+            $("#videoTabPreview").parent().append('<a href="'+url+'" contenteditable="false" download class="download_video" target="_blank" _href="'+url+'">下载视频</a>');
+          }
+        });
+      }else{
+        //外链视频
+        $("#videoTabPreview").parent().find("a").remove();
+        $("#videoTabPreview").html(html);
       }
+      this.formTop.content=html;
       this.ishideone=true;
     },
     reuploadvideo(){
@@ -291,31 +306,9 @@ watch:{
        this.$emit('showUploadPop');
     },
     showPreviewContent:function(){
-      //获得编辑器中的内容:这里的预览需要写一个界面（待完善。。。）
-      if (this.articleID > -1) {
-//    	保存显示预览(后台返回数据问题)
-        this.$http.get("/api/content/"+this.articleID).then((response) => {
-          let data = response.data.content;
-          //给数据值
-          this.previewCon[0].title = data.title;
-          this.previewCon[0].cover = data.cover;
-          this.previewCon[0].subtitle = data.subtitle;
-	          this.previewCon[0].content = data.content;
-	          this.previewCon[0].time = data.addtime;
-	          this.previewCon[0].studioname = this.studioName;
-	          this.$refs.yulan.previewConauthor(data.author);
-	          this.previewCon[0].channel = data.channel;
-          if (response.data.operatortype == "Edit") {
-	          this.previewCon[0].author = data.author;
-          }
-        }, (error) => {
-          this.$Notice.error({
-            title: error.data.message,
-            desc: false
-          })
-        });
-        this.previewContent=true;
+      this.previewContent=true;
         var ele = this.elements;
+        let This=this;
         clearTimeout(time);
         var time =  setTimeout(function () {
           if (ele[3].clientHeight >= ele[0].clientHeight) {
@@ -328,6 +321,33 @@ watch:{
             ele[1].style.height = ele[2].clientHeight*scale + 'px'
           }
         },200)
+      //获得编辑器中的内容:这里的预览需要写一个界面（待完善。。。）
+      if (this.articleID > -1) {
+//    	保存显示预览(后台返回数据问题)
+        this.$http.get("/api/content/"+this.articleID).then((response) => {
+          let data = response.data.content;
+          //给数据值
+          this.previewCon[0].title = data.title;
+          this.previewCon[0].cover = data.cover;
+          this.previewCon[0].subtitle = data.subtitle;
+          this.previewCon[0].content = data.content;
+          this.previewCon[0].time = data.addtime;
+          this.previewCon[0].studioname = this.studioName;
+          this.$refs.yulan.previewConauthor(data.author);
+          this.previewCon[0].channel = data.channel;
+          if (response.data.operatortype == "Edit") {
+	          this.previewCon[0].author = data.author;
+          }
+          this.$nextTick(function(){
+              //生成播放器
+              This.stopVideo();
+          });
+        }, (error) => {
+          this.$Notice.error({
+            title: error.data.message,
+            desc: false
+          })
+        });
       }else{
 //    	不显示预览
         this.$Notice.warning({
@@ -562,7 +582,6 @@ abstractWordCount:function(event){
       }
     },
     save:function(name,hideTip){
-      this.formTop.content=this.$refs.videoTabPreview.innerHTML;
       this.formTop.author=this.formTop.authorArr.join(" ");
       this.formTop.keyword=this.formTop.keywordArr.join(" ");
       if(!this.formTop.author){

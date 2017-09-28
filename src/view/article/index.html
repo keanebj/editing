@@ -15,7 +15,7 @@
     </Col>
   </Row>
   <Row type="flex" justify="center">
-    <Col span="12">
+    <Col span="18">
     <div class="article">
       <div>
         <div class="con_new hidden-xs">
@@ -26,8 +26,8 @@
       			<span>{{ conInfo.time.substring(0,10) }}</span>
       			<span>{{ conInfo.author }}</span>
         	</div>
-          
-        	<div v-my-directive-audio="content"></div>
+          <div id="loading-div" style="text-align: center;display: block;"><img style="width:30px;height:30px;"  src="../../assets/loading.gif" ></div>
+        	<div v-my-directive-audio="content" style="opacity: 0" id="content-div"></div>
         </div>
 
       </div>
@@ -38,7 +38,7 @@
     </Col>
     <Col span="6">
     <div class="right">
-      <img src="../../assets/article/right-1.png">  
+      <img src="../../assets/article/right-1.png">
       <img src="../../assets/article/right-2.png">
     </div>
     </Col>

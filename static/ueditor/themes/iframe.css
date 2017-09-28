@@ -22,7 +22,7 @@ img {
 	text-align: left;
 }
 .video_container{
-  position: relative;
+  /*position: relative;*/
   margin: 10px auto;
 }
 .download_video{

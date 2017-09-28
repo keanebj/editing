@@ -10626,7 +10626,7 @@ UE.plugins['autotypeset'] = function(){
 
             }
             if(isLine(ci,true) && ci.tagName != 'SPAN'){
-                if(ci.className.indexOf("myDirectiveAudio") == -1 && ci.className.indexOf("video_container") == -1 && ci.className.indexOf("video_link_container") == -1){
+                if(ci.className.indexOf("myDirectiveAudio") == -1 && ci.className.indexOf("div_video_container_father") == -1 && ci.className.indexOf("video_container") == -1 && ci.className.indexOf("video_link_container") == -1){
                     if(opt.indent){
                         ci.style.textIndent = opt.indentValue;
                     }

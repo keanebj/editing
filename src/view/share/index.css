@@ -43,16 +43,6 @@
 .error img{
     width: 80%;
 }
-.con_new embed{
-	/*max-width: 100%;*/
-  width:41.6vw;
-  height:23.4vw;
-}
-.con_new video{
-	/*max-width: 100%;*/
-  width:41.6vw;
-  height:23.4vw;
-}
 .error p{
     margin-top: 30px;
     color: #333;
@@ -68,9 +58,6 @@
 .video_container{
   margin-bottom:30px;
 }
-/*.video_container embed,.video_container video{
-  width:100% !important;
-}*/
 .orginTit{
 	font-size: 30px;
 	font-weight: bold;
@@ -183,7 +170,7 @@
     padding-left:20px;
     display:inline-block;
     color:#b2b2b2;
-    background:url(http://mp.dev.hubpd.com/static/ueditor/audioimages/download.svg) left center no-repeat;
+    background:url(../../assets/svg/download.svg) left center no-repeat;
     background-size:14px 14px;
 }
 .totleTime{
@@ -193,15 +180,15 @@
 .con_new p{
   position: relative;
 }
-.con_new p .download_video{
+.con_new  .download_video{
   position: absolute;
   bottom: -24px;
-  right: calc((100% - 41.6vw) / 2);
+  right: calc(50% - 320px);
   text-decoration: none;
   padding-left: 20px;
   display: inline-block;
   color: #b2b2b2;
-  background: url(http://mp.dev.hubpd.com/static/ueditor/audioimages/download.svg) left center no-repeat;
+  background: url(../../assets/svg/download.svg) left center no-repeat;
   background-size: 14px 14px;
 }
 .hidden-xss{
@@ -242,6 +229,9 @@
 	.hidden-xss{
 		display: none;
 	}
+  .shareright{
+    display: none !important;
+  }
 	.article_xinxi span{
 		margin-left: 5px;
 	}
@@ -304,7 +294,6 @@
 		padding: 15px;
 	}
 	.con_new{
-		/*padding: 0 15px;*/
 		padding: 0;
 		margin-top: 0;
 	}
@@ -314,9 +303,6 @@
    .footer{
      display: none;
    }
-   /*.article .orginTit{
-      font-size:16px;
-   }*/
    .shareContent video{
      background:#000;
    }
@@ -348,11 +334,7 @@
     text-decoration: none;
     padding-left: 20px;
     color: #b2b2b2;
-    background: url(http://mp.dev.hubpd.com/static/ueditor/audioimages/download.svg) left center no-repeat;
+    background: url(../../assets/svg/download.svg) left center no-repeat;
     background-size: 14px 14px;
   }
-  /*.article .shareContent video{
-     width:70% !important;
-     height: auto;
-  }*/
 }

@@ -22,28 +22,25 @@
     margin-left:10%;
     margin-top:10px;
   }
-  #videoTabPreview p{
-    position: relative;
-  }
-  #videoTabPreview p .download_video{
+.download_video{
     position: absolute;
     bottom: -24px;
-    right: calc((100% - 640px) / 2);
+    right: calc(50% - 320px);
     text-decoration: none;
     padding-left: 20px;
     display: inline-block;
     color: #b2b2b2;
-    background: url(http://mp.dev.hubpd.com/static/ueditor/audioimages/download.svg) left center no-repeat;
+    background: url(../../assets/svg/download.svg) left center no-repeat;
     background-size: 14px 14px;
   }
-  #videoTabPreview video{
+  /*#videoTabPreview video{
     width:100% !important;
     height:100% !important;
     border:1px solid #cccccc;
   }
   #videoTabPreview embed{
     width:100% !important;
-  }
+  }*/
   .video-scale-tip{
     color:#F95759;
     display: block;

@@ -17,7 +17,7 @@ export default {
     uploadVideo
   },
   data () {
-    return { 
+    return {
       tabname:'text',
       disabledText:false,
       disabledVideo:false
@@ -41,14 +41,14 @@ export default {
            this.disabledVideo=true;
       }
     },
-    insertVideoEditor(val,id,name){
+    insertVideoEditor(val,id,name,url){
       //如果是图文
       if(this.tabname == 'text'){
           this.$refs.publishtextele.insertVideoEditor(val);
       }else{
           //如果是视频
-          this.$refs.publishvideoele.insertVideoEditor(val,id,name);
-      } 
+          this.$refs.publishvideoele.insertVideoEditor(val,id,name,url);
+      }
     },
     goBack(){
       this.$router.go(-1);

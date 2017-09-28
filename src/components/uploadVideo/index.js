@@ -28,7 +28,7 @@ export default {
             status:''
         },
         //给一个默认id
-        selVideoid:'111',
+        selVideoid:-1,
         materialVideos:[],
         isHideSourceBtn:false,
         playInfo:'',
@@ -58,7 +58,6 @@ export default {
     uploadVideo(bool){
         if(!bool){
             this.reset();
-
         }
     },
     uploadVideoCodeStatus(){
@@ -104,6 +103,34 @@ export default {
       trim(str){
             return str.replace(/(^\s*)|(\s*$)/g, "");
       },
+      reset(){
+        this.videoLink='';
+        $("#videoPreview").html("");
+        this.reUpload();
+        this.changeTab('local');
+        this.selVideoid= -1;
+        this.uploadVideo=false;
+        //同时需要取消上传
+        if(this.video.status == 'uploading'){
+          this.video.status='';
+          qdVideo.uploader.stopUpload();
+          qdVideo.uploader.deleteFile(this.video.localId);
+        }
+        this.idHideStepOne=false;
+        this.idHideStepTwo=true;
+        this.idHideStepThree=true;
+        this.idHideStepFour=true;
+        clearInterval(this.videotimer);
+        clearTimeout(this.onceTimer);
+        clearTimeout(this.loadingTimer);
+        clearInterval(this.loadingMsgTimer);
+        this.$refs.loadingMsg.innerHTML='';
+        $("#pickfile").show();
+        this.uploadVideoCodeStatus=false;
+        var fileElement = $("#pickfile").detach();
+        fileElement[0].innerText="上传视频";
+        fileElement.appendTo("#step-one-pickfile");
+      },
       addLinkVideo(){
         if(!this.trim(this.videoLink)){
              this.$Notice.warning({
@@ -121,64 +148,24 @@ export default {
              });
          }else{
              //调用父组件中的
-            let linkvideoHtml=this.$refs.linkVideoHtml.innerHTML;
+            let linkvideoHtml =$("#previewLinkVideo").html();
             this.$emit("insertVideoEditor",linkvideoHtml);
             this.uploadVideo=false;
          }
       },
       addLocalVideo(){
-        let $ = qdVideo.get('$');
-        $("#videoPreview").find('embed').prop('width','640px');
-        $("#videoPreview").find('embed').prop('height','360px');
-        let videoHtml='<p contenteditable="false" style="text-align:center;width:100%;margin-bottom:30px;" class="video_container" serverfileid="'+this.video.videoId+'" id="id_video_container_'+this.video.videoId+'">'+this.$refs.videoPreview.innerHTML+'<a href="'+this.$store.state.videourl+'" contenteditable="false" download class="download_video" target="_blank" _href="'+ this.$store.state.videourl+'">下载视频</a></p>';
-        this.$emit("insertVideoEditor",videoHtml,this.video.videoId,this.video.name);
+       let videoHtml='<div contenteditable="false" class="div_video_container_father" style="width:100%;margin-bottom:30px;position:relative;"><p style="text-align:center;" class="video_container" serverfileid="'+this.video.videoId+'" id="id_video_container_'+this.video.videoId+'">'+
+       '<video style="background:#000;" src="'+this.$store.state.videourl+'" width="640" height="360" preload="auto" controls></video>'
+       +'</p><a href="'+this.$store.state.videourl+'" contenteditable="false" download class="download_video" target="_blank" _href="'+this.$store.state.videourl+'">下载视频</a></div>';
+        this.$emit("insertVideoEditor",videoHtml,this.video.videoId,this.video.name,this.$store.state.videourl);
         this.uploadVideo=false;
-      },
-      reset(){
-        this.videoLink='';
-        $("#videoPreview").html("");
-        this.reUpload();
-        this.changeTab('local');
-        this.selVideoid= '111';
-        this.uploadVideo=false;
-        //同时需要取消上传
-        if(this.video.status == 'uploading'){
-            this.video.status='';
-            qdVideo.uploader.stopUpload();
-            qdVideo.uploader.deleteFile(this.video.localId);
-        }
-        this.idHideStepOne=false;
-        this.idHideStepTwo=true;
-        this.idHideStepThree=true;
-        this.idHideStepFour=true;
-        clearInterval(this.videotimer);
-        clearTimeout(this.onceTimer);
-        clearTimeout(this.loadingTimer);
-        clearInterval(this.loadingMsgTimer);
-        this.$refs.loadingMsg.innerHTML='';
-        $("#pickfile").show();
-        this.uploadVideoCodeStatus=false;
-        var fileElement = $("#pickfile").detach();
-        fileElement[0].innerText="上传视频";
-        fileElement.appendTo("#step-one-pickfile");
       },
       addSourceVideo(){
-          if(this.selVideoid!= '111'){
-              //已经选择了某个素材
-            var option = {
-                "auto_play": "0",
-                "file_id": this.selVideoid,
-                "app_id": "1252018592",
-                "width": 640,
-                "height": 360,
-            };
-            new qcVideo.Player("videoPreview1", option);
-            let $ = qdVideo.get('$');
-            $("#videoPreview1").find('embed').prop('width','640px');
-            $("#videoPreview1").find('embed').prop('height','360px');
-            $("#videoPreview1").find('object').prop('contenteditable','false');
-            let videoHtml='<p contenteditable="false" style="text-align:center;width:100%;margin-bottom:30px;" class="video_container" serverfileid="'+this.selVideoid+'" id="id_video_container_'+this.selVideoid+'">'+this.$refs.videoPreview1.innerHTML+'<a href="'+this.$store.state.videourl+'" contenteditable="false" download class="download_video" target="_blank" _href="'+ this.$store.state.videourl+'">下载视频</a></p>';
-            this.$emit("insertVideoEditor",videoHtml,this.selVideoid);
+          if(this.selVideoid != -1){
+            let videoHtml='<div contenteditable="false" class="div_video_container_father" style="width:100%;margin-bottom:30px;position:relative;"><p style="text-align:center;" class="video_container" serverfileid="'+this.selVideoid+'" id="id_video_container_'+this.selVideoid+'">'+
+            '<video style="background:#000;" src="'+this.$store.state.videourl+'" width="640" height="360" preload="auto" controls></video>'
+            +'</p><a href="'+this.$store.state.videourl+'" contenteditable="false" download class="download_video" target="_blank" _href="'+this.$store.state.videourl+'">下载视频</a></div>';
+            this.$emit("insertVideoEditor",videoHtml,this.selVideoid,'',this.$store.state.videourl);
             this.uploadVideo=false;
          }else{
              //没有选择素材

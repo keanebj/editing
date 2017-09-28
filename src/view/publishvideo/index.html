@@ -31,7 +31,8 @@
     </div>
      <div :class="{hide:!ishideone}">
       <div class="video-upload-label">上传视频 <span style="margin-left:30px;">{{videoname}}</span><Button type="primary" shape="circle" style="margin-left:30px;float:right;" @click="reuploadvideo">重新上传</Button></div>
-      <div id="videoTabPreview" ref="videoTabPreview" class="video_container" v-html="formTop.content"></div>
+      <div v-html="formTop.content" style="display: none;" id="temp"></div>
+      <div style="width:100%;margin-bottom:30px;position:relative;"><p id="videoTabPreview" ref="videoTabPreview" class="video_container"></p></div>
       <span class="video-scale-tip">视频比例为16:9</span>
     </div>
 

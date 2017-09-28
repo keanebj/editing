@@ -312,15 +312,14 @@
   position: relative;
   word-break: break-all;
 }
-.set-con p .download_video{
+.set-con .download_video{
   position: absolute;
-  bottom: -14px;
-  right: calc((100% - 640px) / 2);
+  right: calc(50% - 320px);
   text-decoration: none;
   padding-left: 20px;
   display: inline-block;
   color: #b2b2b2;
-  background: url(http://mp.dev.hubpd.com/static/ueditor/audioimages/download.svg) left center no-repeat;
+  background: url(../../assets/svg/download.svg) left center no-repeat;
   background-size: 14px 14px;
 }
 
@@ -352,6 +351,17 @@
   position: absolute;
   width: 97%;
 }
+
+.ivu-modal-wrap.pc .video_container>div{
+  width:640px !important;
+  height:360px !important;
+}
+.ivu-modal-wrap.mobile .video_container>div{
+  width:227px !important;
+  height:114px !important;
+}
+
+
 
 /*在手机上预览*/
 .ivu-modal-wrap.mobile .ivu-modal-content .ivu-modal-body {
@@ -407,9 +417,9 @@
   font-size: 16px !important;
 }
 
-.ivu-modal-wrap.pc embed {
+/*.ivu-modal-wrap.pc embed {
   margin: 10px auto;
-}
+}*/
 
 .ivu-modal-wrap.mobile embed, .ivu-modal-wrap.mobile video {
   width: 90% !important;

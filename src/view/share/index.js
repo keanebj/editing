@@ -23,59 +23,38 @@ export default {
       noData:true,
       notShared: false,
       hideRight: 'block',
-      align: 'left'
+      align: 'left',
+      txvideocurrentcount:0,
+      txvideocount:0
     }
   },
   created() {
     this.shareId = this.$route.query.id;
-    //ajax获得分享的内容
-    this.$http.get("/api/content/share/" + this.shareId)
-      .then((response) => {
-        if(response.data.status == 1){
-            this.noData=true;
-            this.title = response.data.content.title;
-            this.cover = response.data.content.cover;
-            this.subtitle = response.data.content.subtitle;
-            this.conInfo.channel = response.data.content.channel;
-            this.content = response.data.content.content;
-            this.conInfo.time = response.data.content.addtime;
-	          this.conInfo.author = response.data.content.author;
-        }else{
-          this.noData=false;
-           this.$Notice.warning({
-                title: response.data.message,
-                desc: false
-            })
+  },
+   watch:{
+    txvideocurrentcount(val){
+        if(val == this.txvideocount){
+            // show
+            $("#loading-div").css({"display":'none'});
+            $("#content-div").css({"opacity":1});
         }
-      }, (error) => {
-        this.noData=false;
-        this.$Notice.warning({
-            title: error.data.message,
-            desc: false
-        })
-    });
+    }
   },
   methods: {
     goBack() {
       this.$router.push('/manage/content')
-    }
-  },
-  mounted() {
-  	if (this.$store.state.userinfo.roleType == 'Manage') {
-  		this.align = 'center';
-  		this.hideRight = 'none';
-  	}else{
-  		this.hideRight = 'block';
-  		this.align = 'left';
-  	}
-       //找到编辑器里面的视频内容 ，进行 替换
-       let $=qaVideo.get("$");
-       setTimeout(function(){
+    },
+    renderPlayer(){
+             //生成播放器
+          let This=this;
           let count=$(".video_container").size();
+          this.txvideocount=count;
+          if(count == 0){
+            $("#loading-div").css({"display":'none'});
+            $("#content-div").css({"opacity":1});
+          }
           if(count > 0){
           		for(var i=0;i<count;i++){
-                // if ($(".video_container").eq(i).find('embed').length > 0) {
-                  let a = $(".video_container").eq(i).find('.download_video')[0];
 	                let serverfileid=$(".video_container").eq(i).html('').attr('serverfileid');
                   //替换容器的id，用于解决id重复的问题
                   $(".video_container").eq(i).attr('id',"id_video_container_"+serverfileid+"_"+i);
@@ -86,14 +65,11 @@ export default {
 	                    "width": 640,
 	                    "height": 360
 	                };
-                 new qcVideo.Player("id_video_container_"+serverfileid+"_"+i,option,function (ev) {
-                   if (ev == 'ready') {
-                    $(".video_container")[i].append(a)
-                   }
-                 });
-                //  $(".video_container").eq(i)[0].appendChild(a);
-
-	            // }
+                  new qcVideo.Player("id_video_container_"+serverfileid+"_"+i,option,function(status){
+                      if(status == 'ready'){
+                          This.txvideocurrentcount++;
+                      }
+                  });
           	}
           }
           if (window.screen.width < 640) {
@@ -120,7 +96,45 @@ export default {
 //            }
 //          }
           }
+    }
+  },
+  mounted() {
+  	// if (this.$store.state.userinfo.roleType == 'Manage') {
+  	// 	this.align = 'center';
+  	// 	this.hideRight = 'none';
+  	// }else{
+  	// 	this.hideRight = 'block';
+  	// 	this.align = 'left';
+  	// }
 
-        },500)
+    //ajax获得分享的内容
+    this.$http.get("/api/content/share/" + this.shareId)
+      .then((response) => {
+        if(response.data.status == 1){
+            this.noData=true;
+            this.title = response.data.content.title;
+            this.cover = response.data.content.cover;
+            this.subtitle = response.data.content.subtitle;
+            this.conInfo.channel = response.data.content.channel;
+            this.content = response.data.content.content;
+            this.conInfo.time = response.data.content.addtime;
+	          this.conInfo.author = response.data.content.author;
+            this.$nextTick(function(){
+                this.renderPlayer();
+            })
+        }else{
+          this.noData=false;
+           this.$Notice.warning({
+                title: response.data.message,
+                desc: false
+            })
+        }
+      }, (error) => {
+        this.noData=false;
+        this.$Notice.warning({
+            title: error.data.message,
+            desc: false
+        })
+    });
   }
 }

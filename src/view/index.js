@@ -30,15 +30,7 @@ export default {
   },
   mounted() {
 
-    /*if (window.location.href.indexOf('publish') > -1) {
-      this.$store.commit('set', {
-        isActive: true
-      })
-    } else {
-      this.$store.commit('set', {
-        isActive: false
-      })
-    }*/
+
   },
   created() {
     if(localStorage.getItem('token') == null){

@@ -1,14 +1,14 @@
 <section>
 	<Row :gutter="34" v-if="articleBack">
 	  <Col span="6">
-	  <a href="javascript:void(0)" @click="goBack" style="font-size: 16px;">
+	  <a class="go-back" href="javascript:void(0)" @click="goBack">
 	  <Icon type="arrow-left-a"></Icon>
 	  返回</a>
 	  </Col>
 	  </Col>
 	</Row>
   <Row type="flex" justify="center">
-    <Col span="12">
+    <Col span="16">
     <div class="article" id="notice_video">
       <div>
         <div class="con_new hidden-xs">
@@ -19,8 +19,8 @@
 	  			<span>{{ conInfo.time.substring(0,10) }}</span>
 	  			<span>{{ conInfo.author }}</span>
 	      </div>
-            <div v-my-directive-audio="content"></div>
-          <!--<div v-html="content"></div>-->
+            <div style="text-align: center;display: block;" id="loading-div"><img style="width:30px;height:30px;" src="../../assets/loading.gif"}></div>
+            <div v-my-directive-audio="content" style="opacity: 0" id="content-div"></div>
         </div>
       </div>
     </div>

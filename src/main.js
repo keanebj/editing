@@ -8,6 +8,8 @@ import store from './store'
 import iView from 'iview'
 import './assets/iviewTheme/index.less'
 import './assets/style.css'
+import $ from 'jquery'
+
 
 Vue.use(iView)
 Vue.config.productionTip = false
