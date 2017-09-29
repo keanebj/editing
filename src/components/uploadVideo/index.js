@@ -154,6 +154,10 @@ export default {
          }
       },
       addLocalVideo(){
+        //协议问题：临时修改为https
+        this.$store.commit('set', {
+            videourl: this.$store.state.videourl.replace('http','https')
+        })
        let videoHtml='<div contenteditable="false" class="div_video_container_father" style="width:100%;margin-bottom:30px;position:relative;"><p style="text-align:center;" class="video_container" serverfileid="'+this.video.videoId+'" id="id_video_container_'+this.video.videoId+'">'+
        '<video style="background:#000;" src="'+this.$store.state.videourl+'" width="640" height="360" preload="auto" controls></video>'
        +'</p><a href="'+this.$store.state.videourl+'" contenteditable="false" download class="download_video" target="_blank" _href="'+this.$store.state.videourl+'">下载视频</a></div>';
@@ -162,6 +166,11 @@ export default {
       },
       addSourceVideo(){
           if(this.selVideoid != -1){
+            //协议问题：临时修改为https
+            this.$store.commit('set', {
+                videourl: this.$store.state.videourl.replace('http','https')
+            })
+
             let videoHtml='<div contenteditable="false" class="div_video_container_father" style="width:100%;margin-bottom:30px;position:relative;"><p style="text-align:center;" class="video_container" serverfileid="'+this.selVideoid+'" id="id_video_container_'+this.selVideoid+'">'+
             '<video style="background:#000;" src="'+this.$store.state.videourl+'" width="640" height="360" preload="auto" controls></video>'
             +'</p><a href="'+this.$store.state.videourl+'" contenteditable="false" download class="download_video" target="_blank" _href="'+this.$store.state.videourl+'">下载视频</a></div>';
@@ -416,7 +425,8 @@ export default {
                                                     clearTimeout(This.loadingTimer);
                                                 }
                                             }else{
-                                                This.$refs.videoPreview.innerHTML=res.data.message;
+                                                //This.$refs.videoPreview.innerHTML=res.data.message;
+                                                This.$refs.videoPreview.innerHTML='视频转码失败，请重新上传！';
                                                 clearInterval(This.videotimer);
                                                 clearTimeout(This.onceTimer);
                                                 clearTimeout(This.loadingTimer);
