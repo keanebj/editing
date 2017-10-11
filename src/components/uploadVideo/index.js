@@ -234,7 +234,7 @@ export default {
               return;
           }
           //绑定按钮及回调处理
-          this.accountDone('pickfile','AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo',1,1,null,null);
+          this.accountDone('pickfile','AKIDLcjeNxMuAEIG3eeRYSG7wc8ukS4HKM9u',1,1,null,null);
       },
       accountDone(upBtnId, secretId, isTranscode, isWatermark, transcodeNotifyUrl, classId) {
             var This=this;
@@ -247,7 +247,7 @@ export default {
                   Version = qdVideo.get('Version');
 
               //您的secretKey
-              var secret_key = 'UmsnV4Sgw65rRE0e6OUTGtK3viKky4yh';
+              var secret_key = 'thKl5EBGCzb1GJApIgstiLm2Tnwa5OUN';
               qdVideo.uploader.init(
                   //1: 上传基础条件
                   {

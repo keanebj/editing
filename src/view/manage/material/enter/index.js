@@ -112,9 +112,9 @@ export default {
       	var $ = qaVideo.get('$')
 				if ($('.material_xx_con').find('.moxie-shim').length > 0) {
 					$('.material_xx_con')[0].removeChild($('.material_xx_con').find('.moxie-shim')[0]);
-					this.initUpload('picks', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
+					this.initUpload('picks', 'AKIDLcjeNxMuAEIG3eeRYSG7wc8ukS4HKM9u', 1, 1, null, null)
 				}else{
-					this.initUpload('picks', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
+					this.initUpload('picks', 'AKIDLcjeNxMuAEIG3eeRYSG7wc8ukS4HKM9u', 1, 1, null, null)
 				}
 
         this.formValidate.videoname = this.material.name;//视频名字
@@ -154,7 +154,7 @@ export default {
 //	window.location.reload();
 //	this.$router.go(0)
     if (this.$route.query.id) {
-    	this.initUpload('picks', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
+    	this.initUpload('picks', 'AKIDLcjeNxMuAEIG3eeRYSG7wc8ukS4HKM9u', 1, 1, null, null)
       this.$http.get('/api/material/' + this.$route.query.id).then(({data}) => {
         this.vievShow = false;
         this.material.code = 6;
@@ -181,7 +181,7 @@ export default {
         this.$Notice.error({title:error.data.message,desc: false});
       })
     }else {
-    	this.initUpload('pick', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
+    	this.initUpload('pick', 'AKIDLcjeNxMuAEIG3eeRYSG7wc8ukS4HKM9u', 1, 1, null, null)
     	this.$http.post('api/material').then((response) => {
 	  		if (response.data.status == 1) {
 	  			this.videoId = response.data.id;
@@ -431,9 +431,9 @@ export default {
           var $ = qaVideo.get('$')
 					if ($('.material_xx_cons').find('.moxie-shim').length > 0) {
 						$('.material_xx_cons')[0].removeChild($('.material_xx_cons').find('.moxie-shim')[0]);
-						this.initUpload('pick', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
+						this.initUpload('pick', 'AKIDLcjeNxMuAEIG3eeRYSG7wc8ukS4HKM9u', 1, 1, null, null)
 					}else{
-						this.initUpload('pick', 'AKIDiJjz3vMbP1SgknteIk270g9QvMbjpXGo', 1, 1, null, null)
+						this.initUpload('pick', 'AKIDLcjeNxMuAEIG3eeRYSG7wc8ukS4HKM9u', 1, 1, null, null)
 					}
         },
         onCancel: () => {
@@ -468,7 +468,7 @@ export default {
           Code = qaVideo.get('Code'),
           Version = qaVideo.get('Version');
       //您的secretKey
-      var secret_key =  'UmsnV4Sgw65rRE0e6OUTGtK3viKky4yh';
+      var secret_key =  'thKl5EBGCzb1GJApIgstiLm2Tnwa5OUN';
       var secret_id = secretId;
       qaVideo.uploader.init(
           //1: 上传基础条件
