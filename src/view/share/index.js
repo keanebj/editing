@@ -69,7 +69,7 @@ export default {
 	                var option = {
 	                    "auto_play": "0",
 	                    "file_id": serverfileid,
-	                    "app_id": "1252018592",
+	                    "app_id": "1253974404",
 	                    "width": 640,
 	                    "height": 360,
                       "hide_h5_error":true

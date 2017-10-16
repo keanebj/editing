@@ -241,7 +241,7 @@ watch:{
                 embedArr[i].setAttribute("id",id+'_Preview');
                 var option = {
                     "file_id": selVideoid,
-                    "app_id": "1252018592",
+                    "app_id": "1253974404",
                     "width": 640,
                     "height": 360,
                     "hide_h5_error":true
@@ -283,7 +283,7 @@ watch:{
         var option = {
             "auto_play": "0",
             "file_id": id,
-            "app_id": "1252018592",
+            "app_id": "1253974404",
             "width": 640,
             "height": 360,
         };

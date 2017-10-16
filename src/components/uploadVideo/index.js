@@ -210,7 +210,7 @@ export default {
         var option = {
                 "auto_play": "0",
                 "file_id": this.video.videoId,
-                "app_id": "1252018592",
+                "app_id": "1253974404",
                 "width": 400,
                 "height": 225,
             };
