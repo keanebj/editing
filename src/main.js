@@ -105,7 +105,6 @@ var vueEle=new Vue({
                 vueEle.playAudio(audio,playimg,totleTimeDiv,currentTimeDiv,progress,audioBtn,prefix);
         }
       }
-
   }
 }
 })

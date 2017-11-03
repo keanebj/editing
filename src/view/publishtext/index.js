@@ -6,6 +6,8 @@ import '../../../static/ueditor/ueditor.config.js'
 import '../../../static/ueditor/ueditor.all.js'
 import '../../../static/ueditor/lang/zh-cn/zh-cn.js'
 import '../../../static/ueditor/ueditor.parse.js'
+import '../../../static/ueditor/xiumi-ue-dialog-v5.js'
+import '../../../static/ueditor/xiumi-ue-v5.css'
 import Vue from 'vue'
 import Cookies from 'js-cookie'
 import {

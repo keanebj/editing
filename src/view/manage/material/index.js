@@ -69,7 +69,7 @@ export default {
           desc: false
         })
     	}
-      
+
     },
     cancel () {
 
@@ -142,7 +142,8 @@ export default {
       this.getVideoList();
     },
     getVideoList () {
-      this.$http.get("api/material", {
+      this.$http.get("api" +
+        "/material", {
         params: {
           value: this.searchValue,
           page: true,
@@ -216,7 +217,7 @@ export default {
 	          })
 	        },
 	        onCancel: () => {
-	
+
 	        }
 	       })
     	}
@@ -325,7 +326,7 @@ export default {
                 This.$Notice.error({
                   title: args.message+(args.solution ? (';solution==' + args.solution) :''),
                   desc: false
-               	})  
+               	})
               }
 
           }
