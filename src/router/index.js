@@ -7,7 +7,7 @@ import store from '../store'
 import config from '../config'
 Vue.use(Router)
 const RouterConfig = {
-  mode: 'history', //history hash
+  mode: 'hash', //history hash
   base: config.root,
   routes: routers
 }

@@ -104,14 +104,6 @@ export default [
         component: () => import('@/view/settings/account/index.vue')
       },
       {
-        name: 'notice',
-        path: '/notice',
-        meta: {
-          title: '公告-全国党媒融合号'
-        },
-        component: () => import('@/view/notice/index.vue')
-      },
-      {
         name: 'article',
         path: '/article',
         meta: {
@@ -120,6 +112,14 @@ export default [
         component: () => import('@/view/article/index.vue')
       },
     ]
+  },
+  {
+    name: 'notice',
+    path: '/notice',
+    meta: {
+      title: '公告-全国党媒融合号'
+    },
+    component: () => import('@/view/notice/index.vue')
   },
   {
     name: 'share',
