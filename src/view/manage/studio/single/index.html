@@ -19,7 +19,7 @@
       <Form-item label="LOGO" prop="logofile">
         <img v-if="formValidate.logofile" style="max-width:100px;border:1px solid #eee" :src="formValidate.logofile"
         />
-        <cropper-upload :width="300" :height="200" :cropUploadSuccess="cropUploadSuccess" :cropUploadFail="cropUploadSuccess" minwidth="300" minheight="200">
+        <cropper-upload :width="300" :height="200" :cropUploadSuccess="cropUploadSuccess" :cropUploadFail="cropUploadSuccess" :minwidth="300" :minheight="200">
           <a v-if="formValidate.logofile" href="javascript:void(0)">
             <Icon type="edit"></Icon>
           </a>
@@ -46,7 +46,7 @@
         </Select> 
       </Form-item>
       <Form-item label="中央厨房指数" prop="accountindex">
-        <Input v-model="formValidate.accountindex" @on-change="allowSubmit" maxlength="4" placeholder="请输入中央厨房指数" number></Input>
+        <Input v-model="formValidate.accountindex" @on-change="allowSubmit" :maxlength="4" placeholder="请输入中央厨房指数" number></Input>
       </Form-item>
 
       <Form-item style="margin-top: 80px;">
