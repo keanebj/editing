@@ -34,10 +34,6 @@
   display: inline-block;
 }
 
-.ivu-col-span-5 {
-  display: none;
-}
-
 .main-color {
   color: #F95759 !important;
 }

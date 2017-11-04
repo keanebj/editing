@@ -1,32 +1,37 @@
+
 <section>
-	<Row :gutter="34" v-if="articleBack">
-	  <Col span="6">
-	  <a class="go-back" href="javascript:void(0)" @click="goBack">
-	  <Icon type="arrow-left-a"></Icon>
-	  返回</a>
-	  </Col>
-	  </Col>
-	</Row>
-
-
- <Row type="flex" justify="center">
-    <Col span="18">
-    <div class="article" id="notice_video">
-      <div>
-        <div class="con_new hidden-xs">
-        	<h2 class="orginTit" v-if="subtitle == null">{{ title }}</h2>
-        	<h2 class="orginTit" v-else>{{ subtitle }}</h2>
-        	<div class="article_xinxi">
-        		<span>{{ conInfo.channel }}</span>
-      			<span>{{ conInfo.time.substring(0,10) }}</span>
-      			<span>{{ conInfo.author }}</span>
-        	</div>
-          <div id="loading-div" style="text-align: center;display: block;"><img style="width:30px;height:30px;"  src="../../assets/loading.gif" ></div>
-        	<div v-my-directive-audio="content" style="opacity: 0" id="content-div"></div>
-        </div>
-
-      </div>
-    </div>
-    </Col>
-  </Row>
+	<MainHeader></MainHeader>
+	<section>
+		<Row :gutter="34" v-if="articleBack">
+			<Col span="6">
+			<a class="go-back" href="javascript:void(0)" @click="goBack">
+			<Icon type="arrow-left-a"></Icon>
+			返回</a>
+			</Col>
+			</Col>
+		</Row>
+	 <Row type="flex" justify="center">
+			<Col span="18">
+			<div class="article" id="notice_video">
+				<div>
+					<div class="con_new hidden-xs">
+						<h2 class="orginTit" v-if="subtitle == null">{{ title }}</h2>
+						<h2 class="orginTit" v-else>{{ subtitle }}</h2>
+						<div class="article_xinxi">
+							<span>{{ conInfo.channel }}</span>
+							<span>{{ conInfo.time.substring(0,10) }}</span>
+							<span>{{ conInfo.author }}</span>
+						</div>
+						<div id="loading-div" style="text-align: center;display: block;"><img style="width:30px;height:30px;"  src="../../assets/loading.gif" ></div>
+						<div v-my-directive-audio="content" style="opacity: 0" id="content-div"></div>
+					</div>
+	
+				</div>
+			</div>
+			</Col>
+		</Row>
+	</section>
+	
+	<MainFooter></MainFooter>
 </section>
+
