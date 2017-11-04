@@ -13,24 +13,13 @@ export default {
     ComponentsBreadcrumb
   },
   computed: {
-    ...mapState(['menu', 'userinfo', 'isActive', 'token'])
+    ...mapState(['menu', 'isActive', 'userinfo', 'token'])
   },
   data() {
     return {
       minHeight: window.screen.height - 310,
       isToken : true
     }
-  },
-  beforeCreate() {
-
-    //监听浏览器的返回按钮
-    window.addEventListener("popstate", function (e) {
-      location.reload();
-    }, false);
-  },
-  mounted() {
-
-
   },
   created() {
     if(localStorage.getItem('token') == null){
@@ -39,47 +28,12 @@ export default {
     else{
       this.isToken= false
     }
-    this.getLocalUserInfo()
   },
   methods: {
-    getLocalUserInfo() {
-      if (localStorage.getItem('userinfo')) {
-        let _userinfo = {}
-        _userinfo = JSON.parse(localStorage.getItem('userinfo'))
-        this.$store.commit('set', {
-          _userinfo
-        })
-      }
-    },
     onSelect(e) {
       if (e.path) {
-        this.$router.push({
-          path: e.path
-        })
+        this.$router.push(e.path)
       }
-    },
-    goHome() {
-      this.$router.push('/')
-    },
-    goAccount() {
-      this.$router.push('/settings/account')
-    },
-    logOut(e) {
-      this.$http.get('/api/studio/logout')
-        .then(res => {
-          if (res.data.status == 1) {
-            localStorage.removeItem("token")
-            this.$store.commit('set', {
-              token: ''
-            })
-            this.$Message.success('退出成功')
-          } else {
-            this.$Message.error(res.data.message)
-          }
-          this.$router.push('/login')
-        }, err => {
-          this.$Message.error(JSON.stringify(err))
-        })
     }
   }
 }

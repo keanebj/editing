@@ -1,121 +1,60 @@
-  .layout {
-    position: relative;
-  }
-  .layout-container {
-    padding: 50px;
-    min-height: 510px;
-  }
-  .layout-breadcrumb {
-    padding: 10px 15px 0;
-  }
-
-  .layout-content {
-    min-height: 200px;
-    margin: 0 15px;
-    background: #fff;
-    border-radius: 4px;
-  }
-
-  .layout-content-main {
-    padding: 0 20px;
-  }
-
-  .layout-ceiling {
-    padding: 1px 50px;
-    overflow: hidden;
-    /*box-shadow: 1px 0 1px #999999;*/
-    border-bottom:1px solid #ddd;
-    width:100%;
-  }
-  .layout-ceiling .logo{
-    float: left;
-  }
-  .layout-ceiling .logo img{
-    height: 30px;
-    margin-top: 8px;
-  }
-  .layout-ceiling-main {
-    float: right;
-    line-height: 50px;
-    vertical-align: middle
-  }
-
-  .layout-ceiling-main a {
-    color: #757575;
-    float: left;
-  }
-  .layout-ceiling-main a img {
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-    box-shadow: 0 0 1px #999;
-    float: left;
-    margin-right: 20px;
-  }
-  .layout-ceiling-main a.nickname{
-    font-size: 18px;
-    margin-right: 10px;
-    color:#333;
-  }
-.layout-footer{
-  text-align: center;
-  padding: 10px 0 0px;
-}
-.layout-footer-top{
-  font-size: 16px;
-  color: #999;
-  padding: 10px 0 30px;
-}
-.layout-footer-top .item{
-  display: inline-block;
-  margin: 0 10px;
-}
-.layout-footer-top img {
-  height: 20px;
+.layout {
   position: relative;
-  bottom: -3px
 }
-.layout-footer-bottom {
-  background: #F3F3F3;
-  color: #9ea7b4;
-  line-height: 50px;
-  height: 50px;
+.layout-container {
+  padding: 50px;
+  min-height: 510px;
+}
+.layout-breadcrumb {
+  padding: 10px 15px 0;
+}
+
+.layout-content {
+  min-height: 200px;
+  margin: 0 15px;
+  background: #fff;
+  border-radius: 4px;
+}
+
+.layout-content-main {
+  padding: 0 20px;
 }
 
 .slide-fade-enter-active {
-  transition: all .3s ease;
+  transition: all 0.3s ease;
 }
 .slide-fade-leave-active {
-  transition: all .4s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  transition: all 0.4s cubic-bezier(1, 0.5, 0.8, 1);
 }
-.slide-fade-enter, .slide-fade-leave-to
-/* .slide-fade-leave-active 在 <2.1.8 中 */ {
+.slide-fade-enter,
+.slide-fade-leave-to {
   transform: translateX(20px);
   opacity: 0;
 }
 
 /*mine*/
-.hide{
-  display:none !important;
+.hide {
+  display: none !important;
 }
-.set-width{
-  width:100% !important;
-}
-
-.ivu-menu-vertical.ivu-menu-light:after{
-  background:transparent!important;
-}
-.ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu){
-  border-right:none!important;
-}
-.ivu-menu-item, .ivu-menu-submenu .ivu-menu-submenu-title{
-  font-size: 16px!important;
+.set-width {
+  width: 100% !important;
 }
 
-.ivu-menu-submenu .ivu-menu-item{
-  font-size: 14px!important;
+.ivu-menu-vertical.ivu-menu-light:after {
+  background: transparent !important;
 }
-.check-login{
+.ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu) {
+  border-right: none !important;
+}
+.ivu-menu-item,
+.ivu-menu-submenu .ivu-menu-submenu-title {
+  font-size: 16px !important;
+}
+
+.ivu-menu-submenu .ivu-menu-item {
+  font-size: 14px !important;
+}
+.check-login {
   position: fixed;
   width: 100%;
   height: 100%;
@@ -123,9 +62,9 @@
   top: 0;
   z-index: 999;
   background: #000;
-  opacity: .6;
+  opacity: 0.6;
 }
-.check-login .tip-info{
+.check-login .tip-info {
   position: absolute;
   left: 0;
   top: 0;
@@ -141,7 +80,7 @@
 }
 
 /*全局添加audio样式*/
-.audioWrap{
+.audioWrap {
   position: relative;
   width: 600px;
   height: 100px;
@@ -149,82 +88,82 @@
   border-radius: 3px;
   background: #fcfcfc;
   box-sizing: border-box;
-  margin:30px auto;
+  margin: 30px auto;
 }
-.audioBtn{
+.audioBtn {
   position: absolute;
-  width:45px;
-  height:45px;
-  top:50%;
-  transform:translateY(-50%);
+  width: 45px;
+  height: 45px;
+  top: 50%;
+  transform: translateY(-50%);
   margin-left: 15px;
   margin-right: 15px;
   cursor: pointer;
 }
-.content{
+.content {
   margin-left: 75px;
   width: 500px;
-  height:100px;
+  height: 100px;
   box-sizing: border-box;
   overflow: hidden;
 }
-.songName{
-  height:20px;
-  margin:15px 0;
+.songName {
+  height: 20px;
+  margin: 15px 0;
   overflow: hidden;
-  text-overflow:ellipsis;
+  text-overflow: ellipsis;
   white-space: nowrap;
-  text-align:left;
+  text-align: left;
 }
-.progress{
-  width:500px;
-  margin:10px 0 0 0;
+.progress {
+  width: 500px;
+  margin: 10px 0 0 0;
   cursor: pointer;
-  height:3px;
-  -webkit-appearance:none;
-  -moz-appearance:none;
-  -ms-appearance:none;
-  appearance:none;
-  border:none;
+  height: 3px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  border: none;
 }
-.progress::-ms-fill{
-  background:#f95858;
+.progress::-ms-fill {
+  background: #f95858;
 }
-.progress::-moz-progress-bar{
-  background:#f95858;
+.progress::-moz-progress-bar {
+  background: #f95858;
 }
-.progress::-webkit-progress-value{
-  background:#f95858;
+.progress::-webkit-progress-value {
+  background: #f95858;
 }
-.timeContemt{
+.timeContemt {
   position: relative;
   width: 500px;
-  height:20px;
+  height: 20px;
   box-sizing: border-box;
   overflow: hidden;
 }
-.time{
-  width:40px;
-  height:20px;
-  font-size:12px;
-  color:#b2b2b2;
+.time {
+  width: 40px;
+  height: 20px;
+  font-size: 12px;
+  color: #b2b2b2;
   position: absolute;
-  top:0;
-  padding-top:3px;
+  top: 0;
+  padding-top: 3px;
 }
-.download{
-  position:absolute;
-  bottom:-24px;
-  right:0;
-  text-decoration:none;
-  padding-left:20px;
-  display:inline-block;
-  color:#b2b2b2;
-  background:url(http://mp.dev.hubpd.com/static/ueditor/audioimages/download.svg) left center no-repeat;
-  background-size:14px 14px;
+.download {
+  position: absolute;
+  bottom: -24px;
+  right: 0;
+  text-decoration: none;
+  padding-left: 20px;
+  display: inline-block;
+  color: #b2b2b2;
+  background: url(http://mp.dev.hubpd.com/static/ueditor/audioimages/download.svg)
+    left center no-repeat;
+  background-size: 14px 14px;
 }
-.totleTime{
+.totleTime {
   right: 0;
   text-align: right;
 }
-

@@ -101,7 +101,6 @@ export default {
   		this.align = 'left';
       this.hideHead='block';
   	}
-
     //ajax获得分享的内容
     this.$http.get("/api/content/share/" + this.shareId)
       .then((response) => {

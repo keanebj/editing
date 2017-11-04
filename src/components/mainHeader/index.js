@@ -1,26 +1,33 @@
+import {
+  mapState
+} from 'vuex'
 export default {
   name: 'ComponentsMainHeader',
-  data() {
-    return {}
+  computed: {
+    ...mapState(['userinfo'])
   },
-  props: {
-    logOut: Function,
-    goHome: Function,
-    goAccount: Function,
-    studioLogo: {
-      type: String,
-      default: ''
+  methods: {
+    logOut(e){
+      this.$http.get('/api/studio/logout').then(res => {
+        if (res.data.status == 1) {
+          localStorage.removeItem("token")
+          this.$store.commit('set', {
+            token: ''
+          })
+          this.$Message.success('退出成功')
+        } else {
+          this.$Message.error(res.data.message)
+        }
+        this.$router.push('/login')
+      }, err => {
+        this.$Message.error(JSON.stringify(err))
+      })
     },
-    userName: {
-      type: String,
-      default: ''
+    goHome() {
+      this.$router.push('/')
     },
-    studioName: {
-    	type: String,
-      default: ''
+    goAccount() {
+      this.$router.push('/settings/account')
     }
-  },
-  methods: {},
-  created() {},
-  mounted() {}
+  }
 }
