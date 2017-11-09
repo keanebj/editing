@@ -141,7 +141,10 @@ export default {
       this.pageIndexX = page;
       this.getVideoList();
     },
-    getVideoList () {
+    getVideoList (type) {
+    	if (type == 'search') {
+    		this.pageIndexX = 1;
+    	}
       this.$http.get("api" +
         "/material", {
         params: {

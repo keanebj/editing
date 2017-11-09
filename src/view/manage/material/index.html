@@ -29,7 +29,7 @@
         </a>
       </Col>
       <Col span="12">
-        <Input icon="ios-search-strong" placeholder="请搜索标题、简介" style="width:250px;float:right;" @on-enter="getVideoList()" @on-click="getVideoList()" v-model="searchValue"></Input>
+        <Input icon="ios-search-strong" placeholder="请搜索标题、简介" style="width:250px;float:right;" @on-enter="getVideoList('search')" @on-click="getVideoList('search')" v-model="searchValue"></Input>
       </Col>
     </Row>
     <Row :gutter="50" :class="{hide: tabViews}">

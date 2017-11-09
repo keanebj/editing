@@ -200,6 +200,9 @@ export default {
 
     },
     getContentList:function(type){
+    	if (type == 'search') {
+    		this.pageIndex = 1;
+    	}
       this.hidenofound=true;
       this.hidenodata=true;
       this.$http.get("/api/content",{
