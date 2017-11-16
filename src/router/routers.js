@@ -111,6 +111,22 @@ export default [
         },
         component: () => import('@/view/article/index.vue')
       },
+      {
+        name: 'SourceLive',
+        path: '/manage/live',
+        meta: {
+          title: '直播管理-全国党媒融合号'
+        },
+        component: () => import('@/view/manage/live/index.vue')
+      },
+      {
+        name: 'SourceLiveEnter',
+        path: '/manage/live/enter',
+        meta: {
+          title: '直播管理保存-全国党媒融合号'
+        },
+        component: () => import('@/view/manage/live/enter/index.vue')
+      }
     ]
   },
   {

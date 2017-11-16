@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="53px" height="53px" viewBox="0 0 53 53" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46 (44423) - http://www.bohemiancoding.com/sketch -->
+    <title>返回(1)</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#6C78C5" offset="0%"></stop>
+            <stop stop-color="#69B4F3" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="运营导航编辑-弹框" transform="translate(-466.000000, -189.000000)" stroke="url(#linearGradient-1)">
+            <g id="返回(1)" transform="translate(492.500000, 215.500000) scale(-1, 1) translate(-492.500000, -215.500000) translate(467.000000, 190.000000)">
+                <path d="M25.5,51 C39.5827698,51 51,39.5828302 51,25.5 C51,11.4171698 39.5827698,0 25.5,0 C11.4172302,0 0,11.4172302 0,25.5 C0,39.5827698 11.4171698,51 25.5,51 Z" id="Shape" stroke-width="2" fill-rule="nonzero"></path>
+                <path d="M31.9314958,25.4982415 L21.9026621,35.5303899 C22.0209292,35.4121227 22.2094743,35.4121227 22.3275078,35.5301562 C22.4454854,35.6481339 22.4455412,35.8365564 22.3276752,35.9546007 L31.3652117,26.9102339 L32.7780905,25.4962872 L22.3923291,15.1066078 C22.5102093,15.2244988 22.5102028,15.4129941 22.3921833,15.5310136 L22.3920551,15.5311418 C22.3350532,15.5881333 22.2549701,15.6203698 22.1816,15.6203698 C22.1056041,15.6203698 22.030355,15.5899243 21.9778756,15.5379591 L31.9314958,25.4982415 Z" id="Path" stroke-width="4"></path>
+            </g>
+        </g>
+    </g>
+</svg>

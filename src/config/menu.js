@@ -15,6 +15,7 @@ export default [{
   children: [{
       name: '公告管理',
       path: '/manage/announcement',
+      
       authority: 'Manage'
     },
     {
@@ -41,7 +42,13 @@ export default [{
 	    path: '/manage/material',
 	    match: ['SourceMaterialEnter'],
 	    authority:'Manage Edit'
-	  }
+	  },
+    {
+      name: '直播管理',
+      path: '/manage/live',
+      match: ['SourceLive'],
+      authority:'Manage Edit'
+    }
   ]
 }, {
   name: '设置',

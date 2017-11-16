@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="25px" height="24px" viewBox="0 0 25 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46 (44423) - http://www.bohemiancoding.com/sketch -->
+    <title>Oval 5</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-0.7%" y="-0.6%" width="101.5%" height="102.1%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="4" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.773644315   0 0 0 0 0.813307596   0 0 0 0 0.852970876  0 0 0 1 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="运营导航编辑" transform="translate(-1012.000000, -761.000000)" fill="#F95759">
+            <g id="左1" filter="url(#filter-1)" transform="translate(407.000000, 140.000000)">
+                <g id="Group-3" transform="translate(181.000000, 56.000000)">
+                    <g id="栏目" transform="translate(218.000000, 517.000000)">
+                        <g id="按钮" transform="translate(164.500000, 50.000000)">
+                            <path d="M54,12 C50.6862915,12 48,9.3137085 48,6 C48,2.6862915 50.6862915,0 54,0 C57.3137085,0 60,2.6862915 60,6 C60,9.3137085 57.3137085,12 54,12 Z M53.999995,5.3841505 L51.7440364,3.12749298 C51.5740601,2.95750234 51.2984742,2.95750234 51.1284979,3.12749298 C50.9585217,3.29748363 50.9585217,3.57309291 51.1284979,3.74308355 L53.3839487,5.99974108 L51.1274822,8.2558907 C50.9575059,8.42588134 50.9575059,8.70149063 51.1274822,8.87148127 C51.2974584,9.04147191 51.5730444,9.0414719 51.7430207,8.87148126 L53.999995,6.61583956 L56.2559537,8.8724971 C56.365909,8.98246177 56.5261725,9.02540786 56.6763743,8.985158 C56.8265761,8.94490814 56.9438971,8.82757723 56.9841435,8.6773627 C57.02439,8.52714817 56.9814475,8.36687118 56.8714921,8.25690652 L54.6160414,5.99974108 L56.8725079,3.74359146 C56.9824633,3.6336268 57.0254057,3.4733498 56.9851593,3.32313528 C56.9449128,3.17292075 56.8275918,3.05558985 56.67739,3.01533999 C56.5271882,2.97509013 56.3669248,3.01803623 56.2569694,3.1280009 L53.999995,5.3836426 L53.999995,5.3841505 Z" id="Oval-5"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

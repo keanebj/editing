@@ -1,0 +1,160 @@
+<section>
+  <div class="tab-live">
+
+    <div class="live_title">
+      <router-link to="/manage/live/enter">
+        <Button type="primary" class="addlive_btn fl" id="pickfiles111">
+          <img src="../../../assets/live/fodder1.svg" class="icon-create" width="22" height="20"></img>
+          <span class="live-create">添加直播</span>
+        </Button>
+      </router-link>
+      <!-- <img src="../../../assets/live/preview.svg" class="icon-preview" width="33" height="30" @click="liveprev" ></img> -->
+      <Input icon="ios-search-strong" placeholder="输入搜索名称..." class="fr"></Input>
+    </div>
+
+    <div :class="{hide:tabViews}">
+      <Row :gutter="50" class="live_list_warp">
+
+
+
+        <Col span="6" class="live_list" v-for="(liveItem, index) in liveList" :key="liveItem.id" :index="liveItem.id">
+          <div class="live_list_in" :id="liveItem.roomid">
+            <div class="live_list_item">
+              <img :src="liveItem.coverimage" alt="" />
+              
+              <span class="live_list_play" v-if="liveItem.stateLive == 0">
+                <i class="fa fa-play" aria-hidden="true"></i>
+              </span>
+                <span class="live_now" v-if="liveItem.stateLive == 1">
+                <span>正在直播中....</span>
+                </span>
+                <span class="live_remote" v-if="liveItem.stateLive == 2">
+                  <p>距离直播开始还有</p>
+                <p :class="'timeCountdown'+index">0天00:00:00</p>
+              </span>
+              
+              <div class="deleteLiveIcon" >
+                <img src="../../../assets/live/viewnum.svg" style="width:90%;" alt="" />
+              </div>
+              <div :id="'fansNum'+liveItem.id" class="fansNum" >{{liveItem.fansNum}}</div>
+              
+              <div class="mask">
+                <span>
+                  <i class="fa fa-times-circle" aria-hidden="true" @click="deleteLive(liveItem.id)" ></i>
+                </span>
+              </div>
+              <div class="live_bottom">
+                <span class="fl">{{liveItem.begin}}</span>
+                <span class="fr">{{liveItem.end}}</span>
+              </div>
+            </div>
+            <div class="live_info">
+              <span class="video_info_tit">{{liveItem.title}}</span>
+              <span class="video_info_icon">
+                <Tooltip placement="top" content="直播">
+                <img src="../../../assets/live/message.svg" alt="" @click="liveMessage(liveItem)">
+                </Tooltip>
+                <Tooltip placement="top" content="编辑">
+                <img src="../../../assets/live/edit_video.svg" alt="" @click="editVideo(liveItem.id)">
+                </Tooltip>
+              </span>
+            </div>
+          </div>
+        </Col>
+
+
+
+
+        <Modal v-model="modalMessage" class="modalLiveMessage" width="404" on-cancel="modalLiveClose">
+            
+          <div class="message_play">
+            <div class="message_title">直播</div>
+            <div style="width:100%;">
+              <div id="id_live_container" class="g_video_container" ></div>
+            </div>
+          </div>
+
+          <div class="message_tab">
+            <Tabs :animated="false">
+            <TabPane label="互动聊天">
+              <div class="tabContent" id="catalogContent">
+                
+                <div v-for="(liveItem, index) in catalogContentList" :key="liveItem.id" :index="liveItem.id">
+                  <p>{{liveItem.addtime}}</p>
+                  <div class="catalogTab">
+                    <img class="path" :src="liveItem.picturepath" alt="" />
+                    <span v-html="liveItem.content">{{liveItem.content}}</span>
+                  </div>
+                </div>
+
+              </div>
+            </TabPane>
+            <TabPane label="视频简介">
+              <div class="tabContent" id="videoContent">
+                <div class="catalogTab">
+                  {{curLiveData.introduction}}
+                </div>
+              </div>
+            </TabPane>
+            </Tabs>
+
+            <edit-div @oninput="getLiveContent" @onimage="getLiveIamge" @onok="okEdit"></edit-div>
+
+          </div>
+
+        </Modal>
+
+
+
+        <Modal v-model="qCode" class="share_hide_video" ref="shareHide" width="auto" title="分享">
+          <div style="text-align:center;margin-top:50px;overflow:hidden;">
+            <img src="../../../assets/live/link.svg" alt="" width="30" height="30" style="margin-right:20px;float:left;margin-left:30px;margin-top:3px;">
+            <div class="copy" style="display:inline-block;height:37px;">
+              <input type="text"  v-model="videourl" ref="thisInput" readonly /><span @click="CopyUrl($event)">复制</span>
+            </div>
+          </div>
+          <div style="text-align:center;margin-top:30px;">
+            <div id='code'></div>
+            <canvas id="videoItem"></canvas>
+            <p style="font-size:16px;margin-top:10px;">复制链接或扫描二维码分享视频</p>
+          </div>
+        </Modal>
+
+      </Row>
+
+
+      <div class="live_pager clearfix">
+        <div v-if="nodataOfDataByLive" >
+          <div style="float:right;line-height:24px;margin-right:10px;">共{{pageCountByLive}}页</div>
+          <Page :total="dataTotalByLive" style="float:right" :page-size="pageSize" :current="pageIndexByLive" size="small" @on-change="changePage"></Page>
+        </div>
+      </div>
+    </div>
+    
+      <div class="no_live" :class="{hide: !tabViews}">
+        <img src="../../../assets/live/nofodder.svg"/>
+        <p>暂无内容</p>
+    </div>
+    
+
+
+
+
+
+
+
+
+    
+    <!--弹出框-->
+
+
+
+
+
+
+
+
+
+  </div>
+</section>
+

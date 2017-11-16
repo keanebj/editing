@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46 (44423) - http://www.bohemiancoding.com/sketch -->
+    <title>图片</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#F06264" offset="0%"></stop>
+            <stop stop-color="#CA6DD1" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="创建直播" transform="translate(-1421.000000, -1222.000000)" stroke="url(#linearGradient-1)" stroke-width="1.5">
+            <g id="图文配套" transform="translate(1349.000000, 40.000000)">
+                <g id="图片" transform="translate(72.000000, 1182.000000)">
+                    <path d="M15.0786299,0.75355091 C11.2197709,0.798741413 7.95563288,2.07913345 5.24440615,4.63367268 C2.42514144,7.29007582 0.926274928,10.5721187 0.777254009,14.4261219 C0.616775645,18.5777597 2.01407414,22.1569574 4.94325503,25.0924462 C7.66746185,27.8225024 11.0098596,29.2185546 14.8878659,29.2528501 C18.687859,29.2863881 21.9981439,27.9987988 24.7564425,25.4068155 C27.6835983,22.6561104 29.1937848,19.246766 29.2624635,15.2360564 C29.3298022,11.3029393 27.9768222,7.89018214 25.2322847,5.07305861 C22.4815295,2.24952319 19.0754014,0.81312945 15.0786299,0.75355091 Z" id="Shape" fill-rule="nonzero"></path>
+                    <circle id="Oval-6" cx="10.5" cy="10.5" r="3.5"></circle>
+                    <path d="M2,20 C5.33333333,18 8.5,18.3333333 11.5,21" id="Path-2"></path>
+                    <path d="M10,28.5 C10.3333333,22.8333333 12.1666667,18.3333333 15.5,15 C18.8333333,11.6666667 23,9.66666667 28,9" id="Path-3"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
